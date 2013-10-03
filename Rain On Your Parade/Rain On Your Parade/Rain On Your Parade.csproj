@@ -35,9 +35,15 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="ActorController.cs" />
+    <Compile Include="Model.cs" />
+    <Compile Include="SliderController.cs" />
     <Compile Include="GameEngine.cs" />
     <Compile Include="RainOnYourParade.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Slider.cs" />
+    <Compile Include="SliderView.cs" />
+    <Compile Include="View.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="OpenTK">
