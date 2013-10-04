@@ -19,6 +19,7 @@ namespace Rain_On_Your_Parade
         public const int SCREEN_WIDTH = 800;
         public const int SCREEN_HEIGHT = 600;
 
+        ContentManager content;
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
@@ -30,7 +31,11 @@ namespace Rain_On_Your_Parade
             : base()
         {
             graphics = new GraphicsDeviceManager(this);
+            content = new ContentManager(Services);
             Content.RootDirectory = "Content";
+            models = new List<Model>();
+            views = new List<View>();
+            controllers = new List<Controller>();
         }
 
         /// <summary>
@@ -42,6 +47,18 @@ namespace Rain_On_Your_Parade
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
+            graphics.PreferredBackBufferWidth = SCREEN_WIDTH;
+            graphics.PreferredBackBufferHeight = SCREEN_HEIGHT;
+            graphics.IsFullScreen = false;
+            graphics.ApplyChanges();
+
+            //This is where the level building goes. I don't care about an XML parsing framework yet.
+            Slider slider = new Slider();
+            SliderView sliderView = new SliderView(slider);
+            SliderController sliderController = new SliderController(slider);
+            models.Add(slider);
+            views.Add(sliderView);
+            controllers.Add(sliderController);
 
             base.Initialize();
         }
@@ -54,7 +71,10 @@ namespace Rain_On_Your_Parade
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-
+            foreach (Model model in models)
+            {
+                model.LoadTexture(content);
+            }
             // TODO: use this.Content to load your game content here
         }
 
@@ -91,7 +111,10 @@ namespace Rain_On_Your_Parade
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: Add your drawing code here
-
+            foreach (View view in views)
+            {
+                view.Draw(spriteBatch);
+            }
             base.Draw(gameTime);
         }
     }

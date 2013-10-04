@@ -36,6 +36,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="ActorController.cs" />
+    <Compile Include="Controller.cs" />
     <Compile Include="Model.cs" />
     <Compile Include="SliderController.cs" />
     <Compile Include="GameEngine.cs" />
