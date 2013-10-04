@@ -3,6 +3,10 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rain On Your Parade", "Rain On Your Parade\Rain On Your Parade.csproj", "{D1626B45-29E7-49E0-AFE6-1B280214AC4F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ROYP XNA", "WindowsGame1\WindowsGame1\ROYP XNA.csproj", "{932BEC5A-7ABA-451E-929D-FEAD94721BF8}"
+EndProject
+Project("{96E2B04D-8817-42C6-938A-82C39BA4D311}") = "Rain On Your Parade Content", "WindowsGame1\WindowsGame1Content\Rain On Your Parade Content.contentproj", "{7C481A56-6A36-46F6-975B-5FB90EADBC42}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -13,6 +17,12 @@ Global
 		{D1626B45-29E7-49E0-AFE6-1B280214AC4F}.Debug|x86.Build.0 = Debug|x86
 		{D1626B45-29E7-49E0-AFE6-1B280214AC4F}.Release|x86.ActiveCfg = Release|x86
 		{D1626B45-29E7-49E0-AFE6-1B280214AC4F}.Release|x86.Build.0 = Release|x86
+		{932BEC5A-7ABA-451E-929D-FEAD94721BF8}.Debug|x86.ActiveCfg = Debug|x86
+		{932BEC5A-7ABA-451E-929D-FEAD94721BF8}.Debug|x86.Build.0 = Debug|x86
+		{932BEC5A-7ABA-451E-929D-FEAD94721BF8}.Release|x86.ActiveCfg = Release|x86
+		{932BEC5A-7ABA-451E-929D-FEAD94721BF8}.Release|x86.Build.0 = Release|x86
+		{7C481A56-6A36-46F6-975B-5FB90EADBC42}.Debug|x86.ActiveCfg = Debug|x86
+		{7C481A56-6A36-46F6-975B-5FB90EADBC42}.Release|x86.ActiveCfg = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

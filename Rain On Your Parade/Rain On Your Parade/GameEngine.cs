@@ -109,12 +109,14 @@ namespace Rain_On_Your_Parade
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
-
+            spriteBatch.Begin();
             // TODO: Add your drawing code here
-            foreach (View view in views)
+            /*foreach (View view in views)
             {
                 view.Draw(spriteBatch);
-            }
+            }*/
+
+            spriteBatch.End();
             base.Draw(gameTime);
         }
     }
