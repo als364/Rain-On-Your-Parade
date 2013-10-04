@@ -31,7 +31,7 @@ namespace Rain_On_Your_Parade
             : base()
         {
             graphics = new GraphicsDeviceManager(this);
-            content = new ContentManager(Services);
+            //content = new ContentManager(Services);
             Content.RootDirectory = "Content";
             models = new List<Model>();
             views = new List<View>();
@@ -71,11 +71,11 @@ namespace Rain_On_Your_Parade
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
+            // TODO: use this.Content to load your game content here
             foreach (Model model in models)
             {
-                model.LoadTexture(content);
+                model.LoadContent(this.Content);
             }
-            // TODO: use this.Content to load your game content here
         }
 
         /// <summary>
@@ -111,11 +111,10 @@ namespace Rain_On_Your_Parade
             GraphicsDevice.Clear(Color.CornflowerBlue);
             spriteBatch.Begin();
             // TODO: Add your drawing code here
-            /*foreach (View view in views)
+            foreach (View view in views)
             {
                 view.Draw(spriteBatch);
-            }*/
-
+            }
             spriteBatch.End();
             base.Draw(gameTime);
         }

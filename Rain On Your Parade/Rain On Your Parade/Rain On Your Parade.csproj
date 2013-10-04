@@ -71,15 +71,15 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <None Include="Content\default.xnb">
+    <Content Include="Content\default.xnb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Content\SliderBackground.xnb">
+    </Content>
+    <Content Include="Content\SliderBackground.xnb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Content\SliderButton.xnb">
+    </Content>
+    <Content Include="Content\SliderButton.xnb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -16,8 +16,9 @@ namespace Rain_On_Your_Parade
             this.slider = slider;
         }
 
-        public void draw(SpriteBatch spriteBatch)
+        public override void Draw(SpriteBatch spriteBatch)
         {
+            //Console.WriteLine("ping");
             spriteBatch.Draw(slider.sliderSprite, slider.sliderSprite.Bounds, Color.White);
             spriteBatch.Draw(slider.buttonSprite, slider.buttonSprite.Bounds, Color.White);
         }
