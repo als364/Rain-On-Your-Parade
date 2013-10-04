@@ -72,6 +72,9 @@ _TeamCity*
 # DotCover is a Code Coverage Tool
 *.dotCover
 
+# We really don't need photoshop files in here and I want my locak storage to make sense
+*.psd
+
 # NCrunch
 *.ncrunch*
 .*crunch*.local.xml
