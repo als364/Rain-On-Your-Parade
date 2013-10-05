@@ -42,6 +42,7 @@
     <Compile Include="Controller.cs" />
     <Compile Include="GridSquare.cs" />
     <Compile Include="Model.cs" />
+    <Compile Include="ObjectType.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="SliderController.cs" />
     <Compile Include="GameEngine.cs" />
@@ -50,6 +51,7 @@
     <Compile Include="Slider.cs" />
     <Compile Include="SliderView.cs" />
     <Compile Include="View.cs" />
+    <Compile Include="WorldObject.cs" />
     <Compile Include="WorldState.cs" />
   </ItemGroup>
   <ItemGroup>
