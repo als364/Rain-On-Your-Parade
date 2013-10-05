@@ -35,20 +35,20 @@ namespace Rain_On_Your_Parade
                     else
                     {
                         //Console.WriteLine("MousePosition: " + mouseState.Y);
-                        int newPosition = mouseState.Y;
+                        int newPosition = mouseState.Y - pixelOnButtonClicked;
                         if (newPosition <= 0)
                         {
-                            //slider.buttonPosition = 0;
+                            slider.buttonPosition = 0;
                             Console.WriteLine("<0");
                         }
                         else if (newPosition >= (slider.sliderBounds.Height - slider.buttonBounds.Height))
                         {
-                            //slider.buttonPosition = slider.sliderBounds.Height - slider.buttonBounds.Height;
+                            slider.buttonPosition = slider.sliderBounds.Height - slider.buttonBounds.Height;
                             Console.WriteLine(">600");
                         }
                         else
                         {
-                            //slider.buttonPosition = mouseState.Y;
+                            slider.buttonPosition = newPosition;
                         }
                     }
                 }
