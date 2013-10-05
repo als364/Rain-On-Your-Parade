@@ -11,7 +11,7 @@ namespace Rain_On_Your_Parade
     {
         Slider slider;
         bool pressStarted = false;
-        int oldY = 0;
+        int pixelOnButtonClicked;
 
         public SliderController (Slider slider) : base(slider)
         {
@@ -28,32 +28,37 @@ namespace Rain_On_Your_Parade
                     if (!pressStarted)
                     {
                         pressStarted = true;
-                        oldY = mouseState.Y;
+                        //Console.WriteLine("pressed");
+                        pixelOnButtonClicked = mouseState.Y - slider.buttonBounds.Y;
+                        Console.WriteLine("pixel clicked: " + pixelOnButtonClicked);
                     }
                     else
                     {
-                        int dY = mouseState.Y - oldY;
-                        int newPosition = slider.buttonPosition += dY;
+                        //Console.WriteLine("MousePosition: " + mouseState.Y);
+                        int newPosition = mouseState.Y;
                         if (newPosition <= 0)
                         {
-                            slider.buttonPosition = 0;
+                            //slider.buttonPosition = 0;
                             Console.WriteLine("<0");
                         }
                         else if (newPosition >= (slider.sliderBounds.Height - slider.buttonBounds.Height))
                         {
-                            slider.buttonPosition = slider.sliderBounds.Height - slider.buttonBounds.Height;
+                            //slider.buttonPosition = slider.sliderBounds.Height - slider.buttonBounds.Height;
                             Console.WriteLine(">600");
                         }
                         else
                         {
-                            slider.buttonPosition += dY;
-                            Console.WriteLine("ping");
+                            //slider.buttonPosition = mouseState.Y;
                         }
                     }
                 }
                 else
                 {
-                    pressStarted = false;
+                    if (pressStarted)
+                    {
+                        pressStarted = false;
+                        //Console.WriteLine("released");
+                    }
                 }
             }
 
