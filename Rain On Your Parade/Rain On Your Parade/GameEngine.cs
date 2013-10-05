@@ -19,7 +19,6 @@ namespace Rain_On_Your_Parade
         public const int SCREEN_WIDTH = 800;
         public const int SCREEN_HEIGHT = 600;
 
-        ContentManager content;
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
@@ -53,7 +52,7 @@ namespace Rain_On_Your_Parade
             graphics.ApplyChanges();
 
             //This is where the level building goes. I don't care about an XML parsing framework yet.
-            Slider slider = new Slider();
+            Slider slider = new Slider(SCREEN_WIDTH-50, 0, 50, SCREEN_HEIGHT);
             SliderView sliderView = new SliderView(slider);
             SliderController sliderController = new SliderController(slider);
             models.Add(slider);
@@ -98,7 +97,10 @@ namespace Rain_On_Your_Parade
                 Exit();
 
             // TODO: Add your update logic here
-
+            foreach (Controller controller in controllers)
+            {
+                controller.Update(gameTime);
+            }
             base.Update(gameTime);
         }
 

@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework;
 
 namespace Rain_On_Your_Parade
 {
-    class Controller
+    abstract class Controller
     {
         protected Model controlledModel;
         public Model ControlledModel { get { return controlledModel; } }
@@ -14,5 +15,7 @@ namespace Rain_On_Your_Parade
         {
             controlledModel = model;
         }
+
+        abstract public void Update(GameTime gameTime);
     }
 }

@@ -43,7 +43,6 @@
     <Compile Include="GridSquare.cs" />
     <Compile Include="Model.cs" />
     <Compile Include="Player.cs" />
-    <Compile Include="Point.cs" />
     <Compile Include="SliderController.cs" />
     <Compile Include="GameEngine.cs" />
     <Compile Include="RainOnYourParade.cs" />

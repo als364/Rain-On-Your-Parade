@@ -11,11 +11,25 @@ namespace Rain_On_Your_Parade
     class Slider : Model
     {
         public Texture2D sliderSprite;
+        public Rectangle sliderBounds;
         public Texture2D buttonSprite;
+        public Rectangle buttonBounds;
+
         public string sliderSpriteFilePath = "SliderBackground";
         public string buttonSpriteFilePath = "SliderButton";
+        public int buttonPosition;
+        //public Color buttonColor = Color.Gray;
 
         public Slider() : base(){}
+
+        public Slider(int originX, int originY, int width, int height)
+        {
+            spriteOriginX = originX;
+            spriteOriginY = originY;
+            spriteWidth = width;
+            spriteHeight = height;
+            buttonPosition = height/2;
+        }
 
         public override void LoadContent(ContentManager content)
         {

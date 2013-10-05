@@ -4,7 +4,7 @@ namespace Rain_On_Your_Parade
 {
     public class ActorType
     {
-        enum Type { Kid, Cat, Mom };
+        public enum Type { Kid, Cat, Mom };
 
         private Type typeName;
 
