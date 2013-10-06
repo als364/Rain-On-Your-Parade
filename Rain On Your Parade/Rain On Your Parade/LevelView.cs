@@ -9,7 +9,7 @@ namespace Rain_On_Your_Parade
     class LevelView : View
     {
 
-        public LevelView(Model model)
+        public LevelView(Model model) : base(model)
         {
         }
         public void DrawGrid(SpriteBatch spriteBatch)
