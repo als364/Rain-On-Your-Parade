@@ -31,10 +31,10 @@ namespace Rain_On_Your_Parade
             canvasGrid[1, 1] = new GridSquare(new List<WorldObject>() {new WorldObject(new ObjectType(ObjectType.TypeName.SunnySpot, true, 3,1,0,0))}, new List<Actor>(), true);
             canvasGrid[4, 1] = new GridSquare(new List<WorldObject>() { new WorldObject(new ObjectType(ObjectType.TypeName.Laundry, true, 1, 1, 1, 1)) }, new List<Actor>(), true);
             canvasGrid[1, 8] = new GridSquare(new List<WorldObject>(), new List<Actor>(), false);
-            canvasGrid[1, 9] = new GridSquare(new List<WorldObject>(), new List<Actor>(), false);
+            canvasGrid[9, 1] = new GridSquare(new List<WorldObject>(), new List<Actor>(), false);
             canvasGrid[2, 8] = new GridSquare(new List<WorldObject>(), new List<Actor>(), false);
-            canvasGrid[2, 9] = new GridSquare(new List<WorldObject>(), new List<Actor>(), false);
-            canvasGrid[2, 10] = new GridSquare(new List<WorldObject>() { new WorldObject(new ObjectType(ObjectType.TypeName.Garden, true, 3, 0, 3, 3)) }, new List<Actor>(), true);
+            canvasGrid[9, 2] = new GridSquare(new List<WorldObject>(), new List<Actor>(), false);
+            canvasGrid[10, 2] = new GridSquare(new List<WorldObject>() { new WorldObject(new ObjectType(ObjectType.TypeName.Garden, true, 3, 0, 3, 3)) }, new List<Actor>(), true);
             canvasGrid[2, 3] = new GridSquare(new List<WorldObject>() { new WorldObject(new ObjectType(ObjectType.TypeName.Pool, true, 0, 3, 0, 0)) }, new List<Actor>(), true);
             canvasGrid[3, 2] = new GridSquare(new List<WorldObject>(), new List<Actor>(), false);
             canvasGrid[4, 2] = new GridSquare(new List<WorldObject>(), new List<Actor>(), false);

@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace Rain_On_Your_Parade
 {
@@ -31,6 +32,7 @@ namespace Rain_On_Your_Parade
 
         public override void LoadContent(ContentManager content)
         {
+            sprite = content.Load<Texture2D>("SliderButton");
         }
 
         #region Getters and Setters
