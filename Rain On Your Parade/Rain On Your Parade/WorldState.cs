@@ -12,6 +12,7 @@ namespace Rain_On_Your_Parade
         private GridSquare[,] stateOfWorld;  //state array of each space in level
         public int worldWidth;
         public int worldHeight;
+        private Player player;
 
         
         #region Getters and Setters
@@ -39,6 +40,19 @@ namespace Rain_On_Your_Parade
             set
             {
                 maliceObjective = value;
+            }
+        }
+
+        public Player Player
+        {
+            get
+            {
+                return player;
+            }
+
+            set
+            {
+                player = value;
             }
         }
 
@@ -75,6 +89,37 @@ namespace Rain_On_Your_Parade
             worldHeight = stateOfWorld.GetLength(1);
         }
 
+        public List<Actor> getActors()
+        {
+            List<Actor> allActors = new List<Actor>();
+
+            for (int x = 0; x < worldWidth; x++)
+            {
+                for (int y = 0; y < worldHeight; y++)
+                {
+                    GridSquare currentSquare = stateOfWorld[x, y];
+                    allActors.AddRange(currentSquare.Actors);
+                }
+            }
+
+            return allActors;
+        }
+
+        public List<WorldObject> getObjects()
+        {
+            List<WorldObject> allObjects = new List<WorldObject>();
+
+            for (int x = 0; x < worldWidth; x++)
+            {
+                for (int y = 0; y < worldHeight; y++)
+                {
+                    GridSquare currentSquare = stateOfWorld[x, y];
+                    allObjects.AddRange(currentSquare.Objects);
+                }
+            }
+
+            return allObjects;
+        }
 
         /// <summary>Public stuff about the method</summary>
         /// <param name="foo">It's an integer apparently</param>

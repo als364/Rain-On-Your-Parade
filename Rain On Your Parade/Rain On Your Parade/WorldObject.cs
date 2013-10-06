@@ -2,7 +2,7 @@
 
 namespace Rain_On_Your_Parade
 {
-    public class WorldObject
+    public class WorldObject : Model
     {
         private ObjectType type;
         private bool activated;

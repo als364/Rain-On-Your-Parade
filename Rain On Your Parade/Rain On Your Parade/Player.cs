@@ -6,9 +6,8 @@ using Microsoft.Xna.Framework;
 
 namespace Rain_On_Your_Parade
 {
-    class Player
+    class Player : Model
     {
-        private Point pos;      //position of player (x, y)
         private double v;       //velocity of player
         private int rain;       //amount of rain held by player
 

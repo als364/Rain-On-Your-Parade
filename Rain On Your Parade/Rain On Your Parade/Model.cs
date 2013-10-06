@@ -11,7 +11,7 @@ namespace Rain_On_Your_Parade
     abstract public class Model
     {
         public int spriteWidth, spriteHeight;
-        public int spriteOriginX, spriteOriginY;
+        public Point pos;
         public string spriteFilePath = "Content/default";
         public Texture2D sprite;
 

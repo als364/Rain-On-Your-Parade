@@ -58,6 +58,18 @@ namespace Rain_On_Your_Parade
             Slider slider = new Slider(SCREEN_WIDTH-50, 0, 50, SCREEN_HEIGHT-50);
             SliderView sliderView = new SliderView(slider);
             SliderController sliderController = new SliderController(slider);
+
+            int quota = 100;
+            worldState = new WorldState(quota,new GridSquare[3,3]);
+
+            foreach (Actor a in worldState.getActors()){
+                View actors = new View(a);
+            }
+            foreach (WorldObject o in worldState.getObjects()){
+                View actors = new View(o);
+            }
+            View player = new View(worldState.Player);
+
             models.Add(slider);
             views.Add(sliderView);
             controllers.Add(sliderController);

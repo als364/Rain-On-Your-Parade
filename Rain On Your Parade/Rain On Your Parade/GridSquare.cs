@@ -9,7 +9,7 @@ namespace Rain_On_Your_Parade
 {
     class GridSquare
     {
-        private List<Model> objects;               // list of objects on GridSquare
+        private List<WorldObject> objects;               // list of objects on GridSquare
         private List<Actor> actors;                // list of actors on GridSquare
         public  List<GridSquare> adjacent;               // list of adjacent GridSquares
 	    private bool isPassable;                 // can actors enter/see past GridSquare
@@ -21,7 +21,7 @@ namespace Rain_On_Your_Parade
 
         #region Getters and Setters
 
-        public List<Model> Objects
+        public List<WorldObject> Objects
         {
             get
             {
