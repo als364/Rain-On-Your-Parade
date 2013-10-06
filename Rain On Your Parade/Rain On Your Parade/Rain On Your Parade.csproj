@@ -39,6 +39,7 @@
     <Compile Include="ActorController.cs" />
     <Compile Include="ActorState.cs" />
     <Compile Include="ActorType.cs" />
+    <Compile Include="Canvas.cs" />
     <Compile Include="Controller.cs" />
     <Compile Include="GridSquare.cs" />
     <Compile Include="Model.cs" />
@@ -72,13 +73,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="..\..\..\..\..\..\Program Files (x86)\MonoGame\v3.0\Assemblies\WindowsGL\SDL.dll">
-      <Link>SDL.dll</Link>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="Icon.ico" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="Content\player.xnb" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="Content\default.xnb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

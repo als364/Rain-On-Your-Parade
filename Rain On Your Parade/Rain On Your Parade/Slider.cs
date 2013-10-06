@@ -24,8 +24,8 @@ namespace Rain_On_Your_Parade
 
         public Slider(int originX, int originY, int width, int height)
         {
-            spriteOriginX = originX;
-            spriteOriginY = originY;
+            pos.X = originX;
+            pos.Y = originY;
             spriteWidth = width;
             spriteHeight = height;
             buttonPosition = height/2;

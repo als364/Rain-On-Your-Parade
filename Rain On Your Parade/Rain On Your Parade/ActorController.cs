@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
+using Microsoft.VisualBasic;
 
 namespace Rain_On_Your_Parade
 {
@@ -127,7 +128,7 @@ namespace Rain_On_Your_Parade
                            (target.TotalPlay * controlledActor.PlayLevel) + 
                            (target.TotalRampage * controlledActor.Mood) + 
                            (target.TotalSleep * controlledActor.SleepLevel);
-            desirability /= Utils.EuclideanDistance(currentLocation, target.Location);
+           // desirability /= Utils.EuclideanDistance(currentLocation, target.Location);
             return desirability;
         }
 

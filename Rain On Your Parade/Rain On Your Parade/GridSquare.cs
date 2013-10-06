@@ -9,9 +9,10 @@ namespace Rain_On_Your_Parade
 {
     class GridSquare
     {
-        private List<Model> objects;               // list of objects on GridSquare
-        private List<Actor> actors;                // list of actors on GridSquare
-        public  List<GridSquare> adjacent;               // list of adjacent GridSquares
+
+        private List<WorldObject> objects;             // list of objects on GridSquare
+        private List<Actor> actors;              // list of actors on GridSquare
+        public  List<GridSquare> adjacent;       // list of adjacent GridSquares
 	    private bool isPassable;                 // can actors enter/see past GridSquare
 	    private int totalSleep;                  // total sleep attr on GridSquare
 	    private int totalPlay;                   // total play attr on GridSquare
@@ -21,7 +22,7 @@ namespace Rain_On_Your_Parade
 
         #region Getters and Setters
 
-        public List<Model> Objects
+        public List<WorldObject> Objects
         {
             get
             {
@@ -143,25 +144,33 @@ namespace Rain_On_Your_Parade
         /// <param name="o">ArrayList of objects on GridSquare</param>
         /// <param name="a">ArrayList of actors on GridSquare</param>
         /// <param name="is_p">Ability of actors to enter/see past GridSquare</param>
-        /// <param name="s">Total amount of sleep on GridSquare</param>
-        /// <param name="p">Total amount of play on GridSquare</param>
-        /// <param name="n">Total amount of nurture on GridSquare</param>
-        /// <param name="r">Total amount of rampage on GridSquare</param>
         /// <devdoc>
         /// Create a GridSquare containing all objects and actors
         /// from the objectlist and actorlist, it's ability to be passed
         /// by actors, and the total amount of sleep, play, nurture, and rampage
         /// attributes present on the GridSquare.
         /// </devdoc>
-        public GridSquare(List<Model> o, List<Actor> a, bool is_p, int s, int p, int n, int r)
+        public GridSquare(List<WorldObject> o, List<Actor> a, bool is_p)
         {
             objects = o;
             actors = a;
             isPassable = is_p;
-            totalSleep = s;
-            totalPlay = p;
-            totalNurture = n;
-            totalRampage = r;
+
+            foreach(WorldObject obj in o) 
+            {
+                totalSleep += obj.type.getSleepLevel();
+                totalPlay += obj.type.getPlayLevel();
+                totalNurture += obj.type.getNurtureLevel();
+                totalRampage += obj.type.getRampageLevel();
+            }
+
+            foreach(Actor act in a)
+            {
+                totalSleep += act.SleepLevel;
+                totalPlay += act.PlayLevel;
+                totalNurture += act.NurtureLevel;
+                totalRampage += act.RampageLevel;
+            }
         }
 
 

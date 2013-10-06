@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Storage;
 using Microsoft.Xna.Framework.GamerServices;
+using System.Diagnostics;
 #endregion
 
 namespace Rain_On_Your_Parade
@@ -16,8 +17,9 @@ namespace Rain_On_Your_Parade
     /// </summary>
     public class GameEngine : Game
     {
-        public const int SCREEN_WIDTH = 800;
-        public const int SCREEN_HEIGHT = 600;
+        public const int SCREEN_WIDTH = 880;
+        public const int SCREEN_HEIGHT = 720;
+        
 
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
@@ -55,12 +57,33 @@ namespace Rain_On_Your_Parade
             graphics.ApplyChanges();
 
             //This is where the level building goes. I don't care about an XML parsing framework yet.
-            Slider slider = new Slider(SCREEN_WIDTH-50, 0, 50, SCREEN_HEIGHT-50);
-            SliderView sliderView = new SliderView(slider);
-            SliderController sliderController = new SliderController(slider);
-            models.Add(slider);
-            views.Add(sliderView);
-            controllers.Add(sliderController);
+            //Slider slider = new Slider(SCREEN_WIDTH-50, 0, 50, SCREEN_HEIGHT-50);
+            //SliderView sliderView = new SliderView(slider);
+            //SliderController sliderController = new SliderController(slider);
+
+            Canvas level = new Canvas();
+
+
+            int quota = 100;
+            worldState = new WorldState(quota,level.canvasGrid);
+
+            foreach (Actor a in worldState.getActors()){
+                View actors = new View(a);
+                models.Add(a);
+               // Debug.WriteLine("Sprite:" + slider.sprite);
+                views.Add(actors);
+            }
+            foreach (WorldObject o in worldState.getObjects()){
+                View objects= new View(o);
+                models.Add(o);
+               // views.Add(objects);
+            }
+            View player = new View(worldState.Player);
+            //views.Add(player);
+
+          // models.Add(slider);
+          //  views.Add(sliderView);
+            //controllers.Add(sliderController);
 
             base.Initialize();
         }

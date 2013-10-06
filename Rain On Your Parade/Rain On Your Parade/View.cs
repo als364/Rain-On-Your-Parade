@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System.Diagnostics;
 
 namespace Rain_On_Your_Parade
 {
@@ -20,7 +21,9 @@ namespace Rain_On_Your_Parade
         public virtual void Draw(SpriteBatch spriteBatch)
         {
             Texture2D image = viewedModel.sprite;
-            spriteBatch.Draw(image, new Rectangle(viewedModel.spriteOriginX, viewedModel.spriteOriginY, viewedModel.spriteWidth, viewedModel.spriteHeight), Color.White);
+            Debug.WriteLine("Sprite:" + image);
+            Debug.WriteLine("Y:"+viewedModel.pos.Y);
+            spriteBatch.Draw(image, new Rectangle(viewedModel.pos.X, viewedModel.pos.Y, viewedModel.spriteWidth, viewedModel.spriteHeight), Color.Azure);
         }
     }
 }

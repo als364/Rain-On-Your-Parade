@@ -15,6 +15,7 @@ namespace Rain_On_Your_Parade
         private int baseSleepLevel;
         private int basePlayLevel;
         private int baseNurtureLevel;
+        private int baseRampageLevel;
 
         public const int SLEEP_THRESHOLD = 3;
         public const int PLAY_THRESHOLD = 3;
@@ -22,7 +23,7 @@ namespace Rain_On_Your_Parade
         public const int RAMPAGE_THRESHOLD = 3;
 
         public ActorType(Type aTypeName, int aSleepNeed, int aPlayNeed, int aNurtureNeed,
-            int aBaseSleepLevel, int aBasePlayLevel, int aBaseNurtureLevel)
+            int aBaseSleepLevel, int aBasePlayLevel, int aBaseNurtureLevel, int aBaseRampageLevel)
         {
             typeName = aTypeName;
             sleepNeed = aSleepNeed;
@@ -31,6 +32,7 @@ namespace Rain_On_Your_Parade
             baseSleepLevel = aBaseSleepLevel;
             basePlayLevel = aBasePlayLevel;
             baseNurtureLevel = aBaseNurtureLevel;
+            baseRampageLevel = aBaseRampageLevel;
         }
 
         #region Getters and Setters
@@ -68,6 +70,11 @@ namespace Rain_On_Your_Parade
         {
             get { return baseNurtureLevel; }
             set { baseNurtureLevel = value; }
+        }
+        public int BaseRampageLevel
+        {
+            get { return baseRampageLevel; }
+            set { baseRampageLevel = value; }
         }
         #endregion
     }
