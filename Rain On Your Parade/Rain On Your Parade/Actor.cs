@@ -81,17 +81,15 @@ namespace Rain_On_Your_Parade
             get { return nurtureLevel; }
             set { nurtureLevel = value; }
         }
-<<<<<<< HEAD
         public List<GridSquare> Path
         {
             get { return path; }
             set { path = value; }
-=======
+        }
         public int RampageLevel
         {
             get { return rampageLevel; }
             set { rampageLevel = value; }
->>>>>>> f6dba559f98e973b1d4a80f98a444efdc1be35ef
         }
         #endregion
 
