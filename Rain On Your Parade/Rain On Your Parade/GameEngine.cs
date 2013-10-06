@@ -69,17 +69,20 @@ namespace Rain_On_Your_Parade
 
             foreach (Actor a in worldState.getActors()){
                 View actors = new View(a);
+                models.Add(a);
+               // Debug.WriteLine("Sprite:" + slider.sprite);
                 views.Add(actors);
             }
             foreach (WorldObject o in worldState.getObjects()){
                 View objects= new View(o);
+                models.Add(o);
                // views.Add(objects);
             }
             View player = new View(worldState.Player);
             //views.Add(player);
 
-           // models.Add(slider);
-            //views.Add(sliderView);
+          // models.Add(slider);
+          //  views.Add(sliderView);
             //controllers.Add(sliderController);
 
             base.Initialize();

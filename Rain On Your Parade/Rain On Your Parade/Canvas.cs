@@ -27,7 +27,7 @@ namespace Rain_On_Your_Parade
                 }
             }
 
-            canvasGrid[0, 6] = new GridSquare(new List<WorldObject>(), new List<Actor>() {new Actor(new ActorType(ActorType.Type.Cat, 0,0,0,0,0,0,0), new Point(0,6), 0, new ActorState(ActorState.AState.Sleep)) }, true);
+            canvasGrid[0, 6] = new GridSquare(new List<WorldObject>(), new List<Actor>() {new Actor(new ActorType(ActorType.Type.Cat, 0,0,0,0,0,0,0), new Point(0,6*80), 0, new ActorState(ActorState.AState.Sleep)) }, true);
             canvasGrid[1, 1] = new GridSquare(new List<WorldObject>() {new WorldObject(new ObjectType(ObjectType.TypeName.SunnySpot, true, 3,1,0,0))}, new List<Actor>(), true);
             canvasGrid[4, 1] = new GridSquare(new List<WorldObject>() { new WorldObject(new ObjectType(ObjectType.TypeName.Laundry, true, 1, 1, 1, 1)) }, new List<Actor>(), true);
             canvasGrid[1, 8] = new GridSquare(new List<WorldObject>(), new List<Actor>(), false);
@@ -56,14 +56,14 @@ namespace Rain_On_Your_Parade
             canvasGrid[2, 6] = new GridSquare(new List<WorldObject>(), new List<Actor>(), false);
             canvasGrid[3, 6] = new GridSquare(new List<WorldObject>(), new List<Actor>(), false);
             canvasGrid[4, 6] = new GridSquare(new List<WorldObject>(), new List<Actor>(), false);
-            canvasGrid[6, 6] = new GridSquare(new List<WorldObject>(), new List<Actor>() { new Actor(new ActorType(ActorType.Type.Mom, 0, 0, 0, 0, 0, 0, 0), new Point(0, 6), 0, new ActorState(ActorState.AState.Nurture)) }, true);
+            canvasGrid[6, 6] = new GridSquare(new List<WorldObject>(), new List<Actor>() { new Actor(new ActorType(ActorType.Type.Mom, 0, 0, 0, 0, 0, 0, 0), new Point(6*80, 6*80), 0, new ActorState(ActorState.AState.Nurture)) }, true);
             canvasGrid[8, 5] = new GridSquare(new List<WorldObject>(), new List<Actor>(), false);
             canvasGrid[9, 5] = new GridSquare(new List<WorldObject>(), new List<Actor>(), false);
             canvasGrid[8, 6] = new GridSquare(new List<WorldObject>(), new List<Actor>(), false);
             canvasGrid[9, 6] = new GridSquare(new List<WorldObject>(), new List<Actor>(), false);
             canvasGrid[5, 7] = new GridSquare(new List<WorldObject>() { new WorldObject(new ObjectType(ObjectType.TypeName.SunnySpot, true, 3, 1, 0, 0)) }, new List<Actor>(), true);
             canvasGrid[9, 7] = new GridSquare(new List<WorldObject>() { new WorldObject(new ObjectType(ObjectType.TypeName.Garden, true, 3, 0, 3, 3)) }, new List<Actor>(), true);
-            canvasGrid[1, 8] = new GridSquare(new List<WorldObject>(), new List<Actor>() { new Actor(new ActorType(ActorType.Type.Kid, 0, 0, 0, 0, 0, 0, 0), new Point(0, 6), 0, new ActorState(ActorState.AState.Play)) }, true);
+            canvasGrid[1, 8] = new GridSquare(new List<WorldObject>(), new List<Actor>() { new Actor(new ActorType(ActorType.Type.Kid, 0, 0, 0, 0, 0, 0, 0), new Point(1*80, 8*80), 0, new ActorState(ActorState.AState.Play)) }, true);
 
 
         }

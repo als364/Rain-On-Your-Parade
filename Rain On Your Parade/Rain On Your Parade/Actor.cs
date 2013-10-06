@@ -8,7 +8,6 @@ namespace Rain_On_Your_Parade
     public class Actor : Model
     {
         private ActorType type;
-        private Point position;
         private float velocity = 0;
 
         private int mood;
@@ -21,7 +20,7 @@ namespace Rain_On_Your_Parade
         public Actor(ActorType aType, Point initPos, int initMood, ActorState initState)
         {
             type = aType;
-            position = initPos;
+            pos = initPos;
             mood = initMood;
             state = initState;
             sleepLevel = aType.BaseSleepLevel;
@@ -33,6 +32,8 @@ namespace Rain_On_Your_Parade
         public override void LoadContent(ContentManager content)
         {
             sprite = content.Load<Texture2D>("SliderButton");
+            spriteWidth = sprite.Width;
+            spriteHeight = sprite.Height;
         }
 
         #region Getters and Setters
@@ -43,8 +44,8 @@ namespace Rain_On_Your_Parade
         }
         public Point Position
         {
-            get { return position; }
-            set { position = value; }
+            get { return pos; }
+            set { pos = value; }
         }
         public float Velocity
         {
