@@ -139,7 +139,7 @@ namespace Rain_On_Your_Parade
         /// by actors, and the total amount of sleep, play, nurture, and rampage
         /// attributes present on the GridSquare.
         /// </devdoc>
-        public GridSquare(ArrayList o, ArrayList a, bool is_p, int s, int p, int n, int r)
+        public GridSquare(List<Model> o, List<Actor> a, bool is_p, int s, int p, int n, int r)
         {
             objects = o;
             actors = a;
