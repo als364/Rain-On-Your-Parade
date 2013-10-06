@@ -74,7 +74,9 @@
   <ItemGroup>
     <Content Include="Icon.ico" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="Content\player.xnb" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="Content\default.xnb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
