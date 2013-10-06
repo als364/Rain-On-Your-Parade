@@ -10,8 +10,8 @@ namespace Rain_On_Your_Parade
         private int malice;                 //total malice generated
         private int maliceObjective;        //amount of malice needed to win level
         private GridSquare[,] stateOfWorld;  //state array of each space in level
-        public int worldWidth;
-        public int worldHeight;
+        public int worldWidth;              //# gridsquares wide
+        public int worldHeight;             //# gridsquares tall
 
         
         #region Getters and Setters

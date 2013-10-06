@@ -39,6 +39,7 @@
     <Compile Include="ActorController.cs" />
     <Compile Include="ActorState.cs" />
     <Compile Include="ActorType.cs" />
+    <Compile Include="Canvas.cs" />
     <Compile Include="Controller.cs" />
     <Compile Include="GridSquare.cs" />
     <Compile Include="Model.cs" />

@@ -12,6 +12,7 @@ namespace Rain_On_Your_Parade
         private double v;       //velocity of player
         private int rain;       //amount of rain held by player
 
+        private const int MAX_RAIN = 6;
 
         #region Getters and Setters
 
@@ -64,9 +65,9 @@ namespace Rain_On_Your_Parade
         /// </devdoc>
         public Player()
         {
-            pos = new Point(250,250);   //TODO:change to be relative to screensize
+            pos = new Point(GameEngine.SCREEN_WIDTH/2,GameEngine.SCREEN_HEIGHT/2);
             v = 0.0;
-            rain = 6;                   //TODO:change this to a constant MAX_RAIN
+            rain = MAX_RAIN;
         }
 
 
