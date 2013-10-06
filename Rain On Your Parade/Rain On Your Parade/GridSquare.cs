@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Collections;
+using Microsoft.Xna.Framework;
 
 namespace Rain_On_Your_Parade
 {
@@ -16,10 +17,11 @@ namespace Rain_On_Your_Parade
 	    private int totalPlay;                   // total play attr on GridSquare
 	    private int totalNurture;                // total nurture attr on GridSquare
 	    private int totalRampage;                // total rampage attr on GridSquare
+        private Point location;
 
         #region Getters and Setters
 
-        private List<Model> Objects
+        public List<Model> Objects
         {
             get
             {
@@ -32,7 +34,7 @@ namespace Rain_On_Your_Parade
             }
         }
 
-        private List<Actor> Actors
+        public List<Actor> Actors
         {
             get
             {
@@ -45,7 +47,7 @@ namespace Rain_On_Your_Parade
             }
         }
 
-        private List<GridSquare> Adjacent
+        public List<GridSquare> Adjacent
         {
             get
             {
@@ -57,7 +59,7 @@ namespace Rain_On_Your_Parade
             }
         }
 
-        private bool IsPassable
+        public bool IsPassable
         {
             get
             {
@@ -70,7 +72,7 @@ namespace Rain_On_Your_Parade
             }
         }
 
-        private int TotalSleep
+        public int TotalSleep
         {
             get
             {
@@ -83,7 +85,7 @@ namespace Rain_On_Your_Parade
             }
         }
 
-        private int TotalPlay
+        public int TotalPlay
         {
             get
             {
@@ -96,7 +98,7 @@ namespace Rain_On_Your_Parade
             }
         }
 
-        private int TotalNurture
+        public int TotalNurture
         {
             get
             {
@@ -109,7 +111,7 @@ namespace Rain_On_Your_Parade
             }
         }
 
-        private int TotalRampage
+        public int TotalRampage
         {
             get
             {
@@ -119,6 +121,18 @@ namespace Rain_On_Your_Parade
             set
             {
                 totalRampage = value;
+            }
+        }
+
+        public Point Location
+        {
+            get
+            {
+                return location;
+            }
+            set
+            {
+                location = value;
             }
         }
 
