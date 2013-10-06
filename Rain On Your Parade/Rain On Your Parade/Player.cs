@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 
 namespace Rain_On_Your_Parade
 {
@@ -69,6 +70,10 @@ namespace Rain_On_Your_Parade
             rain = MAX_RAIN;
         }
 
+        public override void LoadContent(ContentManager content)
+        {
+
+        }
 
         /// <summary>Public stuff about the method</summary>
         /// <param name="foo">It's an integer apparently</param>

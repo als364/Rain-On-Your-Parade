@@ -9,15 +9,10 @@ namespace Rain_On_Your_Parade
 {
     class GridSquare
     {
-<<<<<<< HEAD
-        private List<WorldObject> objects;               // list of objects on GridSquare
-        private List<Actor> actors;                // list of actors on GridSquare
-        public  List<GridSquare> adjacent;               // list of adjacent GridSquares
-=======
+
         private List<WorldObject> objects;             // list of objects on GridSquare
         private List<Actor> actors;              // list of actors on GridSquare
         public  List<GridSquare> adjacent;       // list of adjacent GridSquares
->>>>>>> d283350f0fc45ba4b757a233fc0f24c61c33ad14
 	    private bool isPassable;                 // can actors enter/see past GridSquare
 	    private int totalSleep;                  // total sleep attr on GridSquare
 	    private int totalPlay;                   // total play attr on GridSquare
