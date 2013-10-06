@@ -20,7 +20,7 @@ namespace Rain_On_Your_Parade
         public virtual void Draw(SpriteBatch spriteBatch)
         {
             Texture2D image = viewedModel.sprite;
-            spriteBatch.Draw(image, new Rectangle(viewedModel.spriteOriginX, viewedModel.spriteOriginY, viewedModel.spriteWidth, viewedModel.spriteHeight), Color.White);
+            spriteBatch.Draw(image, new Rectangle(viewedModel.pos.X, viewedModel.pos.Y, viewedModel.spriteWidth, viewedModel.spriteHeight), Color.White);
         }
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework.Content;
 
 namespace Rain_On_Your_Parade
 {
@@ -10,6 +11,7 @@ namespace Rain_On_Your_Parade
         private int malice;                 //total malice generated
         private int maliceObjective;        //amount of malice needed to win level
         private GridSquare[,] stateOfWorld;  //state array of each space in level
+        private Player player;
         public int worldWidth;              //# gridsquares wide
         public int worldHeight;             //# gridsquares tall
 
@@ -39,6 +41,19 @@ namespace Rain_On_Your_Parade
             set
             {
                 maliceObjective = value;
+            }
+        }
+
+        public Player Player
+        {
+            get
+            {
+                return player;
+            }
+
+            set
+            {
+                player = value;
             }
         }
 
@@ -75,6 +90,37 @@ namespace Rain_On_Your_Parade
             worldHeight = stateOfWorld.GetLength(1);
         }
 
+        public List<Actor> getActors()
+        {
+            List<Actor> allActors = new List<Actor>();
+
+            for (int x = 0; x < worldWidth; x++)
+            {
+                for (int y = 0; y < worldHeight; y++)
+                {
+                    GridSquare currentSquare = stateOfWorld[x, y];
+                    allActors.AddRange(currentSquare.Actors);
+                }
+            }
+
+            return allActors;
+        }
+
+        public List<WorldObject> getObjects()
+        {
+            List<WorldObject> allObjects = new List<WorldObject>();
+
+            for (int x = 0; x < worldWidth; x++)
+            {
+                for (int y = 0; y < worldHeight; y++)
+                {
+                    GridSquare currentSquare = stateOfWorld[x, y];
+                    allObjects.AddRange(currentSquare.Objects);
+                }
+            }
+
+            return allObjects;
+        }
 
         /// <summary>Public stuff about the method</summary>
         /// <param name="foo">It's an integer apparently</param>

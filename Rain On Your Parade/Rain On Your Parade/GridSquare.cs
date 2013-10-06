@@ -9,6 +9,7 @@ namespace Rain_On_Your_Parade
 {
     class GridSquare
     {
+
         private List<WorldObject> objects;             // list of objects on GridSquare
         private List<Actor> actors;              // list of actors on GridSquare
         public  List<GridSquare> adjacent;       // list of adjacent GridSquares

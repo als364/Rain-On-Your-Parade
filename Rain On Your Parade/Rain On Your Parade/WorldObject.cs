@@ -1,4 +1,5 @@
 ﻿using System;
+using Microsoft.Xna.Framework.Content;
 
 namespace Rain_On_Your_Parade
 {
@@ -11,6 +12,10 @@ namespace Rain_On_Your_Parade
         {
             type = oType;
             activated = oType.getStartsActivated();
+        }
+
+        public override void LoadContent(ContentManager content)
+        {
         }
 
         public bool getActivated()
