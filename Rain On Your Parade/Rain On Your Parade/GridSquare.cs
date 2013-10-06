@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework;
 
 namespace Rain_On_Your_Parade
 {
-    class GridSquare
+    public class GridSquare
     {
 
         private List<WorldObject> objects;             // list of objects on GridSquare

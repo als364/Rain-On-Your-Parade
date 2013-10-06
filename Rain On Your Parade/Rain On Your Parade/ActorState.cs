@@ -4,23 +4,18 @@ namespace Rain_On_Your_Parade
 {
     public class ActorState
     {
-
-        public enum AState { Sleep, Play, Nurture, Rampage };
+        public enum AState { Sleep, Play, Nurture, Rampage, Seek };
         private AState state;
 
-        public ActorState(AState conState)
+        public ActorState(AState aState)
         {
-            state = conState;
+            state = aState;
         }
 
-        public AState getActorState()
+        public AState State
         {
-            return state;
-        }
-
-        public void setActorState(AState newState)
-        {
-            state = newState;
+            get { return state; }
+            set { state = value; }
         }
     }
 }

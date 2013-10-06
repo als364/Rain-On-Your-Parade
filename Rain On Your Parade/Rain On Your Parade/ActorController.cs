@@ -18,8 +18,83 @@ namespace Rain_On_Your_Parade
 
         public override void Update(GameTime gameTime, WorldState worldState)
         {
-            List<GridSquare> targets = PreferenceSearch(controlledActor.Type, worldState);
-            List<GridSquare> path = FindPath(targets, worldState.StateOfWorld[controlledActor.Position.X, controlledActor.Position.Y], worldState.StateOfWorld, new Point[worldState.worldWidth,worldState.worldHeight]);
+            switch (controlledActor.State.State)
+            {
+                /*case ActorState.ActorState.Nurture:
+                    break;
+                case ActorState.ActorState.Play:
+                    break;
+                case ActorState.ActorState.Rampage:
+                    break;*/
+                case ActorState.AState.Seek:
+                    ActorState.AState newState = DetermineTargetState();
+                    break;
+                /*case ActorState.ActorState.Sleep:
+                    break;*/
+                default:
+                    if (controlledActor.Path.Count == 0)
+                    {
+                        controlledActor.Path = FindPath(PreferenceSearch(controlledActor.Type, worldState), 
+                                                                         worldState.StateOfWorld[controlledActor.Position.X, controlledActor.Position.Y],
+                                                                         worldState.StateOfWorld, new Point[worldState.worldWidth, worldState.worldHeight]);
+                    }
+                    else
+                    {
+                        GridSquare nextSquare = controlledActor.Path[0];
+                        controlledActor.Path.RemoveAt(0);
+                    }
+                    break;
+            }
+        }
+
+        private ActorState.AState DetermineTargetState()
+        {
+            ActorState.AState currentState = controlledActor.State.State;
+            int maxLevel = 0;
+            List<ActorState.AState> highestNeeds = new List<ActorState.AState>();
+            if (controlledActor.Mood > maxLevel)
+            {
+                maxLevel = controlledActor.Mood;
+                highestNeeds.Clear();
+                highestNeeds.Add(ActorState.AState.Rampage);
+            }
+            else if (controlledActor.Mood == maxLevel)
+            {
+                highestNeeds.Add(ActorState.AState.Rampage);
+            }
+            if (controlledActor.NurtureLevel > maxLevel)
+            {
+                maxLevel = controlledActor.NurtureLevel;
+                highestNeeds.Clear();
+                highestNeeds.Add(ActorState.AState.Nurture);
+            }
+            else if (controlledActor.NurtureLevel == maxLevel)
+            {
+                highestNeeds.Add(ActorState.AState.Nurture);
+            }
+            if (controlledActor.PlayLevel > maxLevel)
+            {
+                maxLevel = controlledActor.PlayLevel;
+                highestNeeds.Clear();
+                highestNeeds.Add(ActorState.AState.Play);
+            }
+            else if (controlledActor.PlayLevel == maxLevel)
+            {
+                highestNeeds.Add(ActorState.AState.Play);
+            }
+            if (controlledActor.SleepLevel > maxLevel)
+            {
+                maxLevel = controlledActor.SleepLevel;
+                highestNeeds.Clear();
+                highestNeeds.Add(ActorState.AState.Sleep);
+            }
+            else if (controlledActor.SleepLevel == maxLevel)
+            {
+                highestNeeds.Add(ActorState.AState.Sleep);
+            }
+            Random random = new Random();
+            int index = random.Next(highestNeeds.Count);
+            return highestNeeds[index];
         }
 
         private List<GridSquare> PreferenceSearch(ActorType actorType, WorldState worldState)
