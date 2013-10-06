@@ -18,7 +18,7 @@ namespace Rain_On_Your_Parade
             this.slider = slider;
         }
 
-        public override void Update(GameTime gameTime)
+        public override void Update(GameTime gameTime, WorldState worldState)
         {
             MouseState mouseState = Mouse.GetState();
             if (slider.buttonBounds.Contains(new Point(mouseState.X, mouseState.Y)))

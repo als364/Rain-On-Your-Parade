@@ -33,41 +33,42 @@ namespace Rain_On_Your_Parade
             baseNurtureLevel = aBaseNurtureLevel;
         }
 
-        public Type getType()
+        #region Getters and Setters
+        public Type TypeName
         {
-            return typeName;
+            get { return typeName; }
+            set { typeName = value; }
         }
-
-        public int getSleepNeed()
+        public int SleepNeed
         {
-            return sleepNeed;
+            get { return sleepNeed; }
+            set { sleepNeed = value; }
         }
-
-        public int getPlayNeed()
+        public int PlayNeed
         {
-            return playNeed;
+            get { return playNeed; }
+            set { playNeed = value; }
         }
-
-        public int getNurtureNeed()
+        public int NurtureNeed
         {
-            return nurtureNeed;
+            get { return nurtureNeed; }
+            set { nurtureNeed = value; }
         }
-
-        public int getBaseSleepLevel()
+        public int BaseSleepLevel
         {
-            return baseSleepLevel;
+            get { return baseSleepLevel; }
+            set { baseSleepLevel = value; }
         }
-
-        public int getBasePlayLevel()
+        public int BasePlayLevel
         {
-            return basePlayLevel;
+            get { return basePlayLevel; }
+            set { basePlayLevel = value; }
         }
-
-        public int getBaseNurtureLevel()
+        public int BaseNurtureLevel
         {
-            return baseNurtureLevel;
+            get { return baseNurtureLevel; }
+            set { baseNurtureLevel = value; }
         }
-
-
+        #endregion
     }
 }
