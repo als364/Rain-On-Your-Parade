@@ -9,7 +9,9 @@ namespace Rain_On_Your_Parade
     {
         private int malice;                 //total malice generated
         private int maliceObjective;        //amount of malice needed to win level
-        private GridSquare[] stateOfWorld;  //state array of each space in level
+        private GridSquare[][] stateOfWorld;  //state array of each space in level
+        public int worldWidth;
+        public int worldHeight;
 
         
         #region Getters and Setters
@@ -40,7 +42,7 @@ namespace Rain_On_Your_Parade
             }
         }
 
-        private GridSquare[] StateOfWorld
+        private GridSquare[][] StateOfWorld
         {
             get
             {
@@ -64,11 +66,13 @@ namespace Rain_On_Your_Parade
         /// amount of malice generated to 0 and set the maliceObjective
         /// to the specified quota.
         /// </devdoc>
-        public WorldState(int quota, GridSquare[] levelmap)
+        public WorldState(int quota, GridSquare[][] levelmap)
         {
             malice = 0;
             maliceObjective = quota;
             stateOfWorld = levelmap;
+            worldWidth = stateOfWorld.GetLength(0);
+            worldHeight = stateOfWorld.GetLength(1);
         }
 
 
@@ -78,6 +82,81 @@ namespace Rain_On_Your_Parade
         public void doSomethingWorldState(int foo) 
         {
             //do stuff here
+        }
+
+        /// <summary>Initialize adjacency lists in level map for ease of search</summary>
+        /// <devdoc>
+        /// Sets up adjacency lists for the entire levelmap. This will use pointers if at all possible later, but for now, I have an i7.
+        /// </devdoc>
+        private void initializeAdjacencyLists()
+        {
+            for (int x = 0; x < worldWidth; x++)
+            {
+                for (int y = 0; y < worldHeight; y++)
+                {
+                    GridSquare currentSquare = stateOfWorld[x][y];
+                    if (x == 0)
+                    {
+                        if (y == 0) //top left
+                        {
+                            currentSquare.adjacent.Add(stateOfWorld[x + 1][y]);
+                            currentSquare.adjacent.Add(stateOfWorld[x][y + 1]);
+                        }
+                        else if (y == worldHeight - 1) //bottom left
+                        {
+                            currentSquare.adjacent.Add(stateOfWorld[x + 1][y]);
+                            currentSquare.adjacent.Add(stateOfWorld[x][y - 1]);
+                        }
+                        else //left edge
+                        {
+                            currentSquare.adjacent.Add(stateOfWorld[x + 1][y]);
+                            currentSquare.adjacent.Add(stateOfWorld[x][y + 1]);
+                            currentSquare.adjacent.Add(stateOfWorld[x][y - 1]);
+                        }
+                    }
+                    else if (x == worldWidth - 1)
+                    {
+                        if (y == 0) //top right
+                        {
+                            currentSquare.adjacent.Add(stateOfWorld[x - 1][y]);
+                            currentSquare.adjacent.Add(stateOfWorld[x][y + 1]);
+                        }
+                        else if (y == worldHeight - 1) //bottom right
+                        {
+                            currentSquare.adjacent.Add(stateOfWorld[x - 1][y]);
+                            currentSquare.adjacent.Add(stateOfWorld[x][y - 1]);
+                        }
+                        else //right edge
+                        {
+                            currentSquare.adjacent.Add(stateOfWorld[x - 1][y]);
+                            currentSquare.adjacent.Add(stateOfWorld[x][y + 1]);
+                            currentSquare.adjacent.Add(stateOfWorld[x][y - 1]);
+                        }
+                    }
+                    else
+                    {
+                        if (y == 0) //top edge
+                        {
+                            currentSquare.adjacent.Add(stateOfWorld[x + 1][y]);
+                            currentSquare.adjacent.Add(stateOfWorld[x - 1][y]);
+                            currentSquare.adjacent.Add(stateOfWorld[x][y + 1]);
+                        }
+                        else if (y == worldHeight - 1) //bottom edge
+                        {
+                            currentSquare.adjacent.Add(stateOfWorld[x + 1][y]);
+                            currentSquare.adjacent.Add(stateOfWorld[x - 1][y]);
+                            currentSquare.adjacent.Add(stateOfWorld[x][y - 1]);
+                        }
+                        else //finally not a corner case
+                        {
+                            currentSquare.adjacent.Add(stateOfWorld[x + 1][y]);
+                            currentSquare.adjacent.Add(stateOfWorld[x - 1][y]);
+                            currentSquare.adjacent.Add(stateOfWorld[x][y + 1]);
+                            currentSquare.adjacent.Add(stateOfWorld[x][y - 1]);
+                        }
+                    }
+                }
+            }
         }
     }
 }

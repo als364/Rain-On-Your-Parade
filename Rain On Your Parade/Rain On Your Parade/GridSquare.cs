@@ -8,18 +8,18 @@ namespace Rain_On_Your_Parade
 {
     class GridSquare
     {
-        private ArrayList objects;      // list of objects on GridSquare
-        private ArrayList actors;       // list of actors on GridSquare
-	    private bool isPassable;        // can actors enter/see past GridSquare
-	    private int totalSleep;         // total sleep attr on GridSquare
-	    private int totalPlay;          // total play attr on GridSquare
-	    private int totalNurture;       // total nurture attr on GridSquare
-	    private int totalRampage;       // total rampage attr on GridSquare
-
+        private List<Model> objects;               // list of objects on GridSquare
+        private List<Actor> actors;                // list of actors on GridSquare
+        public  List<GridSquare> adjacent;               // list of adjacent GridSquares
+	    private bool isPassable;                 // can actors enter/see past GridSquare
+	    private int totalSleep;                  // total sleep attr on GridSquare
+	    private int totalPlay;                   // total play attr on GridSquare
+	    private int totalNurture;                // total nurture attr on GridSquare
+	    private int totalRampage;                // total rampage attr on GridSquare
 
         #region Getters and Setters
 
-        private ArrayList Objects
+        private List<Model> Objects
         {
             get
             {
@@ -32,7 +32,7 @@ namespace Rain_On_Your_Parade
             }
         }
 
-        private ArrayList Actors
+        private List<Actor> Actors
         {
             get
             {
@@ -42,6 +42,18 @@ namespace Rain_On_Your_Parade
             set
             {
                 actors = value;
+            }
+        }
+
+        private List<GridSquare> Adjacent
+        {
+            get
+            {
+                return adjacent;
+            }
+            set
+            {
+                adjacent = value;
             }
         }
 

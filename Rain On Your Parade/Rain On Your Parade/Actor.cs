@@ -1,9 +1,10 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 
 namespace Rain_On_Your_Parade
 {
-    public class Actor
+    public class Actor : Model
     {
         private ActorType type;
         private Point position;
@@ -24,6 +25,10 @@ namespace Rain_On_Your_Parade
             sleepLevel = aType.getBaseSleepLevel();
             playLevel = aType.getBasePlayLevel();
             nurtureLevel = aType.getBaseNurtureLevel();
+        }
+
+        public override void LoadContent(ContentManager content)
+        {
         }
 
         public ActorType getType()

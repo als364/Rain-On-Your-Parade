@@ -30,7 +30,7 @@ namespace Rain_On_Your_Parade
                         pressStarted = true;
                         //Console.WriteLine("pressed");
                         pixelOnButtonClicked = mouseState.Y - slider.buttonBounds.Y;
-                        Console.WriteLine("pixel clicked: " + pixelOnButtonClicked);
+                        //Console.WriteLine("pixel clicked: " + pixelOnButtonClicked);
                     }
                     else
                     {
@@ -39,12 +39,12 @@ namespace Rain_On_Your_Parade
                         if (newPosition <= 0)
                         {
                             slider.buttonPosition = 0;
-                            Console.WriteLine("<0");
+                            //Console.WriteLine("<0");
                         }
                         else if (newPosition >= (slider.sliderBounds.Height - slider.buttonBounds.Height))
                         {
                             slider.buttonPosition = slider.sliderBounds.Height - slider.buttonBounds.Height;
-                            Console.WriteLine(">600");
+                            //Console.WriteLine(">600");
                         }
                         else
                         {
