@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Rain_On_Your_Parade
 {
-    abstract class Model
+    abstract public class Model
     {
         public int spriteWidth, spriteHeight;
         public int spriteOriginX, spriteOriginY;

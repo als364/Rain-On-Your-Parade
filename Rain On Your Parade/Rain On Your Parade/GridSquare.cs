@@ -3,23 +3,25 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Collections;
+using Microsoft.Xna.Framework;
 
 namespace Rain_On_Your_Parade
 {
     class GridSquare
     {
-        private ArrayList objects;      // list of objects on GridSquare
-        private ArrayList actors;       // list of actors on GridSquare
-	    private bool isPassable;        // can actors enter/see past GridSquare
-	    private int totalSleep;         // total sleep attr on GridSquare
-	    private int totalPlay;          // total play attr on GridSquare
-	    private int totalNurture;       // total nurture attr on GridSquare
-	    private int totalRampage;       // total rampage attr on GridSquare
-
+        private List<Model> objects;               // list of objects on GridSquare
+        private List<Actor> actors;                // list of actors on GridSquare
+        public  List<GridSquare> adjacent;               // list of adjacent GridSquares
+	    private bool isPassable;                 // can actors enter/see past GridSquare
+	    private int totalSleep;                  // total sleep attr on GridSquare
+	    private int totalPlay;                   // total play attr on GridSquare
+	    private int totalNurture;                // total nurture attr on GridSquare
+	    private int totalRampage;                // total rampage attr on GridSquare
+        private Point location;
 
         #region Getters and Setters
 
-        private ArrayList Objects
+        public List<Model> Objects
         {
             get
             {
@@ -32,7 +34,7 @@ namespace Rain_On_Your_Parade
             }
         }
 
-        private ArrayList Actors
+        public List<Actor> Actors
         {
             get
             {
@@ -45,7 +47,19 @@ namespace Rain_On_Your_Parade
             }
         }
 
-        private bool IsPassable
+        public List<GridSquare> Adjacent
+        {
+            get
+            {
+                return adjacent;
+            }
+            set
+            {
+                adjacent = value;
+            }
+        }
+
+        public bool IsPassable
         {
             get
             {
@@ -58,7 +72,7 @@ namespace Rain_On_Your_Parade
             }
         }
 
-        private int TotalSleep
+        public int TotalSleep
         {
             get
             {
@@ -71,7 +85,7 @@ namespace Rain_On_Your_Parade
             }
         }
 
-        private int TotalPlay
+        public int TotalPlay
         {
             get
             {
@@ -84,7 +98,7 @@ namespace Rain_On_Your_Parade
             }
         }
 
-        private int TotalNurture
+        public int TotalNurture
         {
             get
             {
@@ -97,7 +111,7 @@ namespace Rain_On_Your_Parade
             }
         }
 
-        private int TotalRampage
+        public int TotalRampage
         {
             get
             {
@@ -107,6 +121,18 @@ namespace Rain_On_Your_Parade
             set
             {
                 totalRampage = value;
+            }
+        }
+
+        public Point Location
+        {
+            get
+            {
+                return location;
+            }
+            set
+            {
+                location = value;
             }
         }
 
@@ -127,7 +153,7 @@ namespace Rain_On_Your_Parade
         /// by actors, and the total amount of sleep, play, nurture, and rampage
         /// attributes present on the GridSquare.
         /// </devdoc>
-        public GridSquare(ArrayList o, ArrayList a, bool is_p, int s, int p, int n, int r)
+        public GridSquare(List<Model> o, List<Actor> a, bool is_p, int s, int p, int n, int r)
         {
             objects = o;
             actors = a;

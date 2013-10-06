@@ -1,9 +1,10 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 
 namespace Rain_On_Your_Parade
 {
-    public class Actor
+    public class Actor : Model
     {
         private ActorType type;
         private Point position;
@@ -21,95 +22,66 @@ namespace Rain_On_Your_Parade
             position = initPos;
             mood = initMood;
             state = initState;
-            sleepLevel = aType.getBaseSleepLevel();
-            playLevel = aType.getBasePlayLevel();
-            nurtureLevel = aType.getBaseNurtureLevel();
+            sleepLevel = aType.BaseSleepLevel;
+            playLevel = aType.BaseSleepLevel;
+            nurtureLevel = aType.BaseNurtureLevel;
         }
 
-        public ActorType getType()
+        public override void LoadContent(ContentManager content)
         {
-            return type;
         }
 
-        public Point getPosition()
+        #region Getters and Setters
+        public ActorType Type
         {
-            return position;
+            get { return type; }
+            set { type = value; }
         }
-
-        public void setPosition(Point newPos)
+        public Point Position
         {
-            position = newPos;
+            get { return position; }
+            set { position = value; }
         }
-
-        public float getVelocity()
+        public float Velocity
         {
-            return velocity;
+            get { return velocity; }
+            set { velocity = value; }
         }
-
-        public void setVelocity(float newVel)
+        public int Mood
         {
-            velocity = newVel;
+            get { return mood; }
+            set { mood = value; }
         }
-
-        public int getMood()
+        public ActorState State
         {
-            return mood;
+            get { return state; }
+            set { state = value; }
         }
-
-        public void setMood(int newMood)
+        public int SleepLevel
         {
-            mood = newMood;
+            get { return sleepLevel; }
+            set { sleepLevel = value; }
         }
+        public int PlayLevel
+        {
+            get { return playLevel; }
+            set { playLevel = value; }
+        }
+        public int NurtureLevel
+        {
+            get { return nurtureLevel; }
+            set { nurtureLevel = value; }
+        }
+        #endregion
 
-        public void incMood()
+        public void IncrementMood()
         {
             mood++;
         }
 
-        public void decMood()
+        public void DecrementMood()
         {
             mood--;
         }
-
-        public ActorState getState()
-        {
-            return state;
-        }
-
-        public void setState(ActorState newState)
-        {
-            state = newState;
-        }
-
-        public int getSleepLevel()
-        {
-            return sleepLevel;
-        }
-
-        public void setSleepLevel(int newSleep)
-        {
-            sleepLevel = newSleep;
-        }
-
-        public int getPlayLevel()
-        {
-            return playLevel;
-        }
-
-        public void setPlayLevel(int newPlay)
-        {
-            playLevel = newPlay;
-        }
-
-        public int getNurtureLevel()
-        {
-            return nurtureLevel;
-        }
-
-        public void setNurtureLevel(int newNurture)
-        {
-            nurtureLevel = newNurture;
-        }
-
     }
 }

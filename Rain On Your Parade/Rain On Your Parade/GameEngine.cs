@@ -26,6 +26,8 @@ namespace Rain_On_Your_Parade
         List<View> views;
         List<Controller> controllers;
 
+        WorldState worldState;
+
         public GameEngine()
             : base()
         {
@@ -35,6 +37,7 @@ namespace Rain_On_Your_Parade
             models = new List<Model>();
             views = new List<View>();
             controllers = new List<Controller>();
+            //worldState = new WorldState();
         }
 
         /// <summary>
@@ -52,7 +55,7 @@ namespace Rain_On_Your_Parade
             graphics.ApplyChanges();
 
             //This is where the level building goes. I don't care about an XML parsing framework yet.
-            Slider slider = new Slider(SCREEN_WIDTH-50, 0, 50, SCREEN_HEIGHT);
+            Slider slider = new Slider(SCREEN_WIDTH-50, 0, 50, SCREEN_HEIGHT-50);
             SliderView sliderView = new SliderView(slider);
             SliderController sliderController = new SliderController(slider);
             models.Add(slider);
@@ -99,7 +102,7 @@ namespace Rain_On_Your_Parade
             // TODO: Add your update logic here
             foreach (Controller controller in controllers)
             {
-                controller.Update(gameTime);
+                controller.Update(gameTime, worldState);
             }
             base.Update(gameTime);
         }
