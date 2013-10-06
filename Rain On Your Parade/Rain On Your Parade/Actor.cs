@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 
@@ -16,6 +17,8 @@ namespace Rain_On_Your_Parade
         private int playLevel;
         private int nurtureLevel;
 
+        private List<GridSquare> path;
+
         public Actor(ActorType aType, Point initPos, int initMood, ActorState initState)
         {
             type = aType;
@@ -25,6 +28,7 @@ namespace Rain_On_Your_Parade
             sleepLevel = aType.BaseSleepLevel;
             playLevel = aType.BaseSleepLevel;
             nurtureLevel = aType.BaseNurtureLevel;
+            path = new List<GridSquare>();
         }
 
         public override void LoadContent(ContentManager content)
@@ -71,6 +75,11 @@ namespace Rain_On_Your_Parade
         {
             get { return nurtureLevel; }
             set { nurtureLevel = value; }
+        }
+        public List<GridSquare> Path
+        {
+            get { return path; }
+            set { path = value; }
         }
         #endregion
 
