@@ -5,7 +5,7 @@ namespace Rain_On_Your_Parade
     public class ObjectType
     {
 
-        enum TypeName {SunnySpot, Garden, Pool, Chalking, Laundry, Rainbow};
+        public enum TypeName {SunnySpot, Garden, Pool, Chalking, Laundry, Rainbow};
 
         private TypeName objectType;
         private bool startsActivated;

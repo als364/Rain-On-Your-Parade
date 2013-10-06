@@ -41,6 +41,7 @@
     <Compile Include="ActorType.cs" />
     <Compile Include="Class1.cs" />
     <Compile Include="Level.cs" />
+    <Compile Include="Canvas.cs" />
     <Compile Include="Controller.cs" />
     <Compile Include="GridSquare.cs" />
     <Compile Include="Model.cs" />

@@ -16,8 +16,9 @@ namespace Rain_On_Your_Parade
     /// </summary>
     public class GameEngine : Game
     {
-        public const int SCREEN_WIDTH = 800;
-        public const int SCREEN_HEIGHT = 600;
+        public const int SCREEN_WIDTH = 880;
+        public const int SCREEN_HEIGHT = 720;
+        
 
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;

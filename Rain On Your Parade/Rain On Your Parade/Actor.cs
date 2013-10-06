@@ -15,6 +15,7 @@ namespace Rain_On_Your_Parade
         private int sleepLevel;
         private int playLevel;
         private int nurtureLevel;
+        private int rampageLevel;
 
         public Actor(ActorType aType, Point initPos, int initMood, ActorState initState)
         {
@@ -25,6 +26,7 @@ namespace Rain_On_Your_Parade
             sleepLevel = aType.BaseSleepLevel;
             playLevel = aType.BaseSleepLevel;
             nurtureLevel = aType.BaseNurtureLevel;
+            rampageLevel = aType.BaseRampageLevel;
         }
 
         public override void LoadContent(ContentManager content)
@@ -71,6 +73,11 @@ namespace Rain_On_Your_Parade
         {
             get { return nurtureLevel; }
             set { nurtureLevel = value; }
+        }
+        public int RampageLevel
+        {
+            get { return rampageLevel; }
+            set { rampageLevel = value; }
         }
         #endregion
 
