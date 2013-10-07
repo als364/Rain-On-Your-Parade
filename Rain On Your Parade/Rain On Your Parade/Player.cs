@@ -9,40 +9,41 @@ namespace Rain_On_Your_Parade
 {
     class Player : Model
     {
-        private double v;       //velocity of player
+        private Vector2 velocity;       //velocity of player
         private int rain;       //amount of rain held by player
+        //private Vector2 position;
 
         private const int MAX_RAIN = 6;
 
         #region Getters and Setters
 
-        private Point Pos
+        /*public Vector2 Position
         {
             get
             {
-                return pos;
+                return position;
             }
 
             set
             {
-                pos = value;
+                position = value;
             }
-        }
+        }*/
 
-        private double Velocity
+        public Vector2 Velocity
         {
             get
             {
-                return v;
+                return velocity;
             }
 
             set
             {
-                v = value;
+                velocity = value;
             }
         }
 
-        private int Rain
+        public int Rain
         {
             get
             {
@@ -65,8 +66,8 @@ namespace Rain_On_Your_Parade
         /// </devdoc>
         public Player()
         {
-            pos = new Point(GameEngine.SCREEN_WIDTH/2,GameEngine.SCREEN_HEIGHT/2);
-            v = 0.0;
+            this.Position = new Vector2(GameEngine.SCREEN_WIDTH/2,GameEngine.SCREEN_HEIGHT/2);
+            velocity = new Vector2();
             rain = MAX_RAIN;
         }
 

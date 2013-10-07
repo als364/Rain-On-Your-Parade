@@ -14,6 +14,7 @@ namespace Rain_On_Your_Parade
         public Rectangle sliderBounds;
         public Texture2D buttonSprite;
         public Rectangle buttonBounds;
+        Point origin;
 
         public string sliderSpriteFilePath = "SliderBackground";
         public string buttonSpriteFilePath = "SliderButton";
@@ -22,10 +23,9 @@ namespace Rain_On_Your_Parade
 
         public Slider() : base(){}
 
-        public Slider(int originX, int originY, int width, int height)
+        public Slider(Point origin, int width, int height)
         {
-            pos.X = originX;
-            pos.Y = originY;
+            this.origin = origin;
             spriteWidth = width;
             spriteHeight = height;
             buttonPosition = height/2;

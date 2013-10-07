@@ -21,9 +21,9 @@ namespace Rain_On_Your_Parade
         public virtual void Draw(SpriteBatch spriteBatch)
         {
             Texture2D image = viewedModel.sprite;
-            Debug.WriteLine("Sprite:" + image);
-            Debug.WriteLine("Y:"+viewedModel.pos.Y);
-            spriteBatch.Draw(image, new Rectangle(viewedModel.pos.X, viewedModel.pos.Y, viewedModel.spriteWidth, viewedModel.spriteHeight), Color.Azure);
+            //Debug.WriteLine("Sprite:" + image);
+            Debug.WriteLine("Y: " + viewedModel.Position.Y);
+            spriteBatch.Draw(image, new Rectangle((int)viewedModel.Position.X, (int)viewedModel.Position.Y, viewedModel.spriteWidth, viewedModel.spriteHeight), Color.Azure);
         }
     }
 }

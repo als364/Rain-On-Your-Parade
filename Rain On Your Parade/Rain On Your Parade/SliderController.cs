@@ -62,8 +62,8 @@ namespace Rain_On_Your_Parade
                 }
             }
 
-            slider.sliderBounds = new Rectangle(slider.pos.X, slider.pos.Y, slider.spriteWidth, slider.spriteHeight);
-            slider.buttonBounds = new Rectangle(slider.pos.X, 
+            slider.sliderBounds = new Rectangle((int)slider.Position.X, (int)slider.Position.Y, slider.spriteWidth, slider.spriteHeight);
+            slider.buttonBounds = new Rectangle((int)slider.Position.X, 
                                                 (int)Math.Max(Math.Min(slider.buttonPosition, slider.spriteHeight - slider.spriteWidth), 0), 
                                                 slider.spriteWidth, slider.spriteWidth);
         }

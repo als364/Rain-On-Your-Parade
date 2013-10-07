@@ -20,28 +20,58 @@ namespace Rain_On_Your_Parade
         {
             switch (controlledActor.State.State)
             {
-                /*case ActorState.ActorState.Nurture:
+                /*case ActorState.AState.Nurture:
                     break;
-                case ActorState.ActorState.Play:
+                case ActorState.AState.Play:
                     break;
-                case ActorState.ActorState.Rampage:
+                case ActorState.AState.Rampage:
+                    break;
+                case ActorState.AState.Sleep:
                     break;*/
                 case ActorState.AState.Seek:
                     ActorState.AState newState = DetermineTargetState();
+                    controlledActor.TargetState = newState;
+                    controlledActor.Path = FindPath(PreferenceSearch(worldState),
+                                                        worldState.StateOfWorld[(int)controlledActor.Position.X, (int)controlledActor.Position.Y],
+                                                        worldState.StateOfWorld, new Point[worldState.worldWidth, worldState.worldHeight]);
+                    controlledActor.State = new ActorState(ActorState.AState.Walk);
                     break;
-                /*case ActorState.ActorState.Sleep:
-                    break;*/
-                default:
+                case ActorState.AState.Walk:
                     if (controlledActor.Path.Count == 0)
                     {
-                        controlledActor.Path = FindPath(PreferenceSearch(controlledActor.Type, worldState), 
-                                                                         worldState.StateOfWorld[controlledActor.Position.X, controlledActor.Position.Y],
-                                                                         worldState.StateOfWorld, new Point[worldState.worldWidth, worldState.worldHeight]);
+                        controlledActor.State = new ActorState(ActorState.AState.Seek);
+                    }
+                    else if (controlledActor.Path.Count == 1)
+                    {
+                        controlledActor.State = new ActorState(controlledActor.TargetState);
                     }
                     else
                     {
                         GridSquare nextSquare = controlledActor.Path[0];
-                        controlledActor.Path.RemoveAt(0);
+                        if (nextSquare.Contains(controlledActor.Position))
+                        {
+                            controlledActor.Path.RemoveAt(0);
+                            nextSquare = controlledActor.Path[0];
+                            controlledActor.Velocity = new Vector2(nextSquare.Location.X - controlledActor.Position.X, nextSquare.Location.Y - controlledActor.Position.Y);
+                        }
+                        controlledActor.Position = Vector2.Add(controlledActor.Position, controlledActor.Velocity);
+                    }
+                    break;
+                default:
+                    if (controlledActor.Path.Count == 0)
+                    {
+                        controlledActor.State = new ActorState(ActorState.AState.Seek);
+                    }
+                    else if (controlledActor.Path.Count == 1) //at target!
+                    {
+                        controlledActor.Velocity = new Vector2();
+                        if (!PreferenceSearch(worldState).Contains(controlledActor.Path[0]))
+                        {
+                            controlledActor.State = new ActorState(ActorState.AState.Seek);
+                        }
+                    }
+                    else
+                    {
                     }
                     break;
             }
@@ -97,7 +127,7 @@ namespace Rain_On_Your_Parade
             return highestNeeds[index];
         }
 
-        private List<GridSquare> PreferenceSearch(ActorType actorType, WorldState worldState)
+        private List<GridSquare> PreferenceSearch(WorldState worldState)
         {
             double maxPreference = 0;
             List<GridSquare> targets = new List<GridSquare>();
@@ -117,7 +147,7 @@ namespace Rain_On_Your_Parade
             return targets;
         }
 
-        private double Desirability(GridSquare target, Point currentLocation)
+        private double Desirability(GridSquare target, Vector2 currentLocation)
         {
             double desirability = 0;
             if (!target.IsPassable)
@@ -128,7 +158,7 @@ namespace Rain_On_Your_Parade
                            (target.TotalPlay * controlledActor.PlayLevel) + 
                            (target.TotalRampage * controlledActor.Mood) + 
                            (target.TotalSleep * controlledActor.SleepLevel);
-           // desirability /= Utils.EuclideanDistance(currentLocation, target.Location);
+            desirability /= Utils.EuclideanDistance(currentLocation, target.Location);
             return desirability;
         }
 

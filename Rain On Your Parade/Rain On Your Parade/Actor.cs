@@ -9,21 +9,23 @@ namespace Rain_On_Your_Parade
     public class Actor : Model
     {
         private ActorType type;
-        private float velocity = 0;
+        private Vector2 velocity;
 
         private int mood;
         private ActorState state;
+        private ActorState.AState targetState;
         private int sleepLevel;
         private int playLevel;
         private int nurtureLevel;
         private int rampageLevel;
+        private Vector2 position;
 
         private List<GridSquare> path;
 
-        public Actor(ActorType aType, Point initPos, int initMood, ActorState initState)
+        public Actor(ActorType aType, Vector2 initPos, int initMood, ActorState initState)
         {
             type = aType;
-            pos = initPos;
+            position = initPos;
             mood = initMood;
             state = initState;
             sleepLevel = aType.BaseSleepLevel;
@@ -46,12 +48,12 @@ namespace Rain_On_Your_Parade
             get { return type; }
             set { type = value; }
         }
-        public Point Position
+        /*public Vector2 Position
         {
-            get { return pos; }
-            set { pos = value; }
-        }
-        public float Velocity
+            get { return position; }
+            set { position = value; }
+        }*/
+        public Vector2 Velocity
         {
             get { return velocity; }
             set { velocity = value; }
@@ -65,6 +67,11 @@ namespace Rain_On_Your_Parade
         {
             get { return state; }
             set { state = value; }
+        }
+        public ActorState.AState TargetState
+        {
+            get { return targetState; }
+            set { targetState = value; }
         }
         public int SleepLevel
         {

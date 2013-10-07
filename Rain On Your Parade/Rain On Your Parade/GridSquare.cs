@@ -173,6 +173,13 @@ namespace Rain_On_Your_Parade
             }
         }
 
+        public bool Contains(Vector2 point)
+        {
+            bool xContained = (point.X >= location.X && point.X <= location.X + 1);
+            bool yContained = (point.Y >= location.Y && point.Y <= location.Y + 1);
+            return xContained && yContained;
+        }
+
 
         /// <summary>Public stuff about the method</summary>
         /// <param name="foo">It's an integer apparently</param>
