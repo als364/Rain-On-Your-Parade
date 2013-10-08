@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace Rain_On_Your_Parade
 {
@@ -73,7 +74,9 @@ namespace Rain_On_Your_Parade
 
         public override void LoadContent(ContentManager content)
         {
-
+            sprite = content.Load<Texture2D>("Actor");
+            spriteWidth = sprite.Width;
+            spriteHeight = sprite.Height;
         }
 
         /// <summary>Public stuff about the method</summary>

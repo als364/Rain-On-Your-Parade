@@ -79,10 +79,12 @@ namespace Rain_On_Your_Parade
                // views.Add(objects);
             }
             View player = new View(worldState.Player);
-            //views.Add(player);
+            views.Add(player);
+            models.Add(worldState.Player);
+            controllers.Add(new PlayerController(worldState.Player));
 
-          // models.Add(slider);
-          //  views.Add(sliderView);
+            //models.Add(slider);
+            //views.Add(sliderView);
             //controllers.Add(sliderController);
 
             base.Initialize();

@@ -50,6 +50,7 @@
     <Compile Include="Model.cs" />
     <Compile Include="ObjectType.cs" />
     <Compile Include="Player.cs" />
+    <Compile Include="PlayerController.cs" />
     <Compile Include="SliderController.cs" />
     <Compile Include="GameEngine.cs" />
     <Compile Include="RainOnYourParade.cs" />
