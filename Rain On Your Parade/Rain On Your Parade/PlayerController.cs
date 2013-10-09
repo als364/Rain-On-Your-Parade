@@ -10,7 +10,8 @@ namespace Rain_On_Your_Parade
     class PlayerController : Controller
     {
         public const float ACCELERATION = 0.3f;
-        public const float MAX_SPEED = 5f;
+        public const float DECELERATION = 0.2f;
+        public const float MAX_SPEED = 6f;
         public const int COOL_DOWN = 15; //amount of time spent raining
         private int coolDown;
         private Player player;
@@ -64,11 +65,27 @@ namespace Rain_On_Your_Parade
                 {
                     if (player.Velocity.X > 0)
                     {
-                        player.Velocity = Vector2.Subtract(player.Velocity,new Vector2(ACCELERATION,0));
+                        if (player.Velocity.X - DECELERATION < 0)
+                        {
+                            player.Velocity = new Vector2(0, player.Velocity.Y);
+                        }
+                        else
+                        {
+                            player.Velocity = Vector2.Subtract(player.Velocity,new Vector2(DECELERATION,0));
+                        }
+                        
                     }
                     else
                     {
-                        player.Velocity = Vector2.Add(player.Velocity, new Vector2(ACCELERATION,0));
+                        if (player.Velocity.X + DECELERATION > 0)
+                        {
+                            player.Velocity = new Vector2(0, player.Velocity.Y);
+                        }
+                        else
+                        {
+                            player.Velocity = Vector2.Add(player.Velocity, new Vector2(DECELERATION,0));
+                        }
+                        
                     }
                 }
 
@@ -76,11 +93,27 @@ namespace Rain_On_Your_Parade
                 {
                     if (player.Velocity.Y > 0)
                     {
-                        player.Velocity = Vector2.Subtract(player.Velocity,new Vector2(0, ACCELERATION));
+                        if (player.Velocity.Y - DECELERATION < 0)
+                        {
+                            player.Velocity = new Vector2(player.Velocity.X, 0);
+                        }
+                        else
+                        {
+                            player.Velocity = Vector2.Subtract(player.Velocity,new Vector2(0, DECELERATION));
+                        }
+                        
                     }
                     else
                     {
-                        player.Velocity = Vector2.Add(player.Velocity, new Vector2(0, ACCELERATION));
+                        if (player.Velocity.Y + DECELERATION > 0)
+                        {
+                            player.Velocity = new Vector2(player.Velocity.X, 0);
+                        }
+                        else
+                        {
+                            player.Velocity = Vector2.Add(player.Velocity, new Vector2(0, DECELERATION));
+                        }
+                        
                     }
                 }
             }
@@ -90,6 +123,27 @@ namespace Rain_On_Your_Parade
             }
 
             player.Position = Vector2.Add(player.Position, player.Velocity);
+
+            if (player.Position.X + player.spriteWidth > GameEngine.SCREEN_WIDTH)
+            {
+                player.Position = new Vector2(GameEngine.SCREEN_WIDTH - player.spriteWidth, player.Position.Y);
+                player.Velocity = new Vector2(0, player.Velocity.Y);
+            }
+            if (player.Position.X < 0)
+            {
+                player.Position = new Vector2(0, player.Position.Y);
+                player.Velocity = new Vector2(0, player.Velocity.Y);
+            }
+            if (player.Position.Y + player.spriteHeight > GameEngine.SCREEN_HEIGHT)
+            {
+                player.Position = new Vector2(player.Position.X, GameEngine.SCREEN_HEIGHT - player.spriteHeight);
+                player.Velocity = new Vector2(player.Velocity.X, 0);
+            }
+            if (player.Position.Y < 0)
+            {
+                player.Position = new Vector2(player.Position.X, 0);
+                player.Velocity = new Vector2(player.Velocity.X, 0);
+            }
         }
 
         private bool Rain()
