@@ -63,20 +63,22 @@ namespace Rain_On_Your_Parade
 
             Canvas level = new Canvas();
 
-
+           // Debug.WriteLine("Y: " + level.canvasGrid[6, 6].Actors[0].Position.Y);
             int quota = 100;
             worldState = new WorldState(quota,level.canvasGrid);
+
+            //Debug.WriteLine("Y: " + worldState.getActors().ToArray()[1].Position.Y);
 
             foreach (Actor a in worldState.getActors()){
                 View actors = new View(a);
                 models.Add(a);
-               // Debug.WriteLine("Sprite:" + slider.sprite);
+                Debug.WriteLine("Y: " + a.Position.Y);
                 views.Add(actors);
             }
             foreach (WorldObject o in worldState.getObjects()){
                 View objects= new View(o);
                 models.Add(o);
-               // views.Add(objects);
+                views.Add(objects);
             }
             View player = new View(worldState.Player);
             views.Add(player);

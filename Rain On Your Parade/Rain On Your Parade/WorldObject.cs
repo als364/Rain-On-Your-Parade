@@ -1,5 +1,8 @@
 ﻿using System;
 using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework;
+using System.Collections;
 
 namespace Rain_On_Your_Parade
 {
@@ -8,14 +11,18 @@ namespace Rain_On_Your_Parade
         public ObjectType type;
         private bool activated;
 
-        public WorldObject(ObjectType oType)
+        public WorldObject(ObjectType oType, Vector2 pos)
         {
             type = oType;
+            Position = pos;
             activated = oType.getStartsActivated();
         }
 
         public override void LoadContent(ContentManager content)
         {
+            sprite = content.Load<Texture2D>(type.ToString());
+            spriteWidth = 80;
+            spriteHeight = 80;
         }
 
         public bool getActivated()

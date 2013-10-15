@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework.Content;
+using System.Diagnostics;
 
 namespace Rain_On_Your_Parade
 {
@@ -101,6 +102,7 @@ namespace Rain_On_Your_Parade
                 {
                     GridSquare currentSquare = stateOfWorld[x, y];
                     allActors.AddRange(currentSquare.Actors);
+           
                 }
             }
 
@@ -115,8 +117,11 @@ namespace Rain_On_Your_Parade
             {
                 for (int y = 0; y < worldHeight; y++)
                 {
-                    GridSquare currentSquare = stateOfWorld[x, y];
+                    GridSquare currentSquare = stateOfWorld[x,y];
                     allObjects.AddRange(currentSquare.Objects);
+                  //  if (currentSquare.Objects.ToArray().Length > 0)
+                  // Debug.WriteLine("Y Pos: " + stateOfWorld[x, y].Objects.ToArray()[0].Position.Y);
+                
                 }
             }
 

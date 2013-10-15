@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 
 namespace Rain_On_Your_Parade
 {
@@ -6,7 +7,7 @@ namespace Rain_On_Your_Parade
     {
 
         public enum TypeName {SunnySpot, Garden, Pool, Chalking, Laundry, Rainbow};
-
+        Hashtable stringNames = new Hashtable();
         private TypeName objectType;
         private bool startsActivated;
         private int sleepLevel;
@@ -22,6 +23,13 @@ namespace Rain_On_Your_Parade
             playLevel = oPlay;
             nurtureLevel = oNurture;
             rampageLevel = oRampage;
+
+            stringNames.Add(TypeName.Chalking, "sidewalk");
+            stringNames.Add(TypeName.SunnySpot, "sunspot");
+            stringNames.Add(TypeName.Garden, "garden");
+            stringNames.Add(TypeName.Laundry, "sidewalk");
+            stringNames.Add(TypeName.Pool, "pool");
+            stringNames.Add(TypeName.Rainbow, "sidewalk");
         }
 
         public TypeName getObjectType()
@@ -53,5 +61,9 @@ namespace Rain_On_Your_Parade
         {
             return rampageLevel;
         }
+        public override string ToString()
+        {
+            return (string)stringNames[objectType];
+        }
     }
 }

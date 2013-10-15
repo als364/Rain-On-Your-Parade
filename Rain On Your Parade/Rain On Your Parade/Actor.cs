@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using System.Diagnostics;
 
 namespace Rain_On_Your_Parade
 {
@@ -18,14 +19,12 @@ namespace Rain_On_Your_Parade
         private int playLevel;
         private int nurtureLevel;
         private int rampageLevel;
-        private Vector2 position;
-
         private List<GridSquare> path;
 
         public Actor(ActorType aType, Vector2 initPos, int initMood, ActorState initState)
         {
             type = aType;
-            position = initPos;
+            Position = initPos;
             mood = initMood;
             state = initState;
             sleepLevel = aType.BaseSleepLevel;
@@ -38,8 +37,8 @@ namespace Rain_On_Your_Parade
         public override void LoadContent(ContentManager content)
         {
             sprite = content.Load<Texture2D>("Actor");
-            spriteWidth = sprite.Width;
-            spriteHeight = sprite.Height;
+            spriteWidth = 80;
+            spriteHeight = 80;
         }
 
         #region Getters and Setters
