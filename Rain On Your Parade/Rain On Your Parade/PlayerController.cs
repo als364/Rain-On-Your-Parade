@@ -25,8 +25,17 @@ namespace Rain_On_Your_Parade
         public override void Update(GameTime gameTime, WorldState worldState)
         {
             KeyboardState ks = Keyboard.GetState();
+
             if (coolDown == 0) //
             {
+                if (ks.IsKeyDown(Keys.R))
+                {
+                    if (Absorb())
+                    {
+                        player.Velocity = new Vector2(0, 0);
+                        coolDown = COOL_DOWN;
+                    }
+                }
                 if (ks.IsKeyDown(Keys.Space))
                 {
                     if (Rain())
@@ -154,6 +163,11 @@ namespace Rain_On_Your_Parade
                 //do other stuff, affect world, draw rain etc.
                 return true;
             }
+            return false;
+        }
+
+        private bool Absorb()
+        {
             return false;
         }
     }
