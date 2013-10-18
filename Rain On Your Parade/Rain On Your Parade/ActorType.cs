@@ -136,7 +136,6 @@ namespace Rain_On_Your_Parade
             get { return baseRampageLevel; }
             set { baseRampageLevel = value; }
         }
-<<<<<<< HEAD
         public int GridSleepEffect
         {
             get { return gridSleepEffect; }
@@ -156,11 +155,21 @@ namespace Rain_On_Your_Parade
         {
             get { return gridRampageEffect; }
             set { gridRampageEffect = value; }
-=======
+        }
         public override string ToString()
         {
-            return (string)stringNames[typeName];
->>>>>>> 0c8c04ed0bb273b60b53bcbaf6e27337032f509f
+            //return (string)stringNames[typeName];
+            switch (typeName)
+            {
+                case ActorType.Type.Cat:
+                    return "cat";
+                case ActorType.Type.Kid:
+                    return "kid";
+                case ActorType.Type.Mom:
+                    return "mom";
+                default:
+                    return "Actor";
+            }
         }
         #endregion
     }

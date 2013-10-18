@@ -36,6 +36,10 @@ namespace Rain_On_Your_Parade
             nurtureLevel = aType.BaseNurtureLevel;
             path = new List<GridSquare>();
             rampageLevel = aType.BaseRampageLevel;
+            gridSleepEffect = aType.GridSleepEffect;
+            gridPlayEffect = aType.GridPlayEffect;
+            gridNurtureEffect = aType.GridNurtureEffect;
+            gridRampageEffect = aType.GridRampageEffect;
         }
 
         public override void LoadContent(ContentManager content)
@@ -100,6 +104,26 @@ namespace Rain_On_Your_Parade
         {
             get { return rampageLevel; }
             set { rampageLevel = value; }
+        }
+        public int GridSleepEffect
+        {
+            get { return gridSleepEffect; }
+            set { gridSleepEffect = value; }
+        }
+        public int GridPlayEffect
+        {
+            get { return gridPlayEffect; }
+            set { gridPlayEffect = value; }
+        }
+        public int GridNurtureEffect
+        {
+            get { return gridNurtureEffect; }
+            set { gridNurtureEffect = value; }
+        }
+        public int GridRampageEffect
+        {
+            get { return gridRampageEffect; }
+            set { gridRampageEffect = value; }
         }
         #endregion
 

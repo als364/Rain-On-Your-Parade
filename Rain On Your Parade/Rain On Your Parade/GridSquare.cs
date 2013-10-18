@@ -79,7 +79,7 @@ namespace Rain_On_Your_Parade
             {
                 foreach (WorldObject o in objects)
                 {
-                    totalSleep += o.type.getSleepLevel();
+                    totalSleep += o.type.SleepLevel;
                 }
                 foreach (Actor a in actors)
                 {
