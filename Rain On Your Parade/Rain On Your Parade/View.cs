@@ -22,8 +22,20 @@ namespace Rain_On_Your_Parade
         {
             Texture2D image = viewedModel.sprite;
             //Debug.WriteLine("Sprite:" + image);
-            //Debug.WriteLine("Y: " + viewedModel.Position.Y);
-            spriteBatch.Draw(image, new Rectangle((int)viewedModel.Position.X, (int)viewedModel.Position.Y, viewedModel.spriteWidth, viewedModel.spriteHeight), Color.Azure);
-        }
+            //Debug.WriteLine("Y: " + viewedModel.Position.Y); 
+            if (viewedModel is WorldObject)
+            {
+                WorldObject temp = (WorldObject)viewedModel;
+                if (temp.getActivated() == temp.type.getStartsActivated())
+                {
+                    spriteBatch.Draw(image, new Rectangle((int)viewedModel.Position.X, (int)viewedModel.Position.Y, viewedModel.spriteWidth, viewedModel.spriteHeight), Color.Azure);
+                }
+                else spriteBatch.Draw(image, new Rectangle((int)viewedModel.Position.X, (int)viewedModel.Position.Y, viewedModel.spriteWidth, viewedModel.spriteHeight), Color.Black);
+            }
+            else
+            {
+                spriteBatch.Draw(image, new Rectangle((int)viewedModel.Position.X, (int)viewedModel.Position.Y, viewedModel.spriteWidth, viewedModel.spriteHeight), Color.Azure);
+            }
+            }
     }
 }
