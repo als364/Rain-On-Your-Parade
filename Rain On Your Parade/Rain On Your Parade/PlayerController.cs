@@ -15,6 +15,7 @@ namespace Rain_On_Your_Parade
         public const int COOL_DOWN = 15; //amount of time spent raining
         private int coolDown;
         private Player player;
+        public bool isRaining = false;
 
         public PlayerController(Player player)
             : base(player)
@@ -30,7 +31,7 @@ namespace Rain_On_Your_Parade
             {
                 if (ks.IsKeyDown(Keys.R))
                 {
-                    if (Absorb())
+                    if (Absorb(worldState))
                     {
                         player.Velocity = new Vector2(0, 0);
                         coolDown = COOL_DOWN;
@@ -38,7 +39,7 @@ namespace Rain_On_Your_Parade
                 }
                 if (ks.IsKeyDown(Keys.Space))
                 {
-                    if (Rain())
+                    if (Rain(worldState))
                     {
                         player.Velocity = new Vector2(0, 0);
                         coolDown = COOL_DOWN;
@@ -129,6 +130,10 @@ namespace Rain_On_Your_Parade
             else
             {
                 coolDown--;
+                if (coolDown < 1)
+                {
+                    isRaining = false;
+                }
             }
 
             player.Position = Vector2.Add(player.Position, player.Velocity);
@@ -155,19 +160,57 @@ namespace Rain_On_Your_Parade
             }
         }
 
-        private bool Rain()
+        private bool Rain(WorldState worldState)
         {
             if (player.Rain > 0)
             {
+                isRaining = true;
                 player.Rain--;
-                //do other stuff, affect world, draw rain etc.
+
+                foreach (Actor a in worldState.StateOfWorld[(int)(player.Position.X / Canvas.SQUARE_SIZE), (int)(player.Position.Y / Canvas.SQUARE_SIZE)].Actors)
+                {
+                    if (a.State.State == a.TargetState)
+                    {
+                        a.IncrementMood();
+                        a.IncrementMood();
+                    }
+                    else
+                    {
+                        a.IncrementMood();
+                    }
+                }
+                foreach (WorldObject o in worldState.StateOfWorld[(int)(player.Position.X / Canvas.SQUARE_SIZE), (int)(player.Position.Y / Canvas.SQUARE_SIZE)].Objects)
+                {
+                    if (o.getActivated())
+                    {
+                        o.deactivate();
+                    }
+                    else
+                    {
+                        o.activate();
+                    }
+                }
+
                 return true;
             }
             return false;
         }
 
-        private bool Absorb()
+        private bool Absorb(WorldState worldState)
         {
+            List<WorldObject> objects = worldState.StateOfWorld[(int)(player.Position.X / Canvas.SQUARE_SIZE), (int)(player.Position.Y / Canvas.SQUARE_SIZE)].Objects;
+            foreach (WorldObject o in objects)
+            {
+                if (o.type.getObjectType() == ObjectType.TypeName.Pool || o.type.getObjectType() == ObjectType.TypeName.Garden)
+                {
+                    if (o.getActivated())
+                    {
+                        o.deactivate();
+                        player.Rain++;
+                        return true;
+                    }
+                }
+            }
             return false;
         }
     }

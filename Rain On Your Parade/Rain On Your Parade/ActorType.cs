@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 
 namespace Rain_On_Your_Parade
 {
@@ -7,6 +8,8 @@ namespace Rain_On_Your_Parade
         public enum Type { Kid, Cat, Mom };
 
         private Type typeName;
+
+        Hashtable stringNames = new Hashtable();
 
         private int sleepNeed;
         private int playNeed;
@@ -133,6 +136,7 @@ namespace Rain_On_Your_Parade
             get { return baseRampageLevel; }
             set { baseRampageLevel = value; }
         }
+<<<<<<< HEAD
         public int GridSleepEffect
         {
             get { return gridSleepEffect; }
@@ -152,6 +156,11 @@ namespace Rain_On_Your_Parade
         {
             get { return gridRampageEffect; }
             set { gridRampageEffect = value; }
+=======
+        public override string ToString()
+        {
+            return (string)stringNames[typeName];
+>>>>>>> 0c8c04ed0bb273b60b53bcbaf6e27337032f509f
         }
         #endregion
     }
