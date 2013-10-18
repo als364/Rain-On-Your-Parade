@@ -108,5 +108,10 @@ namespace Rain_On_Your_Parade
         {
             mood--;
         }
+
+        public Point GridSquareLocation()
+        {
+            return new Point((int)(this.Position.X / 80), (int)(this.Position.Y / 80));
+        }
     }
 }

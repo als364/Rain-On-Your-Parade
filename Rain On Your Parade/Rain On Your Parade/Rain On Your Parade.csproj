@@ -98,17 +98,33 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Content\cloud.xnb" />
-    <None Include="Content\garden.xnb" />
-    <None Include="Content\grass.xnb" />
-    <None Include="Content\house.xnb" />
-    <None Include="Content\Player.xnb">
+    <Content Include="Content\cloud.xnb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Content\pool.xnb" />
-    <None Include="Content\sandbox.xnb" />
-    <None Include="Content\sidewalk.xnb" />
-    <None Include="Content\sunspot.xnb" />
+    </Content>
+    <Content Include="Content\garden.xnb">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\grass.xnb">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\house.xnb">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Player.xnb">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\pool.xnb">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\sandbox.xnb">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\sidewalk.xnb">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\sunspot.xnb">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
