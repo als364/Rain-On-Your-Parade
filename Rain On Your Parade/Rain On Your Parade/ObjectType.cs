@@ -27,7 +27,7 @@ namespace Rain_On_Your_Parade
             stringNames.Add(TypeName.Chalking, "sidewalk");
             stringNames.Add(TypeName.SunnySpot, "sunspot");
             stringNames.Add(TypeName.Garden, "garden");
-            stringNames.Add(TypeName.Laundry, "sidewalk");
+            stringNames.Add(TypeName.Laundry, "laundry");
             stringNames.Add(TypeName.Pool, "pool");
             //stringNames.Add(TypeName.Rainbow, "sidewalk");
             stringNames.Add(TypeName.House, "house");

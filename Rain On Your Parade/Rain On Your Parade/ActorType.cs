@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 
 namespace Rain_On_Your_Parade
 {
@@ -7,6 +8,8 @@ namespace Rain_On_Your_Parade
         public enum Type { Kid, Cat, Mom };
 
         private Type typeName;
+
+        Hashtable stringNames = new Hashtable();
 
         private int sleepNeed;
         private int playNeed;
@@ -33,6 +36,10 @@ namespace Rain_On_Your_Parade
             basePlayLevel = aBasePlayLevel;
             baseNurtureLevel = aBaseNurtureLevel;
             baseRampageLevel = aBaseRampageLevel;
+
+            stringNames.Add(Type.Cat, "cat");
+            stringNames.Add(Type.Mom, "mom");
+            stringNames.Add(Type.Kid, "kid");
         }
 
         #region Getters and Setters
@@ -75,6 +82,10 @@ namespace Rain_On_Your_Parade
         {
             get { return baseRampageLevel; }
             set { baseRampageLevel = value; }
+        }
+        public override string ToString()
+        {
+            return (string)stringNames[typeName];
         }
         #endregion
     }
