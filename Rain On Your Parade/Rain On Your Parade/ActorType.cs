@@ -27,6 +27,53 @@ namespace Rain_On_Your_Parade
         public const int NURTURE_THRESHOLD = 3;
         public const int RAMPAGE_THRESHOLD = 3;
 
+        public ActorType(Type aTypeName)
+        {
+            typeName = aTypeName;
+            switch (typeName)
+            {
+                case ActorType.Type.Cat:
+                    sleepNeed = 3;
+                    playNeed = 2;
+                    nurtureNeed = 0;
+                    baseSleepLevel = 3;
+                    basePlayLevel = 2;
+                    baseNurtureLevel = 0;
+                    baseRampageLevel = 1;
+                    gridSleepEffect = 1;
+                    gridPlayEffect = 1;
+                    gridNurtureEffect = 1;
+                    gridRampageEffect = 3;
+                    break;
+                case ActorType.Type.Kid:
+                    sleepNeed = 1;
+                    playNeed = 3;
+                    nurtureNeed = 0;
+                    baseSleepLevel = 1;
+                    basePlayLevel = 3;
+                    baseNurtureLevel = 0;
+                    baseRampageLevel = 1;
+                    gridSleepEffect = -1;
+                    gridPlayEffect = 2;
+                    gridNurtureEffect = 3;
+                    gridRampageEffect = 3;
+                    break;
+                case ActorType.Type.Mom:
+                    sleepNeed = 0;
+                    playNeed = 0;
+                    nurtureNeed = 3;
+                    baseSleepLevel = 0;
+                    basePlayLevel = 0;
+                    baseNurtureLevel = 3;
+                    baseRampageLevel = 1;
+                    gridSleepEffect = -1;
+                    gridPlayEffect = -1;
+                    gridNurtureEffect = -1;
+                    gridRampageEffect = 3;
+                    break;
+            }
+        }
+
         public ActorType(Type aTypeName, int aSleepNeed, int aPlayNeed, int aNurtureNeed,
             int aBaseSleepLevel, int aBasePlayLevel, int aBaseNurtureLevel, int aBaseRampageLevel, 
             int aGridSleepEffect, int aGridPlayEffect, int aGridNurtureEffect, int aGridRampageEffect)

@@ -62,7 +62,7 @@ namespace Rain_On_Your_Parade
             canvasGrid[9, 6] = new GridSquare(new List<WorldObject>(), new List<Actor>(), false, new Point(9, 6));
             canvasGrid[5, 7] = new GridSquare(new List<WorldObject>() { new WorldObject(new ObjectType(ObjectType.TypeName.SunnySpot, true, 3, 1, 0, 0), new Vector2(5 * SQUARE_SIZE, 7 * SQUARE_SIZE)) }, new List<Actor>(), true, new Point(5, 7));
             canvasGrid[9, 7] = new GridSquare(new List<WorldObject>() { new WorldObject(new ObjectType(ObjectType.TypeName.Garden, true, 3, 0, 3, 3), new Vector2(9 * SQUARE_SIZE, 7 * SQUARE_SIZE)) }, new List<Actor>(), true, new Point(9, 7));
-            canvasGrid[1, 8] = new GridSquare(new List<WorldObject>(), new List<Actor>() { new Actor(new ActorType(ActorType.Type.Kid, 0, 0, 0, 0, 0, 0, 0, -2, 1, 2, 10), new Vector2(1 * SQUARE_SIZE, 8 * SQUARE_SIZE), 0, new ActorState(ActorState.AState.Play)) }, true, new Point(1, 8));
+            canvasGrid[1, 8] = new GridSquare(new List<WorldObject>(), new List<Actor>() { new Actor(new ActorType(ActorType.Type.Kid), new Vector2(1 * SQUARE_SIZE, 8 * SQUARE_SIZE), 0, new ActorState(ActorState.AState.Play)) }, true, new Point(1, 8));
 
         }
 
