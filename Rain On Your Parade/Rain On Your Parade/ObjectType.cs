@@ -6,7 +6,7 @@ namespace Rain_On_Your_Parade
     public class ObjectType
     {
 
-        public enum TypeName {SunnySpot, Garden, Pool, Chalking, Laundry, Rainbow};
+        public enum TypeName {SunnySpot, Garden, Pool, Chalking, Laundry, Rainbow, House};
         Hashtable stringNames = new Hashtable();
         private TypeName objectType;
         private bool startsActivated;
@@ -30,6 +30,7 @@ namespace Rain_On_Your_Parade
             stringNames.Add(TypeName.Laundry, "sidewalk");
             stringNames.Add(TypeName.Pool, "pool");
             stringNames.Add(TypeName.Rainbow, "sidewalk");
+            stringNames.Add(TypeName.House, "house");
         }
 
         public TypeName getObjectType()
