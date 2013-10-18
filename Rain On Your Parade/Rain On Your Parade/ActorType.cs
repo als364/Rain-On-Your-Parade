@@ -47,6 +47,7 @@ namespace Rain_On_Your_Parade
                     gridPlayEffect = 1;
                     gridNurtureEffect = 1;
                     gridRampageEffect = 3;
+                    stringNames.Add(Type.Cat, "cat");
                     break;
                 case ActorType.Type.Kid:
                     sleepNeed = 1;
@@ -60,6 +61,7 @@ namespace Rain_On_Your_Parade
                     gridPlayEffect = 2;
                     gridNurtureEffect = 3;
                     gridRampageEffect = 3;
+                    stringNames.Add(Type.Kid, "kid");
                     break;
                 case ActorType.Type.Mom:
                     sleepNeed = 0;
@@ -73,6 +75,7 @@ namespace Rain_On_Your_Parade
                     gridPlayEffect = -1;
                     gridNurtureEffect = -1;
                     gridRampageEffect = 3;
+                    stringNames.Add(Type.Mom, "mom");
                     break;
             }
         }
@@ -136,7 +139,6 @@ namespace Rain_On_Your_Parade
             get { return baseRampageLevel; }
             set { baseRampageLevel = value; }
         }
-<<<<<<< HEAD
         public int GridSleepEffect
         {
             get { return gridSleepEffect; }
@@ -156,11 +158,10 @@ namespace Rain_On_Your_Parade
         {
             get { return gridRampageEffect; }
             set { gridRampageEffect = value; }
-=======
+        }
         public override string ToString()
         {
             return (string)stringNames[typeName];
->>>>>>> 0c8c04ed0bb273b60b53bcbaf6e27337032f509f
         }
         #endregion
     }

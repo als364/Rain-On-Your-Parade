@@ -10,7 +10,7 @@ namespace Rain_On_Your_Parade
     public class GridSquare
     {
 
-        private List<WorldObject> objects;             // list of objects on GridSquare
+        private List<WorldObject> objects;       // list of objects on GridSquare
         private List<Actor> actors;              // list of actors on GridSquare
         public  List<GridSquare> adjacent;       // list of adjacent GridSquares
 	    private bool isPassable;                 // can actors enter/see past GridSquare

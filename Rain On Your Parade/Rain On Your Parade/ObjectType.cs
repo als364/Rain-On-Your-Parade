@@ -43,10 +43,10 @@ namespace Rain_On_Your_Parade
             return startsActivated;
         }
 
-        //public int getSleepLevel()
-        //{
-        //    return sleepLevel;
-        //}
+        public int getSleepLevel()
+        {
+            return sleepLevel;
+        }
 
         //public int getPlayLevel()
         //{
