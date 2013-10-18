@@ -158,10 +158,10 @@ namespace Rain_On_Your_Parade
 
             foreach(WorldObject obj in o) 
             {
-                totalSleep += obj.type.getSleepLevel();
-                totalPlay += obj.type.getPlayLevel();
-                totalNurture += obj.type.getNurtureLevel();
-                totalRampage += obj.type.getRampageLevel();
+                totalSleep += obj.type.SleepLevel;
+                totalPlay += obj.type.PlayLevel;
+                totalNurture += obj.type.NurtureLevel;
+                totalRampage += obj.type.RampageLevel;
             }
 
             foreach(Actor act in a)

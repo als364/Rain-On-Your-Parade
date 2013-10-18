@@ -6,7 +6,7 @@ namespace Rain_On_Your_Parade
     public class ObjectType
     {
 
-        public enum TypeName {SunnySpot, Garden, Pool, Chalking, Laundry, Rainbow, House};
+        public enum TypeName {SunnySpot, Garden, Pool, Chalking, Laundry, House};
         Hashtable stringNames = new Hashtable();
         private TypeName objectType;
         private bool startsActivated;
@@ -29,7 +29,7 @@ namespace Rain_On_Your_Parade
             stringNames.Add(TypeName.Garden, "garden");
             stringNames.Add(TypeName.Laundry, "sidewalk");
             stringNames.Add(TypeName.Pool, "pool");
-            stringNames.Add(TypeName.Rainbow, "sidewalk");
+            //stringNames.Add(TypeName.Rainbow, "sidewalk");
             stringNames.Add(TypeName.House, "house");
         }
 
@@ -43,24 +43,45 @@ namespace Rain_On_Your_Parade
             return startsActivated;
         }
 
-        public int getSleepLevel()
-        {
-            return sleepLevel;
-        }
+        //public int getSleepLevel()
+        //{
+        //    return sleepLevel;
+        //}
 
-        public int getPlayLevel()
-        {
-            return playLevel;
-        }
+        //public int getPlayLevel()
+        //{
+        //    return playLevel;
+        //}
 
-        public int getNurtureLevel()
-        {
-            return nurtureLevel;
-        }
+        //public int getNurtureLevel()
+        //{
+        //    return nurtureLevel;
+        //}
 
-        public int getRampageLevel()
+        //public int getRampageLevel()
+        //{
+        //    return rampageLevel;
+        //}
+
+        public int SleepLevel
         {
-            return rampageLevel;
+            get { return sleepLevel; }
+            set { sleepLevel = value; }
+        }
+        public int PlayLevel
+        {
+            get { return playLevel; }
+            set { playLevel = value; }
+        }
+        public int NurtureLevel
+        {
+            get { return nurtureLevel; }
+            set { nurtureLevel = value; }
+        }
+        public int RampageLevel
+        {
+            get { return rampageLevel; }
+            set { rampageLevel = value; }
         }
         public override string ToString()
         {
