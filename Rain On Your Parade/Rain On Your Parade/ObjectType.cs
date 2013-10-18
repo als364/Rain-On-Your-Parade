@@ -65,6 +65,7 @@ namespace Rain_On_Your_Parade
         public override string ToString()
         {
             return (string)stringNames[objectType];
-        }
+        }
+
     }
 }
