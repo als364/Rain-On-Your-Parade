@@ -18,6 +18,7 @@ namespace Rain_On_Your_Parade
 
         public override void Update(GameTime gameTime, WorldState worldState)
         {
+            //Console.WriteLine("State: " + controlledActor.State.State);
             switch (controlledActor.State.State)
             {
                 /*case ActorState.AState.Nurture:
@@ -31,30 +32,43 @@ namespace Rain_On_Your_Parade
                 case ActorState.AState.Seek:
                     ActorState.AState newState = DetermineTargetState();
                     controlledActor.TargetState = newState;
+                    //Console.WriteLine("Position: " + controlledActor.Position);
+                    //Console.WriteLine("World Size: [" + worldState.worldWidth + " x " + worldState.worldHeight + "]");
                     controlledActor.Path = FindPath(PreferenceSearch(worldState),
-                                                        worldState.StateOfWorld[(int)controlledActor.Position.X, (int)controlledActor.Position.Y],
+                                                        worldState.StateOfWorld[(int)(controlledActor.Position.X/Canvas.SQUARE_SIZE), (int)(controlledActor.Position.Y/Canvas.SQUARE_SIZE)],
                                                         worldState.StateOfWorld, new Point[worldState.worldWidth, worldState.worldHeight]);
                     controlledActor.State = new ActorState(ActorState.AState.Walk);
                     break;
                 case ActorState.AState.Walk:
                     if (controlledActor.Path.Count == 0)
                     {
+                        //Console.WriteLine("Path empty, moving to Seek");
                         controlledActor.State = new ActorState(ActorState.AState.Seek);
                     }
                     else if (controlledActor.Path.Count == 1)
                     {
+                        //Console.WriteLine("Path ended, moving to " + controlledActor.TargetState);
                         controlledActor.State = new ActorState(controlledActor.TargetState);
                     }
                     else
                     {
+                        Console.WriteLine("Moving along path");
+                        Console.WriteLine("Current Square: " + controlledActor.GridSquareLocation());
                         GridSquare nextSquare = controlledActor.Path[0];
+                        Console.WriteLine("Next Square: " + nextSquare.Location);
                         if (nextSquare.Contains(controlledActor.Position))
                         {
                             controlledActor.Path.RemoveAt(0);
                             nextSquare = controlledActor.Path[0];
                             controlledActor.Velocity = new Vector2(nextSquare.Location.X - controlledActor.Position.X, nextSquare.Location.Y - controlledActor.Position.Y);
+                            Console.WriteLine("Velocity: " + controlledActor.Velocity);
                         }
-                        controlledActor.Position = Vector2.Add(controlledActor.Position, controlledActor.Velocity);
+                        else
+                        {
+                            controlledActor.Velocity = new Vector2(nextSquare.Location.X - controlledActor.Position.X, nextSquare.Location.Y - controlledActor.Position.Y);
+                        }
+                        //controlledActor.Velocity.Normalize();
+                        //controlledActor.Position = Vector2.Add(controlledActor.Position, controlledActor.Velocity);
                     }
                     break;
                 default:
@@ -134,10 +148,14 @@ namespace Rain_On_Your_Parade
             foreach (GridSquare square in worldState.StateOfWorld)
             {
                 double desirability = Desirability(square, controlledActor.Position);
+                Console.WriteLine("GridSquare: " + square.Location);
+                Console.WriteLine("Desirability: " + desirability);
+                Console.WriteLine("MaxPreference: " + maxPreference);
                 if (desirability > maxPreference)
                 {
                     targets.Clear();
                     targets.Add(square);
+                    maxPreference = desirability;
                 }
                 else if (desirability == maxPreference)
                 {
@@ -174,7 +192,6 @@ namespace Rain_On_Your_Parade
                 GridSquare lookingAt = queue.Dequeue();
                 if (targets.Contains(lookingAt))
                 {
-                    //no, this does not actually work yet
                     List<Point> pointPath = ExtractPathFromTarget(parentArray, lookingAt.Location, currentSquare.Location);
                     foreach(Point point in pointPath)
                     {

@@ -77,6 +77,14 @@ namespace Rain_On_Your_Parade
         {
             get
             {
+                foreach (WorldObject o in objects)
+                {
+                    totalSleep += o.type.getSleepLevel();
+                }
+                foreach (Actor a in actors)
+                {
+                    totalSleep += a.Type.GridSleepEffect;
+                }
                 return totalSleep;
             }
 
@@ -143,18 +151,19 @@ namespace Rain_On_Your_Parade
         /// <summary>GridSquare Constructor</summary>
         /// <param name="o">ArrayList of objects on GridSquare</param>
         /// <param name="a">ArrayList of actors on GridSquare</param>
-        /// <param name="is_p">Ability of actors to enter/see past GridSquare</param>
+        /// <param name="is_passable">Ability of actors to enter/see past GridSquare</param>
         /// <devdoc>
         /// Create a GridSquare containing all objects and actors
         /// from the objectlist and actorlist, it's ability to be passed
         /// by actors, and the total amount of sleep, play, nurture, and rampage
         /// attributes present on the GridSquare.
         /// </devdoc>
-        public GridSquare(List<WorldObject> o, List<Actor> a, bool is_p)
+        public GridSquare(List<WorldObject> o, List<Actor> a, bool is_passable, Point location)
         {
             objects = o;
             actors = a;
-            isPassable = is_p;
+            isPassable = is_passable;
+            this.location = location;
 
             foreach(WorldObject obj in o) 
             {
@@ -171,6 +180,8 @@ namespace Rain_On_Your_Parade
                 totalNurture += act.NurtureLevel;
                 totalRampage += act.RampageLevel;
             }
+
+            adjacent = new List<GridSquare>();
         }
 
         public bool Contains(Vector2 point)

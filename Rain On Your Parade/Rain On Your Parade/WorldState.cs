@@ -90,6 +90,7 @@ namespace Rain_On_Your_Parade
             worldWidth = stateOfWorld.GetLength(0);
             worldHeight = stateOfWorld.GetLength(1);
             player = new Player();
+            initializeAdjacencyLists();
         }
 
         public List<Actor> getActors()

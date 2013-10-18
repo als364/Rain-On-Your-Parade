@@ -75,8 +75,10 @@ namespace Rain_On_Your_Parade
             foreach (Actor a in worldState.getActors()){
                 View actors = new View(a);
                 models.Add(a);
-                Debug.WriteLine("Y: " + a.Position.Y);
+                //Debug.WriteLine("Y: " + a.Position.Y);
                 views.Add(actors);
+                Controller actorController = new ActorController(a);
+                controllers.Add(actorController);
             }
             foreach (WorldObject o in worldState.getObjects()){
                 View objects= new View(o);
