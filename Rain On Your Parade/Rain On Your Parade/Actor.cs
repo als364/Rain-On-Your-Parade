@@ -36,7 +36,7 @@ namespace Rain_On_Your_Parade
 
         public override void LoadContent(ContentManager content)
         {
-            sprite = content.Load<Texture2D>("Actor");
+            sprite = content.Load<Texture2D>(type.ToString());
             spriteWidth = 80;
             spriteHeight = 80;
         }
