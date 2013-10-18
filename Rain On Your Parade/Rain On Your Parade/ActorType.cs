@@ -17,13 +17,19 @@ namespace Rain_On_Your_Parade
         private int baseNurtureLevel;
         private int baseRampageLevel;
 
+        private int gridSleepEffect;
+        private int gridPlayEffect;
+        private int gridNurtureEffect;
+        private int gridRampageEffect;
+
         public const int SLEEP_THRESHOLD = 3;
         public const int PLAY_THRESHOLD = 3;
         public const int NURTURE_THRESHOLD = 3;
         public const int RAMPAGE_THRESHOLD = 3;
 
         public ActorType(Type aTypeName, int aSleepNeed, int aPlayNeed, int aNurtureNeed,
-            int aBaseSleepLevel, int aBasePlayLevel, int aBaseNurtureLevel, int aBaseRampageLevel)
+            int aBaseSleepLevel, int aBasePlayLevel, int aBaseNurtureLevel, int aBaseRampageLevel, 
+            int aGridSleepEffect, int aGridPlayEffect, int aGridNurtureEffect, int aGridRampageEffect)
         {
             typeName = aTypeName;
             sleepNeed = aSleepNeed;
@@ -33,6 +39,10 @@ namespace Rain_On_Your_Parade
             basePlayLevel = aBasePlayLevel;
             baseNurtureLevel = aBaseNurtureLevel;
             baseRampageLevel = aBaseRampageLevel;
+            gridSleepEffect = aGridSleepEffect;
+            gridPlayEffect = aGridPlayEffect;
+            gridNurtureEffect = aGridNurtureEffect;
+            gridRampageEffect = aGridRampageEffect;
         }
 
         #region Getters and Setters
@@ -75,6 +85,26 @@ namespace Rain_On_Your_Parade
         {
             get { return baseRampageLevel; }
             set { baseRampageLevel = value; }
+        }
+        public int GridSleepEffect
+        {
+            get { return gridSleepEffect; }
+            set { gridSleepEffect = value; }
+        }
+        public int GridPlayEffect
+        {
+            get { return gridSleepEffect; }
+            set { gridSleepEffect = value; }
+        }
+        public int GridNurtureEffect
+        {
+            get { return gridNurtureEffect; }
+            set { gridNurtureEffect = value; }
+        }
+        public int GridRampageEffect
+        {
+            get { return gridRampageEffect; }
+            set { gridRampageEffect = value; }
         }
         #endregion
     }

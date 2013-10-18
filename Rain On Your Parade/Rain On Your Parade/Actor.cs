@@ -19,6 +19,10 @@ namespace Rain_On_Your_Parade
         private int playLevel;
         private int nurtureLevel;
         private int rampageLevel;
+        private int gridSleepEffect;
+        private int gridPlayEffect;
+        private int gridNurtureEffect;
+        private int gridRampageEffect;
         private List<GridSquare> path;
 
         public Actor(ActorType aType, Vector2 initPos, int initMood, ActorState initState)

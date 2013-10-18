@@ -65,9 +65,10 @@ namespace Rain_On_Your_Parade
                         }
                         else
                         {
-
+                            controlledActor.Velocity = new Vector2(nextSquare.Location.X - controlledActor.Position.X, nextSquare.Location.Y - controlledActor.Position.Y);
                         }
-                        controlledActor.Position = Vector2.Add(controlledActor.Position, controlledActor.Velocity);
+                        //controlledActor.Velocity.Normalize();
+                        //controlledActor.Position = Vector2.Add(controlledActor.Position, controlledActor.Velocity);
                     }
                     break;
                 default:
@@ -147,10 +148,14 @@ namespace Rain_On_Your_Parade
             foreach (GridSquare square in worldState.StateOfWorld)
             {
                 double desirability = Desirability(square, controlledActor.Position);
+                Console.WriteLine("GridSquare: " + square.Location);
+                Console.WriteLine("Desirability: " + desirability);
+                Console.WriteLine("MaxPreference: " + maxPreference);
                 if (desirability > maxPreference)
                 {
                     targets.Clear();
                     targets.Add(square);
+                    maxPreference = desirability;
                 }
                 else if (desirability == maxPreference)
                 {
@@ -187,7 +192,6 @@ namespace Rain_On_Your_Parade
                 GridSquare lookingAt = queue.Dequeue();
                 if (targets.Contains(lookingAt))
                 {
-                    //no, this does not actually work yet
                     List<Point> pointPath = ExtractPathFromTarget(parentArray, lookingAt.Location, currentSquare.Location);
                     foreach(Point point in pointPath)
                     {
