@@ -98,6 +98,9 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\batterybar.xnb">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\cloud.xnb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -108,9 +111,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\house.xnb">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\Player.xnb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\pool.xnb">

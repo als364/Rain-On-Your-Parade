@@ -14,7 +14,7 @@ namespace Rain_On_Your_Parade
         private int rain;       //amount of rain held by player
         //private Vector2 position;
 
-        private const int MAX_RAIN = 6;
+        public const int MAX_RAIN = 6;
 
         #region Getters and Setters
 

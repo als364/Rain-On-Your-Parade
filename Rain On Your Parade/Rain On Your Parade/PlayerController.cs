@@ -11,7 +11,7 @@ namespace Rain_On_Your_Parade
     {
         public const float ACCELERATION = 0.3f;
         public const float DECELERATION = 0.2f;
-        public const float MAX_SPEED = 6f;
+        public const float MAX_SPEED = 5f;
         public const int COOL_DOWN = 15; //amount of time spent raining
         private int coolDown;
         private Player player;
@@ -25,8 +25,17 @@ namespace Rain_On_Your_Parade
         public override void Update(GameTime gameTime, WorldState worldState)
         {
             KeyboardState ks = Keyboard.GetState();
+
             if (coolDown == 0) //
             {
+                if (ks.IsKeyDown(Keys.R))
+                {
+                    if (Absorb())
+                    {
+                        player.Velocity = new Vector2(0, 0);
+                        coolDown = COOL_DOWN;
+                    }
+                }
                 if (ks.IsKeyDown(Keys.Space))
                 {
                     if (Rain())
@@ -38,19 +47,19 @@ namespace Rain_On_Your_Parade
 
                 //if (player.Velocity.Length() < MAX_SPEED)
                 //{
-                    if (ks.IsKeyDown(Keys.W))
+                    if (ks.IsKeyDown(Keys.W) || ks.IsKeyDown(Keys.Up))
                     {
                        player.Velocity = Vector2.Subtract(player.Velocity,new Vector2(0, ACCELERATION));
                     }
-                    if (ks.IsKeyDown(Keys.D))
+                    if (ks.IsKeyDown(Keys.D) || ks.IsKeyDown(Keys.Right))
                     {
                         player.Velocity = Vector2.Add(player.Velocity, new Vector2(ACCELERATION, 0));
                     }
-                    if (ks.IsKeyDown(Keys.S))
+                    if (ks.IsKeyDown(Keys.S) || ks.IsKeyDown(Keys.Down))
                     {
                         player.Velocity = Vector2.Add(player.Velocity, new Vector2(0, ACCELERATION));
                     }
-                    if (ks.IsKeyDown(Keys.A))
+                    if (ks.IsKeyDown(Keys.A) || ks.IsKeyDown(Keys.Left))
                     {
                         player.Velocity = Vector2.Subtract(player.Velocity, new Vector2(ACCELERATION, 0));
                     }
@@ -154,6 +163,11 @@ namespace Rain_On_Your_Parade
                 //do other stuff, affect world, draw rain etc.
                 return true;
             }
+            return false;
+        }
+
+        private bool Absorb()
+        {
             return false;
         }
     }
