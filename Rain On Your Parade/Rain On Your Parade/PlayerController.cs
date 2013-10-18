@@ -183,7 +183,10 @@ namespace Rain_On_Your_Parade
                 {
                     if (o.getActivated())
                     {
-                        o.deactivate();
+                        if (o.type.getObjectType() != ObjectType.TypeName.House && o.type.getObjectType() != ObjectType.TypeName.Chalking)
+                        {
+                            o.deactivate();
+                        }
                     }
                     else
                     {
