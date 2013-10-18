@@ -30,6 +30,9 @@ namespace Rain_On_Your_Parade
 
         WorldState worldState;
 
+        Texture2D batterybar;
+        Texture2D battery;
+
         public GameEngine()
             : base()
         {
@@ -105,6 +108,10 @@ namespace Rain_On_Your_Parade
             {
                 model.LoadContent(this.Content);
             }
+
+            batterybar = Content.Load<Texture2D>("batterybar");
+            battery = Content.Load<Texture2D>("grass");
+
         }
 
         /// <summary>
@@ -147,8 +154,15 @@ namespace Rain_On_Your_Parade
             {
                 view.Draw(spriteBatch);
             }
+
+            spriteBatch.Draw(batterybar, new Rectangle(0, 0, 155, 30), Color.Azure);
+            for (int i = 0; i < worldState.Player.Rain; i++)
+            {
+                spriteBatch.Draw(battery, new Rectangle(i*150/6 +5 , 3, 150/6, 25), Color.Azure);
+            }
             spriteBatch.End();
             base.Draw(gameTime);
+
         }
     }
 }

@@ -98,6 +98,9 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\batterybar.xnb">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="Content\cloud.xnb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
