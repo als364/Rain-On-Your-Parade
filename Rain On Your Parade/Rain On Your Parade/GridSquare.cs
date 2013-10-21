@@ -79,7 +79,7 @@ namespace Rain_On_Your_Parade
             {
                 foreach (WorldObject o in objects)
                 {
-                    totalSleep += o.type.getSleepLevel();
+                    totalSleep += o.Type.SleepLevel;
                 }
                 foreach (Actor a in actors)
                 {
@@ -158,19 +158,58 @@ namespace Rain_On_Your_Parade
         /// by actors, and the total amount of sleep, play, nurture, and rampage
         /// attributes present on the GridSquare.
         /// </devdoc>
-        public GridSquare(List<WorldObject> o, List<Actor> a, bool is_passable, Point location)
+        /// 
+
+        public GridSquare(ObjectType.Type newObj, Point location)
+        {
+            WorldObject o = new WorldObject(newObj, location);
+            objects = new List<WorldObject> () {o};
+            actors = new List<Actor>();
+            isPassable = o.Type.Passable;
+            this.location = location;
+
+            foreach (WorldObject obj in objects)
+            {
+                totalSleep += obj.Type.SleepLevel;
+                totalPlay += obj.Type.PlayLevel;
+                totalNurture += obj.Type.NurtureLevel;
+                totalRampage += obj.Type.RampageLevel;
+            }
+            adjacent = new List<GridSquare>();
+        }
+
+        public GridSquare(ActorType.Type newAct, Point location)
+        {
+            Actor a = new Actor(newAct, location);
+            objects = new List<WorldObject>();
+            actors = new List<Actor>() { a };
+            isPassable = true;
+            this.location = location;
+
+            foreach (Actor act in actors)
+            {
+                totalSleep += act.SleepLevel;
+                totalPlay += act.PlayLevel;
+                totalNurture += act.NurtureLevel;
+                totalRampage += act.RampageLevel;
+            }
+
+            adjacent = new List<GridSquare>();
+        }
+
+        public GridSquare(List<WorldObject> o, List<Actor> a, Point location)
         {
             objects = o;
             actors = a;
-            isPassable = is_passable;
             this.location = location;
 
             foreach(WorldObject obj in o) 
             {
-                totalSleep += obj.type.SleepLevel;
-                totalPlay += obj.type.PlayLevel;
-                totalNurture += obj.type.NurtureLevel;
-                totalRampage += obj.type.RampageLevel;
+                totalSleep += obj.Type.SleepLevel;
+                totalPlay += obj.Type.PlayLevel;
+                totalNurture += obj.Type.NurtureLevel;
+                totalRampage += obj.Type.RampageLevel;
+                isPassable = isPassable || obj.Type.Passable;
             }
 
             foreach(Actor act in a)

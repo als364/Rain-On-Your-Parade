@@ -26,7 +26,7 @@ namespace Rain_On_Your_Parade
             if (viewedModel is WorldObject)
             {
                 WorldObject temp = (WorldObject)viewedModel;
-                if (temp.getActivated() == temp.type.getStartsActivated())
+                if (temp.Activated == temp.Type.StartsActivated)
                 {
                     spriteBatch.Draw(image, new Rectangle((int)viewedModel.Position.X, (int)viewedModel.Position.Y, viewedModel.spriteWidth, viewedModel.spriteHeight), Color.Azure);
                 }

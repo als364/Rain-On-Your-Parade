@@ -19,6 +19,7 @@ namespace Rain_On_Your_Parade
         private int basePlayLevel;
         private int baseNurtureLevel;
         private int baseRampageLevel;
+        private ActorState initState;
 
         private int gridSleepEffect;
         private int gridPlayEffect;
@@ -47,6 +48,7 @@ namespace Rain_On_Your_Parade
                     gridPlayEffect = 1;
                     gridNurtureEffect = 1;
                     gridRampageEffect = 3;
+                    initState = new ActorState(ActorState.AState.Sleep);
                     stringNames.Add(Type.Cat, "cat");
                     break;
                 case ActorType.Type.Kid:
@@ -61,6 +63,7 @@ namespace Rain_On_Your_Parade
                     gridPlayEffect = 2;
                     gridNurtureEffect = 3;
                     gridRampageEffect = 3;
+                    initState = new ActorState(ActorState.AState.Seek);
                     stringNames.Add(Type.Kid, "kid");
                     break;
                 case ActorType.Type.Mom:
@@ -75,6 +78,7 @@ namespace Rain_On_Your_Parade
                     gridPlayEffect = -1;
                     gridNurtureEffect = -1;
                     gridRampageEffect = 3;
+                    initState = new ActorState(ActorState.AState.Seek);
                     stringNames.Add(Type.Mom, "mom");
                     break;
             }
@@ -96,6 +100,10 @@ namespace Rain_On_Your_Parade
             gridPlayEffect = aGridPlayEffect;
             gridNurtureEffect = aGridNurtureEffect;
             gridRampageEffect = aGridRampageEffect;
+
+            stringNames.Add(Type.Cat, "cat");
+            stringNames.Add(Type.Kid, "kid");
+            stringNames.Add(Type.Mom, "mom");
         }
 
         #region Getters and Setters
@@ -158,6 +166,11 @@ namespace Rain_On_Your_Parade
         {
             get { return gridRampageEffect; }
             set { gridRampageEffect = value; }
+        }
+        public ActorState InitState
+        {
+            get { return initState; }
+            set { initState = value; }
         }
         public override string ToString()
         {

@@ -25,12 +25,13 @@ namespace Rain_On_Your_Parade
         private int gridRampageEffect;
         private List<GridSquare> path;
 
-        public Actor(ActorType aType, Vector2 initPos, int initMood, ActorState initState)
+        public Actor(ActorType.Type newActType, Point pos)
         {
+            ActorType aType = new ActorType(newActType);
             type = aType;
-            Position = initPos;
-            mood = initMood;
-            state = initState;
+            Position = new Vector2(pos.X * Canvas.SQUARE_SIZE, pos.Y * Canvas.SQUARE_SIZE);
+            mood = 0;
+            state = aType.InitState;
             sleepLevel = aType.BaseSleepLevel;
             playLevel = aType.BaseSleepLevel;
             nurtureLevel = aType.BaseNurtureLevel;

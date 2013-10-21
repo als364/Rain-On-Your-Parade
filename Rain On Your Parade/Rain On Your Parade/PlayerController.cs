@@ -181,9 +181,9 @@ namespace Rain_On_Your_Parade
                 }
                 foreach (WorldObject o in worldState.StateOfWorld[(int)(player.Position.X / Canvas.SQUARE_SIZE), (int)(player.Position.Y / Canvas.SQUARE_SIZE)].Objects)
                 {
-                    if (o.getActivated())
+                    if (o.Activated)
                     {
-                        if (o.type.getObjectType() != ObjectType.TypeName.House && o.type.getObjectType() != ObjectType.TypeName.Chalking)
+                        if (o.Type.TypeName != ObjectType.Type.House && o.Type.TypeName != ObjectType.Type.Chalking)
                         {
                             o.deactivate();
                         }
@@ -204,9 +204,9 @@ namespace Rain_On_Your_Parade
             List<WorldObject> objects = worldState.StateOfWorld[(int)(player.Position.X / Canvas.SQUARE_SIZE), (int)(player.Position.Y / Canvas.SQUARE_SIZE)].Objects;
             foreach (WorldObject o in objects)
             {
-                if (o.type.getObjectType() == ObjectType.TypeName.Pool || o.type.getObjectType() == ObjectType.TypeName.Garden)
+                if (o.Type.TypeName == ObjectType.Type.Pool || o.Type.TypeName == ObjectType.Type.Garden)
                 {
-                    if (o.getActivated())
+                    if (o.Activated)
                     {
                         o.deactivate();
                         player.Rain++;

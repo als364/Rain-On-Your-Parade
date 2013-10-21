@@ -8,14 +8,14 @@ namespace Rain_On_Your_Parade
 {
     public class WorldObject : Model
     {
-        public ObjectType type;
+        private ObjectType type;
         private bool activated;
 
-        public WorldObject(ObjectType oType, Vector2 pos)
+        public WorldObject(ObjectType.Type oType, Point pos)
         {
-            type = oType;
-            Position = pos;
-            activated = oType.getStartsActivated();
+            type = new ObjectType(oType);
+            Position =  new Vector2(pos.X * Canvas.SQUARE_SIZE, pos.Y * Canvas.SQUARE_SIZE);
+            activated = type.StartsActivated;
         }
 
         public override void LoadContent(ContentManager content)
@@ -25,38 +25,45 @@ namespace Rain_On_Your_Parade
             spriteHeight = 80;
         }
 
-        public bool getActivated()
+        public ObjectType Type
         {
-            return activated;
+            get { return type; }
+            set { type = value; }
+        }
+
+        public bool Activated
+        {
+            get { return activated; }
+            set { activated = value; }
         }
 
         public void activate()
         {
             activated = true;
-            if (type.getObjectType() == ObjectType.TypeName.Pool)
+            if (type.TypeName == ObjectType.Type.Pool)
             {
                 type.PlayLevel = 3;
             }
-            if (type.getObjectType() == ObjectType.TypeName.Garden)
+            if (type.TypeName == ObjectType.Type.Garden)
             {
                 type.PlayLevel = 3;
                 type.SleepLevel = 3;
                 type.NurtureLevel = 0;
             }
-            if (type.getObjectType() == ObjectType.TypeName.Chalking)
+            if (type.TypeName == ObjectType.Type.Chalking)
             {
                 type.PlayLevel = 3;
                 type.RampageLevel = 0;
             }
-            if (type.getObjectType() == ObjectType.TypeName.House)
+            if (type.TypeName == ObjectType.Type.House)
             {
             }
-            if (type.getObjectType() == ObjectType.TypeName.Laundry)
+            if (type.TypeName == ObjectType.Type.Laundry)
             {
                 type.RampageLevel = 0;
                 type.NurtureLevel = 0;
             }
-            if (type.getObjectType() == ObjectType.TypeName.SunnySpot)
+            if (type.TypeName == ObjectType.Type.SunnySpot)
             {
                 type.SleepLevel = 0;
                 type.NurtureLevel = 3;
@@ -67,30 +74,30 @@ namespace Rain_On_Your_Parade
         public void deactivate()
         {
             activated = false;
-            if (type.getObjectType() == ObjectType.TypeName.Pool)
+            if (type.TypeName == ObjectType.Type.Pool)
             {
                 type.PlayLevel = 0;
             }
-            if (type.getObjectType() == ObjectType.TypeName.Garden)
+            if (type.TypeName == ObjectType.Type.Garden)
             {
                 type.PlayLevel = 0;
                 type.SleepLevel = 0;
                 type.NurtureLevel = 3;
             }
-            if (type.getObjectType() == ObjectType.TypeName.Chalking)
+            if (type.TypeName == ObjectType.Type.Chalking)
             {
                 type.PlayLevel = 0;
                 type.RampageLevel = 3;
             }
-            if (type.getObjectType() == ObjectType.TypeName.House)
+            if (type.TypeName == ObjectType.Type.House)
             {
             }
-            if (type.getObjectType() == ObjectType.TypeName.Laundry)
+            if (type.TypeName == ObjectType.Type.Laundry)
             {
                 type.RampageLevel = 3;
                 type.NurtureLevel = 3;
             }
-            if (type.getObjectType() == ObjectType.TypeName.SunnySpot)
+            if (type.TypeName == ObjectType.Type.SunnySpot)
             {
                 type.SleepLevel = 3;
                 type.NurtureLevel = 0;
