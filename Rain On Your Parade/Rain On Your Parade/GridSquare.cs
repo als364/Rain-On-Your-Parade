@@ -203,7 +203,18 @@ namespace Rain_On_Your_Parade
             actors = a;
             this.location = location;
 
-            foreach(WorldObject obj in o) 
+            this.calculateLevels();
+
+            adjacent = new List<GridSquare>();
+        }
+
+        public void calculateLevels(){
+            totalSleep = 0;
+            totalPlay = 0;
+            totalNurture = 0;
+            totalRampage = 0;
+
+            foreach (WorldObject obj in objects)
             {
                 totalSleep += obj.Type.SleepLevel;
                 totalPlay += obj.Type.PlayLevel;
@@ -212,7 +223,7 @@ namespace Rain_On_Your_Parade
                 isPassable = isPassable || obj.Type.Passable;
             }
 
-            foreach(Actor act in a)
+            foreach (Actor act in actors)
             {
                 totalSleep += act.SleepLevel;
                 totalPlay += act.PlayLevel;
@@ -220,13 +231,17 @@ namespace Rain_On_Your_Parade
                 totalRampage += act.RampageLevel;
             }
 
-            adjacent = new List<GridSquare>();
         }
 
         public bool Contains(Vector2 point)
         {
-            bool xContained = (point.X >= location.X && point.X <= location.X + 1);
-            bool yContained = (point.Y >= location.Y && point.Y <= location.Y + 1);
+            bool xContained = (point.X >= location.X * Canvas.SQUARE_SIZE - 2 && point.X <= location.X * Canvas.SQUARE_SIZE + 2);
+            bool yContained = (point.Y >= location.Y * Canvas.SQUARE_SIZE - 2 && point.Y <= location.Y * Canvas.SQUARE_SIZE + 2);
+           // Console.WriteLine("Point.X: " + point.X);
+           // Console.WriteLine("Point.Y: " + point.Y);
+           // Console.WriteLine("Location.X: " + location.X * Canvas.SQUARE_SIZE);
+           // Console.WriteLine("Location.Y: " + location.Y * Canvas.SQUARE_SIZE);
+
             return xContained && yContained;
         }
 

@@ -33,7 +33,7 @@ namespace Rain_On_Your_Parade
             mood = 0;
             state = aType.InitState;
             sleepLevel = aType.BaseSleepLevel;
-            playLevel = aType.BaseSleepLevel;
+            playLevel = aType.BasePlayLevel;
             nurtureLevel = aType.BaseNurtureLevel;
             path = new List<GridSquare>();
             rampageLevel = aType.BaseRampageLevel;
@@ -42,8 +42,8 @@ namespace Rain_On_Your_Parade
         public override void LoadContent(ContentManager content)
         {
             sprite = content.Load<Texture2D>(type.ToString());
-            spriteWidth = 80;
-            spriteHeight = 80;
+            spriteWidth = Canvas.SQUARE_SIZE;
+            spriteHeight = Canvas.SQUARE_SIZE;
         }
 
         #region Getters and Setters

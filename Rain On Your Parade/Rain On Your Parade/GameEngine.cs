@@ -71,7 +71,12 @@ namespace Rain_On_Your_Parade
             worldState = new WorldState(quota,level.canvasGrid);
 
             //Debug.WriteLine("Y: " + worldState.getActors().ToArray()[1].Position.Y);
-
+            foreach (WorldObject o in worldState.getObjects())
+            {
+                View objects = new View(o);
+                models.Add(o);
+                views.Add(objects);
+            }
             foreach (Actor a in worldState.getActors()){
                 View actors = new View(a);
                 models.Add(a);
@@ -80,11 +85,7 @@ namespace Rain_On_Your_Parade
                 Controller actorController = new ActorController(a);
                 controllers.Add(actorController);
             }
-            foreach (WorldObject o in worldState.getObjects()){
-                View objects= new View(o);
-                models.Add(o);
-                views.Add(objects);
-            }
+            
             View player = new View(worldState.Player);
             views.Add(player);
             models.Add(worldState.Player);
@@ -140,6 +141,12 @@ namespace Rain_On_Your_Parade
             {
                 controller.Update(gameTime, worldState);
             }
+            foreach (GridSquare g in worldState.StateOfWorld)
+            {
+                g.calculateLevels();
+
+            }
+
             base.Update(gameTime);
         }
 
