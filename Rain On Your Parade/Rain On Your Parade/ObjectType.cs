@@ -25,7 +25,7 @@ namespace Rain_On_Your_Parade
                 case ObjectType.Type.SunnySpot:
                     startsActivated = true;
                     sleepLevel = 3;
-                    playLevel = 1;
+                    playLevel = 0;
                     nurtureLevel = 0;
                     rampageLevel = 0;
                     passable = true;
@@ -54,10 +54,10 @@ namespace Rain_On_Your_Parade
 
                 case ObjectType.Type.Chalking:
                     startsActivated = false;
-                    sleepLevel = 1;
-                    playLevel = 3;
+                    sleepLevel = 0;
+                    playLevel = 0;
                     nurtureLevel = 0;
-                    rampageLevel = 2;
+                    rampageLevel = 0;
                     passable = true;
                     stringNames.Add(Type.Chalking, "sidewalk");
                     break;
