@@ -30,9 +30,9 @@ namespace Rain_On_Your_Parade
             //Reactivate once actor pathing is fixed
             //
 
-            canvasGrid[6, 0] = new GridSquare(ActorType.Type.Cat, new Point(6, 0));
-            canvasGrid[1, 8] = new GridSquare(ActorType.Type.Kid, new Point(1, 8));
-            canvasGrid[6, 6] = new GridSquare(ActorType.Type.Mom, new Point(6, 6));
+            //canvasGrid[6, 0] = new GridSquare(ActorType.Type.Cat, new Point(6, 0));
+            //canvasGrid[1, 8] = new GridSquare(ActorType.Type.Kid, new Point(1, 8));
+            //canvasGrid[6, 6] = new GridSquare(ActorType.Type.Mom, new Point(6, 6));
             canvasGrid[1, 1] = new GridSquare(ObjectType.Type.SunnySpot, new Point(1, 1));
             canvasGrid[4, 1] = new GridSquare(ObjectType.Type.Laundry, new Point(4, 1));
             canvasGrid[8, 1] = new GridSquare(ObjectType.Type.House, new Point(8, 1));
