@@ -245,6 +245,26 @@ namespace Rain_On_Your_Parade
             return xContained && yContained;
         }
 
+        public override string ToString()
+        {
+            string foo = location.ToString() + ":\nPassable: " + isPassable + "\nTotal Sleep: " + totalSleep + "\nTotal Play: " + totalPlay +
+                "\nTotal Nurture: " + totalNurture + "\nTotal Rampage: " + totalRampage + "\n Adjacent: \n";
+            foreach (GridSquare g in adjacent)
+            {
+                foo += "\t" + g.Location.ToString() + "\n";
+            }
+            foo += "Objects:\n";
+            foreach (WorldObject o in objects)
+            {
+                foo += o.ToString() + "\n";
+            }
+            foo += "Actors:\n";
+            foreach (Actor a in actors)
+            {
+                foo += a.ToString() + "\n";
+            }
+            return foo;
+        }
 
         /// <summary>Public stuff about the method</summary>
         /// <param name="foo">It's an integer apparently</param>

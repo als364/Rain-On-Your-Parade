@@ -22,6 +22,11 @@ namespace Rain_On_Your_Parade
             spriteFilePath = filepath;
         }
 
+        public override string ToString()
+        {
+            return "Position: " + Position.ToString() + "\n";
+        }
+
         abstract public void LoadContent(ContentManager content);
     }
 }

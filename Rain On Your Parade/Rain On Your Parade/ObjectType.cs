@@ -139,9 +139,17 @@ namespace Rain_On_Your_Parade
             get { return passable; }
             set { passable = value; }
         }
-        public override string ToString()
+        //public override string ToString()
+        //{
+        //    return (string)stringNames[typeName];
+        //}
+        public string StringName()
         {
             return (string)stringNames[typeName];
+        }
+        public override string ToString()
+        {
+            return (string)stringNames[typeName] + "\nSleep Level: " + sleepLevel + "\nPlay Level: " + playLevel + "\nNurture Level: " + nurtureLevel + "\nRampage Level: " + rampageLevel;
         }
 
     }

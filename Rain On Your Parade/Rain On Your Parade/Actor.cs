@@ -41,7 +41,7 @@ namespace Rain_On_Your_Parade
 
         public override void LoadContent(ContentManager content)
         {
-            sprite = content.Load<Texture2D>(type.ToString());
+            sprite = content.Load<Texture2D>(type.StringName());
             spriteWidth = Canvas.SQUARE_SIZE;
             spriteHeight = Canvas.SQUARE_SIZE;
         }
@@ -117,6 +117,18 @@ namespace Rain_On_Your_Parade
         public Point GridSquareLocation()
         {
             return new Point((int)(this.Position.X / 80), (int)(this.Position.Y / 80));
+        }
+
+        public override string ToString()
+        {
+            string gPath = "";
+            foreach (GridSquare g in path)
+            {
+                gPath += g.Location.ToString() + "->";
+            }
+            return "Type: " + type.ToString() + "\n" + base.ToString() + "\nVelocity: " + velocity.ToString() + "\nMood: " + mood + "\nState: " + state.ToString() + " Target State: " + targetState.ToString() + "\nSleep Level = " + sleepLevel + "\nPlay Level = " + playLevel + "\nNurture Level = " +
+                nurtureLevel + "\nRampage Level = " + rampageLevel + "\nGrid Sleep Effect: " + gridSleepEffect + "Grid Nurture Effect: " + gridNurtureEffect + "Grid Play Effect: " + gridPlayEffect +
+                "Grid Rampage Effect: " + gridRampageEffect + gPath;
         }
     }
 }

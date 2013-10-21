@@ -19,7 +19,9 @@ namespace Rain_On_Your_Parade
     {
         public const int SCREEN_WIDTH = 880;
         public const int SCREEN_HEIGHT = 720;
-        
+
+        public const int LOG_FRAMES = 60;
+        private int framesTillLog = 0;
 
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
@@ -32,6 +34,8 @@ namespace Rain_On_Your_Parade
 
         Texture2D batterybar;
         Texture2D battery;
+
+        Logger log;
 
         public GameEngine()
             : base()
@@ -95,6 +99,8 @@ namespace Rain_On_Your_Parade
             //views.Add(sliderView);
             //controllers.Add(sliderController);
 
+            log = new Logger();
+
             base.Initialize();
         }
 
@@ -133,6 +139,16 @@ namespace Rain_On_Your_Parade
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
+            if (framesTillLog == 0)
+            {
+                log.Log(worldState, gameTime);
+                framesTillLog = LOG_FRAMES;
+            }
+            else
+            {
+                framesTillLog--;
+            }
+
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 

@@ -20,7 +20,7 @@ namespace Rain_On_Your_Parade
 
         public override void LoadContent(ContentManager content)
         {
-            sprite = content.Load<Texture2D>(type.ToString());
+            sprite = content.Load<Texture2D>(type.StringName());
             spriteWidth = 80;
             spriteHeight = 80;
         }
@@ -104,6 +104,11 @@ namespace Rain_On_Your_Parade
                 type.PlayLevel = 0;
             }
             
+        }
+
+        public override string ToString()
+        {
+            return base.ToString() + type.ToString() + "\nActivated: " + activated;
         }
     }
 }
