@@ -32,7 +32,7 @@ namespace Rain_On_Your_Parade
             mood = initMood;
             state = initState;
             sleepLevel = aType.BaseSleepLevel;
-            playLevel = aType.BaseSleepLevel;
+            playLevel = aType.BasePlayLevel;
             nurtureLevel = aType.BaseNurtureLevel;
             path = new List<GridSquare>();
             rampageLevel = aType.BaseRampageLevel;

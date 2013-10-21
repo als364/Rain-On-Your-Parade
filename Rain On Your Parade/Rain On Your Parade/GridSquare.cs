@@ -165,7 +165,18 @@ namespace Rain_On_Your_Parade
             isPassable = is_passable;
             this.location = location;
 
-            foreach(WorldObject obj in o) 
+            this.calculateLevels();
+
+            adjacent = new List<GridSquare>();
+        }
+
+        public void calculateLevels(){
+            totalSleep = 0;
+            totalPlay = 0;
+            totalNurture = 0;
+            totalRampage = 0;
+
+            foreach (WorldObject obj in objects)
             {
                 totalSleep += obj.type.SleepLevel;
                 totalPlay += obj.type.PlayLevel;
@@ -173,7 +184,7 @@ namespace Rain_On_Your_Parade
                 totalRampage += obj.type.RampageLevel;
             }
 
-            foreach(Actor act in a)
+            foreach (Actor act in actors)
             {
                 totalSleep += act.SleepLevel;
                 totalPlay += act.PlayLevel;
@@ -181,7 +192,6 @@ namespace Rain_On_Your_Parade
                 totalRampage += act.RampageLevel;
             }
 
-            adjacent = new List<GridSquare>();
         }
 
         public bool Contains(Vector2 point)

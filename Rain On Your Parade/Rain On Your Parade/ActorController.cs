@@ -24,24 +24,22 @@ namespace Rain_On_Your_Parade
         /// <param name="worldState"></param>
         public override void Update(GameTime gameTime, WorldState worldState)
         {
-          //  Debug.WriteLine(controlledActor.State.State);
-            //Console.WriteLine("State: " + controlledActor.State.State);
+            Random random = new Random();
+            int next = random.Next(1000); //Let the actor choose a new state in a random way
+            Console.WriteLine("State: " + controlledActor.State.State);
             switch (controlledActor.State.State)
             {
                 //TODO: Implement these four states
                 case ActorState.AState.Nurture:
-                   // controlledActor.State.State = ActorState.AState.Seek;
+                    if (next <= 30) controlledActor.State = new ActorState(ActorState.AState.Seek);
                     break;
-                case ActorState.AState.Play:
-                    if (controlledActor.Path.Count == 0)
-                    {
-                        //Console.WriteLine("Path empty, moving to Seek");
-                        controlledActor.State = new ActorState(ActorState.AState.Seek);
-                    }
+                case ActorState.AState.Play:  
+                    if (next <= 30) controlledActor.State = new ActorState(ActorState.AState.Seek);
                     break;
                 case ActorState.AState.Rampage:
                     break;
                 case ActorState.AState.Sleep:
+                    if (next <= 30) controlledActor.State = new ActorState(ActorState.AState.Seek);
                    // controlledActor.State.State = ActorState.AState.Seek;
                     break;
                 case ActorState.AState.Seek:
@@ -50,10 +48,12 @@ namespace Rain_On_Your_Parade
                     controlledActor.TargetState = newState;
                     //PreferenceSearch determines the most desired square.
                     //FindPath finds a path to it.
-                   // Debug.WriteLine("Seek:");
                     controlledActor.Path = FindPath(PreferenceSearch(worldState),
                                                         worldState.StateOfWorld[(int)(controlledActor.Position.X/Canvas.SQUARE_SIZE), (int)(controlledActor.Position.Y/Canvas.SQUARE_SIZE)],
                                                         worldState.StateOfWorld, new Point[worldState.worldWidth, worldState.worldHeight]);
+                    //if none of the squares were desirable, Rampage
+                    if (controlledActor.Path == null) controlledActor.State = new ActorState(ActorState.AState.Rampage);
+                    else
                     //Now, walk there.
                     controlledActor.State = new ActorState(ActorState.AState.Walk);
                     break;
@@ -91,8 +91,7 @@ namespace Rain_On_Your_Parade
                             //controlledActor.Velocity = new Vector2(nextSquare.Location.X * Canvas.SQUARE_SIZE - controlledActor.Position.X, nextSquare.Location.Y * Canvas.SQUARE_SIZE - controlledActor.Position.Y)/30;
                             //Console.WriteLine("Velocity: " + controlledActor.Velocity);
                         }
-                        //If I'm not within the next square on the path, make sure my velocity is set correctly (necessary for first square)
-                    
+                        //If I'm not within the next square on the path, make sure my velocity is set correctly (necessary for first square) Move uniformly to the next square
                             if (nextSquare.Location.X * Canvas.SQUARE_SIZE - controlledActor.Position.X <= 0)
                                 Velx = -1f;
                             else Velx = 1f;
@@ -208,23 +207,22 @@ namespace Rain_On_Your_Parade
             {
                 //How desirable /is/ the square
                 double desirability = Desirability(square);
-                Console.WriteLine("GridSquare: " + square.Location);
-                Console.WriteLine("Desirability: " + desirability);
-                Console.WriteLine("MaxPreference: " + maxPreference);
+                //Console.WriteLine("GridSquare: " + square.Location);
+               // Console.WriteLine("Desirability: " + desirability);
+                //Console.WriteLine("MaxPreference: " + maxPreference);
                 //If it's more desirable than anything else we've seen, clear the targets list and add that square
                 if (desirability > maxPreference)
                 {
                     targets.Clear();
-                    //targets.Add(square);
+                   // targets.Add(square);
                     maxPreference = desirability;
                 }
                 //If it's equally desirable, add it to the list
-                else if (desirability == maxPreference)
+                else if (desirability == maxPreference && maxPreference != 0) //dont add non-desirable squares (maxPreference == 0)
                 {
                     targets.Add(square);
                 }
             }
-            //targets.Add(worldState.StateOfWorld[2, 3]);
             return targets;
         }
 
@@ -245,8 +243,8 @@ namespace Rain_On_Your_Parade
                            (target.TotalPlay * controlledActor.PlayLevel) + 
                            (target.TotalRampage * controlledActor.Mood) + 
                            (target.TotalSleep * controlledActor.SleepLevel);
-            //Console.WriteLine("Desirability Before: " + desirability);
-            //desirability /= (int)Utils.EuclideanDistance(new Vector2(controlledActor.Position.X/Canvas.SQUARE_SIZE, controlledActor.Position.Y/Canvas.SQUARE_SIZE), target.Location);
+           // Console.WriteLine("Target Play:" + target.TotalPlay + " MyPlay:"+ controlledActor.PlayLevel);
+           // Causes infinity...?  desirability /= Utils.EuclideanDistance(new Vector2(controlledActor.Position.X/Canvas.SQUARE_SIZE, controlledActor.Position.Y/Canvas.SQUARE_SIZE), target.Location);
             return desirability;
         }
 
@@ -260,6 +258,8 @@ namespace Rain_On_Your_Parade
         /// <returns></returns>
         private List<GridSquare> FindPath(List<GridSquare> targets, GridSquare currentSquare, GridSquare[,] worldGrid, Point[,] parentArray)
         {
+            if (targets.Count == 0) return null;
+
             foreach (GridSquare p in targets)
             {
                // Debug.WriteLine(p);
@@ -325,7 +325,7 @@ namespace Rain_On_Your_Parade
 
             foreach (Point a in path)
             {
-                Debug.WriteLine("Path-------------------------------------: " + a);
+                Debug.WriteLine("Path--------: " + a);
             }
             path.RemoveAt(0);
             return path;

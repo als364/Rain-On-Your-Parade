@@ -37,10 +37,10 @@ namespace Rain_On_Your_Parade
             {
                 case ActorType.Type.Cat:
                     sleepNeed = 3;
-                    playNeed = 2;
+                    playNeed = 0;
                     nurtureNeed = 0;
                     baseSleepLevel = 3;
-                    basePlayLevel = 2;
+                    basePlayLevel = 0;
                     baseNurtureLevel = 0;
                     baseRampageLevel = 1;
                     gridSleepEffect = 1;
@@ -50,10 +50,10 @@ namespace Rain_On_Your_Parade
                     stringNames.Add(Type.Cat, "cat");
                     break;
                 case ActorType.Type.Kid:
-                    sleepNeed = 1;
+                    sleepNeed = 0;
                     playNeed = 3;
                     nurtureNeed = 0;
-                    baseSleepLevel = 1;
+                    baseSleepLevel = 0;
                     basePlayLevel = 3;
                     baseNurtureLevel = 0;
                     baseRampageLevel = 1;
