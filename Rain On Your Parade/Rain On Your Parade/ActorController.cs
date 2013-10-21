@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.VisualBasic;
+using System.Diagnostics;
 
 namespace Rain_On_Your_Parade
 {
@@ -23,17 +24,25 @@ namespace Rain_On_Your_Parade
         /// <param name="worldState"></param>
         public override void Update(GameTime gameTime, WorldState worldState)
         {
+          //  Debug.WriteLine(controlledActor.State.State);
             //Console.WriteLine("State: " + controlledActor.State.State);
             switch (controlledActor.State.State)
             {
                 //TODO: Implement these four states
                 case ActorState.AState.Nurture:
+                   // controlledActor.State.State = ActorState.AState.Seek;
                     break;
                 case ActorState.AState.Play:
+                    if (controlledActor.Path.Count == 0)
+                    {
+                        //Console.WriteLine("Path empty, moving to Seek");
+                        controlledActor.State = new ActorState(ActorState.AState.Seek);
+                    }
                     break;
                 case ActorState.AState.Rampage:
                     break;
                 case ActorState.AState.Sleep:
+                   // controlledActor.State.State = ActorState.AState.Seek;
                     break;
                 case ActorState.AState.Seek:
                     //Actor figures out what state it wants to be 
@@ -41,6 +50,7 @@ namespace Rain_On_Your_Parade
                     controlledActor.TargetState = newState;
                     //PreferenceSearch determines the most desired square.
                     //FindPath finds a path to it.
+                   // Debug.WriteLine("Seek:");
                     controlledActor.Path = FindPath(PreferenceSearch(worldState),
                                                         worldState.StateOfWorld[(int)(controlledActor.Position.X/Canvas.SQUARE_SIZE), (int)(controlledActor.Position.Y/Canvas.SQUARE_SIZE)],
                                                         worldState.StateOfWorld, new Point[worldState.worldWidth, worldState.worldHeight]);
@@ -64,25 +74,37 @@ namespace Rain_On_Your_Parade
                     //The actual moving along the path.
                     else
                     {
-                        Console.WriteLine("Moving along path");
-                        Console.WriteLine("Current Square: " + controlledActor.GridSquareLocation());
+                      //  Console.WriteLine("Moving along path");
+                      //  Console.WriteLine("Current Square: " + controlledActor.GridSquareLocation());
                         GridSquare nextSquare = controlledActor.Path[0];
-                        Console.WriteLine("Next Square: " + nextSquare.Location);
+                      //  Console.WriteLine("Next Square: " + nextSquare.Location);
+                        float Velx;
+                        float Vely;
+
                         //If I'm within the next square on the path, remove it from the path and set my velocity towards the next one
                         if (nextSquare.Contains(controlledActor.Position))
                         {
+                          //  Console.WriteLine("REMOVING");
                             controlledActor.Path.RemoveAt(0);
                             nextSquare = controlledActor.Path[0];
-                            controlledActor.Velocity = new Vector2(nextSquare.Location.X - (controlledActor.Position.X/Canvas.SQUARE_SIZE), nextSquare.Location.Y - (controlledActor.Position.Y/Canvas.SQUARE_SIZE));
-                            Console.WriteLine("Velocity: " + controlledActor.Velocity);
+
+                            //controlledActor.Velocity = new Vector2(nextSquare.Location.X * Canvas.SQUARE_SIZE - controlledActor.Position.X, nextSquare.Location.Y * Canvas.SQUARE_SIZE - controlledActor.Position.Y)/30;
+                            //Console.WriteLine("Velocity: " + controlledActor.Velocity);
                         }
                         //If I'm not within the next square on the path, make sure my velocity is set correctly (necessary for first square)
-                        else
-                        {
-                            controlledActor.Velocity = new Vector2(nextSquare.Location.X - controlledActor.Position.X, nextSquare.Location.Y - controlledActor.Position.Y);
-                        }
+                    
+                            if (nextSquare.Location.X * Canvas.SQUARE_SIZE - controlledActor.Position.X <= 0)
+                                Velx = -1f;
+                            else Velx = 1f;
+                            if (nextSquare.Location.Y * Canvas.SQUARE_SIZE - controlledActor.Position.Y <= 0)
+                                Vely = -1f;
+                            else Vely = 1f;
+                            controlledActor.Velocity = new Vector2(Velx, Vely);
+                            //controlledActor.Velocity = new Vector2(nextSquare.Location.X * Canvas.SQUARE_SIZE - controlledActor.Position.X, nextSquare.Location.Y * Canvas.SQUARE_SIZE - controlledActor.Position.Y)/30;
+                        
                         //Otherwise they'll just jump there
                         controlledActor.Velocity.Normalize();
+                      //  Console.WriteLine("Velocity: " + controlledActor.Velocity);
                         //Move the actor
                         controlledActor.Position = Vector2.Add(controlledActor.Position, controlledActor.Velocity);
                     }
@@ -193,7 +215,7 @@ namespace Rain_On_Your_Parade
                 if (desirability > maxPreference)
                 {
                     targets.Clear();
-                    targets.Add(square);
+                    //targets.Add(square);
                     maxPreference = desirability;
                 }
                 //If it's equally desirable, add it to the list
@@ -202,6 +224,7 @@ namespace Rain_On_Your_Parade
                     targets.Add(square);
                 }
             }
+            //targets.Add(worldState.StateOfWorld[2, 3]);
             return targets;
         }
 
@@ -222,7 +245,8 @@ namespace Rain_On_Your_Parade
                            (target.TotalPlay * controlledActor.PlayLevel) + 
                            (target.TotalRampage * controlledActor.Mood) + 
                            (target.TotalSleep * controlledActor.SleepLevel);
-            desirability /= Utils.EuclideanDistance(new Vector2(controlledActor.Position.X/Canvas.SQUARE_SIZE, controlledActor.Position.Y/Canvas.SQUARE_SIZE), target.Location);
+            //Console.WriteLine("Desirability Before: " + desirability);
+            //desirability /= (int)Utils.EuclideanDistance(new Vector2(controlledActor.Position.X/Canvas.SQUARE_SIZE, controlledActor.Position.Y/Canvas.SQUARE_SIZE), target.Location);
             return desirability;
         }
 
@@ -236,6 +260,12 @@ namespace Rain_On_Your_Parade
         /// <returns></returns>
         private List<GridSquare> FindPath(List<GridSquare> targets, GridSquare currentSquare, GridSquare[,] worldGrid, Point[,] parentArray)
         {
+            foreach (GridSquare p in targets)
+            {
+               // Debug.WriteLine(p);
+            }
+
+            Debug.WriteLine("Find Path");
             Queue<GridSquare> queue = new Queue<GridSquare>();
             HashSet<GridSquare> seen = new HashSet<GridSquare>();
             List<GridSquare> path = new List<GridSquare>();
@@ -249,6 +279,7 @@ namespace Rain_On_Your_Parade
                 if (targets.Contains(lookingAt))
                 {
                     List<Point> pointPath = ExtractPathFromTarget(parentArray, lookingAt.Location, currentSquare.Location);
+                   // Debug.WriteLine(pointPath);
                     foreach(Point point in pointPath)
                     {
                         path.Add(worldGrid[point.X, point.Y]);
@@ -291,6 +322,12 @@ namespace Rain_On_Your_Parade
             }
             path.Add(origin);
             path.Reverse();
+
+            foreach (Point a in path)
+            {
+                Debug.WriteLine("Path-------------------------------------: " + a);
+            }
+            path.RemoveAt(0);
             return path;
         }
     }

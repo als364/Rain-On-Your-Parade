@@ -186,8 +186,13 @@ namespace Rain_On_Your_Parade
 
         public bool Contains(Vector2 point)
         {
-            bool xContained = (point.X >= location.X && point.X <= location.X + 1);
-            bool yContained = (point.Y >= location.Y && point.Y <= location.Y + 1);
+            bool xContained = (point.X >= location.X * Canvas.SQUARE_SIZE - 2 && point.X <= location.X * Canvas.SQUARE_SIZE + 2);
+            bool yContained = (point.Y >= location.Y * Canvas.SQUARE_SIZE - 2 && point.Y <= location.Y * Canvas.SQUARE_SIZE + 2);
+           // Console.WriteLine("Point.X: " + point.X);
+           // Console.WriteLine("Point.Y: " + point.Y);
+           // Console.WriteLine("Location.X: " + location.X * Canvas.SQUARE_SIZE);
+           // Console.WriteLine("Location.Y: " + location.Y * Canvas.SQUARE_SIZE);
+
             return xContained && yContained;
         }
 
