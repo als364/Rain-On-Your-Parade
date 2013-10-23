@@ -122,7 +122,7 @@ namespace Rain_On_Your_Parade
         public override string ToString()
         {
             string gPath = "";
-            if (path.Count > 0)
+            if (path != null && path.Count > 0)
             {
                 foreach (GridSquare g in path)
                 {
