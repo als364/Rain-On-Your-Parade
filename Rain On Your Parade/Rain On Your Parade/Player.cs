@@ -86,5 +86,10 @@ namespace Rain_On_Your_Parade
         {
             //do stuff here
         }
+
+        public override string ToString()
+        {
+            return base.ToString() + "Velocity: " + velocity.ToString() + "\nRain: " + rain;
+        }
     }
 }

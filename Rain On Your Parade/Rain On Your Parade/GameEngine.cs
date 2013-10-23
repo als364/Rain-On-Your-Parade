@@ -19,7 +19,9 @@ namespace Rain_On_Your_Parade
     {
         public const int SCREEN_WIDTH = 880;
         public const int SCREEN_HEIGHT = 720;
-        
+
+        public const int LOG_FRAMES = 60;
+        private int framesTillLog = 0;
 
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
@@ -32,6 +34,8 @@ namespace Rain_On_Your_Parade
 
         Texture2D batterybar;
         Texture2D battery;
+
+        Logger log;
 
         public GameEngine()
             : base()
@@ -71,7 +75,12 @@ namespace Rain_On_Your_Parade
             worldState = new WorldState(quota,level.canvasGrid);
 
             //Debug.WriteLine("Y: " + worldState.getActors().ToArray()[1].Position.Y);
-
+            foreach (WorldObject o in worldState.getObjects())
+            {
+                View objects = new View(o);
+                models.Add(o);
+                views.Add(objects);
+            }
             foreach (Actor a in worldState.getActors()){
                 View actors = new View(a);
                 models.Add(a);
@@ -80,11 +89,7 @@ namespace Rain_On_Your_Parade
                 Controller actorController = new ActorController(a);
                 controllers.Add(actorController);
             }
-            foreach (WorldObject o in worldState.getObjects()){
-                View objects= new View(o);
-                models.Add(o);
-                views.Add(objects);
-            }
+            
             View player = new View(worldState.Player);
             views.Add(player);
             models.Add(worldState.Player);
@@ -93,6 +98,8 @@ namespace Rain_On_Your_Parade
             //models.Add(slider);
             //views.Add(sliderView);
             //controllers.Add(sliderController);
+
+            log = new Logger();
 
             base.Initialize();
         }
@@ -132,6 +139,16 @@ namespace Rain_On_Your_Parade
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
+            if (framesTillLog == 0)
+            {
+                log.Log(worldState, gameTime);
+                framesTillLog = LOG_FRAMES;
+            }
+            else
+            {
+                framesTillLog--;
+            }
+
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
@@ -140,6 +157,12 @@ namespace Rain_On_Your_Parade
             {
                 controller.Update(gameTime, worldState);
             }
+            foreach (GridSquare g in worldState.StateOfWorld)
+            {
+                g.calculateLevels();
+
+            }
+
             base.Update(gameTime);
         }
 

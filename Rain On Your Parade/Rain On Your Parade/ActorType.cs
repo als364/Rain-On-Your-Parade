@@ -19,6 +19,7 @@ namespace Rain_On_Your_Parade
         private int basePlayLevel;
         private int baseNurtureLevel;
         private int baseRampageLevel;
+        private ActorState initState;
 
         private int gridSleepEffect;
         private int gridPlayEffect;
@@ -37,22 +38,24 @@ namespace Rain_On_Your_Parade
             {
                 case ActorType.Type.Cat:
                     sleepNeed = 3;
-                    playNeed = 2;
+                    playNeed = 0;
                     nurtureNeed = 0;
                     baseSleepLevel = 3;
-                    basePlayLevel = 2;
+                    basePlayLevel = 0;
                     baseNurtureLevel = 0;
                     baseRampageLevel = 1;
                     gridSleepEffect = 1;
                     gridPlayEffect = 1;
                     gridNurtureEffect = 1;
                     gridRampageEffect = 3;
+                    initState = new ActorState(ActorState.AState.Sleep);
+                    stringNames.Add(Type.Cat, "cat");
                     break;
                 case ActorType.Type.Kid:
-                    sleepNeed = 1;
+                    sleepNeed = 0;
                     playNeed = 3;
                     nurtureNeed = 0;
-                    baseSleepLevel = 1;
+                    baseSleepLevel = 0;
                     basePlayLevel = 3;
                     baseNurtureLevel = 0;
                     baseRampageLevel = 1;
@@ -60,6 +63,8 @@ namespace Rain_On_Your_Parade
                     gridPlayEffect = 2;
                     gridNurtureEffect = 3;
                     gridRampageEffect = 3;
+                    initState = new ActorState(ActorState.AState.Seek);
+                    stringNames.Add(Type.Kid, "kid");
                     break;
                 case ActorType.Type.Mom:
                     sleepNeed = 0;
@@ -73,6 +78,8 @@ namespace Rain_On_Your_Parade
                     gridPlayEffect = -1;
                     gridNurtureEffect = -1;
                     gridRampageEffect = 3;
+                    initState = new ActorState(ActorState.AState.Seek);
+                    stringNames.Add(Type.Mom, "mom");
                     break;
             }
         }
@@ -93,6 +100,10 @@ namespace Rain_On_Your_Parade
             gridPlayEffect = aGridPlayEffect;
             gridNurtureEffect = aGridNurtureEffect;
             gridRampageEffect = aGridRampageEffect;
+
+            stringNames.Add(Type.Cat, "cat");
+            stringNames.Add(Type.Kid, "kid");
+            stringNames.Add(Type.Mom, "mom");
         }
 
         #region Getters and Setters
@@ -156,6 +167,7 @@ namespace Rain_On_Your_Parade
             get { return gridRampageEffect; }
             set { gridRampageEffect = value; }
         }
+
         public override string ToString()
         {
             //return (string)stringNames[typeName];
@@ -171,6 +183,27 @@ namespace Rain_On_Your_Parade
                     return "Actor";
             }
         }
+
+        public ActorState InitState
+        {
+            get { return initState; }
+            set { initState = value; }
+        }
+        //public override string ToString()
+        //{
+        //    return (string)stringNames[typeName];
+        //}
+        public string StringName()
+        {
+            return (string)stringNames[typeName];
+        }
         #endregion
+
+        public override string ToString()
+        {
+            return "Type: " + stringNames[typeName] + "\nSleep Need: " + sleepNeed + "\nPlay Need: " + playNeed + "\nNurture Need: " + nurtureNeed + "\nBase Sleep Level = " + baseSleepLevel +
+                "\nBase Play Level = " + basePlayLevel + "\nBase Nurture Level = " + baseNurtureLevel + "\nBase Rampage Level = " + baseRampageLevel + "\nGrid Sleep Effect: " + gridSleepEffect +
+                "Grid Nurture Effect: " + gridNurtureEffect + "Grid Play Effect: " + gridPlayEffect + "Grid Rampage Effect: " + gridRampageEffect;
+        }
     }
 }

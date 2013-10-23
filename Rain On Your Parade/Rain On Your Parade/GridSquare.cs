@@ -10,7 +10,7 @@ namespace Rain_On_Your_Parade
     public class GridSquare
     {
 
-        private List<WorldObject> objects;             // list of objects on GridSquare
+        private List<WorldObject> objects;       // list of objects on GridSquare
         private List<Actor> actors;              // list of actors on GridSquare
         public  List<GridSquare> adjacent;       // list of adjacent GridSquares
 	    private bool isPassable;                 // can actors enter/see past GridSquare
@@ -79,7 +79,7 @@ namespace Rain_On_Your_Parade
             {
                 foreach (WorldObject o in objects)
                 {
-                    totalSleep += o.type.SleepLevel;
+                    totalSleep += o.Type.SleepLevel;
                 }
                 foreach (Actor a in actors)
                 {
@@ -158,22 +158,35 @@ namespace Rain_On_Your_Parade
         /// by actors, and the total amount of sleep, play, nurture, and rampage
         /// attributes present on the GridSquare.
         /// </devdoc>
-        public GridSquare(List<WorldObject> o, List<Actor> a, bool is_passable, Point location)
+        /// 
+
+        public GridSquare(ObjectType.Type newObj, Point location)
         {
-            objects = o;
-            actors = a;
-            isPassable = is_passable;
+            WorldObject o = new WorldObject(newObj, location);
+            objects = new List<WorldObject> () {o};
+            actors = new List<Actor>();
+            isPassable = o.Type.Passable;
             this.location = location;
 
-            foreach(WorldObject obj in o) 
+            foreach (WorldObject obj in objects)
             {
-                totalSleep += obj.type.SleepLevel;
-                totalPlay += obj.type.PlayLevel;
-                totalNurture += obj.type.NurtureLevel;
-                totalRampage += obj.type.RampageLevel;
+                totalSleep += obj.Type.SleepLevel;
+                totalPlay += obj.Type.PlayLevel;
+                totalNurture += obj.Type.NurtureLevel;
+                totalRampage += obj.Type.RampageLevel;
             }
+            adjacent = new List<GridSquare>();
+        }
 
-            foreach(Actor act in a)
+        public GridSquare(ActorType.Type newAct, Point location)
+        {
+            Actor a = new Actor(newAct, location);
+            objects = new List<WorldObject>();
+            actors = new List<Actor>() { a };
+            isPassable = true;
+            this.location = location;
+
+            foreach (Actor act in actors)
             {
                 totalSleep += act.SleepLevel;
                 totalPlay += act.PlayLevel;
@@ -184,13 +197,74 @@ namespace Rain_On_Your_Parade
             adjacent = new List<GridSquare>();
         }
 
+        public GridSquare(List<WorldObject> o, List<Actor> a, Point location)
+        {
+            objects = o;
+            actors = a;
+            this.location = location;
+
+            this.calculateLevels();
+
+            adjacent = new List<GridSquare>();
+        }
+
+        public void calculateLevels(){
+            totalSleep = 0;
+            totalPlay = 0;
+            totalNurture = 0;
+            totalRampage = 0;
+
+            foreach (WorldObject obj in objects)
+            {
+                totalSleep += obj.Type.SleepLevel;
+                totalPlay += obj.Type.PlayLevel;
+                totalNurture += obj.Type.NurtureLevel;
+                totalRampage += obj.Type.RampageLevel;
+                isPassable = isPassable || obj.Type.Passable;
+            }
+
+            foreach (Actor act in actors)
+            {
+                totalSleep += act.SleepLevel;
+                totalPlay += act.PlayLevel;
+                totalNurture += act.NurtureLevel;
+                totalRampage += act.RampageLevel;
+            }
+
+        }
+
         public bool Contains(Vector2 point)
         {
-            bool xContained = (point.X >= location.X && point.X <= location.X + 1);
-            bool yContained = (point.Y >= location.Y && point.Y <= location.Y + 1);
+            bool xContained = (point.X >= location.X * Canvas.SQUARE_SIZE - 2 && point.X <= location.X * Canvas.SQUARE_SIZE + 2);
+            bool yContained = (point.Y >= location.Y * Canvas.SQUARE_SIZE - 2 && point.Y <= location.Y * Canvas.SQUARE_SIZE + 2);
+           // Console.WriteLine("Point.X: " + point.X);
+           // Console.WriteLine("Point.Y: " + point.Y);
+           // Console.WriteLine("Location.X: " + location.X * Canvas.SQUARE_SIZE);
+           // Console.WriteLine("Location.Y: " + location.Y * Canvas.SQUARE_SIZE);
+
             return xContained && yContained;
         }
 
+        public override string ToString()
+        {
+            string foo = location.ToString() + ":\nPassable: " + isPassable + "\nTotal Sleep: " + totalSleep + "\nTotal Play: " + totalPlay +
+                "\nTotal Nurture: " + totalNurture + "\nTotal Rampage: " + totalRampage + "\n Adjacent: \n";
+            foreach (GridSquare g in adjacent)
+            {
+                foo += "\t" + g.Location.ToString() + "\n";
+            }
+            foo += "Objects:\n";
+            foreach (WorldObject o in objects)
+            {
+                foo += o.ToString() + "\n";
+            }
+            foo += "Actors:\n";
+            foreach (Actor a in actors)
+            {
+                foo += a.ToString() + "\n";
+            }
+            return foo;
+        }
 
         /// <summary>Public stuff about the method</summary>
         /// <param name="foo">It's an integer apparently</param>
