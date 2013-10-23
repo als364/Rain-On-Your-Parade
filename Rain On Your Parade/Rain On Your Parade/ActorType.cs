@@ -186,7 +186,7 @@ namespace Rain_On_Your_Parade
         {
             return "Type: " + stringNames[typeName] + "\nSleep Need: " + sleepNeed + "\nPlay Need: " + playNeed + "\nNurture Need: " + nurtureNeed + "\nBase Sleep Level = " + baseSleepLevel +
                 "\nBase Play Level = " + basePlayLevel + "\nBase Nurture Level = " + baseNurtureLevel + "\nBase Rampage Level = " + baseRampageLevel + "\nGrid Sleep Effect: " + gridSleepEffect +
-                "Grid Nurture Effect: " + gridNurtureEffect + "Grid Play Effect: " + gridPlayEffect + "Grid Rampage Effect: " + gridRampageEffect;
+                " Grid Nurture Effect: " + gridNurtureEffect + " Grid Play Effect: " + gridPlayEffect + " Grid Rampage Effect: " + gridRampageEffect;
         }
     }
 }

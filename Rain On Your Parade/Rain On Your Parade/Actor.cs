@@ -126,9 +126,9 @@ namespace Rain_On_Your_Parade
             {
                 gPath += g.Location.ToString() + "->";
             }
-            return "Type: " + type.ToString() + "\n" + base.ToString() + "\nVelocity: " + velocity.ToString() + "\nMood: " + mood + "\nState: " + state.ToString() + " Target State: " + targetState.ToString() + "\nSleep Level = " + sleepLevel + "\nPlay Level = " + playLevel + "\nNurture Level = " +
-                nurtureLevel + "\nRampage Level = " + rampageLevel + "\nGrid Sleep Effect: " + gridSleepEffect + "Grid Nurture Effect: " + gridNurtureEffect + "Grid Play Effect: " + gridPlayEffect +
-                "Grid Rampage Effect: " + gridRampageEffect + gPath;
+            return type.ToString() + "\n" + base.ToString() + "Velocity: " + velocity.ToString() + "\nMood: " + mood + "\n" + state.ToString() + " Target State: " + targetState.ToString() + "\nSleep Level = " + sleepLevel + "\nPlay Level = " + playLevel + "\nNurture Level = " +
+                nurtureLevel + "\nRampage Level = " + rampageLevel + "\nGrid Sleep Effect: " + gridSleepEffect + " Grid Nurture Effect: " + gridNurtureEffect + " Grid Play Effect: " + gridPlayEffect +
+                " Grid Rampage Effect: " + gridRampageEffect + gPath;
         }
     }
 }
