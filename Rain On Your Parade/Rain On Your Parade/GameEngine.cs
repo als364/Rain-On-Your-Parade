@@ -172,7 +172,7 @@ namespace Rain_On_Your_Parade
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.LimeGreen);
             spriteBatch.Begin();
             // TODO: Add your drawing code here
             foreach (View view in views)
