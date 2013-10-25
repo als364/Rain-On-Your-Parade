@@ -34,10 +34,10 @@ namespace Rain_On_Your_Parade
 
                 case ObjectType.Type.Garden:
                     startsActivated = true;
-                    sleepLevel = 3;
+                    sleepLevel = 0;
                     playLevel = 0;
                     nurtureLevel = 3;
-                    rampageLevel = 3;
+                    rampageLevel = 0;
                     passable = true;
                     stringNames.Add(Type.Garden, "garden");
                     break;
@@ -55,7 +55,7 @@ namespace Rain_On_Your_Parade
                 case ObjectType.Type.Chalking:
                     startsActivated = false;
                     sleepLevel = 0;
-                    playLevel = 0;
+                    playLevel = 1;
                     nurtureLevel = 0;
                     rampageLevel = 0;
                     passable = true;
@@ -74,9 +74,9 @@ namespace Rain_On_Your_Parade
 
                 case ObjectType.Type.House:
                     startsActivated = false;
-                    sleepLevel = 2;
+                    sleepLevel = 0;
                     playLevel = 0;
-                    nurtureLevel = 1;
+                    nurtureLevel = 0;
                     rampageLevel = 0;
                     passable = false;
                     stringNames.Add(Type.House, "house");

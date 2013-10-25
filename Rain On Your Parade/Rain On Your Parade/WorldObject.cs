@@ -46,18 +46,17 @@ namespace Rain_On_Your_Parade
             }
             if (type.TypeName == ObjectType.Type.Garden)
             {
-                type.PlayLevel = 3;
-                type.SleepLevel = 3;
-                type.NurtureLevel = 0;
+                type.PlayLevel = 0;
+                type.SleepLevel = 0;
+                type.NurtureLevel = 3;
             }
             if (type.TypeName == ObjectType.Type.Chalking)
             {
-                type.PlayLevel = 3;
+                type.PlayLevel = 1;
                 type.RampageLevel = 0;
             }
-            if (type.TypeName == ObjectType.Type.House)
-            {
-            }
+           
+            
             if (type.TypeName == ObjectType.Type.Laundry)
             {
                 type.RampageLevel = 0;
@@ -65,9 +64,9 @@ namespace Rain_On_Your_Parade
             }
             if (type.TypeName == ObjectType.Type.SunnySpot)
             {
-                type.SleepLevel = 0;
-                type.NurtureLevel = 3;
-                type.PlayLevel = 3;
+                type.SleepLevel = 3;
+                type.NurtureLevel = 0;
+                type.PlayLevel = 0;
             }
         }
 
@@ -82,24 +81,26 @@ namespace Rain_On_Your_Parade
             {
                 type.PlayLevel = 0;
                 type.SleepLevel = 0;
-                type.NurtureLevel = 3;
+                type.NurtureLevel = 0;
             }
             if (type.TypeName == ObjectType.Type.Chalking)
             {
                 type.PlayLevel = 0;
-                type.RampageLevel = 3;
+                type.SleepLevel = 0;
+                type.NurtureLevel = 0;
             }
             if (type.TypeName == ObjectType.Type.House)
             {
             }
             if (type.TypeName == ObjectType.Type.Laundry)
             {
-                type.RampageLevel = 3;
-                type.NurtureLevel = 3;
+                type.PlayLevel = 0;
+                type.SleepLevel = 0;
+                type.NurtureLevel = 0;
             }
             if (type.TypeName == ObjectType.Type.SunnySpot)
             {
-                type.SleepLevel = 3;
+                type.SleepLevel = 0;
                 type.NurtureLevel = 0;
                 type.PlayLevel = 0;
             }

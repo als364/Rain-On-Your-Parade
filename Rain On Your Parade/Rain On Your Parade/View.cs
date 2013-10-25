@@ -27,15 +27,19 @@ namespace Rain_On_Your_Parade
             {
                 WorldObject temp = (WorldObject)viewedModel;
                 if (temp.Activated == temp.Type.StartsActivated)
-                {
-                    spriteBatch.Draw(image, new Rectangle((int)viewedModel.Position.X, (int)viewedModel.Position.Y, viewedModel.spriteWidth, viewedModel.spriteHeight), Color.Azure);
-                }
-                else spriteBatch.Draw(image, new Rectangle((int)viewedModel.Position.X, (int)viewedModel.Position.Y, viewedModel.spriteWidth, viewedModel.spriteHeight), Color.Black);
+                     spriteBatch.Draw(image, new Rectangle((int)viewedModel.Position.X, (int)viewedModel.Position.Y, viewedModel.spriteWidth, viewedModel.spriteHeight), Color.Azure);
+                else spriteBatch.Draw(image, new Rectangle((int)viewedModel.Position.X, (int)viewedModel.Position.Y, viewedModel.spriteWidth, viewedModel.spriteHeight), Color.Brown);
             }
             else
             {
-                spriteBatch.Draw(image, new Rectangle((int)viewedModel.Position.X, (int)viewedModel.Position.Y, viewedModel.spriteWidth, viewedModel.spriteHeight), Color.Azure);
+                if (viewedModel is Actor){
+                     Actor actor = (Actor )viewedModel;
+                    if (actor.Mood == 0)
+                         spriteBatch.Draw(image, new Rectangle((int)viewedModel.Position.X, (int)viewedModel.Position.Y, viewedModel.spriteWidth, viewedModel.spriteHeight), Color.Azure);
+                    else spriteBatch.Draw(image, new Rectangle((int)viewedModel.Position.X, (int)viewedModel.Position.Y, viewedModel.spriteWidth, viewedModel.spriteHeight), Color.Brown);
+                } else
+                     spriteBatch.Draw(image, new Rectangle((int)viewedModel.Position.X, (int)viewedModel.Position.Y, viewedModel.spriteWidth, viewedModel.spriteHeight), Color.Azure);
             }
-            }
+        }    
     }
 }
