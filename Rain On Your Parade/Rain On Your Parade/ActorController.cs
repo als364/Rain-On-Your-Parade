@@ -82,12 +82,12 @@ namespace Rain_On_Your_Parade
                         //If I'm within the next square on the path, remove it from the path and set my velocity towards the next one
                         if (nextSquare.Contains(controlledActor.Position))
                         {
-                            //At target square. Move to target state.
+                            //At target square. Move to target state.  
                             if (controlledActor.Path.Count == 1)
                             {
                                 //controlledActor.Path.Clear();
                                 controlledActor.State = new ActorState(controlledActor.TargetState);
-                                controlledActor.Path[0].Actors.Remove(controlledActor);
+                                //controlledActor.Path[0].Actors.Remove(controlledActor);
                                
                             }
                             else
@@ -95,7 +95,7 @@ namespace Rain_On_Your_Parade
                                 //  Console.WriteLine("REMOVING");
                                 worldState.StateOfWorld[(int)(controlledActor.Position.X/Canvas.SQUARE_SIZE), (int)(controlledActor.Position.Y/Canvas.SQUARE_SIZE)].Actors.Remove(controlledActor);
                                 controlledActor.Path.RemoveAt(0);
-                                controlledActor.Path[0].Actors.Add(controlledActor);
+                               controlledActor.Path[0].Actors.Add(controlledActor);
                                 nextSquare = controlledActor.Path[0];
                             }
 
@@ -215,22 +215,22 @@ namespace Rain_On_Your_Parade
             {
                 //How desirable /is/ the square
                 double desirability = Desirability(square);
-                Console.WriteLine("GridSquare: " + square.Location);
-                Console.WriteLine("Desirability: " + desirability);
-                Console.WriteLine("MaxPreference: " + maxPreference);
+              //  Console.WriteLine("GridSquare: " + square.Location);
+                //Console.WriteLine("Desirability: " + desirability);
+                //Console.WriteLine("MaxPreference: " + maxPreference);
                 //If it's more desirable than anything else we've seen, clear the targets list and add that square
                 if (desirability > maxPreference)
                 {
                     targets.Clear();
-                    targets.Add(square);
-                    Console.WriteLine("SquareAdded: " + square);
+                    //targets.Add(square);
+                   // Console.WriteLine("SquareAdded: " + square);
                     maxPreference = desirability;
                 }
                 //If it's equally desirable, add it to the list
                 else if (desirability == maxPreference && maxPreference != 0 && desirability != 0) //dont add non-desirable squares (maxPreference == 0)
                 {
                     targets.Add(square);
-                    Console.WriteLine("SquareAdded: " + square);
+                   // Console.WriteLine("SquareAdded: " + square);
                 }
             }
             return targets;

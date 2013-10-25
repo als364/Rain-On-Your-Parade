@@ -27,8 +27,8 @@ namespace Rain_On_Your_Parade
             }
 
 
-           // canvasGrid[6, 0] = new GridSquare(ActorType.Type.Cat, new Point(6, 0));
-            //canvasGrid[1, 8] = new GridSquare(ActorType.Type.Kid, new Point(1, 8));
+            canvasGrid[6, 0] = new GridSquare(ActorType.Type.Cat, new Point(6, 0));
+            canvasGrid[1, 8] = new GridSquare(ActorType.Type.Kid, new Point(1, 8));
             canvasGrid[6, 6] = new GridSquare(ActorType.Type.Mom, new Point(6, 6));
             canvasGrid[1, 1] = new GridSquare(ObjectType.Type.SunnySpot, new Point(1, 1));
             canvasGrid[8, 1] = new GridSquare(ObjectType.Type.House, new Point(8, 1));
@@ -58,7 +58,7 @@ namespace Rain_On_Your_Parade
             canvasGrid[3, 6] = new GridSquare(ObjectType.Type.House, new Point(3, 6));
             canvasGrid[4, 6] = new GridSquare(ObjectType.Type.House, new Point(4, 6));
             canvasGrid[8, 5] = new GridSquare(ObjectType.Type.House, new Point(8, 5));
-            canvasGrid[9, 5] = new GridSquare(ObjectType.Type.House, new Point(9, 5));
+            canvasGrid[9, 5] = new GridSquare(ObjectType.Type.Pool, new Point(9, 5));
             canvasGrid[8, 6] = new GridSquare(ObjectType.Type.House, new Point(8, 6));
             canvasGrid[9, 6] = new GridSquare(ObjectType.Type.House, new Point(9, 6));
             canvasGrid[5, 7] = new GridSquare(ObjectType.Type.SunnySpot, new Point(5, 7));

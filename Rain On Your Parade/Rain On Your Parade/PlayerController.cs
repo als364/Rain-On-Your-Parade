@@ -27,6 +27,8 @@ namespace Rain_On_Your_Parade
         {
             KeyboardState ks = Keyboard.GetState();
 
+            Point prevPos = new Point((int)(player.Position.X / Canvas.SQUARE_SIZE), (int)(player.Position.Y / Canvas.SQUARE_SIZE));
+
             if (coolDown == 0) //
             {
                 if (ks.IsKeyDown(Keys.R))
@@ -45,6 +47,7 @@ namespace Rain_On_Your_Parade
                         coolDown = COOL_DOWN;
                     }
                 }
+
 
                 //if (player.Velocity.Length() < MAX_SPEED)
                 //{
@@ -158,6 +161,12 @@ namespace Rain_On_Your_Parade
                 player.Position = new Vector2(player.Position.X, 0);
                 player.Velocity = new Vector2(player.Velocity.X, 0);
             }
+            //Point newPos = new Point((int)(player.Position.X / Canvas.SQUARE_SIZE), (int)(player.Position.Y / Canvas.SQUARE_SIZE));
+            //if (newPos != prevPos) {
+            //    worldState.StateOfWorld[prevPos.X, prevPos.Y].ContainsPlayer = false;
+            //     worldState.StateOfWorld[newPos.X, newPos.Y].ContainsPlayer = true;
+            //    Console.WriteLine(newPos);
+            //}
         }
 
         private bool Rain(WorldState worldState)
@@ -169,11 +178,6 @@ namespace Rain_On_Your_Parade
 
                 foreach (Actor a in worldState.StateOfWorld[(int)(player.Position.X / Canvas.SQUARE_SIZE), (int)(player.Position.Y / Canvas.SQUARE_SIZE)].Actors)
                 {
-                    Console.WriteLine("Incrementing Mood");
-                    Console.WriteLine("Incrementing Mood");
-                    Console.WriteLine("Incrementing Mood");
-                    Console.WriteLine("Incrementing Mood");
-
                     if (a.State.State == a.TargetState)
                     {
                         a.IncrementMood();

@@ -25,7 +25,7 @@ namespace Rain_On_Your_Parade
             {
                 case ObjectType.Type.SunnySpot:
                     startsActivated = false;
-                    sleepLevel = 0;
+                    sleepLevel = 3;
                     playLevel = 0;
                     nurtureLevel = 0;
                     rampageLevel = 0;
@@ -48,7 +48,7 @@ namespace Rain_On_Your_Parade
                 case ObjectType.Type.Pool:
                     startsActivated = true;
                     sleepLevel = 0;
-                    playLevel = 0;
+                    playLevel = 3;
                     nurtureLevel = 0;
                     rampageLevel = 0;
                     passable = true;

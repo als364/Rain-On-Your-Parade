@@ -74,6 +74,7 @@ namespace Rain_On_Your_Parade
             }
         }
 
+
         public void deactivate()
         {
             ObjectType.Type typeSwitch = type.TypeName;
@@ -89,7 +90,7 @@ namespace Rain_On_Your_Parade
                     case ObjectType.Type.Garden:
                         type.PlayLevel = 0;
                         type.SleepLevel = 0;
-                        type.NurtureLevel = 0;
+                        type.NurtureLevel = 2;
                         activated = false;
                         break;
                     case ObjectType.Type.Chalking:
@@ -111,9 +112,12 @@ namespace Rain_On_Your_Parade
                         activated = false;
                         break;
                 }
-            }     
-
+            }
         }
+
+
+
+
 
         public override string ToString()
         {
