@@ -25,7 +25,7 @@ namespace Rain_On_Your_Parade
             {
                 case ObjectType.Type.SunnySpot:
                     startsActivated = false;
-                    sleepLevel = 3;
+                    sleepLevel = 0;
                     playLevel = 0;
                     nurtureLevel = 0;
                     rampageLevel = 0;
@@ -48,7 +48,7 @@ namespace Rain_On_Your_Parade
                 case ObjectType.Type.Pool:
                     startsActivated = true;
                     sleepLevel = 0;
-                    playLevel = 3;
+                    playLevel = 0;
                     nurtureLevel = 0;
                     rampageLevel = 0;
                     passable = true;
@@ -59,7 +59,7 @@ namespace Rain_On_Your_Parade
                 case ObjectType.Type.Chalking:
                     startsActivated = false;
                     sleepLevel = 0;
-                    playLevel = 2;
+                    playLevel = 0;
                     nurtureLevel = 0;
                     rampageLevel = 0;
                     passable = true;
@@ -70,9 +70,9 @@ namespace Rain_On_Your_Parade
                 case ObjectType.Type.Laundry:
                     startsActivated = true;
                     sleepLevel = 0;
-                    playLevel = 1;
-                    nurtureLevel = 2;
-                    rampageLevel = 3;
+                    playLevel = 0;
+                    nurtureLevel = 0;
+                    rampageLevel = 0;
                     passable = true;
                     activatedImages.Add(Type.Laundry, "laundry");
                     deactivatedImages.Add(Type.Laundry, "wetlaundry");

@@ -215,20 +215,22 @@ namespace Rain_On_Your_Parade
             {
                 //How desirable /is/ the square
                 double desirability = Desirability(square);
-                //Console.WriteLine("GridSquare: " + square.Location);
-               // Console.WriteLine("Desirability: " + desirability);
-                //Console.WriteLine("MaxPreference: " + maxPreference);
+                Console.WriteLine("GridSquare: " + square.Location);
+                Console.WriteLine("Desirability: " + desirability);
+                Console.WriteLine("MaxPreference: " + maxPreference);
                 //If it's more desirable than anything else we've seen, clear the targets list and add that square
                 if (desirability > maxPreference)
                 {
                     targets.Clear();
-                    //targets.Add(square);
+                    targets.Add(square);
+                    Console.WriteLine("SquareAdded: " + square);
                     maxPreference = desirability;
                 }
                 //If it's equally desirable, add it to the list
-                else if (desirability == maxPreference && maxPreference != 0) //dont add non-desirable squares (maxPreference == 0)
+                else if (desirability == maxPreference && maxPreference != 0 && desirability != 0) //dont add non-desirable squares (maxPreference == 0)
                 {
                     targets.Add(square);
+                    Console.WriteLine("SquareAdded: " + square);
                 }
             }
             return targets;
@@ -251,7 +253,7 @@ namespace Rain_On_Your_Parade
                            (target.TotalPlay * controlledActor.PlayLevel) + 
                            (target.TotalRampage * controlledActor.Mood) + 
                            (target.TotalSleep * controlledActor.SleepLevel);
-           // Console.WriteLine("Target Play:" + target.TotalPlay + " MyDesire:" + desirability);
+           // Console.WriteLine("Target Play:" + target.TotalPlay +  "MyPlay:" + controlledActor.PlayLevel + "Desire:" + desirability);
            // Causes infinity...?  desirability /= Utils.EuclideanDistance(new Vector2(controlledActor.Position.X/Canvas.SQUARE_SIZE, controlledActor.Position.Y/Canvas.SQUARE_SIZE), target.Location);
             return desirability;
         }
@@ -327,7 +329,6 @@ namespace Rain_On_Your_Parade
             while (parent != origin && i < 100)
             {
                 i++;
-                //Debug.WriteLine("-------- " + i);
                 path.Add(parent);
                 parent = parentArray[parent.X, parent.Y];
             }
@@ -336,7 +337,7 @@ namespace Rain_On_Your_Parade
 
             foreach (Point a in path)
             {
-              //  Debug.WriteLine("Path--------: " + a);
+                Debug.WriteLine("Path--------: " + a);
             }
             path.RemoveAt(0);
             return path;

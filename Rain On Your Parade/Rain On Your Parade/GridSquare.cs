@@ -223,13 +223,13 @@ namespace Rain_On_Your_Parade
                 isPassable = isPassable || obj.Type.Passable;
             }
 
-            foreach (Actor act in actors)
+         /*   foreach (Actor act in actors)
             {
                 totalSleep += act.SleepLevel;
                 totalPlay += act.PlayLevel;
                 totalNurture += act.NurtureLevel;
                 totalRampage += act.RampageLevel;
-            }
+            }*/
 
         }
 
