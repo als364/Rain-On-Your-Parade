@@ -62,7 +62,7 @@ namespace Rain_On_Your_Parade
             canvasGrid[8, 6] = new GridSquare(ObjectType.Type.House, new Point(8, 6));
             canvasGrid[9, 6] = new GridSquare(ObjectType.Type.House, new Point(9, 6));
             canvasGrid[5, 7] = new GridSquare(ObjectType.Type.SunnySpot, new Point(5, 7));
-            canvasGrid[9, 7] = new GridSquare(ObjectType.Type.Garden, new Point(9, 8));
+            canvasGrid[9, 7] = new GridSquare(ObjectType.Type.Garden, new Point(9, 7));
 
         }
 

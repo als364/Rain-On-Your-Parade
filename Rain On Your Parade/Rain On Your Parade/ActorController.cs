@@ -26,7 +26,7 @@ namespace Rain_On_Your_Parade
         {
             Random random = new Random();
             int next = random.Next(1000); //Let the actor choose a new state in a random way
-            Console.WriteLine("State: " + controlledActor.State.State);
+            //Console.WriteLine("State: " + controlledActor.State.State);
             switch (controlledActor.State.State)
             {
                 //TODO: Implement these four states
@@ -214,7 +214,7 @@ namespace Rain_On_Your_Parade
             foreach (GridSquare square in worldState.StateOfWorld)
             {
                 //How desirable /is/ the square
-                double desirability = Desirability(square);
+                double desirability = Desirability(square, worldState);
                 //Console.WriteLine("GridSquare: " + square.Location);
                // Console.WriteLine("Desirability: " + desirability);
                 //Console.WriteLine("MaxPreference: " + maxPreference);
@@ -239,18 +239,24 @@ namespace Rain_On_Your_Parade
         /// </summary>
         /// <param name="target">The square whose desirability we're measuring.</param>
         /// <returns>The desirability value of the target square.</returns>
-        private double Desirability(GridSquare target)
+        private double Desirability(GridSquare target, WorldState worldState)
         {
             double desirability = 0;
-            if (!target.IsPassable)
-            {
-                return 0;
-            }
+            //if (!target.IsPassable)
+            //{
+            //    return 0;
+            //}
+
+            int playerPenalty = 0;
+            Point playerPos = new Point((int)(worldState.Player.Position.X / Canvas.SQUARE_SIZE), (int)(worldState.Player.Position.Y / Canvas.SQUARE_SIZE));
+            if (target.Location.X == playerPos.X && target.Location.Y == playerPos.Y) { playerPenalty = -100; }
+
             //This heuristic is broken. We should only look for squares suitable for the target action.
             desirability = (target.TotalNurture * controlledActor.NurtureLevel) + 
                            (target.TotalPlay * controlledActor.PlayLevel) + 
                            (target.TotalRampage * controlledActor.Mood) + 
-                           (target.TotalSleep * controlledActor.SleepLevel);
+                           (target.TotalSleep * controlledActor.SleepLevel) +
+                           playerPenalty;
            // Console.WriteLine("Target Play:" + target.TotalPlay + " MyDesire:" + desirability);
            // Causes infinity...?  desirability /= Utils.EuclideanDistance(new Vector2(controlledActor.Position.X/Canvas.SQUARE_SIZE, controlledActor.Position.Y/Canvas.SQUARE_SIZE), target.Location);
             return desirability;
