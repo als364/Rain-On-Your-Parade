@@ -38,7 +38,15 @@ namespace Rain_On_Your_Parade
             }
             else
             {
-                spriteBatch.Draw(activatedImage, new Rectangle((int)viewedModel.Position.X, (int)viewedModel.Position.Y, viewedModel.spriteWidth, viewedModel.spriteHeight), Color.White);
+                if (viewedModel is Actor)
+                {
+                    Actor actor = (Actor)viewedModel;
+                    if (actor.Mood == 0)
+                        spriteBatch.Draw(activatedImage, new Rectangle((int)viewedModel.Position.X, (int)viewedModel.Position.Y, viewedModel.spriteWidth, viewedModel.spriteHeight), Color.Azure);
+                    else spriteBatch.Draw(activatedImage, new Rectangle((int)viewedModel.Position.X, (int)viewedModel.Position.Y, viewedModel.spriteWidth, viewedModel.spriteHeight), Color.Brown);
+                }
+                else
+                    spriteBatch.Draw(activatedImage, new Rectangle((int)viewedModel.Position.X, (int)viewedModel.Position.Y, viewedModel.spriteWidth, viewedModel.spriteHeight), Color.Azure);
             }
         }
     }

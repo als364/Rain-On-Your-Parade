@@ -36,10 +36,10 @@ namespace Rain_On_Your_Parade
 
                 case ObjectType.Type.Garden:
                     startsActivated = true;
-                    sleepLevel = 3;
+                    sleepLevel = 0;
                     playLevel = 0;
                     nurtureLevel = 3;
-                    rampageLevel = 3;
+                    rampageLevel = 0;
                     passable = true;
                     activatedImages.Add(Type.Garden, "garden2");
                     deactivatedImages.Add(Type.Garden, "drygarden");
@@ -79,6 +79,8 @@ namespace Rain_On_Your_Parade
                     break;
 
                 case ObjectType.Type.House:
+                    startsActivated = false;
+                    sleepLevel = 0;
                     startsActivated = true;
                     sleepLevel = 0;
                     playLevel = 0;

@@ -165,10 +165,15 @@ namespace Rain_On_Your_Parade
             if (player.Rain > 0)
             {
                 isRaining = true;
-                player.Rain--;
+               // player.Rain--;
 
                 foreach (Actor a in worldState.StateOfWorld[(int)(player.Position.X / Canvas.SQUARE_SIZE), (int)(player.Position.Y / Canvas.SQUARE_SIZE)].Actors)
                 {
+                    Console.WriteLine("Incrementing Mood");
+                    Console.WriteLine("Incrementing Mood");
+                    Console.WriteLine("Incrementing Mood");
+                    Console.WriteLine("Incrementing Mood");
+
                     if (a.State.State == a.TargetState)
                     {
                         a.IncrementMood();
@@ -178,6 +183,7 @@ namespace Rain_On_Your_Parade
                     {
                         a.IncrementMood();
                     }
+                   
                 }
                 foreach (WorldObject o in worldState.StateOfWorld[(int)(player.Position.X / Canvas.SQUARE_SIZE), (int)(player.Position.Y / Canvas.SQUARE_SIZE)].Objects)
                 {
