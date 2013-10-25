@@ -165,7 +165,7 @@ namespace Rain_On_Your_Parade
             if (player.Rain > 0)
             {
                 isRaining = true;
-               // player.Rain--;
+                player.Rain--;
 
                 foreach (Actor a in worldState.StateOfWorld[(int)(player.Position.X / Canvas.SQUARE_SIZE), (int)(player.Position.Y / Canvas.SQUARE_SIZE)].Actors)
                 {
