@@ -41,7 +41,8 @@ namespace Rain_On_Your_Parade
 
         public override void LoadContent(ContentManager content)
         {
-            sprite = content.Load<Texture2D>(type.StringName());
+            activatedSprite = content.Load<Texture2D>(type.activatedStringName());
+            deactivatedSprite = content.Load<Texture2D>(type.activatedStringName());
             spriteWidth = Canvas.SQUARE_SIZE;
             spriteHeight = Canvas.SQUARE_SIZE;
         }

@@ -26,7 +26,6 @@ namespace Rain_On_Your_Parade
                 }
             }
 
-          
 
             canvasGrid[6, 0] = new GridSquare(ActorType.Type.Cat, new Point(6, 0));
             canvasGrid[1, 8] = new GridSquare(ActorType.Type.Kid, new Point(1, 8));

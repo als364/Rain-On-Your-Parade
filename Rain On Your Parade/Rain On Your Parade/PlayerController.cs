@@ -176,12 +176,12 @@ namespace Rain_On_Your_Parade
 
                     if (a.State.State == a.TargetState)
                     {
-                        //a.IncrementMood();
-                       // a.IncrementMood();
+                        a.IncrementMood();
+                        a.IncrementMood();
                     }
                     else
                     {
-                        //a.IncrementMood();
+                        a.IncrementMood();
                     }
                    
                 }
@@ -189,10 +189,7 @@ namespace Rain_On_Your_Parade
                 {
                     if (o.Activated)
                     {
-                        if (o.Type.TypeName != ObjectType.Type.House && o.Type.TypeName != ObjectType.Type.Chalking)
-                        {
-                            o.deactivate();
-                        }
+                        o.deactivate();
                     }
                     else
                     {

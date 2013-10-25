@@ -20,26 +20,34 @@ namespace Rain_On_Your_Parade
 
         public virtual void Draw(SpriteBatch spriteBatch)
         {
-            Texture2D image = viewedModel.sprite;
-            //Debug.WriteLine("Sprite:" + image);
-            //Debug.WriteLine("Y: " + viewedModel.Position.Y); 
+            Texture2D activatedImage = viewedModel.activatedSprite;
+            Texture2D deactivatedImage = viewedModel.deactivatedSprite;
+
             if (viewedModel is WorldObject)
             {
-                WorldObject temp = (WorldObject)viewedModel;
-                if (temp.Activated == temp.Type.StartsActivated)
-                     spriteBatch.Draw(image, new Rectangle((int)viewedModel.Position.X, (int)viewedModel.Position.Y, viewedModel.spriteWidth, viewedModel.spriteHeight), Color.Azure);
-                else spriteBatch.Draw(image, new Rectangle((int)viewedModel.Position.X, (int)viewedModel.Position.Y, viewedModel.spriteWidth, viewedModel.spriteHeight), Color.Brown);
+                WorldObject current = (WorldObject)viewedModel;
+                switch (current.Activated)
+                {
+                    case true:
+                        spriteBatch.Draw(activatedImage, new Rectangle((int)viewedModel.Position.X, (int)viewedModel.Position.Y, viewedModel.spriteWidth, viewedModel.spriteHeight), Color.White);
+                        break;
+                    case false:
+                        spriteBatch.Draw(deactivatedImage, new Rectangle((int)viewedModel.Position.X, (int)viewedModel.Position.Y, viewedModel.spriteWidth, viewedModel.spriteHeight), Color.White);
+                        break;
+                }
             }
             else
             {
-                if (viewedModel is Actor){
-                     Actor actor = (Actor )viewedModel;
+                if (viewedModel is Actor)
+                {
+                    Actor actor = (Actor)viewedModel;
                     if (actor.Mood == 0)
-                         spriteBatch.Draw(image, new Rectangle((int)viewedModel.Position.X, (int)viewedModel.Position.Y, viewedModel.spriteWidth, viewedModel.spriteHeight), Color.Azure);
-                    else spriteBatch.Draw(image, new Rectangle((int)viewedModel.Position.X, (int)viewedModel.Position.Y, viewedModel.spriteWidth, viewedModel.spriteHeight), Color.Brown);
-                } else
-                     spriteBatch.Draw(image, new Rectangle((int)viewedModel.Position.X, (int)viewedModel.Position.Y, viewedModel.spriteWidth, viewedModel.spriteHeight), Color.Azure);
+                        spriteBatch.Draw(activatedImage, new Rectangle((int)viewedModel.Position.X, (int)viewedModel.Position.Y, viewedModel.spriteWidth, viewedModel.spriteHeight), Color.Azure);
+                    else spriteBatch.Draw(activatedImage, new Rectangle((int)viewedModel.Position.X, (int)viewedModel.Position.Y, viewedModel.spriteWidth, viewedModel.spriteHeight), Color.Brown);
+                }
+                else
+                    spriteBatch.Draw(activatedImage, new Rectangle((int)viewedModel.Position.X, (int)viewedModel.Position.Y, viewedModel.spriteWidth, viewedModel.spriteHeight), Color.Azure);
             }
-        }    
+        }
     }
 }
