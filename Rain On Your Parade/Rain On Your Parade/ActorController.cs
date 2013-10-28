@@ -37,7 +37,7 @@ namespace Rain_On_Your_Parade
                     if (next <= 30) controlledActor.State = new ActorState(ActorState.AState.Seek);
                     break;
                 case ActorState.AState.Rampage:
-                    controlledActor.State = new ActorState(ActorState.AState.Seek);
+                    controlledActor.State = new ActorState(ActorState.AState.Wander);
                     break;
                 case ActorState.AState.Sleep:
                     if (next <= 30) controlledActor.State = new ActorState(ActorState.AState.Seek);
@@ -114,6 +114,16 @@ namespace Rain_On_Your_Parade
 
                         //Move the actor
                         controlledActor.Position = Vector2.Add(controlledActor.Position, controlledActor.Velocity);
+                    }
+                    break;
+                case ActorState.AState.Wander: 
+                    List<GridSquare> wanderTarget = new List<GridSquare>();
+                    wanderTarget.Add(worldState.StateOfWorld[random.Next(worldState.worldWidth),random.Next(worldState.worldHeight)]);
+                    controlledActor.Path = FindPath(wanderTarget, worldState.StateOfWorld[(int)(controlledActor.Position.X / Canvas.SQUARE_SIZE), (int)(controlledActor.Position.Y / Canvas.SQUARE_SIZE)],
+                        worldState.StateOfWorld, new Point[worldState.worldWidth, worldState.worldHeight]);
+                    if (controlledActor.Path != null)
+                    {
+                        controlledActor.State = new ActorState(ActorState.AState.Walk);
                     }
                     break;
                 //Again, a specialcase. Just dumps things into Seek, making sure to zero their velocity first.
