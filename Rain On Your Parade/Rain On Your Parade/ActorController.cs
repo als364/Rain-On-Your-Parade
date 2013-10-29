@@ -202,8 +202,9 @@ namespace Rain_On_Your_Parade
         private List<GridSquare> PreferenceSearch(WorldState worldState)
         {
             double maxPreference = 0;
+            Dictionary<Point, int> squarePreference = new Dictionary<Point, int>();
             List<GridSquare> targets = new List<GridSquare>();
-            foreach (GridSquare square in worldState.StateOfWorld)
+            /*foreach (GridSquare square in worldState.StateOfWorld)
             {
                 //How desirable /is/ the square
                 double desirability = Desirability(square);
@@ -222,7 +223,10 @@ namespace Rain_On_Your_Parade
                 {
                     targets.Add(square);
                 }
-            }
+            }*/
+            foreach(WorldObject entity in worldState)
+            {
+
             return targets;
         }
 

@@ -168,22 +168,6 @@ namespace Rain_On_Your_Parade
             set { gridRampageEffect = value; }
         }
 
-        public override string ToString()
-        {
-            //return (string)stringNames[typeName];
-            switch (typeName)
-            {
-                case ActorType.Type.Cat:
-                    return "cat";
-                case ActorType.Type.Kid:
-                    return "kid";
-                case ActorType.Type.Mom:
-                    return "mom";
-                default:
-                    return "Actor";
-            }
-        }
-
         public ActorState InitState
         {
             get { return initState; }
