@@ -9,7 +9,8 @@ namespace Rain_On_Your_Parade
 
         private Type typeName;
 
-        Hashtable stringNames = new Hashtable();
+        Hashtable activatedImages = new Hashtable();
+        Hashtable deactivatedImages = new Hashtable();
 
         private int sleepNeed;
         private int playNeed;
@@ -49,7 +50,8 @@ namespace Rain_On_Your_Parade
                     gridNurtureEffect = 1;
                     gridRampageEffect = 3;
                     initState = new ActorState(ActorState.AState.Sleep);
-                    stringNames.Add(Type.Cat, "cat");
+                    activatedImages.Add(Type.Cat, "cat");
+                    deactivatedImages.Add(Type.Kid, "kid");
                     break;
                 case ActorType.Type.Kid:
                     sleepNeed = 0;
@@ -64,7 +66,8 @@ namespace Rain_On_Your_Parade
                     gridNurtureEffect = 3;
                     gridRampageEffect = 3;
                     initState = new ActorState(ActorState.AState.Seek);
-                    stringNames.Add(Type.Kid, "kid");
+                    activatedImages.Add(Type.Kid, "kid");
+                    deactivatedImages.Add(Type.Kid, "kid");
                     break;
                 case ActorType.Type.Mom:
                     sleepNeed = 0;
@@ -79,7 +82,8 @@ namespace Rain_On_Your_Parade
                     gridNurtureEffect = -1;
                     gridRampageEffect = 3;
                     initState = new ActorState(ActorState.AState.Seek);
-                    stringNames.Add(Type.Mom, "mom");
+                    activatedImages.Add(Type.Mom, "mom");
+                    deactivatedImages.Add(Type.Mom, "mom");
                     break;
             }
         }
@@ -101,9 +105,12 @@ namespace Rain_On_Your_Parade
             gridNurtureEffect = aGridNurtureEffect;
             gridRampageEffect = aGridRampageEffect;
 
-            stringNames.Add(Type.Cat, "cat");
-            stringNames.Add(Type.Kid, "kid");
-            stringNames.Add(Type.Mom, "mom");
+            activatedImages.Add(Type.Cat, "cat");
+            activatedImages.Add(Type.Kid, "kid");
+            activatedImages.Add(Type.Mom, "mom");
+            deactivatedImages.Add(Type.Cat, "cat");
+            deactivatedImages.Add(Type.Kid, "kid");
+            deactivatedImages.Add(Type.Mom, "mom");
         }
 
         #region Getters and Setters
@@ -177,17 +184,17 @@ namespace Rain_On_Your_Parade
         //{
         //    return (string)stringNames[typeName];
         //}
-        public string StringName()
+        public string activatedStringName()
         {
-            return (string)stringNames[typeName];
+            return (string)activatedImages[typeName];
         }
         #endregion
 
         public override string ToString()
         {
-            return "Type: " + stringNames[typeName] + "\nSleep Need: " + sleepNeed + "\nPlay Need: " + playNeed + "\nNurture Need: " + nurtureNeed + "\nBase Sleep Level = " + baseSleepLevel +
+            return "Type: " + activatedImages[typeName] + "\nSleep Need: " + sleepNeed + "\nPlay Need: " + playNeed + "\nNurture Need: " + nurtureNeed + "\nBase Sleep Level = " + baseSleepLevel +
                 "\nBase Play Level = " + basePlayLevel + "\nBase Nurture Level = " + baseNurtureLevel + "\nBase Rampage Level = " + baseRampageLevel + "\nGrid Sleep Effect: " + gridSleepEffect +
-                "Grid Nurture Effect: " + gridNurtureEffect + "Grid Play Effect: " + gridPlayEffect + "Grid Rampage Effect: " + gridRampageEffect;
+                " Grid Nurture Effect: " + gridNurtureEffect + " Grid Play Effect: " + gridPlayEffect + " Grid Rampage Effect: " + gridRampageEffect;
         }
     }
 }

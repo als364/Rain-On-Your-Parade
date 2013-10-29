@@ -13,7 +13,8 @@ namespace Rain_On_Your_Parade
         public int spriteWidth, spriteHeight;
         public string spriteFilePath = "Content/default";
         public Vector2 Position;
-        public Texture2D sprite;
+        public Texture2D activatedSprite;
+        public Texture2D deactivatedSprite;
 
         public Model(){}
 

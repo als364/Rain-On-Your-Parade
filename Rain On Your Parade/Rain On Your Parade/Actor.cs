@@ -45,7 +45,8 @@ namespace Rain_On_Your_Parade
 
         public override void LoadContent(ContentManager content)
         {
-            sprite = content.Load<Texture2D>(type.StringName());
+            activatedSprite = content.Load<Texture2D>(type.activatedStringName());
+            deactivatedSprite = content.Load<Texture2D>(type.activatedStringName());
             spriteWidth = Canvas.SQUARE_SIZE;
             spriteHeight = Canvas.SQUARE_SIZE;
         }
@@ -146,13 +147,18 @@ namespace Rain_On_Your_Parade
         public override string ToString()
         {
             string gPath = "";
-            foreach (GridSquare g in path)
+            if (path != null && path.Count > 0)
             {
-                gPath += g.Location.ToString() + "->";
+                foreach (GridSquare g in path)
+                {
+                    gPath += g.Location.ToString() + "->";
+                }
+                gPath = gPath.Substring(0, gPath.Length - 2);
             }
-            return "Type: " + type.ToString() + "\n" + base.ToString() + "\nVelocity: " + velocity.ToString() + "\nMood: " + mood + "\nState: " + state.ToString() + " Target State: " + targetState.ToString() + "\nSleep Level = " + sleepLevel + "\nPlay Level = " + playLevel + "\nNurture Level = " +
-                nurtureLevel + "\nRampage Level = " + rampageLevel + "\nGrid Sleep Effect: " + gridSleepEffect + "Grid Nurture Effect: " + gridNurtureEffect + "Grid Play Effect: " + gridPlayEffect +
-                "Grid Rampage Effect: " + gridRampageEffect + gPath;
+            
+            return type.ToString() + "\n" + base.ToString() + "Velocity: " + velocity.ToString() + "\nMood: " + mood + "\n" + state.ToString() + " Target State: " + targetState.ToString() + "\nSleep Level = " + sleepLevel + "\nPlay Level = " + playLevel + "\nNurture Level = " +
+                nurtureLevel + "\nRampage Level = " + rampageLevel + "\nGrid Sleep Effect: " + gridSleepEffect + " Grid Nurture Effect: " + gridNurtureEffect + " Grid Play Effect: " + gridPlayEffect +
+                " Grid Rampage Effect: " + gridRampageEffect + "\n" + gPath;
         }
     }
 }

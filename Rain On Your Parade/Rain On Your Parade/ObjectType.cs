@@ -7,7 +7,8 @@ namespace Rain_On_Your_Parade
     {
 
         public enum Type {SunnySpot, Garden, Pool, Chalking, Laundry, House};
-        Hashtable stringNames = new Hashtable();
+        Hashtable activatedImages = new Hashtable();
+        Hashtable deactivatedImages = new Hashtable();
         private Type typeName;
         private bool startsActivated;
         private int sleepLevel;
@@ -23,23 +24,25 @@ namespace Rain_On_Your_Parade
             switch (typeName)
             {
                 case ObjectType.Type.SunnySpot:
-                    startsActivated = true;
+                    startsActivated = false;
                     sleepLevel = 3;
                     playLevel = 0;
                     nurtureLevel = 0;
                     rampageLevel = 0;
                     passable = true;
-                    stringNames.Add(Type.SunnySpot, "sunspot");
+                    activatedImages.Add(Type.SunnySpot, "rainbow");
+                    deactivatedImages.Add(Type.SunnySpot, "sunspot");
                     break;
 
                 case ObjectType.Type.Garden:
                     startsActivated = true;
-                    sleepLevel = 3;
+                    sleepLevel = 0;
                     playLevel = 0;
                     nurtureLevel = 3;
-                    rampageLevel = 3;
+                    rampageLevel = 0;
                     passable = true;
-                    stringNames.Add(Type.Garden, "garden");
+                    activatedImages.Add(Type.Garden, "garden2");
+                    deactivatedImages.Add(Type.Garden, "drygarden");
                     break;
 
                 case ObjectType.Type.Pool:
@@ -49,7 +52,8 @@ namespace Rain_On_Your_Parade
                     nurtureLevel = 0;
                     rampageLevel = 0;
                     passable = true;
-                    stringNames.Add(Type.Pool, "pool");
+                    activatedImages.Add(Type.Pool, "pool");
+                    deactivatedImages.Add(Type.Pool, "poolempty");
                     break;
 
                 case ObjectType.Type.Chalking:
@@ -59,27 +63,32 @@ namespace Rain_On_Your_Parade
                     nurtureLevel = 0;
                     rampageLevel = 0;
                     passable = true;
-                    stringNames.Add(Type.Chalking, "sidewalk");
+                    activatedImages.Add(Type.Chalking, "chalksidewalk");
+                    deactivatedImages.Add(Type.Chalking, "sidewalk");
                     break;
 
                 case ObjectType.Type.Laundry:
                     startsActivated = true;
                     sleepLevel = 0;
-                    playLevel = 1;
-                    nurtureLevel = 2;
-                    rampageLevel = 3;
+                    playLevel = 0;
+                    nurtureLevel = 0;
+                    rampageLevel = 0;
                     passable = true;
-                    stringNames.Add(Type.Laundry, "laundry");
+                    activatedImages.Add(Type.Laundry, "laundry");
+                    deactivatedImages.Add(Type.Laundry, "wetlaundry");
                     break;
 
                 case ObjectType.Type.House:
                     startsActivated = false;
-                    sleepLevel = 2;
+                    sleepLevel = 0;
+                    startsActivated = true;
+                    sleepLevel = 0;
                     playLevel = 0;
-                    nurtureLevel = 1;
+                    nurtureLevel = 0;
                     rampageLevel = 0;
                     passable = false;
-                    stringNames.Add(Type.House, "house");
+                    activatedImages.Add(Type.House, "house");
+                    deactivatedImages.Add(Type.House, "house");
                     break;
             }
         }
@@ -93,12 +102,18 @@ namespace Rain_On_Your_Parade
             nurtureLevel = oNurture;
             rampageLevel = oRampage;
 
-            stringNames.Add(Type.Chalking, "sidewalk");
-            stringNames.Add(Type.SunnySpot, "sunspot");
-            stringNames.Add(Type.Garden, "garden");
-            stringNames.Add(Type.Laundry, "laundry");
-            stringNames.Add(Type.Pool, "pool");
-            stringNames.Add(Type.House, "house");
+            activatedImages.Add(Type.SunnySpot, "rainbow");
+            deactivatedImages.Add(Type.SunnySpot, "sunspot");
+            activatedImages.Add(Type.Garden, "garden2");
+            deactivatedImages.Add(Type.Garden, "drygarden");
+            activatedImages.Add(Type.Pool, "pool");
+            deactivatedImages.Add(Type.Pool, "poolempty");
+            activatedImages.Add(Type.Chalking, "chalksidewalk");
+            deactivatedImages.Add(Type.Chalking, "sidewalk");
+            activatedImages.Add(Type.Laundry, "laundry");
+            deactivatedImages.Add(Type.Laundry, "wetlaundry");
+            activatedImages.Add(Type.House, "house");
+            deactivatedImages.Add(Type.House, "house");
         }
 
         public Type TypeName
@@ -139,17 +154,20 @@ namespace Rain_On_Your_Parade
             get { return passable; }
             set { passable = value; }
         }
-        //public override string ToString()
-        //{
-        //    return (string)stringNames[typeName];
-        //}
-        public string StringName()
+
+        public string activatedStringName()
         {
-            return (string)stringNames[typeName];
+            return (string)activatedImages[typeName];
         }
+
+        public string deactivatedStringName()
+        {
+            return (string)deactivatedImages[typeName];
+        }
+
         public override string ToString()
         {
-            return (string)stringNames[typeName] + "\nSleep Level: " + sleepLevel + "\nPlay Level: " + playLevel + "\nNurture Level: " + nurtureLevel + "\nRampage Level: " + rampageLevel;
+            return (string)activatedImages[typeName] + "\nSleep Level: " + sleepLevel + "\nPlay Level: " + playLevel + "\nNurture Level: " + nurtureLevel + "\nRampage Level: " + rampageLevel;
         }
 
     }

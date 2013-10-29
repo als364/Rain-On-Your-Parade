@@ -220,7 +220,7 @@ namespace Rain_On_Your_Parade
                grid += g.ToString() + "\n";
             }
             return "World Width: " + worldWidth + "\nWorld Height: " + worldHeight +
-                "Malice: " + malice + "\nMalice Objective: " + maliceObjective + "\n" + "Player: \n" + player.ToString() + "Grid: \n" + grid;
+                "\nMalice: " + malice + "\nMalice Objective: " + maliceObjective + "\n" + "Player: \n" + player.ToString() + "\nGrid: \n" + grid;
         }
     }
 }

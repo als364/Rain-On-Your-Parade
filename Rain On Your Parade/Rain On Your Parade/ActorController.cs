@@ -37,6 +37,7 @@ namespace Rain_On_Your_Parade
                     if (next <= 30) controlledActor.State = new ActorState(ActorState.AState.Seek);
                     break;
                 case ActorState.AState.Rampage:
+                    controlledActor.State = new ActorState(ActorState.AState.Wander);
                     break;
                 case ActorState.AState.Sleep:
                     if (next <= 30) controlledActor.State = new ActorState(ActorState.AState.Seek);
@@ -54,9 +55,12 @@ namespace Rain_On_Your_Parade
                     //if none of the squares were desirable, Rampage
                     if (controlledActor.Path == null) controlledActor.State = new ActorState(ActorState.AState.Rampage);
                     else
-                    //Now, walk there.
-                    controlledActor.State = new ActorState(ActorState.AState.Walk);
+                    {
+                        //Now, walk there.
+                        controlledActor.State = new ActorState(ActorState.AState.Walk);
+                    }
                     break;
+
                 case ActorState.AState.Walk:
                     //Shouldn't ever happen, really. This is a specialcase. Rather than throwing an error, just find something else to do.
                     if (controlledActor.Path.Count == 0)
@@ -64,13 +68,7 @@ namespace Rain_On_Your_Parade
                         //Console.WriteLine("Path empty, moving to Seek");
                         controlledActor.State = new ActorState(ActorState.AState.Seek);
                     }
-                    //At target square. Move to target state.
-                    else if (controlledActor.Path.Count == 1)
-                    {
-                        //Console.WriteLine("Path ended, moving to " + controlledActor.TargetState);
-                        controlledActor.Path.Clear();
-                        controlledActor.State = new ActorState(controlledActor.TargetState);
-                    }
+            
                     //The actual moving along the path.
                     else
                     {
@@ -84,9 +82,22 @@ namespace Rain_On_Your_Parade
                         //If I'm within the next square on the path, remove it from the path and set my velocity towards the next one
                         if (nextSquare.Contains(controlledActor.Position))
                         {
-                          //  Console.WriteLine("REMOVING");
-                            controlledActor.Path.RemoveAt(0);
-                            nextSquare = controlledActor.Path[0];
+                            //At target square. Move to target state.  
+                            if (controlledActor.Path.Count == 1)
+                            {
+                                //controlledActor.Path.Clear();
+                                controlledActor.State = new ActorState(controlledActor.TargetState);
+                                //controlledActor.Path[0].Actors.Remove(controlledActor);
+                               
+                            }
+                            else
+                            {
+                                //  Console.WriteLine("REMOVING");
+                                worldState.StateOfWorld[(int)(controlledActor.Position.X/Canvas.SQUARE_SIZE), (int)(controlledActor.Position.Y/Canvas.SQUARE_SIZE)].Actors.Remove(controlledActor);
+                                controlledActor.Path.RemoveAt(0);
+                               controlledActor.Path[0].Actors.Add(controlledActor);
+                                nextSquare = controlledActor.Path[0];
+                            }
 
                             //controlledActor.Velocity = new Vector2(nextSquare.Location.X * Canvas.SQUARE_SIZE - controlledActor.Position.X, nextSquare.Location.Y * Canvas.SQUARE_SIZE - controlledActor.Position.Y)/30;
                             //Console.WriteLine("Velocity: " + controlledActor.Velocity);
@@ -100,12 +111,19 @@ namespace Rain_On_Your_Parade
                             else Vely = 1f;
                             controlledActor.Velocity = new Vector2(Velx, Vely);
                             //controlledActor.Velocity = new Vector2(nextSquare.Location.X * Canvas.SQUARE_SIZE - controlledActor.Position.X, nextSquare.Location.Y * Canvas.SQUARE_SIZE - controlledActor.Position.Y)/30;
-                        
-                        //Otherwise they'll just jump there
-                        controlledActor.Velocity.Normalize();
-                      //  Console.WriteLine("Velocity: " + controlledActor.Velocity);
+
                         //Move the actor
                         controlledActor.Position = Vector2.Add(controlledActor.Position, controlledActor.Velocity);
+                    }
+                    break;
+                case ActorState.AState.Wander: 
+                    List<GridSquare> wanderTarget = new List<GridSquare>();
+                    wanderTarget.Add(worldState.StateOfWorld[random.Next(worldState.worldWidth),random.Next(worldState.worldHeight)]);
+                    controlledActor.Path = FindPath(wanderTarget, worldState.StateOfWorld[(int)(controlledActor.Position.X / Canvas.SQUARE_SIZE), (int)(controlledActor.Position.Y / Canvas.SQUARE_SIZE)],
+                        worldState.StateOfWorld, new Point[worldState.worldWidth, worldState.worldHeight]);
+                    if (controlledActor.Path != null)
+                    {
+                        controlledActor.State = new ActorState(ActorState.AState.Walk);
                     }
                     break;
                 //Again, a specialcase. Just dumps things into Seek, making sure to zero their velocity first.
@@ -208,20 +226,22 @@ namespace Rain_On_Your_Parade
             {
                 //How desirable /is/ the square
                 double desirability = Desirability(square);
-                //Console.WriteLine("GridSquare: " + square.Location);
-               // Console.WriteLine("Desirability: " + desirability);
+              //  Console.WriteLine("GridSquare: " + square.Location);
+                //Console.WriteLine("Desirability: " + desirability);
                 //Console.WriteLine("MaxPreference: " + maxPreference);
                 //If it's more desirable than anything else we've seen, clear the targets list and add that square
                 if (desirability > maxPreference)
                 {
                     targets.Clear();
-                   // targets.Add(square);
+                    //targets.Add(square);
+                   // Console.WriteLine("SquareAdded: " + square);
                     maxPreference = desirability;
                 }
                 //If it's equally desirable, add it to the list
-                else if (desirability == maxPreference && maxPreference != 0) //dont add non-desirable squares (maxPreference == 0)
+                else if (desirability == maxPreference && maxPreference != 0 && desirability != 0) //dont add non-desirable squares (maxPreference == 0)
                 {
                     targets.Add(square);
+                   // Console.WriteLine("SquareAdded: " + square);
                 }
             }*/
             foreach(WorldObject entity in worldState)
@@ -247,7 +267,7 @@ namespace Rain_On_Your_Parade
                            (target.TotalPlay * controlledActor.PlayLevel) + 
                            (target.TotalRampage * controlledActor.Mood) + 
                            (target.TotalSleep * controlledActor.SleepLevel);
-           // Console.WriteLine("Target Play:" + target.TotalPlay + " MyPlay:"+ controlledActor.PlayLevel);
+           // Console.WriteLine("Target Play:" + target.TotalPlay +  "MyPlay:" + controlledActor.PlayLevel + "Desire:" + desirability);
            // Causes infinity...?  desirability /= Utils.EuclideanDistance(new Vector2(controlledActor.Position.X/Canvas.SQUARE_SIZE, controlledActor.Position.Y/Canvas.SQUARE_SIZE), target.Location);
             return desirability;
         }
@@ -319,8 +339,10 @@ namespace Rain_On_Your_Parade
             List<Point> path = new List<Point>();
             Point parent = parentArray[target.X, target.Y];
             path.Add(target);
-            while (parent != origin)
+            int i = 0;
+            while (parent != origin && i < 100)
             {
+                i++;
                 path.Add(parent);
                 parent = parentArray[parent.X, parent.Y];
             }
