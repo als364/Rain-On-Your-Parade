@@ -27,7 +27,7 @@ namespace Rain_On_Your_Parade
         {
             KeyboardState ks = Keyboard.GetState();
 
-            Point prevPos = new Point((int)(player.Position.X / Canvas.SQUARE_SIZE), (int)(player.Position.Y / Canvas.SQUARE_SIZE));
+            player.prevPos = new Vector2((int)(player.Position.X / Canvas.SQUARE_SIZE), (int)(player.Position.Y / Canvas.SQUARE_SIZE));
 
             if (coolDown == 0) //
             {

@@ -12,7 +12,6 @@ namespace Rain_On_Your_Parade
     {
         private Vector2 velocity;       //velocity of player
         private int rain;       //amount of rain held by player
-        //private Vector2 position;
 
         public const int MAX_RAIN = 6;
 
