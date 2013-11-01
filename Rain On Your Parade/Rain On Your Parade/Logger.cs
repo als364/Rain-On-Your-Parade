@@ -35,9 +35,9 @@ namespace Rain_On_Your_Parade
             File.AppendAllText(log, now.ToString() + "\nScreen Width:" + GameEngine.SCREEN_WIDTH + "\nScreen Height: " + GameEngine.SCREEN_HEIGHT + "\n");
         }
 
-        public void Log(WorldState state, GameTime gameTime)
+        public void Log(Canvas level, GameTime gameTime)
         {
-            File.AppendAllText(log, gameTime.TotalGameTime + "\n" + state.ToString() + "\n");
+            File.AppendAllText(log, gameTime.TotalGameTime + "\n" + level.ToString() + "\n");
             //foreach (GridSquare g in state.StateOfWorld)
             //{
             //    File.AppendAllText("log.txt", g.ToString() + "\n");

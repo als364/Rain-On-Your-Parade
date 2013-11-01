@@ -26,15 +26,15 @@ namespace Rain_On_Your_Parade
         /// </summary>
         /// <param name="gameTime"></param>
         /// <param name="worldState"></param>
-        public override void Update(GameTime gameTime, WorldState worldState)
+        public override void Update(GameTime gameTime, Canvas level)
         {
             Random random = new Random();
             int next = random.Next(1000); //Let the actor choose a new state in a random way
             actorSquare = controlledActor.GridspacePosition;
 
             //Determines whether the actor is in the same square as the cloud, and implements a delayed reaction
-            if (worldState.Player.GridspacePosition.X == actorSquare.X
-                && worldState.Player.GridspacePosition.Y == actorSquare.Y)
+            if (level.Player.GridspacePosition.X == actorSquare.X
+                && level.Player.GridspacePosition.Y == actorSquare.Y)
             {
                 if (reactDelay > 0)
                 {
@@ -54,11 +54,11 @@ namespace Rain_On_Your_Parade
             {
                 //TODO: Implement these four states
                 case ActorState.AState.Nurture:
-                    interactWithObject(worldState, ActorState.AState.Nurture);
+                    interactWithObject(level, ActorState.AState.Nurture);
                     if (next <= 30) controlledActor.State = new ActorState(ActorState.AState.Seek);
                     break;
                 case ActorState.AState.Play:
-                    interactWithObject(worldState, ActorState.AState.Play);
+                    interactWithObject(level, ActorState.AState.Play);
                     if (next <= 30) controlledActor.State = new ActorState(ActorState.AState.Seek);
                     break;
                 case ActorState.AState.Rampage:
@@ -74,9 +74,9 @@ namespace Rain_On_Your_Parade
                     controlledActor.TargetState = newState;
                     //PreferenceSearch determines the most desired square.
                     //FindPath finds a path to it.
-                    controlledActor.Path = FindPath(PreferenceSearch(worldState),
-                                                    worldState.StateOfWorld[actorSquare.X, actorSquare.Y],
-                                                    worldState.StateOfWorld, new Point[worldState.worldWidth, worldState.worldHeight]);
+                    controlledActor.Path = FindPath(PreferenceSearch(level),
+                                                    level.Grid[actorSquare.X, actorSquare.Y],
+                                                    level.Grid, new Point[level.Width, level.Height]);
                     //if none of the squares were desirable, Rampage
                     if (controlledActor.Path == null) controlledActor.State = new ActorState(ActorState.AState.Rampage);
                     else
@@ -112,7 +112,7 @@ namespace Rain_On_Your_Parade
                             else
                             {
                                 //  Console.WriteLine("REMOVING");
-                                worldState.StateOfWorld[actorSquare.X, actorSquare.Y].Actors.Remove(controlledActor);
+                                level.Grid[actorSquare.X, actorSquare.Y].Actors.Remove(controlledActor);
                                 controlledActor.Path.RemoveAt(0);
                                 controlledActor.Path[0].Actors.Add(controlledActor);
                                 nextSquare = controlledActor.Path[0];
@@ -147,9 +147,9 @@ namespace Rain_On_Your_Parade
                     break;
                 case ActorState.AState.Wander: 
                     List<GridSquare> wanderTarget = new List<GridSquare>();
-                    wanderTarget.Add(worldState.StateOfWorld[random.Next(worldState.worldWidth),random.Next(worldState.worldHeight)]);
-                    controlledActor.Path = FindPath(wanderTarget, worldState.StateOfWorld[actorSquare.X, actorSquare.Y],
-                                                    worldState.StateOfWorld, new Point[worldState.worldWidth, worldState.worldHeight]);
+                    wanderTarget.Add(level.Grid[random.Next(level.Width),random.Next(level.Height)]);
+                    controlledActor.Path = FindPath(wanderTarget, level.Grid[actorSquare.X, actorSquare.Y],
+                                                    level.Grid, new Point[level.Width, level.Height]);
                     if (controlledActor.Path != null)
                     {
                         controlledActor.State = new ActorState(ActorState.AState.Walk);
@@ -164,35 +164,35 @@ namespace Rain_On_Your_Parade
 
                     //Determines which direction to run based on the player's movement direction
                     List<GridSquare> target = new List<GridSquare>();
-                    float xChange = worldState.Player.GridspacePosition.X - worldState.Player.prevPos.X;
-                    float yChange = worldState.Player.GridspacePosition.Y - worldState.Player.prevPos.Y;
+                    float xChange = level.Player.GridspacePosition.X - level.Player.prevPos.X;
+                    float yChange = level.Player.GridspacePosition.Y - level.Player.prevPos.Y;
                     Console.WriteLine("PosChange: " + xChange + ", " + yChange);
                     if (Math.Abs(xChange) > Math.Abs(yChange))
                     {
                         if (xChange > 0)
                         {
-                            target.Add(worldState.StateOfWorld[(int)MathHelper.Clamp(actorSquare.X + 3, 0, worldState.worldWidth-1), actorSquare.Y]);
+                            target.Add(level.Grid[(int)MathHelper.Clamp(actorSquare.X + 3, 0, level.Width-1), actorSquare.Y]);
                         }
                         else
                         {
-                            target.Add(worldState.StateOfWorld[(int)MathHelper.Clamp(actorSquare.X - 3, 0, worldState.worldWidth-1), actorSquare.Y]);
+                            target.Add(level.Grid[(int)MathHelper.Clamp(actorSquare.X - 3, 0, level.Width-1), actorSquare.Y]);
                         }
                     }
                     else
                     {
                         if (yChange > 0)
                         {
-                            target.Add(worldState.StateOfWorld[actorSquare.X, (int)MathHelper.Clamp(actorSquare.Y + 3, 0, worldState.worldHeight-1)]);
+                            target.Add(level.Grid[actorSquare.X, (int)MathHelper.Clamp(actorSquare.Y + 3, 0, level.Height-1)]);
                         }
                         else
                         {
-                            target.Add(worldState.StateOfWorld[actorSquare.X, (int)MathHelper.Clamp(actorSquare.Y - 3, 0, worldState.worldHeight-1)]);
+                            target.Add(level.Grid[actorSquare.X, (int)MathHelper.Clamp(actorSquare.Y - 3, 0, level.Height-1)]);
                         }
                     }
 
                     //FindPath finds a path to it.
-                    controlledActor.Path = FindPath(target, worldState.StateOfWorld[actorSquare.X, actorSquare.Y],
-                        worldState.StateOfWorld, new Point[worldState.worldWidth, worldState.worldHeight]);
+                    controlledActor.Path = FindPath(target, level.Grid[actorSquare.X, actorSquare.Y],
+                                                    level.Grid, new Point[level.Width, level.Height]);
 
                     //if none of the squares were desirable, Rampage
                     if (controlledActor.Path == null) controlledActor.State = new ActorState(ActorState.AState.Rampage);
@@ -212,7 +212,7 @@ namespace Rain_On_Your_Parade
                     else if (controlledActor.Path.Count == 1) //at target!
                     {
                         controlledActor.Velocity = new Vector2();
-                        if (!PreferenceSearch(worldState).Contains(controlledActor.Path[0]))
+                        if (!PreferenceSearch(level).Contains(controlledActor.Path[0]))
                         {
                             controlledActor.State = new ActorState(ActorState.AState.Seek);
                         }
@@ -293,12 +293,15 @@ namespace Rain_On_Your_Parade
         /// </summary>
         /// <param name="worldState">The state of the game world</param>
         /// <returns>A list of equally suitable grid squares</returns>
-        private List<GridSquare> PreferenceSearch(WorldState worldState)
+        private List<GridSquare> PreferenceSearch(Canvas level)
         {
             double maxPreference = 0;
             Dictionary<Point, int> squarePreference = new Dictionary<Point, int>();
             List<GridSquare> targets = new List<GridSquare>();
-            foreach (GridSquare square in worldState.StateOfWorld)
+            foreach(Actor actor in level.Actors)
+            {
+            }
+            /*foreach (GridSquare square in worldState.StateOfWorld)
             {
                 //How desirable /is/ the square
                 double desirability = Desirability(square);
@@ -319,7 +322,7 @@ namespace Rain_On_Your_Parade
                     targets.Add(square);
                    // Console.WriteLine("SquareAdded: " + square);
                 }
-            }
+            }*/
             return targets;
         }
 
@@ -435,11 +438,11 @@ namespace Rain_On_Your_Parade
         /// in their current state.
         /// </summary>
         /// <returns>A boolean stating whether the interaction successfully took place.</returns>
-        private bool interactWithObject(WorldState worldState, ActorState.AState action)
+        private bool interactWithObject(Canvas level, ActorState.AState action)
         {
             bool interacted = false;
 
-            foreach (WorldObject o in worldState.StateOfWorld[actorSquare.X, actorSquare.Y].Objects)
+            foreach (WorldObject o in level.Grid[actorSquare.X, actorSquare.Y].Objects)
             {
                 if (o.Type.CanActivate)
                 {

@@ -58,7 +58,6 @@
     <Compile Include="Utils.cs" />
     <Compile Include="View.cs" />
     <Compile Include="WorldObject.cs" />
-    <Compile Include="WorldState.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="OpenTK">

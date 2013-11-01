@@ -23,7 +23,7 @@ namespace Rain_On_Your_Parade
             this.player = player;
         }
 
-        public override void Update(GameTime gameTime, WorldState worldState)
+        public override void Update(GameTime gameTime, Canvas level)
         {
             KeyboardState ks = Keyboard.GetState();
             Point prevPos = new Point(player.GridspacePosition.X, player.GridspacePosition.Y);
@@ -32,7 +32,7 @@ namespace Rain_On_Your_Parade
             {
                 if (ks.IsKeyDown(Keys.R))
                 {
-                    if (Absorb(worldState))
+                    if (Absorb(level))
                     {
                         player.Velocity = new Vector2(0, 0);
                         coolDown = COOL_DOWN;
@@ -40,7 +40,7 @@ namespace Rain_On_Your_Parade
                 }
                 if (ks.IsKeyDown(Keys.Space))
                 {
-                    if (Rain(worldState))
+                    if (Rain(level))
                     {
                         player.Velocity = new Vector2(0, 0);
                         coolDown = COOL_DOWN;
@@ -166,14 +166,14 @@ namespace Rain_On_Your_Parade
             //Console.WriteLine("Gridspace Position: " + player.GridspacePosition);
         }
 
-        private bool Rain(WorldState worldState)
+        private bool Rain(Canvas level)
         {
             if (player.Rain > 0)
             {
                 isRaining = true;
                 player.Rain--;
 
-                foreach (Actor a in worldState.StateOfWorld[player.GridspacePosition.X, player.GridspacePosition.Y].Actors)
+                foreach (Actor a in level.Grid[player.GridspacePosition.X, player.GridspacePosition.Y].Actors)
                 {
                     if (a.State.State == a.TargetState)
                     {
@@ -186,7 +186,7 @@ namespace Rain_On_Your_Parade
                     }
                    
                 }
-                foreach (WorldObject o in worldState.StateOfWorld[player.GridspacePosition.X, player.GridspacePosition.Y].Objects)
+                foreach (WorldObject o in level.Grid[player.GridspacePosition.X, player.GridspacePosition.Y].Objects)
                 {
                     if (o.Type.CanContainWater)
                     {
@@ -213,9 +213,9 @@ namespace Rain_On_Your_Parade
             return false;
         }
 
-        private bool Absorb(WorldState worldState)
+        private bool Absorb(Canvas level)
         {
-            List<WorldObject> objects = worldState.StateOfWorld[player.GridspacePosition.X, player.GridspacePosition.Y].Objects;
+            List<WorldObject> objects = level.Grid[player.GridspacePosition.X, player.GridspacePosition.Y].Objects;
             foreach (WorldObject o in objects)
             {
                 if (o.Type.CanContainWater)

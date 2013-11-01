@@ -70,6 +70,8 @@ namespace Rain_On_Your_Parade
             objects.Add(new WorldObject(ObjectType.Type.Chalking, new Point(9, 3)));
             objects.Add(new WorldObject(ObjectType.Type.Chalking, new Point(10, 3)));
 
+            player = new Player();
+
             foreach (WorldObject entity in objects)
             {
                 canvasGrid[entity.GridspacePosition.X, entity.GridspacePosition.Y].add(entity);
@@ -155,6 +157,33 @@ namespace Rain_On_Your_Parade
                 objects = value;
             }
         }
+
+        public int Height
+        {
+            get
+            {
+                return squaresTall;
+            }
+        }
+
+        public int Width
+        {
+            get
+            {
+                return squaresWide;
+            }
+        }
         #endregion
+
+        public override string ToString()
+        {
+            string grid = "";
+            foreach (GridSquare g in canvasGrid)
+            {
+                grid += g.ToString() + "\n";
+            }
+            return "World Width: " + squaresWide + "\nWorld Height: " + squaresTall +
+                "\nMalice: " + malice + "\nMalice Objective: " + maliceObjective + "\n" + "Player: \n" + player.ToString() + "\nGrid: \n" + grid;
+        }
     }   
 }

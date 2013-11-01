@@ -30,7 +30,8 @@ namespace Rain_On_Your_Parade
         List<View> views;
         List<Controller> controllers;
 
-        WorldState worldState;
+        //WorldState worldState;
+        Canvas level;
 
         Texture2D batterybar;
         Texture2D battery;
@@ -63,25 +64,22 @@ namespace Rain_On_Your_Parade
             graphics.IsFullScreen = false;
             graphics.ApplyChanges();
 
-            //This is where the level building goes. I don't care about an XML parsing framework yet.
-            //Slider slider = new Slider(SCREEN_WIDTH-50, 0, 50, SCREEN_HEIGHT-50);
-            //SliderView sliderView = new SliderView(slider);
-            //SliderController sliderController = new SliderController(slider);
-
-            Canvas level = new Canvas();
+            //This is where the level building goes. I don't care about an XML parsing framework yet
+            level = new Canvas();
 
            // Debug.WriteLine("Y: " + level.canvasGrid[6, 6].Actors[0].Position.Y);
             int quota = 100;
-            worldState = new WorldState(quota,level.Grid);
+            //worldState = new WorldState(quota,level.Grid);
+            level.MaliceObjective = quota;
 
             //Debug.WriteLine("Y: " + worldState.getActors().ToArray()[1].Position.Y);
-            foreach (WorldObject o in worldState.getObjects())
+            foreach (WorldObject o in level.Objects)
             {
                 View objects = new View(o);
                 models.Add(o);
                 views.Add(objects);
             }
-            foreach (Actor a in worldState.getActors()){
+            foreach (Actor a in level.Actors){
                 View actors = new View(a);
                 models.Add(a);
                 //Debug.WriteLine("Y: " + a.Position.Y);
@@ -90,10 +88,10 @@ namespace Rain_On_Your_Parade
                 controllers.Add(actorController);
             }
             
-            View player = new View(worldState.Player);
+            View player = new View(level.Player);
             views.Add(player);
-            models.Add(worldState.Player);
-            controllers.Add(new PlayerController(worldState.Player));
+            models.Add(level.Player);
+            controllers.Add(new PlayerController(level.Player));
 
             //models.Add(slider);
             //views.Add(sliderView);
@@ -115,7 +113,10 @@ namespace Rain_On_Your_Parade
             // TODO: use this.Content to load your game content here
             foreach (Model model in models)
             {
-                model.LoadContent(this.Content);
+                if (model != null)
+                {
+                    model.LoadContent(this.Content);
+                }
             }
 
             batterybar = Content.Load<Texture2D>("batterybar");
@@ -141,7 +142,7 @@ namespace Rain_On_Your_Parade
         {
             if (framesTillLog == 0)
             {
-                log.Log(worldState, gameTime);
+                log.Log(level, gameTime);
                 framesTillLog = LOG_FRAMES;
             }
             else
@@ -155,9 +156,9 @@ namespace Rain_On_Your_Parade
             // TODO: Add your update logic here
             foreach (Controller controller in controllers)
             {
-                controller.Update(gameTime, worldState);
+                controller.Update(gameTime, level);
             }
-            foreach (GridSquare g in worldState.StateOfWorld)
+            foreach (GridSquare g in level.Grid)
             {
                 g.calculateLevels();
 
@@ -181,7 +182,7 @@ namespace Rain_On_Your_Parade
             }
 
             spriteBatch.Draw(batterybar, new Rectangle(0, 0, 155, 30), Color.Azure);
-            for (int i = 0; i < worldState.Player.Rain; i++)
+            for (int i = 0; i < level.Player.Rain; i++)
             {
                 spriteBatch.Draw(battery, new Rectangle(i*150/6 +5 , 3, 150/6, 25), Color.Azure);
             }

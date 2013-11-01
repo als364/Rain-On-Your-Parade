@@ -16,6 +16,6 @@ namespace Rain_On_Your_Parade
             controlledModel = model;
         }
 
-        abstract public void Update(GameTime gameTime, WorldState worldState);
+        abstract public void Update(GameTime gameTime, Canvas level);
     }
 }
