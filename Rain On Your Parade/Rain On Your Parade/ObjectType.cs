@@ -10,6 +10,7 @@ namespace Rain_On_Your_Parade
         Hashtable activatedImages = new Hashtable();
         Hashtable deactivatedImages = new Hashtable();
         private Type typeName;
+        private bool canActivate;
         private bool startsActivated;
         private int sleepLevel;
         private int playLevel;
@@ -25,6 +26,7 @@ namespace Rain_On_Your_Parade
             {
                 case ObjectType.Type.SunnySpot:
                     startsActivated = false;
+                    canActivate = false;
                     sleepLevel = 3;
                     playLevel = 0;
                     nurtureLevel = 0;
@@ -36,6 +38,7 @@ namespace Rain_On_Your_Parade
 
                 case ObjectType.Type.Garden:
                     startsActivated = true;
+                    canActivate = true;
                     sleepLevel = 0;
                     playLevel = 0;
                     nurtureLevel = 3;
@@ -47,6 +50,7 @@ namespace Rain_On_Your_Parade
 
                 case ObjectType.Type.Pool:
                     startsActivated = true;
+                    canActivate = false;
                     sleepLevel = 0;
                     playLevel = 3;
                     nurtureLevel = 0;
@@ -58,6 +62,7 @@ namespace Rain_On_Your_Parade
 
                 case ObjectType.Type.Chalking:
                     startsActivated = false;
+                    canActivate = true;
                     sleepLevel = 0;
                     playLevel = 0;
                     nurtureLevel = 0;
@@ -69,6 +74,7 @@ namespace Rain_On_Your_Parade
 
                 case ObjectType.Type.Laundry:
                     startsActivated = true;
+                    canActivate = true;
                     sleepLevel = 0;
                     playLevel = 0;
                     nurtureLevel = 0;
@@ -80,6 +86,7 @@ namespace Rain_On_Your_Parade
 
                 case ObjectType.Type.House:
                     startsActivated = false;
+                    canActivate = false;
                     sleepLevel = 0;
                     startsActivated = true;
                     sleepLevel = 0;
@@ -96,6 +103,7 @@ namespace Rain_On_Your_Parade
         public ObjectType(Type oType, bool oActivated, int oSleep, int oPlay, int oNurture, int oRampage)
         {
             typeName = oType;
+            canActivate = false;
             startsActivated = oActivated;
             sleepLevel = oSleep;
             playLevel = oPlay;
@@ -126,6 +134,12 @@ namespace Rain_On_Your_Parade
         {
             get { return startsActivated; }
             set { startsActivated = value; }
+        }
+
+        public bool CanActivate
+        {
+            get { return canActivate; }
+            set { canActivate = value; }
         }
 
         public int SleepLevel

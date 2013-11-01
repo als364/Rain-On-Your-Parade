@@ -11,7 +11,7 @@ namespace Rain_On_Your_Parade
     class ActorController : Controller
     {
         Actor controlledActor;
-        private GridSquare currentSquare;
+        private Point actorSquare = new Point(0, 0);
         private bool nearCloud = false;
         private int reactDelay = REACT_MAX;
         private const int REACT_MAX = 5;
@@ -31,7 +31,7 @@ namespace Rain_On_Your_Parade
             Random random = new Random();
             int next = random.Next(1000); //Let the actor choose a new state in a random way
 
-            Point actorSquare = new Point((int)controlledActor.Position.X / Canvas.SQUARE_SIZE,
+            actorSquare = new Point((int)controlledActor.Position.X / Canvas.SQUARE_SIZE,
                 (int)controlledActor.Position.Y / Canvas.SQUARE_SIZE);
 
             //Determines whether the actor is in the same square as the cloud, and implements a delayed reaction
@@ -55,9 +55,11 @@ namespace Rain_On_Your_Parade
             {
                 //TODO: Implement these four states
                 case ActorState.AState.Nurture:
+                    interactWithObject(worldState, ActorState.AState.Nurture);
                     if (next <= 30) controlledActor.State = new ActorState(ActorState.AState.Seek);
                     break;
-                case ActorState.AState.Play:  
+                case ActorState.AState.Play:
+                    interactWithObject(worldState, ActorState.AState.Play);
                     if (next <= 30) controlledActor.State = new ActorState(ActorState.AState.Seek);
                     break;
                 case ActorState.AState.Rampage:
@@ -418,10 +420,47 @@ namespace Rain_On_Your_Parade
 
             foreach (Point a in path)
             {
-                //Debug.WriteLine("Path--------: " + a);
+                Debug.WriteLine("Path--------: " + a);
             }
             path.RemoveAt(0);
             return path;
         }
+
+        /// <summary>
+        /// Activates any objects in that actor's grid square if they can be activated by an actor
+        /// in their current state.
+        /// </summary>
+        /// <returns>A boolean stating whether the interaction successfully took place.</returns>
+        private bool interactWithObject(WorldState worldState, ActorState.AState action)
+        {
+            bool interacted = false;
+
+            foreach (WorldObject o in worldState.StateOfWorld[actorSquare.X, actorSquare.Y].Objects)
+            {
+                if (o.Type.CanActivate)
+                {
+                    switch (action)
+                    {
+                        case ActorState.AState.Nurture:
+                            if (o.Type.NurtureLevel > 2)
+                            {
+                                o.activate();
+                                interacted = true;
+                            }
+                            break;
+                        case ActorState.AState.Play:
+                            if (o.Type.PlayLevel > 2)
+                            {
+                                o.activate();
+                                interacted = true;
+                            }
+                            break;
+                    }
+                }
+            }
+            return interacted;
+        }
     }
+
+
 }
