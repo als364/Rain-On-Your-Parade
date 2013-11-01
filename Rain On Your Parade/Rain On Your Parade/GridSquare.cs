@@ -214,6 +214,7 @@ namespace Rain_On_Your_Parade
             totalPlay = 0;
             totalNurture = 0;
             totalRampage = 0;
+            isPassable = true;
 
             foreach (WorldObject obj in objects)
             {
@@ -221,7 +222,10 @@ namespace Rain_On_Your_Parade
                 totalPlay += obj.Type.PlayLevel;
                 totalNurture += obj.Type.NurtureLevel;
                 totalRampage += obj.Type.RampageLevel;
-                isPassable = (isPassable || obj.Type.Passable);
+                if (!obj.Type.Passable)
+                {
+                    isPassable = false;
+                }
             }
 
             foreach (Actor act in actors)
