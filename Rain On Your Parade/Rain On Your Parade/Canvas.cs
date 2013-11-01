@@ -71,7 +71,6 @@ namespace Rain_On_Your_Parade
             objects.Add(new WorldObject(ObjectType.Type.Chalking, new Point(10, 3)));
 
             player = new Player();
-            initializeAdjacencyLists();
 
             foreach (WorldObject entity in objects)
             {
@@ -85,6 +84,8 @@ namespace Rain_On_Your_Parade
             {
                 square.calculateLevels();
             }
+
+            initializeAdjacencyLists();
         }
 
         #region Getters & Setters
@@ -259,7 +260,12 @@ namespace Rain_On_Your_Parade
         {
             foreach (WorldObject entity in square.Objects)
             {
-                if (!entity.Type.Passable) return false;
+                Debug.WriteLine("Square " + square.Location + " is passable: " + entity.Type.Passable);
+                if (!entity.Type.Passable)
+                {
+                    square.IsPassable = false;
+                    return false;
+                }
             }
             return true;
         }
