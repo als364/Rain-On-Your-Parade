@@ -221,7 +221,7 @@ namespace Rain_On_Your_Parade
                 totalPlay += obj.Type.PlayLevel;
                 totalNurture += obj.Type.NurtureLevel;
                 totalRampage += obj.Type.RampageLevel;
-                isPassable = isPassable || obj.Type.Passable;
+                isPassable = (isPassable || obj.Type.Passable);
             }
 
             foreach (Actor act in actors)
@@ -248,8 +248,8 @@ namespace Rain_On_Your_Parade
 
         public bool Contains(Point point)
         {
-            bool xContained = (point.X >= location.X - 2 && point.X <= location.X + 2);
-            bool yContained = (point.Y >= location.Y - 2 && point.Y <= location.Y + 2);
+            bool xContained = (point.X >= location.X && point.X <= location.X);
+            bool yContained = (point.Y >= location.Y && point.Y <= location.Y);
             // Console.WriteLine("Point.X: " + point.X);
             // Console.WriteLine("Point.Y: " + point.Y);
             // Console.WriteLine("Location.X: " + location.X * Canvas.SQUARE_SIZE);
