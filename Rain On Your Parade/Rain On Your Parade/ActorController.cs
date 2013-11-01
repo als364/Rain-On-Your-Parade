@@ -300,28 +300,40 @@ namespace Rain_On_Your_Parade
         private List<GridSquare> PreferenceSearch(Canvas level)
         {
             double maxPreference = 0;
-            Dictionary<Point, int> squarePreference = new Dictionary<Point, int>();
+            Dictionary<Point, double> squarePreference = new Dictionary<Point, double>();
             List<GridSquare> targets = new List<GridSquare>();
-            foreach (GridSquare square in level.Grid)
+            foreach (Actor actor in level.Actors)
             {
-                //How desirable /is/ the square
-                double desirability = Desirability(square);
-                //Console.WriteLine("GridSquare: " + square.Location);
-                //Console.WriteLine("Desirability: " + desirability);
-                //Console.WriteLine("MaxPreference: " + maxPreference);
-                //If it's more desirable than anything else we've seen, clear the targets list and add that square
-                if (desirability > maxPreference)
+                if (squarePreference.ContainsKey(actor.GridspacePosition))
+                {
+                    squarePreference[actor.GridspacePosition] += Desirability(level.Grid[actor.GridspacePosition.X, actor.GridspacePosition.Y]);
+                }
+                else
+                {
+                    squarePreference[actor.GridspacePosition] = Desirability(level.Grid[actor.GridspacePosition.X, actor.GridspacePosition.Y]);
+                }
+            }
+            foreach (WorldObject entity in level.Objects)
+            {
+                if (squarePreference.ContainsKey(entity.GridspacePosition))
+                {
+                    squarePreference[entity.GridspacePosition] += Desirability(level.Grid[entity.GridspacePosition.X, entity.GridspacePosition.Y]);
+                }
+                else
+                {
+                    squarePreference[entity.GridspacePosition] = Desirability(level.Grid[entity.GridspacePosition.X, entity.GridspacePosition.Y]);
+                }
+            }
+            foreach (Point point in squarePreference.Keys)
+            {
+                if (squarePreference[point] > maxPreference)
                 {
                     targets.Clear();
-                    //targets.Add(square);
-                   // Console.WriteLine("SquareAdded: " + square);
-                    maxPreference = desirability;
+                    maxPreference = squarePreference[point];
                 }
-                //If it's equally desirable, add it to the list
-                else if (desirability == maxPreference && maxPreference != 0 && desirability != 0) //dont add non-desirable squares (maxPreference == 0)
+                else if (squarePreference[point] == maxPreference && maxPreference != 0 && squarePreference[point] != 0)
                 {
-                    targets.Add(square);
-                   // Console.WriteLine("SquareAdded: " + square);
+                    targets.Add(level.Grid[point.X, point.Y]);
                 }
             }
             return targets;
@@ -340,12 +352,27 @@ namespace Rain_On_Your_Parade
                 return 0;
             }
             //This heuristic is broken. We should only look for squares suitable for the target action.
-            desirability = (target.TotalNurture * controlledActor.NurtureLevel) + 
+            /*desirability = (target.TotalNurture * controlledActor.NurtureLevel) + 
                            (target.TotalPlay * controlledActor.PlayLevel) + 
                            (target.TotalRampage * controlledActor.Mood) + 
-                           (target.TotalSleep * controlledActor.SleepLevel);
+                           (target.TotalSleep * controlledActor.SleepLevel);*/
            // Console.WriteLine("Target Play:" + target.TotalPlay +  "MyPlay:" + controlledActor.PlayLevel + "Desire:" + desirability);
            // Causes infinity...?  desirability /= Utils.EuclideanDistance(new Vector2(controlledActor.Position.X/Canvas.SQUARE_SIZE, controlledActor.Position.Y/Canvas.SQUARE_SIZE), target.Location);
+            switch (controlledActor.TargetState)
+            {
+                case ActorState.AState.Nurture:
+                    desirability += target.TotalNurture * controlledActor.NurtureLevel;
+                    break;
+                case ActorState.AState.Play:
+                    desirability += target.TotalPlay * controlledActor.PlayLevel;
+                    break;
+                case ActorState.AState.Rampage:
+                    desirability += target.TotalRampage * controlledActor.RampageLevel;
+                    break;
+                case ActorState.AState.Sleep:
+                    desirability += target.TotalSleep * controlledActor.SleepLevel;
+                    break;
+            }
             return desirability;
         }
 
@@ -353,50 +380,79 @@ namespace Rain_On_Your_Parade
         /// Breadth-first search.
         /// </summary>
         /// <param name="targets">Goal states.</param>
-        /// <param name="currentSquare">Starting state.</param>
+        /// <param name="origin">Starting state.</param>
         /// <param name="worldGrid">State space.</param>
         /// <param name="parentArray">For keeping track of the actual path. Keeps track of the progress of the BFS.</param>
         /// <returns></returns>
-        private List<GridSquare> FindPath(List<GridSquare> targets, GridSquare currentSquare, GridSquare[,] worldGrid, Point[,] parentArray)
+        private List<GridSquare> FindPath(List<GridSquare> targets, GridSquare origin, GridSquare[,] worldGrid, Point[,] parentArray)
         {
             if (targets.Count == 0) return null;
-
-            foreach (GridSquare p in targets)
-            {
-               // Debug.WriteLine(p);
-            }
-
-            //Debug.WriteLine("Find Path");
-            Queue<GridSquare> queue = new Queue<GridSquare>();
-            HashSet<GridSquare> seen = new HashSet<GridSquare>();
             List<GridSquare> path = new List<GridSquare>();
-            queue.Enqueue(currentSquare);
-            seen.Add(currentSquare);
-            //As long as we haven't run out of squares...
-            while (queue.Count != 0)
+
+            //Dictionary<GridSquare, double> pQueue = new Dictionary<GridSquare, double>();
+            PriorityQueue<int, GridSquare> pQueue = new PriorityQueue<int, GridSquare>();
+            Dictionary<GridSquare, int> gValues = new Dictionary<GridSquare, int>();
+
+            parentArray[origin.Location.X, origin.Location.Y] = new Point(-1, -1);
+            gValues.Add(origin, 0);
+            pQueue.Enqueue(GetHValue(origin, targets), origin);
+
+            while (pQueue.Count != 0)
             {
-                GridSquare lookingAt = queue.Dequeue();
-                //When we reach a goal state, go through the parent array to find the actual path the actor should take.
+                KeyValuePair<int, GridSquare> kvp = pQueue.Dequeue();
+                GridSquare lookingAt = kvp.Value;
+                //if we are looking at a target
                 if (targets.Contains(lookingAt))
                 {
-                    List<Point> pointPath = ExtractPathFromTarget(parentArray, lookingAt.Location, currentSquare.Location);
-                   // Debug.WriteLine(pointPath);
-                    foreach(Point point in pointPath)
+                    List<Point> pointPath = ExtractPathFromTarget(parentArray, lookingAt.Location, origin.Location);
+                    foreach (Point point in pointPath)
                     {
                         path.Add(worldGrid[point.X, point.Y]);
                     }
                     return path;
                 }
-                //Otherwise keep looking...
+                //if we are not looking at a target
                 else
                 {
-                    foreach (GridSquare gridSquare in lookingAt.Adjacent)
+                    //push all adjacent squares to queue with relevant information cached
+                    foreach (GridSquare adjacentSquare in lookingAt.Adjacent)
                     {
-                        if (!seen.Contains(gridSquare))
+                        //assign the gvalue of whatever we're looking at
+                        Point lookingAtParent = parentArray[lookingAt.Location.X, lookingAt.Location.Y];
+                        //if we're looking at the origin, the gvalue is 1
+                        if (lookingAtParent.X == -1 && lookingAtParent.Y == -1)
                         {
-                            seen.Add(gridSquare);
-                            queue.Enqueue(gridSquare);
-                            parentArray[gridSquare.Location.X, gridSquare.Location.Y] = lookingAt.Location;
+                            gValues[lookingAt] = 1;
+                        }
+                        //if we'renot, the gvalue is parent + 1
+                        else
+                        {
+                            gValues[lookingAt] = gValues[worldGrid[lookingAtParent.X, lookingAtParent.Y]] + 1;
+                        }
+                        //if we haven't already looked at it
+                        if (!gValues.ContainsKey(adjacentSquare))
+                        {
+                            //mark what we're looking at as the parent of everything adjacent to it
+                            parentArray[adjacentSquare.Location.X, adjacentSquare.Location.Y] = lookingAt.Location;
+                            //if we're not looknig at the origin
+                            if (lookingAt.Location != origin.Location)
+                            {
+                                //lookup parent gvalue
+                                GridSquare parent = worldGrid[lookingAt.Location.X, lookingAt.Location.Y];
+                                int fValue = gValues[parent] + 1;
+                                //evaluate hvalue and enqueue
+                                fValue += GetHValue(adjacentSquare, targets);
+                                pQueue.Enqueue(fValue, adjacentSquare);
+                            }
+                            //if we are looking at the origin
+                            else
+                            {
+                                //parent gvalue = 0
+                                int fValue = 1;
+                                //evaluate hvalue and enqueue
+                                fValue += GetHValue(adjacentSquare, targets);
+                                pQueue.Enqueue(fValue, adjacentSquare);
+                            }
                         }
                     }
                 }
@@ -417,7 +473,7 @@ namespace Rain_On_Your_Parade
             Point parent = parentArray[target.X, target.Y];
             path.Add(target);
             int i = 0;
-            while (parent != origin && i < 100)
+            while ((parent.X != -1 && parent.Y != -1) && i < 100)
             {
                 i++;
                 path.Add(parent);
@@ -432,6 +488,27 @@ namespace Rain_On_Your_Parade
             }*/
             path.RemoveAt(0);
             return path;
+        }
+
+        private int ManhattanDistance(Point p1, Point p2)
+        {
+            int distance = 0;
+            distance += Math.Abs(p2.X - p1.X);
+            distance += Math.Abs(p2.Y - p1.Y);
+            return distance;
+        }
+
+        private int GetHValue(GridSquare square, List<GridSquare> targets)
+        {
+            int minimumDistance = int.MaxValue;
+            foreach (GridSquare target in targets)
+            {
+                if (ManhattanDistance(square.Location, target.Location) < minimumDistance)
+                {
+                    minimumDistance = ManhattanDistance(square.Location, target.Location);
+                }
+            }
+            return minimumDistance;
         }
 
         /// <summary>

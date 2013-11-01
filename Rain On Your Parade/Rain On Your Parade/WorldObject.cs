@@ -66,7 +66,6 @@ namespace Rain_On_Your_Parade
                 containsWater = value;
             }
         }
-
         #endregion
 
         public void activate()

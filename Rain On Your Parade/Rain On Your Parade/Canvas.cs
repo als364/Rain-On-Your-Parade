@@ -195,64 +195,73 @@ namespace Rain_On_Your_Parade
                     {
                         if (y == 0) //top left
                         {
-                            currentSquare.adjacent.Add(canvasGrid[x + 1, y]);
-                            currentSquare.adjacent.Add(canvasGrid[x, y + 1]);
+                            if (SquareIsPassable(canvasGrid[x + 1, y])) currentSquare.adjacent.Add(canvasGrid[x + 1, y]);
+                            if (SquareIsPassable(canvasGrid[x, y + 1])) currentSquare.adjacent.Add(canvasGrid[x, y + 1]);
                         }
                         else if (y == squaresTall - 1) //bottom left
                         {
-                            currentSquare.adjacent.Add(canvasGrid[x + 1, y]);
-                            currentSquare.adjacent.Add(canvasGrid[x, y - 1]);
+                            if (SquareIsPassable(canvasGrid[x + 1, y])) currentSquare.adjacent.Add(canvasGrid[x + 1, y]);
+                            if (SquareIsPassable(canvasGrid[x, y - 1])) currentSquare.adjacent.Add(canvasGrid[x, y - 1]);
                         }
                         else //left edge
                         {
-                            currentSquare.adjacent.Add(canvasGrid[x + 1, y]);
-                            currentSquare.adjacent.Add(canvasGrid[x, y + 1]);
-                            currentSquare.adjacent.Add(canvasGrid[x, y - 1]);
+                            if (SquareIsPassable(canvasGrid[x + 1, y])) currentSquare.adjacent.Add(canvasGrid[x + 1, y]);
+                            if (SquareIsPassable(canvasGrid[x, y + 1])) currentSquare.adjacent.Add(canvasGrid[x, y + 1]);
+                            if (SquareIsPassable(canvasGrid[x, y - 1])) currentSquare.adjacent.Add(canvasGrid[x, y - 1]);
                         }
                     }
                     else if (x == squaresWide - 1)
                     {
                         if (y == 0) //top right
                         {
-                            currentSquare.adjacent.Add(canvasGrid[x - 1, y]);
-                            currentSquare.adjacent.Add(canvasGrid[x, y + 1]);
+                            if (SquareIsPassable(canvasGrid[x - 1, y])) currentSquare.adjacent.Add(canvasGrid[x - 1, y]);
+                            if (SquareIsPassable(canvasGrid[x, y + 1])) currentSquare.adjacent.Add(canvasGrid[x, y + 1]);
                         }
                         else if (y == squaresTall - 1) //bottom right
                         {
-                            currentSquare.adjacent.Add(canvasGrid[x - 1, y]);
-                            currentSquare.adjacent.Add(canvasGrid[x, y - 1]);
+                            if (SquareIsPassable(canvasGrid[x - 1, y])) currentSquare.adjacent.Add(canvasGrid[x - 1, y]);
+                            if (SquareIsPassable(canvasGrid[x, y - 1])) currentSquare.adjacent.Add(canvasGrid[x, y - 1]);
                         }
                         else //right edge
                         {
-                            currentSquare.adjacent.Add(canvasGrid[x - 1, y]);
-                            currentSquare.adjacent.Add(canvasGrid[x, y + 1]);
-                            currentSquare.adjacent.Add(canvasGrid[x, y - 1]);
+                            if (SquareIsPassable(canvasGrid[x - 1, y])) currentSquare.adjacent.Add(canvasGrid[x - 1, y]);
+                            if (SquareIsPassable(canvasGrid[x, y + 1])) currentSquare.adjacent.Add(canvasGrid[x, y + 1]);
+                            if (SquareIsPassable(canvasGrid[x, y - 1])) currentSquare.adjacent.Add(canvasGrid[x, y - 1]);
                         }
                     }
                     else
                     {
                         if (y == 0) //top edge
                         {
-                            currentSquare.adjacent.Add(canvasGrid[x + 1, y]);
-                            currentSquare.adjacent.Add(canvasGrid[x - 1, y]);
-                            currentSquare.adjacent.Add(canvasGrid[x, y + 1]);
+                            if (SquareIsPassable(canvasGrid[x + 1, y])) currentSquare.adjacent.Add(canvasGrid[x + 1, y]);
+                            if (SquareIsPassable(canvasGrid[x - 1, y])) currentSquare.adjacent.Add(canvasGrid[x - 1, y]);
+                            if (SquareIsPassable(canvasGrid[x, y + 1])) currentSquare.adjacent.Add(canvasGrid[x, y + 1]);
                         }
                         else if (y == squaresTall - 1) //bottom edge
                         {
-                            currentSquare.adjacent.Add(canvasGrid[x + 1, y]);
-                            currentSquare.adjacent.Add(canvasGrid[x - 1, y]);
-                            currentSquare.adjacent.Add(canvasGrid[x, y - 1]);
+                            if (SquareIsPassable(canvasGrid[x + 1, y])) currentSquare.adjacent.Add(canvasGrid[x + 1, y]);
+                            if (SquareIsPassable(canvasGrid[x - 1, y])) currentSquare.adjacent.Add(canvasGrid[x - 1, y]);
+                            if (SquareIsPassable(canvasGrid[x, y - 1])) currentSquare.adjacent.Add(canvasGrid[x, y - 1]);
                         }
                         else //finally not a corner case
                         {
-                            currentSquare.adjacent.Add(canvasGrid[x + 1, y]);
-                            currentSquare.adjacent.Add(canvasGrid[x - 1, y]);
-                            currentSquare.adjacent.Add(canvasGrid[x, y + 1]);
-                            currentSquare.adjacent.Add(canvasGrid[x, y - 1]);
+                            if (SquareIsPassable(canvasGrid[x + 1, y])) currentSquare.adjacent.Add(canvasGrid[x + 1, y]);
+                            if (SquareIsPassable(canvasGrid[x - 1, y])) currentSquare.adjacent.Add(canvasGrid[x - 1, y]);
+                            if (SquareIsPassable(canvasGrid[x, y + 1])) currentSquare.adjacent.Add(canvasGrid[x, y + 1]);
+                            if (SquareIsPassable(canvasGrid[x, y - 1])) currentSquare.adjacent.Add(canvasGrid[x, y - 1]);
                         }
                     }
                 }
             }
+        }
+
+        private bool SquareIsPassable(GridSquare square)
+        {
+            foreach (WorldObject entity in square.Objects)
+            {
+                if (!entity.Type.Passable) return false;
+            }
+            return true;
         }
 
         public override string ToString()

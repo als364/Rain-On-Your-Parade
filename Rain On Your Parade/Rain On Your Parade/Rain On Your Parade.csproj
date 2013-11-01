@@ -53,6 +53,7 @@
     <Compile Include="Player.cs" />
     <Compile Include="PlayerController.cs" />
     <Compile Include="GameEngine.cs" />
+    <Compile Include="PriorityQueue.cs" />
     <Compile Include="RainOnYourParade.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utils.cs" />
