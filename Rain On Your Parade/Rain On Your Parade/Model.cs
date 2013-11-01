@@ -12,8 +12,9 @@ namespace Rain_On_Your_Parade
     {
         public int spriteWidth, spriteHeight;
         public string spriteFilePath = "Content/default";
-        public Vector2 Position;
         public Vector2 prevPos;
+        private Vector2 pixelPosition;
+        private Point gridspacePosition;
         public Texture2D activatedSprite;
         public Texture2D deactivatedSprite;
 
@@ -24,9 +25,35 @@ namespace Rain_On_Your_Parade
             spriteFilePath = filepath;
         }
 
+        #region Getters and Setters
+        public Vector2 PixelPosition
+        {
+            get
+            {
+                return pixelPosition;
+            }
+            set
+            {
+                pixelPosition = value;
+            }
+        }
+
+        public Point GridspacePosition
+        {
+            get
+            {
+                return gridspacePosition;
+            }
+            set
+            {
+                gridspacePosition = value;
+            }
+        }
+        #endregion
+
         public override string ToString()
         {
-            return "Position: " + Position.ToString() + "\n";
+            return "Position: " + pixelPosition.ToString() + "\n";
         }
 
         abstract public void LoadContent(ContentManager content);

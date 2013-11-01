@@ -10,12 +10,15 @@ namespace Rain_On_Your_Parade
     {
         private ObjectType type;
         private bool activated;
+        private bool containsWater;
 
         public WorldObject(ObjectType.Type oType, Point pos)
         {
             type = new ObjectType(oType);
-            Position =  new Vector2(pos.X * Canvas.SQUARE_SIZE, pos.Y * Canvas.SQUARE_SIZE);
+            PixelPosition =  new Vector2(pos.X * Canvas.SQUARE_SIZE, pos.Y * Canvas.SQUARE_SIZE);
+            GridspacePosition = pos;
             activated = type.StartsActivated;
+            containsWater = type.StartsContainingWater;
         }
 
         public override void LoadContent(ContentManager content)
@@ -27,17 +30,44 @@ namespace Rain_On_Your_Parade
             spriteHeight = 80;
         }
 
+        #region Getters and Setters
         public ObjectType Type
         {
-            get { return type; }
-            set { type = value; }
+            get
+            {
+                return type;
+            }
+            set
+            {
+                type = value;
+            }
         }
 
         public bool Activated
         {
-            get { return activated; }
-            set { activated = value; }
+            get
+            {
+                return activated;
+            }
+            set
+            {
+                activated = value;
+            }
         }
+
+        public bool ContainsWater
+        {
+            get
+            {
+                return containsWater;
+            }
+            set
+            {
+                containsWater = value;
+            }
+        }
+
+        #endregion
 
         public void activate()
         {
@@ -114,10 +144,6 @@ namespace Rain_On_Your_Parade
                 }
             }
         }
-
-
-
-
 
         public override string ToString()
         {

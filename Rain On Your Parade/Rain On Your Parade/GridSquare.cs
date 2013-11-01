@@ -267,12 +267,24 @@ namespace Rain_On_Your_Parade
             return foo;
         }
 
-        /// <summary>Public stuff about the method</summary>
-        /// <param name="foo">It's an integer apparently</param>
-        /// <devdoc>This method doesn't do anything yet.</devdoc>
-        public void doSomethingGridSquare(int foo) 
+        public void add(WorldObject entity)
         {
-            //do stuff here
+            objects.Add(entity);
+        }
+
+        public void add(Actor actor)
+        {
+            actors.Add(actor);
+        }
+
+        public void remove(WorldObject entity)
+        {
+            objects.Remove(entity);
+        }
+
+        public void remove(Actor actor)
+        {
+            actors.Remove(actor);
         }
     }
 }

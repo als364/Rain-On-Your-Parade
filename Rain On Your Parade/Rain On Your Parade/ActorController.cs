@@ -30,13 +30,11 @@ namespace Rain_On_Your_Parade
         {
             Random random = new Random();
             int next = random.Next(1000); //Let the actor choose a new state in a random way
-
-            actorSquare = new Point((int)controlledActor.Position.X / Canvas.SQUARE_SIZE,
-                (int)controlledActor.Position.Y / Canvas.SQUARE_SIZE);
+            actorSquare = controlledActor.GridspacePosition;
 
             //Determines whether the actor is in the same square as the cloud, and implements a delayed reaction
-            if ((int)worldState.Player.Position.X / Canvas.SQUARE_SIZE == actorSquare.X
-                && (int)worldState.Player.Position.Y / Canvas.SQUARE_SIZE == actorSquare.Y)
+            if (worldState.Player.GridspacePosition.X == actorSquare.X
+                && worldState.Player.GridspacePosition.Y == actorSquare.Y)
             {
                 if (reactDelay > 0)
                 {
@@ -51,6 +49,7 @@ namespace Rain_On_Your_Parade
             }
             if (nearCloud) controlledActor.State = new ActorState(ActorState.AState.Run);
 
+            //Console.WriteLine("State: " + controlledActor.State.State);
             switch (controlledActor.State.State)
             {
                 //TODO: Implement these four states
@@ -76,8 +75,8 @@ namespace Rain_On_Your_Parade
                     //PreferenceSearch determines the most desired square.
                     //FindPath finds a path to it.
                     controlledActor.Path = FindPath(PreferenceSearch(worldState),
-                                                        worldState.StateOfWorld[actorSquare.X, actorSquare.Y],
-                                                        worldState.StateOfWorld, new Point[worldState.worldWidth, worldState.worldHeight]);
+                                                    worldState.StateOfWorld[actorSquare.X, actorSquare.Y],
+                                                    worldState.StateOfWorld, new Point[worldState.worldWidth, worldState.worldHeight]);
                     //if none of the squares were desirable, Rampage
                     if (controlledActor.Path == null) controlledActor.State = new ActorState(ActorState.AState.Rampage);
                     else
@@ -91,22 +90,17 @@ namespace Rain_On_Your_Parade
                     //Shouldn't ever happen, really. This is a specialcase. Rather than throwing an error, just find something else to do.
                     if (controlledActor.Path.Count == 0)
                     {
-                        //Console.WriteLine("Path empty, moving to Seek");
                         controlledActor.State = new ActorState(ActorState.AState.Seek);
                     }
-            
                     //The actual moving along the path.
                     else
                     {
-                      //  Console.WriteLine("Moving along path");
-                      //  Console.WriteLine("Current Square: " + controlledActor.GridSquareLocation());
                         GridSquare nextSquare = controlledActor.Path[0];
-                      //  Console.WriteLine("Next Square: " + nextSquare.Location);
                         float Velx;
                         float Vely;
 
                         //If I'm within the next square on the path, remove it from the path and set my velocity towards the next one
-                        if (nextSquare.Contains(controlledActor.Position))
+                        if (nextSquare.Contains(controlledActor.PixelPosition))
                         {
                             //At target square. Move to target state.  
                             if (controlledActor.Path.Count == 1)
@@ -114,14 +108,13 @@ namespace Rain_On_Your_Parade
                                 //controlledActor.Path.Clear();
                                 controlledActor.State = new ActorState(controlledActor.TargetState);
                                 //controlledActor.Path[0].Actors.Remove(controlledActor);
-                               
                             }
                             else
                             {
                                 //  Console.WriteLine("REMOVING");
                                 worldState.StateOfWorld[actorSquare.X, actorSquare.Y].Actors.Remove(controlledActor);
                                 controlledActor.Path.RemoveAt(0);
-                               controlledActor.Path[0].Actors.Add(controlledActor);
+                                controlledActor.Path[0].Actors.Add(controlledActor);
                                 nextSquare = controlledActor.Path[0];
                             }
 
@@ -129,24 +122,34 @@ namespace Rain_On_Your_Parade
                             //Console.WriteLine("Velocity: " + controlledActor.Velocity);
                         }
                         //If I'm not within the next square on the path, make sure my velocity is set correctly (necessary for first square) Move uniformly to the next square
-                            if (nextSquare.Location.X * Canvas.SQUARE_SIZE - controlledActor.Position.X <= 0)
-                                Velx = -1f;
-                            else Velx = 1f;
-                            if (nextSquare.Location.Y * Canvas.SQUARE_SIZE - controlledActor.Position.Y <= 0)
-                                Vely = -1f;
-                            else Vely = 1f;
-                            controlledActor.Velocity = new Vector2(Velx, Vely);
-                            //controlledActor.Velocity = new Vector2(nextSquare.Location.X * Canvas.SQUARE_SIZE - controlledActor.Position.X, nextSquare.Location.Y * Canvas.SQUARE_SIZE - controlledActor.Position.Y)/30;
-
+                        if (nextSquare.Location.X * Canvas.SQUARE_SIZE - controlledActor.PixelPosition.X <= 0)
+                        {
+                            Velx = -1f;
+                        }
+                        else
+                        {
+                            Velx = 1f;
+                        }
+                        if (nextSquare.Location.Y * Canvas.SQUARE_SIZE - controlledActor.PixelPosition.Y <= 0)
+                        {
+                            Vely = -1f;
+                        }
+                        else
+                        {
+                            Vely = 1f;
+                        }
+                        controlledActor.Velocity = new Vector2(Velx, Vely);
+                        //controlledActor.Velocity = new Vector2(nextSquare.Location.X * Canvas.SQUARE_SIZE - controlledActor.Position.X, 
+                        //                                       nextSquare.Location.Y * Canvas.SQUARE_SIZE - controlledActor.Position.Y)/30
                         //Move the actor
-                        controlledActor.Position = Vector2.Add(controlledActor.Position, controlledActor.Velocity);
+                        controlledActor.PixelPosition = Vector2.Add(controlledActor.PixelPosition, controlledActor.Velocity);
                     }
                     break;
                 case ActorState.AState.Wander: 
                     List<GridSquare> wanderTarget = new List<GridSquare>();
                     wanderTarget.Add(worldState.StateOfWorld[random.Next(worldState.worldWidth),random.Next(worldState.worldHeight)]);
                     controlledActor.Path = FindPath(wanderTarget, worldState.StateOfWorld[actorSquare.X, actorSquare.Y],
-                        worldState.StateOfWorld, new Point[worldState.worldWidth, worldState.worldHeight]);
+                                                    worldState.StateOfWorld, new Point[worldState.worldWidth, worldState.worldHeight]);
                     if (controlledActor.Path != null)
                     {
                         controlledActor.State = new ActorState(ActorState.AState.Walk);
@@ -161,8 +164,8 @@ namespace Rain_On_Your_Parade
 
                     //Determines which direction to run based on the player's movement direction
                     List<GridSquare> target = new List<GridSquare>();
-                    float xChange = worldState.Player.Position.X - worldState.Player.prevPos.X;
-                    float yChange = worldState.Player.Position.Y - worldState.Player.prevPos.Y;
+                    float xChange = worldState.Player.GridspacePosition.X - worldState.Player.prevPos.X;
+                    float yChange = worldState.Player.GridspacePosition.Y - worldState.Player.prevPos.Y;
                     Console.WriteLine("PosChange: " + xChange + ", " + yChange);
                     if (Math.Abs(xChange) > Math.Abs(yChange))
                     {
@@ -293,6 +296,7 @@ namespace Rain_On_Your_Parade
         private List<GridSquare> PreferenceSearch(WorldState worldState)
         {
             double maxPreference = 0;
+            Dictionary<Point, int> squarePreference = new Dictionary<Point, int>();
             List<GridSquare> targets = new List<GridSquare>();
             foreach (GridSquare square in worldState.StateOfWorld)
             {
@@ -418,10 +422,10 @@ namespace Rain_On_Your_Parade
             path.Add(origin);
             path.Reverse();
 
-            foreach (Point a in path)
+            /*foreach (Point a in path)
             {
                 Debug.WriteLine("Path--------: " + a);
-            }
+            }*/
             path.RemoveAt(0);
             return path;
         }

@@ -19,8 +19,10 @@ namespace Rain_On_Your_Parade
         public override void Draw(SpriteBatch spriteBatch)
         {
             //Console.WriteLine("ping");
-            spriteBatch.Draw(slider.sliderSprite, new Rectangle((int)slider.Position.X, (int)slider.Position.Y, slider.spriteWidth, slider.spriteHeight), Color.White);
-            spriteBatch.Draw(slider.buttonSprite, new Rectangle((int)slider.Position.Y, 
+            spriteBatch.Draw(slider.sliderSprite, new Rectangle((int)slider.PixelPosition.X, 
+                                                                (int)slider.PixelPosition.Y, 
+                                                                slider.spriteWidth, slider.spriteHeight), Color.White);
+            spriteBatch.Draw(slider.buttonSprite, new Rectangle((int)slider.PixelPosition.Y, 
                                                                 (int)Math.Max(Math.Min(slider.buttonPosition, slider.spriteHeight - slider.spriteWidth), 0), 
                                                                 slider.spriteWidth, slider.spriteWidth), Color.White);
         }

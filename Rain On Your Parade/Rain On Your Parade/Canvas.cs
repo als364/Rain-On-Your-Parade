@@ -11,12 +11,18 @@ namespace Rain_On_Your_Parade
         private int squaresTall = GameEngine.SCREEN_HEIGHT / SQUARE_SIZE;
 
         ///TODO: make this more extendable
-
-        public GridSquare[,] canvasGrid;
+        private GridSquare[,] canvasGrid;
+        private Player player;
+        private int malice;                 //total malice generated
+        private int maliceObjective;        //amount of malice needed to win level
+        private List<WorldObject> objects;
+        private List<Actor> actors;
 
         public Canvas()
         {
             canvasGrid = new GridSquare[squaresWide, squaresTall];
+            objects = new List<WorldObject>();
+            actors = new List<Actor>();
 
             for (int i = 0; i < squaresWide; i++)
             {
@@ -26,47 +32,129 @@ namespace Rain_On_Your_Parade
                 }
             }
 
+            actors.Add(new Actor(ActorType.Type.Cat, new Point(6, 0)));
+            actors.Add(new Actor(ActorType.Type.Kid, new Point(1, 8)));
+            actors.Add(new Actor(ActorType.Type.Mom, new Point(6, 6)));
 
-            canvasGrid[6, 0] = new GridSquare(ActorType.Type.Cat, new Point(6, 0));
-            canvasGrid[1, 8] = new GridSquare(ActorType.Type.Kid, new Point(1, 8));
-            canvasGrid[6, 6] = new GridSquare(ActorType.Type.Mom, new Point(6, 6));
-            canvasGrid[1, 1] = new GridSquare(ObjectType.Type.SunnySpot, new Point(1, 1));
-            canvasGrid[8, 1] = new GridSquare(ObjectType.Type.House, new Point(8, 1));
-            canvasGrid[9, 1] = new GridSquare(ObjectType.Type.House, new Point(9, 1));
-            canvasGrid[2, 8] = new GridSquare(ObjectType.Type.House, new Point(2, 8));
-            canvasGrid[9, 2] = new GridSquare(ObjectType.Type.House, new Point(9, 2));
-            canvasGrid[10, 2] = new GridSquare(ObjectType.Type.Garden, new Point(10, 2));
-            canvasGrid[2, 3] = new GridSquare(ObjectType.Type.Pool, new Point(2, 3));
-            canvasGrid[3, 2] = new GridSquare(ObjectType.Type.House, new Point(3, 2));
-            canvasGrid[4, 2] = new GridSquare(ObjectType.Type.House, new Point(4, 2));
-            canvasGrid[3, 3] = new GridSquare(ObjectType.Type.House, new Point(3, 3));
-            canvasGrid[4, 3] = new GridSquare(ObjectType.Type.House, new Point(4, 3));
-            canvasGrid[0, 5] = new GridSquare(ObjectType.Type.Chalking, new Point(0, 5));
-            canvasGrid[1, 5] = new GridSquare(ObjectType.Type.Chalking, new Point(1, 5));
-            canvasGrid[2, 5] = new GridSquare(ObjectType.Type.Chalking, new Point(2, 5));
-            canvasGrid[3, 5] = new GridSquare(ObjectType.Type.Chalking, new Point(3, 5));
-            canvasGrid[4, 5] = new GridSquare(ObjectType.Type.Chalking, new Point(4, 5));
-            canvasGrid[5, 5] = new GridSquare(ObjectType.Type.Chalking, new Point(5, 5));
-            canvasGrid[6, 5] = new GridSquare(ObjectType.Type.Chalking, new Point(6, 5));
-            canvasGrid[6, 4] = new GridSquare(ObjectType.Type.Chalking, new Point(6, 4));
-            canvasGrid[6, 3] = new GridSquare(ObjectType.Type.Chalking, new Point(6, 3));
-            canvasGrid[7, 3] = new GridSquare(ObjectType.Type.Chalking, new Point(7, 3));
-            canvasGrid[8, 3] = new GridSquare(ObjectType.Type.Chalking, new Point(8, 3));
-            canvasGrid[9, 3] = new GridSquare(ObjectType.Type.Chalking, new Point(9, 3));
-            canvasGrid[10, 3] = new GridSquare(ObjectType.Type.Chalking, new Point(10, 3));
-            canvasGrid[2, 6] = new GridSquare(ObjectType.Type.House, new Point(2, 6));
-            canvasGrid[3, 6] = new GridSquare(ObjectType.Type.House, new Point(3, 6));
-            canvasGrid[4, 6] = new GridSquare(ObjectType.Type.House, new Point(4, 6));
-            canvasGrid[8, 5] = new GridSquare(ObjectType.Type.House, new Point(8, 5));
-            canvasGrid[9, 5] = new GridSquare(ObjectType.Type.Pool, new Point(9, 5));
-            canvasGrid[8, 6] = new GridSquare(ObjectType.Type.House, new Point(8, 6));
-            canvasGrid[9, 6] = new GridSquare(ObjectType.Type.House, new Point(9, 6));
-            canvasGrid[5, 7] = new GridSquare(ObjectType.Type.SunnySpot, new Point(5, 7));
-            canvasGrid[9, 7] = new GridSquare(ObjectType.Type.Garden, new Point(9, 7));
+            objects.Add(new WorldObject(ObjectType.Type.SunnySpot, new Point(1, 1)));
+            objects.Add(new WorldObject(ObjectType.Type.SunnySpot, new Point(5, 7)));
+            objects.Add(new WorldObject(ObjectType.Type.Garden, new Point(10, 2)));
+            objects.Add(new WorldObject(ObjectType.Type.Garden, new Point(9, 7)));
+            objects.Add(new WorldObject(ObjectType.Type.Pool, new Point(2, 3)));
+            objects.Add(new WorldObject(ObjectType.Type.Pool, new Point(9, 5)));
+            objects.Add(new WorldObject(ObjectType.Type.House, new Point(8, 1)));
+            objects.Add(new WorldObject(ObjectType.Type.House, new Point(9, 1)));
+            objects.Add(new WorldObject(ObjectType.Type.House, new Point(2, 8)));
+            objects.Add(new WorldObject(ObjectType.Type.House, new Point(9, 2)));
+            objects.Add(new WorldObject(ObjectType.Type.House, new Point(3, 2)));
+            objects.Add(new WorldObject(ObjectType.Type.House, new Point(4, 2)));
+            objects.Add(new WorldObject(ObjectType.Type.House, new Point(3, 3)));
+            objects.Add(new WorldObject(ObjectType.Type.House, new Point(4, 3)));
+            objects.Add(new WorldObject(ObjectType.Type.House, new Point(2, 6)));
+            objects.Add(new WorldObject(ObjectType.Type.House, new Point(3, 6)));
+            objects.Add(new WorldObject(ObjectType.Type.House, new Point(4, 6)));
+            objects.Add(new WorldObject(ObjectType.Type.House, new Point(8, 5)));
+            objects.Add(new WorldObject(ObjectType.Type.House, new Point(8, 6)));
+            objects.Add(new WorldObject(ObjectType.Type.House, new Point(9, 6)));
+            objects.Add(new WorldObject(ObjectType.Type.Chalking, new Point(0, 5)));
+            objects.Add(new WorldObject(ObjectType.Type.Chalking, new Point(1, 5)));
+            objects.Add(new WorldObject(ObjectType.Type.Chalking, new Point(2, 5)));
+            objects.Add(new WorldObject(ObjectType.Type.Chalking, new Point(3, 5)));
+            objects.Add(new WorldObject(ObjectType.Type.Chalking, new Point(4, 5)));
+            objects.Add(new WorldObject(ObjectType.Type.Chalking, new Point(5, 5)));
+            objects.Add(new WorldObject(ObjectType.Type.Chalking, new Point(6, 5)));
+            objects.Add(new WorldObject(ObjectType.Type.Chalking, new Point(6, 4)));
+            objects.Add(new WorldObject(ObjectType.Type.Chalking, new Point(6, 3)));
+            objects.Add(new WorldObject(ObjectType.Type.Chalking, new Point(7, 3)));
+            objects.Add(new WorldObject(ObjectType.Type.Chalking, new Point(8, 3)));
+            objects.Add(new WorldObject(ObjectType.Type.Chalking, new Point(9, 3)));
+            objects.Add(new WorldObject(ObjectType.Type.Chalking, new Point(10, 3)));
 
+            foreach (WorldObject entity in objects)
+            {
+                canvasGrid[entity.GridspacePosition.X, entity.GridspacePosition.Y].add(entity);
+            }
+            foreach (Actor actor in actors)
+            {
+                canvasGrid[actor.GridspacePosition.X, actor.GridspacePosition.Y].add(actor);
+            }
         }
 
-       
-    }
-      
+        #region Getters & Setters
+        public GridSquare[,] Grid
+        {
+            get
+            {
+                return canvasGrid;
+            }
+            set
+            {
+                canvasGrid = value;
+            }
+        }
+
+        public int Malice
+        {
+            get
+            {
+                return malice;
+            }
+
+            set
+            {
+                malice = value;
+            }
+        }
+
+        public int MaliceObjective
+        {
+            get
+            {
+                return maliceObjective;
+            }
+
+            set
+            {
+                maliceObjective = value;
+            }
+        }
+
+        public Player Player
+        {
+            get
+            {
+                return player;
+            }
+
+            set
+            {
+                player = value;
+            }
+        }
+
+        public List<Actor> Actors
+        {
+            get
+            {
+                return actors;
+            }
+            set
+            {
+                actors = value;
+            }
+        }
+
+        public List<WorldObject> Objects
+        {
+            get
+            {
+                return objects;
+            }
+            set
+            {
+                objects = value;
+            }
+        }
+        #endregion
+    }   
 }

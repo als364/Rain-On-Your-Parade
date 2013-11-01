@@ -174,6 +174,7 @@ namespace Rain_On_Your_Parade
             get { return gridRampageEffect; }
             set { gridRampageEffect = value; }
         }
+
         public ActorState InitState
         {
             get { return initState; }

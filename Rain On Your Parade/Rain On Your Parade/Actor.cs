@@ -29,7 +29,8 @@ namespace Rain_On_Your_Parade
         {
             ActorType aType = new ActorType(newActType);
             type = aType;
-            Position = new Vector2(pos.X * Canvas.SQUARE_SIZE, pos.Y * Canvas.SQUARE_SIZE);
+            PixelPosition = new Vector2(pos.X * Canvas.SQUARE_SIZE, pos.Y * Canvas.SQUARE_SIZE);
+            GridspacePosition = pos;
             mood = 0;
             state = aType.InitState;
             sleepLevel = aType.BaseSleepLevel;
@@ -37,6 +38,10 @@ namespace Rain_On_Your_Parade
             nurtureLevel = aType.BaseNurtureLevel;
             path = new List<GridSquare>();
             rampageLevel = aType.BaseRampageLevel;
+            gridSleepEffect = aType.GridSleepEffect;
+            gridPlayEffect = aType.GridPlayEffect;
+            gridNurtureEffect = aType.GridNurtureEffect;
+            gridRampageEffect = aType.GridRampageEffect;
         }
 
         public override void LoadContent(ContentManager content)
@@ -103,6 +108,26 @@ namespace Rain_On_Your_Parade
             get { return rampageLevel; }
             set { rampageLevel = value; }
         }
+        public int GridSleepEffect
+        {
+            get { return gridSleepEffect; }
+            set { gridSleepEffect = value; }
+        }
+        public int GridPlayEffect
+        {
+            get { return gridPlayEffect; }
+            set { gridPlayEffect = value; }
+        }
+        public int GridNurtureEffect
+        {
+            get { return gridNurtureEffect; }
+            set { gridNurtureEffect = value; }
+        }
+        public int GridRampageEffect
+        {
+            get { return gridRampageEffect; }
+            set { gridRampageEffect = value; }
+        }
         #endregion
 
         public void IncrementMood()
@@ -113,11 +138,6 @@ namespace Rain_On_Your_Parade
         public void DecrementMood()
         {
             mood--;
-        }
-
-        public Point GridSquareLocation()
-        {
-            return new Point((int)(this.Position.X / 80), (int)(this.Position.Y / 80));
         }
 
         public override string ToString()
