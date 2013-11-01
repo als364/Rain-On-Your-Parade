@@ -220,7 +220,7 @@ namespace Rain_On_Your_Parade
             {
                 if (o.Type.CanContainWater)
                 {
-                    Console.WriteLine(o.Type.TypeName + " can contain water");
+                    //Console.WriteLine(o.Type.TypeName + " can contain water");
                     if (o.ContainsWater)
                     {
                         o.ContainsWater = false;

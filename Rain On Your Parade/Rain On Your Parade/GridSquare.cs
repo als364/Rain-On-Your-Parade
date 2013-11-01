@@ -246,6 +246,18 @@ namespace Rain_On_Your_Parade
             return xContained && yContained;
         }
 
+        public bool Contains(Point point)
+        {
+            bool xContained = (point.X >= location.X - 2 && point.X <= location.X + 2);
+            bool yContained = (point.Y >= location.Y - 2 && point.Y <= location.Y + 2);
+            // Console.WriteLine("Point.X: " + point.X);
+            // Console.WriteLine("Point.Y: " + point.Y);
+            // Console.WriteLine("Location.X: " + location.X * Canvas.SQUARE_SIZE);
+            // Console.WriteLine("Location.Y: " + location.Y * Canvas.SQUARE_SIZE);
+
+            return xContained && yContained;
+        }
+
         public override string ToString()
         {
             string foo = location.ToString() + ":\nPassable: " + isPassable + "\nTotal Sleep: " + totalSleep + "\nTotal Play: " + totalPlay +

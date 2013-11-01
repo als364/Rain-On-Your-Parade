@@ -71,6 +71,7 @@ namespace Rain_On_Your_Parade
             objects.Add(new WorldObject(ObjectType.Type.Chalking, new Point(10, 3)));
 
             player = new Player();
+            initializeAdjacencyLists();
 
             foreach (WorldObject entity in objects)
             {
@@ -79,6 +80,10 @@ namespace Rain_On_Your_Parade
             foreach (Actor actor in actors)
             {
                 canvasGrid[actor.GridspacePosition.X, actor.GridspacePosition.Y].add(actor);
+            }
+            foreach (GridSquare square in canvasGrid)
+            {
+                square.calculateLevels();
             }
         }
 
@@ -174,6 +179,81 @@ namespace Rain_On_Your_Parade
             }
         }
         #endregion
+
+        /// <summary>Initialize adjacency lists in level map for ease of search</summary>
+        /// <devdoc>
+        /// Sets up adjacency lists for the entire levelmap. This will use pointers if at all possible later, but for now, I have an i7.
+        /// </devdoc>
+        private void initializeAdjacencyLists()
+        {
+            for (int x = 0; x < squaresWide; x++)
+            {
+                for (int y = 0; y < squaresTall; y++)
+                {
+                    GridSquare currentSquare = canvasGrid[x, y];
+                    if (x == 0)
+                    {
+                        if (y == 0) //top left
+                        {
+                            currentSquare.adjacent.Add(canvasGrid[x + 1, y]);
+                            currentSquare.adjacent.Add(canvasGrid[x, y + 1]);
+                        }
+                        else if (y == squaresTall - 1) //bottom left
+                        {
+                            currentSquare.adjacent.Add(canvasGrid[x + 1, y]);
+                            currentSquare.adjacent.Add(canvasGrid[x, y - 1]);
+                        }
+                        else //left edge
+                        {
+                            currentSquare.adjacent.Add(canvasGrid[x + 1, y]);
+                            currentSquare.adjacent.Add(canvasGrid[x, y + 1]);
+                            currentSquare.adjacent.Add(canvasGrid[x, y - 1]);
+                        }
+                    }
+                    else if (x == squaresWide - 1)
+                    {
+                        if (y == 0) //top right
+                        {
+                            currentSquare.adjacent.Add(canvasGrid[x - 1, y]);
+                            currentSquare.adjacent.Add(canvasGrid[x, y + 1]);
+                        }
+                        else if (y == squaresTall - 1) //bottom right
+                        {
+                            currentSquare.adjacent.Add(canvasGrid[x - 1, y]);
+                            currentSquare.adjacent.Add(canvasGrid[x, y - 1]);
+                        }
+                        else //right edge
+                        {
+                            currentSquare.adjacent.Add(canvasGrid[x - 1, y]);
+                            currentSquare.adjacent.Add(canvasGrid[x, y + 1]);
+                            currentSquare.adjacent.Add(canvasGrid[x, y - 1]);
+                        }
+                    }
+                    else
+                    {
+                        if (y == 0) //top edge
+                        {
+                            currentSquare.adjacent.Add(canvasGrid[x + 1, y]);
+                            currentSquare.adjacent.Add(canvasGrid[x - 1, y]);
+                            currentSquare.adjacent.Add(canvasGrid[x, y + 1]);
+                        }
+                        else if (y == squaresTall - 1) //bottom edge
+                        {
+                            currentSquare.adjacent.Add(canvasGrid[x + 1, y]);
+                            currentSquare.adjacent.Add(canvasGrid[x - 1, y]);
+                            currentSquare.adjacent.Add(canvasGrid[x, y - 1]);
+                        }
+                        else //finally not a corner case
+                        {
+                            currentSquare.adjacent.Add(canvasGrid[x + 1, y]);
+                            currentSquare.adjacent.Add(canvasGrid[x - 1, y]);
+                            currentSquare.adjacent.Add(canvasGrid[x, y + 1]);
+                            currentSquare.adjacent.Add(canvasGrid[x, y - 1]);
+                        }
+                    }
+                }
+            }
+        }
 
         public override string ToString()
         {

@@ -95,12 +95,13 @@ namespace Rain_On_Your_Parade
                     //The actual moving along the path.
                     else
                     {
+                        //Console.WriteLine(controlledActor.Type.TypeName + " Position: " + controlledActor.GridspacePosition);
                         GridSquare nextSquare = controlledActor.Path[0];
                         float Velx;
                         float Vely;
 
                         //If I'm within the next square on the path, remove it from the path and set my velocity towards the next one
-                        if (nextSquare.Contains(controlledActor.PixelPosition))
+                        if (nextSquare.Contains(controlledActor.GridspacePosition))
                         {
                             //At target square. Move to target state.  
                             if (controlledActor.Path.Count == 1)
@@ -116,6 +117,7 @@ namespace Rain_On_Your_Parade
                                 controlledActor.Path.RemoveAt(0);
                                 controlledActor.Path[0].Actors.Add(controlledActor);
                                 nextSquare = controlledActor.Path[0];
+                                nextSquare.calculateLevels();
                             }
 
                             //controlledActor.Velocity = new Vector2(nextSquare.Location.X * Canvas.SQUARE_SIZE - controlledActor.Position.X, nextSquare.Location.Y * Canvas.SQUARE_SIZE - controlledActor.Position.Y)/30;
@@ -143,6 +145,8 @@ namespace Rain_On_Your_Parade
                         //                                       nextSquare.Location.Y * Canvas.SQUARE_SIZE - controlledActor.Position.Y)/30
                         //Move the actor
                         controlledActor.PixelPosition = Vector2.Add(controlledActor.PixelPosition, controlledActor.Velocity);
+                        controlledActor.GridspacePosition = new Point((int)(controlledActor.PixelPosition.X / Canvas.SQUARE_SIZE), 
+                                                                      (int)(controlledActor.PixelPosition.Y / Canvas.SQUARE_SIZE));
                     }
                     break;
                 case ActorState.AState.Wander: 
@@ -157,7 +161,7 @@ namespace Rain_On_Your_Parade
                     break;
                 //Actor runs from the cloud if it's in the same square, with a delay
                 case ActorState.AState.Run:
-                    Console.WriteLine("State: " + controlledActor.State.State);
+                    //Console.WriteLine("State: " + controlledActor.State.State);
                     //Actor figures out what state it wants to be 
                     newState = DetermineTargetState();
                     controlledActor.TargetState = newState;
@@ -166,7 +170,7 @@ namespace Rain_On_Your_Parade
                     List<GridSquare> target = new List<GridSquare>();
                     float xChange = level.Player.GridspacePosition.X - level.Player.prevPos.X;
                     float yChange = level.Player.GridspacePosition.Y - level.Player.prevPos.Y;
-                    Console.WriteLine("PosChange: " + xChange + ", " + yChange);
+                    //Console.WriteLine("PosChange: " + xChange + ", " + yChange);
                     if (Math.Abs(xChange) > Math.Abs(yChange))
                     {
                         if (xChange > 0)
@@ -298,14 +302,11 @@ namespace Rain_On_Your_Parade
             double maxPreference = 0;
             Dictionary<Point, int> squarePreference = new Dictionary<Point, int>();
             List<GridSquare> targets = new List<GridSquare>();
-            foreach(Actor actor in level.Actors)
-            {
-            }
-            /*foreach (GridSquare square in worldState.StateOfWorld)
+            foreach (GridSquare square in level.Grid)
             {
                 //How desirable /is/ the square
                 double desirability = Desirability(square);
-              //  Console.WriteLine("GridSquare: " + square.Location);
+                //Console.WriteLine("GridSquare: " + square.Location);
                 //Console.WriteLine("Desirability: " + desirability);
                 //Console.WriteLine("MaxPreference: " + maxPreference);
                 //If it's more desirable than anything else we've seen, clear the targets list and add that square
@@ -322,7 +323,7 @@ namespace Rain_On_Your_Parade
                     targets.Add(square);
                    // Console.WriteLine("SquareAdded: " + square);
                 }
-            }*/
+            }
             return targets;
         }
 
