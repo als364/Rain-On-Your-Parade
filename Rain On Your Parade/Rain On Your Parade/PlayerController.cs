@@ -27,7 +27,7 @@ namespace Rain_On_Your_Parade
         {
             KeyboardState ks = Keyboard.GetState();
 
-            Point prevPos = new Point((int)(player.Position.X / Canvas.SQUARE_SIZE), (int)(player.Position.Y / Canvas.SQUARE_SIZE));
+            Point prevPos = new Point(player.GridspacePosition.X, player.GridspacePosition.Y);
 
             if (coolDown == 0) //
             {
@@ -139,34 +139,32 @@ namespace Rain_On_Your_Parade
                 }
             }
 
-            player.Position = Vector2.Add(player.Position, player.Velocity);
+            player.PixelPosition = Vector2.Add(player.PixelPosition, player.Velocity);
 
-            if (player.Position.X + player.spriteWidth > GameEngine.SCREEN_WIDTH)
+            if (player.PixelPosition.X + player.spriteWidth > GameEngine.SCREEN_WIDTH)
             {
-                player.Position = new Vector2(GameEngine.SCREEN_WIDTH - player.spriteWidth, player.Position.Y);
+                player.PixelPosition = new Vector2(GameEngine.SCREEN_WIDTH - player.spriteWidth, player.PixelPosition.Y);
                 player.Velocity = new Vector2(0, player.Velocity.Y);
             }
-            if (player.Position.X < 0)
+            if (player.PixelPosition.X < 0)
             {
-                player.Position = new Vector2(0, player.Position.Y);
+                player.PixelPosition = new Vector2(0, player.PixelPosition.Y);
                 player.Velocity = new Vector2(0, player.Velocity.Y);
             }
-            if (player.Position.Y + player.spriteHeight > GameEngine.SCREEN_HEIGHT)
+            if (player.PixelPosition.Y + player.spriteHeight > GameEngine.SCREEN_HEIGHT)
             {
-                player.Position = new Vector2(player.Position.X, GameEngine.SCREEN_HEIGHT - player.spriteHeight);
+                player.PixelPosition = new Vector2(player.PixelPosition.X, GameEngine.SCREEN_HEIGHT - player.spriteHeight);
                 player.Velocity = new Vector2(player.Velocity.X, 0);
             }
-            if (player.Position.Y < 0)
+            if (player.PixelPosition.Y < 0)
             {
-                player.Position = new Vector2(player.Position.X, 0);
+                player.PixelPosition = new Vector2(player.PixelPosition.X, 0);
                 player.Velocity = new Vector2(player.Velocity.X, 0);
             }
-            //Point newPos = new Point((int)(player.Position.X / Canvas.SQUARE_SIZE), (int)(player.Position.Y / Canvas.SQUARE_SIZE));
-            //if (newPos != prevPos) {
-            //    worldState.StateOfWorld[prevPos.X, prevPos.Y].ContainsPlayer = false;
-            //     worldState.StateOfWorld[newPos.X, newPos.Y].ContainsPlayer = true;
-            //    Console.WriteLine(newPos);
-            //}
+
+            player.GridspacePosition = new Point((int)(player.PixelPosition.X / Canvas.SQUARE_SIZE), 
+                                                 (int)(player.PixelPosition.Y / Canvas.SQUARE_SIZE));
+            //Console.WriteLine("Gridspace Position: " + player.GridspacePosition);
         }
 
         private bool Rain(WorldState worldState)
@@ -176,7 +174,7 @@ namespace Rain_On_Your_Parade
                 isRaining = true;
                 player.Rain--;
 
-                foreach (Actor a in worldState.StateOfWorld[(int)(player.Position.X / Canvas.SQUARE_SIZE), (int)(player.Position.Y / Canvas.SQUARE_SIZE)].Actors)
+                foreach (Actor a in worldState.StateOfWorld[player.GridspacePosition.X, player.GridspacePosition.Y].Actors)
                 {
                     if (a.State.State == a.TargetState)
                     {
@@ -189,15 +187,25 @@ namespace Rain_On_Your_Parade
                     }
                    
                 }
-                foreach (WorldObject o in worldState.StateOfWorld[(int)(player.Position.X / Canvas.SQUARE_SIZE), (int)(player.Position.Y / Canvas.SQUARE_SIZE)].Objects)
+                foreach (WorldObject o in worldState.StateOfWorld[player.GridspacePosition.X, player.GridspacePosition.Y].Objects)
                 {
+                    if (o.Type.CanContainWater)
+                    {
+                        o.ContainsWater = true;
+                    }
                     if (o.Activated)
                     {
-                        o.deactivate();
+                        if (o.Type.RainDeactivates)
+                        {
+                            o.deactivate();
+                        }
                     }
                     else
                     {
-                        o.activate();
+                        if (o.Type.RainActivates)
+                        {
+                            o.activate();
+                        }
                     }
                 }
 
@@ -208,15 +216,30 @@ namespace Rain_On_Your_Parade
 
         private bool Absorb(WorldState worldState)
         {
-            List<WorldObject> objects = worldState.StateOfWorld[(int)(player.Position.X / Canvas.SQUARE_SIZE), (int)(player.Position.Y / Canvas.SQUARE_SIZE)].Objects;
+            List<WorldObject> objects = worldState.StateOfWorld[player.GridspacePosition.X, player.GridspacePosition.Y].Objects;
             foreach (WorldObject o in objects)
             {
-                if (o.Type.TypeName == ObjectType.Type.Pool || o.Type.TypeName == ObjectType.Type.Garden)
+                if (o.Type.CanContainWater)
                 {
-                    if (o.Activated)
+                    Console.WriteLine(o.Type.TypeName + " can contain water");
+                    if (o.ContainsWater)
                     {
-                        o.deactivate();
+                        o.ContainsWater = false;
                         player.Rain++;
+                        if (o.Activated)
+                        {
+                            if (o.Type.AbsorbDeactivates)
+                            {
+                                o.deactivate();
+                            }
+                        }
+                        else
+                        {
+                            if (o.Type.AbsorbActivates)
+                            {
+                                o.activate();
+                            }
+                        }
                         return true;
                     }
                 }

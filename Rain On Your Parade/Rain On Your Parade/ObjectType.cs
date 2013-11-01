@@ -11,6 +11,12 @@ namespace Rain_On_Your_Parade
         Hashtable deactivatedImages = new Hashtable();
         private Type typeName;
         private bool startsActivated;
+        private bool rainActivates;
+        private bool rainDeactivates;
+        private bool absorbActivates;
+        private bool absorbDeactivates;
+        private bool startsContainingWater;
+        private bool canContainWater;
         private int sleepLevel;
         private int playLevel;
         private int nurtureLevel;
@@ -29,6 +35,12 @@ namespace Rain_On_Your_Parade
                     playLevel = 0;
                     nurtureLevel = 0;
                     rampageLevel = 0;
+                    rainActivates = true;
+                    rainDeactivates = false;
+                    absorbActivates = false;
+                    absorbDeactivates = true;
+                    startsContainingWater = false;
+                    canContainWater = false;
                     passable = true;
                     activatedImages.Add(Type.SunnySpot, "rainbow");
                     deactivatedImages.Add(Type.SunnySpot, "sunspot");
@@ -40,6 +52,12 @@ namespace Rain_On_Your_Parade
                     playLevel = 0;
                     nurtureLevel = 3;
                     rampageLevel = 0;
+                    rainActivates = true;
+                    rainDeactivates = false;
+                    absorbActivates = false;
+                    absorbDeactivates = true;
+                    startsContainingWater = true;
+                    canContainWater = true;
                     passable = true;
                     activatedImages.Add(Type.Garden, "garden2");
                     deactivatedImages.Add(Type.Garden, "drygarden");
@@ -51,6 +69,12 @@ namespace Rain_On_Your_Parade
                     playLevel = 3;
                     nurtureLevel = 0;
                     rampageLevel = 0;
+                    rainActivates = true;
+                    rainDeactivates = false;
+                    absorbActivates = false;
+                    absorbDeactivates = true;
+                    startsContainingWater = true;
+                    canContainWater = true;
                     passable = true;
                     activatedImages.Add(Type.Pool, "pool");
                     deactivatedImages.Add(Type.Pool, "poolempty");
@@ -62,6 +86,12 @@ namespace Rain_On_Your_Parade
                     playLevel = 0;
                     nurtureLevel = 0;
                     rampageLevel = 0;
+                    rainActivates = true;
+                    rainDeactivates = false;
+                    absorbActivates = false;
+                    absorbDeactivates = true;
+                    startsContainingWater = false;
+                    canContainWater = false;
                     passable = true;
                     activatedImages.Add(Type.Chalking, "chalksidewalk");
                     deactivatedImages.Add(Type.Chalking, "sidewalk");
@@ -73,6 +103,12 @@ namespace Rain_On_Your_Parade
                     playLevel = 0;
                     nurtureLevel = 0;
                     rampageLevel = 0;
+                    rainActivates = false;
+                    rainDeactivates = true;
+                    absorbActivates = true;
+                    absorbDeactivates = false;
+                    startsContainingWater = false;
+                    canContainWater = true;
                     passable = true;
                     activatedImages.Add(Type.Laundry, "laundry");
                     deactivatedImages.Add(Type.Laundry, "wetlaundry");
@@ -86,6 +122,12 @@ namespace Rain_On_Your_Parade
                     playLevel = 0;
                     nurtureLevel = 0;
                     rampageLevel = 0;
+                    rainActivates = false;
+                    rainDeactivates = false;
+                    absorbActivates = false;
+                    absorbDeactivates = false;
+                    startsContainingWater = false;
+                    canContainWater = false;
                     passable = false;
                     activatedImages.Add(Type.House, "house");
                     deactivatedImages.Add(Type.House, "house");
@@ -153,6 +195,42 @@ namespace Rain_On_Your_Parade
         {
             get { return passable; }
             set { passable = value; }
+        }
+
+        public bool RainActivates
+        {
+            get { return rainActivates; }
+            set { rainActivates = value; }
+        }
+
+        public bool RainDeactivates
+        {
+            get { return rainDeactivates; }
+            set { rainDeactivates = value; }
+        }
+
+        public bool AbsorbActivates
+        {
+            get { return absorbActivates; }
+            set { absorbActivates = value; }
+        }
+
+        public bool AbsorbDeactivates
+        {
+            get { return absorbDeactivates; }
+            set { absorbDeactivates = value; }
+        }
+
+        public bool StartsContainingWater
+        {
+            get { return startsContainingWater; }
+            set { startsContainingWater = value; }
+        }
+
+        public bool CanContainWater
+        {
+            get { return canContainWater; }
+            set { canContainWater = value; }
         }
 
         public string activatedStringName()

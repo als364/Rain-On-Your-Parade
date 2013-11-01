@@ -72,7 +72,7 @@ namespace Rain_On_Your_Parade
 
            // Debug.WriteLine("Y: " + level.canvasGrid[6, 6].Actors[0].Position.Y);
             int quota = 100;
-            worldState = new WorldState(quota,level.canvasGrid);
+            worldState = new WorldState(quota,level.Grid);
 
             //Debug.WriteLine("Y: " + worldState.getActors().ToArray()[1].Position.Y);
             foreach (WorldObject o in worldState.getObjects())

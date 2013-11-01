@@ -67,7 +67,7 @@ namespace Rain_On_Your_Parade
         /// </devdoc>
         public Player()
         {
-            this.Position = new Vector2(GameEngine.SCREEN_WIDTH/2,GameEngine.SCREEN_HEIGHT/2);
+            PixelPosition = new Vector2(GameEngine.SCREEN_WIDTH/2,GameEngine.SCREEN_HEIGHT/2);
             velocity = new Vector2();
             rain = MAX_RAIN;
         }
