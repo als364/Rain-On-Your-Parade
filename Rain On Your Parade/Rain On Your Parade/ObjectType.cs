@@ -91,8 +91,8 @@ namespace Rain_On_Your_Parade
                     playLevel = 0;
                     nurtureLevel = 0;
                     rampageLevel = 0;
-                    rainActivates = true;
-                    rainDeactivates = false;
+                    rainActivates = false;
+                    rainDeactivates = true;
                     absorbActivates = false;
                     absorbDeactivates = true;
                     startsContainingWater = false;

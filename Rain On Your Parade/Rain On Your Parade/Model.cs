@@ -42,6 +42,7 @@ namespace Rain_On_Your_Parade
         {
             get
             {
+                gridspacePosition = new Point((int)(PixelPosition.X / Canvas.SQUARE_SIZE), (int)(PixelPosition.Y / Canvas.SQUARE_SIZE));
                 return gridspacePosition;
             }
             set
