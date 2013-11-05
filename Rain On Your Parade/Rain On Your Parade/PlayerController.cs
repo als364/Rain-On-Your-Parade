@@ -26,7 +26,7 @@ namespace Rain_On_Your_Parade
         public override void Update(GameTime gameTime, Canvas level)
         {
             KeyboardState ks = Keyboard.GetState();
-            Point prevPos = new Point(player.GridspacePosition.X, player.GridspacePosition.Y);
+            level.Player.PrevPos = new Vector2(player.PixelPosition.X, player.PixelPosition.X);
 
             if (coolDown == 0) //
             {
@@ -163,7 +163,6 @@ namespace Rain_On_Your_Parade
 
             player.GridspacePosition = new Point((int)(player.PixelPosition.X / Canvas.SQUARE_SIZE), 
                                                  (int)(player.PixelPosition.Y / Canvas.SQUARE_SIZE));
-            //Console.WriteLine("Gridspace Position: " + player.GridspacePosition);
         }
 
         private bool Rain(Canvas level)
@@ -173,16 +172,19 @@ namespace Rain_On_Your_Parade
                 isRaining = true;
                 player.Rain--;
 
-                foreach (Actor a in level.Grid[player.GridspacePosition.X, player.GridspacePosition.Y].Actors)
+                foreach (Actor a in level.Actors)
                 {
-                    if (a.State.State == a.TargetState)
+                    if (player.GridspacePosition == a.GridspacePosition)
                     {
-                        a.IncrementMood();
-                        a.IncrementMood();
-                    }
-                    else
-                    {
-                        a.IncrementMood();
+                        if (a.State.State == a.TargetState)
+                        {
+                            a.IncrementMood();
+                            a.IncrementMood();
+                        }
+                        else
+                        {
+                            a.IncrementMood();
+                        }
                     }
                    
                 }

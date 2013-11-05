@@ -14,7 +14,7 @@ namespace Rain_On_Your_Parade
         private Point actorSquare = new Point(0, 0);
         private bool nearCloud = false;
         private int reactDelay = REACT_MAX;
-        private const int REACT_MAX = 5;
+        private const int REACT_MAX = 3;
 
         public ActorController(Actor actor) : base(actor)
         {
@@ -168,9 +168,9 @@ namespace Rain_On_Your_Parade
 
                     //Determines which direction to run based on the player's movement direction
                     List<GridSquare> target = new List<GridSquare>();
-                    float xChange = level.Player.GridspacePosition.X - level.Player.prevPos.X;
-                    float yChange = level.Player.GridspacePosition.Y - level.Player.prevPos.Y;
-                    //Console.WriteLine("PosChange: " + xChange + ", " + yChange);
+                    float xChange = level.Player.PixelPosition.X - level.Player.PrevPos.X;
+                    float yChange = level.Player.PixelPosition.Y - level.Player.PrevPos.Y;
+                    Console.WriteLine("posChange: " + xChange + ", " + yChange);
                     if (Math.Abs(xChange) > Math.Abs(yChange))
                     {
                         if (xChange > 0)

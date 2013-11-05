@@ -12,7 +12,7 @@ namespace Rain_On_Your_Parade
     {
         public int spriteWidth, spriteHeight;
         public string spriteFilePath = "Content/default";
-        public Vector2 prevPos;
+        private Vector2 prevPos;
         private Vector2 pixelPosition;
         private Point gridspacePosition;
         public Texture2D activatedSprite;
@@ -35,6 +35,18 @@ namespace Rain_On_Your_Parade
             set
             {
                 pixelPosition = value;
+            }
+        }
+
+        public Vector2 PrevPos
+        {
+            get
+            {
+                return prevPos;
+            }
+            set
+            {
+                prevPos = value;
             }
         }
 
