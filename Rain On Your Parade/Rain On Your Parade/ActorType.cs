@@ -22,6 +22,9 @@ namespace Rain_On_Your_Parade
         private int baseRampageLevel;
         private ActorState initState;
 
+        private int[] fastNeedIncrease; // 0:sleep, 1:play, 3:nurture
+        private int[] slowNeedIncrease;
+
         private int gridSleepEffect;
         private int gridPlayEffect;
         private int gridNurtureEffect;
@@ -52,6 +55,8 @@ namespace Rain_On_Your_Parade
                     initState = new ActorState(ActorState.AState.Sleep);
                     activatedImages.Add(Type.Cat, "cat");
                     deactivatedImages.Add(Type.Kid, "kid");
+                    fastNeedIncrease = new int[3] {1, 0, 0};
+                    slowNeedIncrease = new int[3] {0, 0, 1 };
                     break;
                 case ActorType.Type.Kid:
                     sleepNeed = 0;
@@ -68,6 +73,8 @@ namespace Rain_On_Your_Parade
                     initState = new ActorState(ActorState.AState.Seek);
                     activatedImages.Add(Type.Kid, "kid");
                     deactivatedImages.Add(Type.Kid, "kid");
+                    fastNeedIncrease = new int[3] { 0, 1, 0 };
+                    slowNeedIncrease = new int[3] { 1, 0, 0 };
                     break;
                 case ActorType.Type.Mom:
                     sleepNeed = 0;
@@ -84,6 +91,8 @@ namespace Rain_On_Your_Parade
                     initState = new ActorState(ActorState.AState.Seek);
                     activatedImages.Add(Type.Mom, "mom");
                     deactivatedImages.Add(Type.Mom, "mom");
+                    fastNeedIncrease = new int[3] { 0, 0, 1 };
+                    slowNeedIncrease = new int[3] { 0, 0, 0 };
                     break;
             }
         }
@@ -174,6 +183,16 @@ namespace Rain_On_Your_Parade
             get { return gridRampageEffect; }
             set { gridRampageEffect = value; }
         }
+        public int[] FastNeedIncrease
+        {
+            get { return fastNeedIncrease; }
+            set { fastNeedIncrease = value; }
+        }
+        public int[] SlowNeedIncrease
+        {
+            get { return slowNeedIncrease; }
+            set { slowNeedIncrease = value; }
+        }
 
         public ActorState InitState
         {
@@ -189,6 +208,7 @@ namespace Rain_On_Your_Parade
             return (string)activatedImages[typeName];
         }
         #endregion
+
 
         public override string ToString()
         {

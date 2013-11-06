@@ -15,6 +15,7 @@ namespace Rain_On_Your_Parade
         private bool nearCloud = false;
         private int reactDelay = REACT_MAX;
         private const int REACT_MAX = 3;
+        private int NeedIncreaseTimer;
 
         public ActorController(Actor actor) : base(actor)
         {
@@ -28,6 +29,20 @@ namespace Rain_On_Your_Parade
         /// <param name="worldState"></param>
         public override void Update(GameTime gameTime, Canvas level)
         {
+            NeedIncreaseTimer++;
+            if (NeedIncreaseTimer % 720 == 0)
+            {
+                controlledActor.increaseFastNeeds();
+                Console.WriteLine(controlledActor.ToString());
+            }
+            else
+                if (NeedIncreaseTimer % 1440 == 0)
+                    controlledActor.increaseSlowNeeds();
+
+
+         
+
+
             Random random = new Random();
             int next = random.Next(1000); //Let the actor choose a new state in a random way
             actorSquare = controlledActor.GridspacePosition;
@@ -55,17 +70,19 @@ namespace Rain_On_Your_Parade
                 //TODO: Implement these four states
                 case ActorState.AState.Nurture:
                     interactWithObject(level, ActorState.AState.Nurture);
-                    if (next <= 30) controlledActor.State = new ActorState(ActorState.AState.Seek);
+                    
+                    if (next <= 1) controlledActor.State = new ActorState(ActorState.AState.Seek);
                     break;
                 case ActorState.AState.Play:
                     interactWithObject(level, ActorState.AState.Play);
-                    if (next <= 30) controlledActor.State = new ActorState(ActorState.AState.Seek);
+                    if (next <= 1) controlledActor.State = new ActorState(ActorState.AState.Seek);
                     break;
                 case ActorState.AState.Rampage:
-                    controlledActor.State = new ActorState(ActorState.AState.Wander);
+                    controlledActor.State = new ActorState(ActorState.AState.Seek);
                     break;
                 case ActorState.AState.Sleep:
-                    if (next <= 30) controlledActor.State = new ActorState(ActorState.AState.Seek);
+                     interactWithObject(level, ActorState.AState.Play);
+                    if (next <= 1) controlledActor.State = new ActorState(ActorState.AState.Seek);
                    // controlledActor.State.State = ActorState.AState.Seek;
                     break;
                 case ActorState.AState.Seek:
@@ -78,7 +95,7 @@ namespace Rain_On_Your_Parade
                                                     level.Grid[actorSquare.X, actorSquare.Y],
                                                     level.Grid, new Point[level.Width, level.Height]);
                     //if none of the squares were desirable, Rampage
-                    if (controlledActor.Path == null) controlledActor.State = new ActorState(ActorState.AState.Rampage);
+                    if (controlledActor.Path == null) controlledActor.State = new ActorState(ActorState.AState.Wander);
                     else
                     {
                         //Now, walk there.
@@ -522,29 +539,42 @@ namespace Rain_On_Your_Parade
 
             foreach (WorldObject o in level.Grid[actorSquare.X, actorSquare.Y].Objects)
             {
-                if (o.Type.CanActivate)
-                {
+               // if (o.Type.CanActivate)
+               // {
                     switch (action)
                     {
                         case ActorState.AState.Nurture:
-                            if (o.Type.NurtureLevel > 2)
-                            {
-                                o.activate();
+                           // if (o.Type.NurtureLevel > 2)
+                          //  {
+                                //o.activate();
+                                controlledActor.NurtureLevel--;
+                                if (controlledActor.NurtureLevel < 0) controlledActor.NurtureLevel = 0;
                                 interacted = true;
-                            }
+                           // }
                             break;
                         case ActorState.AState.Play:
-                            if (o.Type.PlayLevel > 2)
-                            {
-                                o.activate();
+                          //  if (o.Type.PlayLevel > 2)
+                          //  {
+                               // o.activate();
+                                controlledActor.PlayLevel--;
+                                if (controlledActor.PlayLevel < 0) controlledActor.PlayLevel = 0;
                                 interacted = true;
-                            }
+                          //  }
                             break;
-                    }
+                        case ActorState.AState.Sleep:
+                           // if (o.Type.SleepLevel > 2)
+                           // {
+                                controlledActor.SleepLevel--;
+                                if (controlledActor.SleepLevel < 0) controlledActor.SleepLevel = 0;
+                                interacted = true;
+                           // }
+                            break;
+                    //}
                 }
             }
             return interacted;
         }
+
     }
 
 

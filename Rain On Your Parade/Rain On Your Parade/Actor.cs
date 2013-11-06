@@ -140,6 +140,22 @@ namespace Rain_On_Your_Parade
             mood--;
         }
 
+
+        public void increaseFastNeeds(){
+
+             sleepLevel+= type.FastNeedIncrease[0];
+             playLevel+= type.FastNeedIncrease[1];
+             nurtureLevel += type.FastNeedIncrease[2];
+         }
+
+        public void increaseSlowNeeds()
+        {
+            sleepLevel += type.SlowNeedIncrease[0];
+            playLevel += type.SlowNeedIncrease[1];
+            nurtureLevel += type.SlowNeedIncrease[2];
+
+        }
+
         public override string ToString()
         {
             string gPath = "";
