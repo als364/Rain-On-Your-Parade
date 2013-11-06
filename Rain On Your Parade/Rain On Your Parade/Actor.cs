@@ -25,6 +25,17 @@ namespace Rain_On_Your_Parade
         private int gridRampageEffect;
         private List<GridSquare> path;
 
+        public Texture2D mood1;
+        public Texture2D mood2;
+        public Texture2D mood3;
+        public Texture2D mood4;
+        public Texture2D mood5;
+        public Texture2D mood6;
+
+        public Texture2D nurtureImg;
+        public Texture2D playImg;
+        public Texture2D sleepImg;
+
         public Actor(ActorType.Type newActType, Point pos)
         {
             ActorType aType = new ActorType(newActType);
@@ -48,6 +59,18 @@ namespace Rain_On_Your_Parade
         {
             activatedSprite = content.Load<Texture2D>(type.activatedStringName());
             deactivatedSprite = content.Load<Texture2D>(type.activatedStringName());
+
+            mood1 = content.Load<Texture2D>("Emote1");
+            mood2 = content.Load<Texture2D>("Emote2");
+            mood3 = content.Load<Texture2D>("Emote3");
+            mood4 = content.Load<Texture2D>("Emote4");
+            mood5 = content.Load<Texture2D>("Emote5");
+            mood6 = content.Load<Texture2D>("Emote6");
+
+            nurtureImg = content.Load<Texture2D>("EmoteNurture");
+            playImg = content.Load<Texture2D>("EmotePlay");
+            sleepImg = content.Load<Texture2D>("EmoteSleep");
+
             spriteWidth = Canvas.SQUARE_SIZE;
             spriteHeight = Canvas.SQUARE_SIZE;
         }

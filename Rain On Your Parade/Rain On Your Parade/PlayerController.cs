@@ -170,7 +170,7 @@ namespace Rain_On_Your_Parade
             if (player.Rain > 0)
             {
                 isRaining = true;
-                player.Rain--;
+               // player.Rain--;
 
                 foreach (Actor a in level.Actors)
                 {
@@ -179,13 +179,13 @@ namespace Rain_On_Your_Parade
                         if (a.State.State == a.TargetState)
                         {
                             a.IncrementMood();
-                            a.IncrementMood();
                         }
                         else
                         {
                             a.IncrementMood();
                         }
                     }
+                    if (a.Mood > 5) a.Mood = 5;
                    
                 }
                 foreach (WorldObject o in level.Grid[player.GridspacePosition.X, player.GridspacePosition.Y].Objects)

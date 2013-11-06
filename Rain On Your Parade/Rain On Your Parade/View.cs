@@ -45,13 +45,19 @@ namespace Rain_On_Your_Parade
                 if (viewedModel is Actor)
                 {
                     Actor actor = (Actor)viewedModel;
-                    if (actor.Mood == 0)
+                    if (actor.Mood < 4)
                         spriteBatch.Draw(activatedImage, new Rectangle((int)viewedModel.PixelPosition.X,
                                                                        (int)viewedModel.PixelPosition.Y,
                                                                        viewedModel.spriteWidth, viewedModel.spriteHeight), Color.Azure);
                     else spriteBatch.Draw(activatedImage, new Rectangle((int)viewedModel.PixelPosition.X,
                                                                         (int)viewedModel.PixelPosition.Y,
                                                                         viewedModel.spriteWidth, viewedModel.spriteHeight), Color.Brown);
+
+                    Texture2D[] moods = new Texture2D[6] {actor.mood1,actor.mood2,actor.mood3,actor.mood4,actor.mood5,actor.mood6};
+
+                    spriteBatch.Draw(moods[actor.Mood], new Rectangle((int)viewedModel.PixelPosition.X - 18,
+                                                                        (int)viewedModel.PixelPosition.Y-25, 40, 40), Color.White);
+
                 }
                 else
                 {
