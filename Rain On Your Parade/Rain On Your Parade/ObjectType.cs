@@ -6,7 +6,7 @@ namespace Rain_On_Your_Parade
     public class ObjectType
     {
 
-        public enum Type {SunnySpot, Garden, Pool, Chalking, Laundry, House};
+        public enum Type {SunnySpot, Rainbow, Garden, Pool, Chalking, Laundry, House};
         Hashtable activatedImages = new Hashtable();
         Hashtable deactivatedImages = new Hashtable();
         private Type typeName;
@@ -34,8 +34,21 @@ namespace Rain_On_Your_Parade
                     nurtureLevel = 0;
                     rampageLevel = 0;
                     passable = true;
-                    activatedImages.Add(Type.SunnySpot, "rainbow");
-                    deactivatedImages.Add(Type.SunnySpot, "sunspot");
+                    activatedImages.Add(Type.SunnySpot, "sunspot");
+                    deactivatedImages.Add(Type.SunnySpot, "rainbow");
+                    break;
+
+                case ObjectType.Type.Rainbow:
+                    isWetObject = true;
+                    startsWet = true;
+                    canActivate = false;
+                    sleepLevel = 0;
+                    playLevel = 10;
+                    nurtureLevel = 10;
+                    rampageLevel = 3;
+                    passable = true;
+                    activatedImages.Add(Type.Rainbow, "rainbow");
+                    deactivatedImages.Add(Type.Rainbow, "sunspot");
                     break;
 
                 case ObjectType.Type.Garden:
@@ -65,7 +78,7 @@ namespace Rain_On_Your_Parade
                     break;
 
                 case ObjectType.Type.Chalking:
-                    isWetObject = false;
+                    isWetObject = true;
                     canActivate = true;
                     startsWet = false;  //chalking is questionable
                     sleepLevel = 0;
@@ -116,8 +129,10 @@ namespace Rain_On_Your_Parade
             nurtureLevel = oNurture;
             rampageLevel = oRampage;
 
-            activatedImages.Add(Type.SunnySpot, "rainbow");
-            deactivatedImages.Add(Type.SunnySpot, "sunspot");
+            activatedImages.Add(Type.SunnySpot, "sunspot");
+            deactivatedImages.Add(Type.SunnySpot, "rainbow");
+            activatedImages.Add(Type.Rainbow, "rainbow");
+            deactivatedImages.Add(Type.Rainbow, "sunspot");
             activatedImages.Add(Type.Garden, "garden2");
             deactivatedImages.Add(Type.Garden, "drygarden");
             activatedImages.Add(Type.Pool, "pool");

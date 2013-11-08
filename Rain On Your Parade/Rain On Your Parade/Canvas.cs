@@ -32,10 +32,86 @@ namespace Rain_On_Your_Parade
                 }
             }
 
+            /*
+            //Level One
+            #region levelone
+            actors.Add(new Actor(ActorType.Type.Cat, new Point(10, 6)));
+            actors.Add(new Actor(ActorType.Type.Cat, new Point(0, 6)));
+            actors.Add(new Actor(ActorType.Type.Cat, new Point(5, 4)));
+
+            objects.Add(new WorldObject(ObjectType.Type.SunnySpot, new Point(8, 1), 0));
+            objects.Add(new WorldObject(ObjectType.Type.SunnySpot, new Point(2, 3), 0));
+            objects.Add(new WorldObject(ObjectType.Type.SunnySpot, new Point(2, 4), 0));
+            objects.Add(new WorldObject(ObjectType.Type.SunnySpot, new Point(8, 6), 0));
+
+            objects.Add(new WorldObject(ObjectType.Type.Garden, new Point(2, 1), 1));
+            objects.Add(new WorldObject(ObjectType.Type.Garden, new Point(3, 1), 1));
+            objects.Add(new WorldObject(ObjectType.Type.Garden, new Point(4, 1), 1));
+            objects.Add(new WorldObject(ObjectType.Type.Garden, new Point(4, 2), 1));
+            objects.Add(new WorldObject(ObjectType.Type.Garden, new Point(5, 2), 1));
+            objects.Add(new WorldObject(ObjectType.Type.Garden, new Point(6, 2), 1));
+            objects.Add(new WorldObject(ObjectType.Type.Garden, new Point(6, 3), 1));
+            objects.Add(new WorldObject(ObjectType.Type.Garden, new Point(7, 3), 1));
+            objects.Add(new WorldObject(ObjectType.Type.Garden, new Point(8, 3), 1));
+            objects.Add(new WorldObject(ObjectType.Type.Garden, new Point(8, 4), 1));
+            objects.Add(new WorldObject(ObjectType.Type.Garden, new Point(7, 4), 1));
+            objects.Add(new WorldObject(ObjectType.Type.Garden, new Point(6, 4), 1));
+            objects.Add(new WorldObject(ObjectType.Type.Garden, new Point(6, 5), 1));
+            objects.Add(new WorldObject(ObjectType.Type.Garden, new Point(5, 5), 1));
+            objects.Add(new WorldObject(ObjectType.Type.Garden, new Point(4, 5), 1));
+            objects.Add(new WorldObject(ObjectType.Type.Garden, new Point(4, 6), 1));
+            objects.Add(new WorldObject(ObjectType.Type.Garden, new Point(3, 6), 1));
+            objects.Add(new WorldObject(ObjectType.Type.Garden, new Point(2, 6), 1));
+            #endregion levelone
+            
+            //Level 2
+            #region leveltwo
+            actors.Add(new Actor(ActorType.Type.Kid, new Point(10, 6)));
+            actors.Add(new Actor(ActorType.Type.Kid, new Point(5, 6)));
+            actors.Add(new Actor(ActorType.Type.Kid, new Point(0, 6)));
+            actors.Add(new Actor(ActorType.Type.Mom, new Point(3, 3)));
+            actors.Add(new Actor(ActorType.Type.Mom, new Point(7, 3)));
+
+            objects.Add(new WorldObject(ObjectType.Type.House, new Point(0, 1), 0));
+            objects.Add(new WorldObject(ObjectType.Type.House, new Point(1, 1), 0));
+            objects.Add(new WorldObject(ObjectType.Type.House, new Point(2, 1), 0));
+            objects.Add(new WorldObject(ObjectType.Type.Chalking, new Point(3, 0), 0));
+            objects.Add(new WorldObject(ObjectType.Type.Chalking, new Point(3, 1), 0));
+            objects.Add(new WorldObject(ObjectType.Type.House, new Point(4, 1), 0));
+            objects.Add(new WorldObject(ObjectType.Type.House, new Point(5, 1), 0));
+            objects.Add(new WorldObject(ObjectType.Type.House, new Point(6, 1), 0));
+            objects.Add(new WorldObject(ObjectType.Type.Chalking, new Point(7, 0), 0));
+            objects.Add(new WorldObject(ObjectType.Type.Chalking, new Point(7, 1), 0));
+            objects.Add(new WorldObject(ObjectType.Type.House, new Point(8, 1), 0));
+            objects.Add(new WorldObject(ObjectType.Type.House, new Point(9, 1), 0));
+            objects.Add(new WorldObject(ObjectType.Type.House, new Point(10, 1), 0));
+
+            objects.Add(new WorldObject(ObjectType.Type.Chalking, new Point(0, 2), 0));
+            objects.Add(new WorldObject(ObjectType.Type.Chalking, new Point(1, 2), 0));
+            objects.Add(new WorldObject(ObjectType.Type.Chalking, new Point(2, 2), 0));
+            objects.Add(new WorldObject(ObjectType.Type.Chalking, new Point(3, 2), 0));
+            objects.Add(new WorldObject(ObjectType.Type.Chalking, new Point(4, 2), 0));
+            objects.Add(new WorldObject(ObjectType.Type.Chalking, new Point(5, 2), 0));
+            objects.Add(new WorldObject(ObjectType.Type.Chalking, new Point(6, 2), 0));
+            objects.Add(new WorldObject(ObjectType.Type.Chalking, new Point(7, 2), 0));
+            objects.Add(new WorldObject(ObjectType.Type.Chalking, new Point(8, 2), 0));
+            objects.Add(new WorldObject(ObjectType.Type.Chalking, new Point(9, 2), 0));
+            objects.Add(new WorldObject(ObjectType.Type.Chalking, new Point(10, 2), 0));
+
+            objects.Add(new WorldObject(ObjectType.Type.Pool, new Point(1, 5), 3));
+            objects.Add(new WorldObject(ObjectType.Type.Pool, new Point(9, 5), 3));
+
+            objects.Add(new WorldObject(ObjectType.Type.Garden, new Point(1, 3), 2));
+            objects.Add(new WorldObject(ObjectType.Type.Garden, new Point(5, 7), 2));
+            objects.Add(new WorldObject(ObjectType.Type.Garden, new Point(9, 3), 2));
+            #endregion leveltwo
+            */
+
+            //Level 3
+            #region levelthree
             actors.Add(new Actor(ActorType.Type.Cat, new Point(6, 0)));
             actors.Add(new Actor(ActorType.Type.Kid, new Point(1, 8)));
             actors.Add(new Actor(ActorType.Type.Mom, new Point(6, 6)));
-
             objects.Add(new WorldObject(ObjectType.Type.SunnySpot, new Point(1, 1), 0));
             objects.Add(new WorldObject(ObjectType.Type.SunnySpot, new Point(5, 7), 0));
             objects.Add(new WorldObject(ObjectType.Type.Garden, new Point(10, 2), 1));
@@ -69,6 +145,8 @@ namespace Rain_On_Your_Parade
             objects.Add(new WorldObject(ObjectType.Type.Chalking, new Point(8, 3), 0));
             objects.Add(new WorldObject(ObjectType.Type.Chalking, new Point(9, 3), 0));
             objects.Add(new WorldObject(ObjectType.Type.Chalking, new Point(10, 3), 0));
+            #endregion levelthree
+           
 
             player = new Player();
 

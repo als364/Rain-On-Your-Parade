@@ -17,7 +17,7 @@ namespace Rain_On_Your_Parade
             type = new ObjectType(oType);
             PixelPosition =  new Vector2(pos.X * Canvas.SQUARE_SIZE, pos.Y * Canvas.SQUARE_SIZE);
             GridspacePosition = pos;
-            activated = type.StartsWet;
+            activated = (type.StartsWet && type.IsWetObject) || !type.IsWetObject;
             waterLevel = waterAmt;
         }
 
@@ -77,12 +77,12 @@ namespace Rain_On_Your_Parade
                 switch (typeSwitch)
                 {
                     case ObjectType.Type.Pool:
-                        type.PlayLevel = 0;
+                        type.PlayLevel = 3;
                         break;
                     case ObjectType.Type.Garden:
                         type.PlayLevel = 0;
                         type.SleepLevel = 0;
-                        type.NurtureLevel = 0;
+                        type.NurtureLevel = 3;
                         break;
                     case ObjectType.Type.Chalking:
                         type.PlayLevel = 0;
@@ -92,12 +92,17 @@ namespace Rain_On_Your_Parade
                         break;
                     case ObjectType.Type.Laundry:
                         type.RampageLevel = 0;
-                        type.NurtureLevel = 0;
+                        type.NurtureLevel = 3;
                         break;
                     case ObjectType.Type.SunnySpot:
-                        type.SleepLevel = 0;
+                        type.SleepLevel = 3;
                         type.NurtureLevel = 0;
                         type.PlayLevel = 0;
+                        break;
+                    case ObjectType.Type.Rainbow:
+                        type.SleepLevel = 0;
+                        type.NurtureLevel = 10;
+                        type.PlayLevel = 10;
                         break;
                 }
             }
@@ -112,14 +117,14 @@ namespace Rain_On_Your_Parade
                 switch (typeSwitch)
                 {
                     case ObjectType.Type.Pool:
-                        type.PlayLevel = 0;
+                        type.PlayLevel = -3;
                         type.RampageLevel = 0;
                         activated = false;
                         break;
                     case ObjectType.Type.Garden:
                         type.PlayLevel = 0;
                         type.SleepLevel = 0;
-                        type.NurtureLevel = 2;
+                        type.NurtureLevel = -2;
                         activated = false;
                         break;
                     case ObjectType.Type.Chalking:
@@ -131,10 +136,16 @@ namespace Rain_On_Your_Parade
                         break;
                     case ObjectType.Type.Laundry:
                         type.RampageLevel = 0;
-                        type.NurtureLevel = 0;
+                        type.NurtureLevel = -2;
                         activated = false;
                         break;
                     case ObjectType.Type.SunnySpot:
+                        type.SleepLevel = 0;
+                        type.NurtureLevel = 0;
+                        type.PlayLevel = 0;
+                        activated = false;
+                        break;
+                    case ObjectType.Type.Rainbow:
                         type.SleepLevel = 0;
                         type.NurtureLevel = 0;
                         type.PlayLevel = 0;

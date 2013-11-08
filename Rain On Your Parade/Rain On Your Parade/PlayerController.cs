@@ -190,18 +190,40 @@ namespace Rain_On_Your_Parade
                     if (a.Mood > 5) a.Mood = 5;
                    
                 }
-                foreach (WorldObject o in level.Grid[player.GridspacePosition.X, player.GridspacePosition.Y].Objects)
+
+                WorldObject toReplace = null; //for sunnyspot to rainbow
+
+                List<WorldObject> objects = level.Grid[player.GridspacePosition.X, player.GridspacePosition.Y].Objects;
+                foreach (WorldObject o in objects)
                 {
                     o.WaterLevel++;
 
+                    //Console.Write(o.ToString() + "object rained upon\n");
+
+                    if (o.Type.TypeName == ObjectType.Type.SunnySpot)
+                    {
+                        //change to rainbow
+                        toReplace = o;
+                        //o.deactivate();
+                    }
+
                     if (o.Type.IsWetObject)
                     {
-                        o.activate();
+                        o.activate();                    
                     }
                     else
                     {
                         o.deactivate();
                     }
+                }
+
+                if (toReplace != null)
+                {
+                    WorldObject addedRainbow = new WorldObject(ObjectType.Type.Rainbow, new Point(toReplace.GridspacePosition.X, toReplace.GridspacePosition.Y), 1);
+                    addedRainbow.activate();
+                    objects.Add(addedRainbow);
+                    objects.Remove(toReplace);
+                    //Console.Write("removed sunny and added rainbow\n");
                 }
 
                 return true;
@@ -213,10 +235,13 @@ namespace Rain_On_Your_Parade
         {
             if (player.Rain < MAX_RAIN)
             {
+                WorldObject toReplace = null; //for rainbow to sunnyspot
 
                 List<WorldObject> objects = level.Grid[player.GridspacePosition.X, player.GridspacePosition.Y].Objects;
                 foreach (WorldObject o in objects)
                 {
+                    //Console.Write(o.ToString() + "object ABSORBED upon\n");
+
                     if (o.WaterLevel > 0)
                     {
                         player.Rain++;
@@ -224,13 +249,32 @@ namespace Rain_On_Your_Parade
                     }
                     if (o.Type.IsWetObject && o.WaterLevel == 0)
                     {
-                        o.deactivate();
+                        if (o.Type.TypeName == ObjectType.Type.Rainbow)
+                        {
+                            //change to SunnySpot
+                            toReplace = o;
+                            o.deactivate();
+                        }
+                        else
+                        {
+                            o.deactivate();
+                        }
                     }
                     else
                     {
                         o.activate();
                     }
                 }
+
+                if (toReplace != null)
+                {
+                    WorldObject addedSunny = new WorldObject(ObjectType.Type.SunnySpot, new Point(toReplace.GridspacePosition.X, toReplace.GridspacePosition.Y), 0);
+                    addedSunny.activate();
+                    objects.Add(addedSunny);
+                    objects.Remove(toReplace);
+                    //Console.Write("removed rainbow and added Sunny SUNNY!!/n");
+                }
+
                 return true;
             }
             else { return false; }
