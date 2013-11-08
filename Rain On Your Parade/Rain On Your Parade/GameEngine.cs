@@ -181,6 +181,7 @@ namespace Rain_On_Your_Parade
                 view.Draw(spriteBatch);
             }
 
+            //TODO: update this to reflect Player.MAX_RAIN
             spriteBatch.Draw(batterybar, new Rectangle(0, 0, 155, 30), Color.Azure);
             for (int i = 0; i < level.Player.Rain; i++)
             {
