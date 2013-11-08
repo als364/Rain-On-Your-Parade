@@ -215,7 +215,7 @@ namespace Rain_On_Your_Parade
 
                     if (o.Type.IsWetObject)
                     {
-                        o.activate();                    
+                        if (o.Type.TypeName != ObjectType.Type.Chalking) o.activate();                    
                     }
                     else
                     {
@@ -253,6 +253,29 @@ namespace Rain_On_Your_Parade
                         player.Rain++;
                         o.WaterLevel--;
                         o.deactivate();
+
+
+                        foreach (Actor a in level.Actors)
+                        {
+                            if (player.GridspacePosition == a.GridspacePosition)
+                            {
+
+                                if (a.State.State == a.TargetState)
+                                {
+                                    a.IncrementMood();
+                                    a.IncrementMood();
+                                }
+                                else
+                                {
+                                    a.IncrementMood();
+                                }
+                            }
+
+
+                        }
+
+
+
                     }
                     if (o.Type.IsWetObject && o.WaterLevel == 0)
                     {
