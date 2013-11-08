@@ -175,7 +175,12 @@ namespace Rain_On_Your_Parade
 
                 foreach (Actor a in level.Actors)
                 {
-                    if (player.GridspacePosition == a.GridspacePosition)
+                    Vector2 playerPos = player.PixelPosition;
+                    Vector2 actorPos = a.PixelPosition;
+
+                    float dist = Vector2.Distance(playerPos, actorPos);
+
+                    if (Math.Abs(dist) < 100)
                     {
                        
                        if (a.State.State == a.TargetState)
