@@ -69,11 +69,13 @@ namespace Rain_On_Your_Parade
             {
                 //TODO: Implement these four states
                 case ActorState.AState.Nurture:
+                    if (next > 975)
                     interactWithObject(level, ActorState.AState.Nurture);
                     
                     if (next <= 1) controlledActor.State = new ActorState(ActorState.AState.Seek);
                     break;
                 case ActorState.AState.Play:
+                    if (next > 975)
                     interactWithObject(level, ActorState.AState.Play);
                     if (next <= 1) controlledActor.State = new ActorState(ActorState.AState.Seek);
                     break;
@@ -81,6 +83,7 @@ namespace Rain_On_Your_Parade
                     controlledActor.State = new ActorState(ActorState.AState.Seek);
                     break;
                 case ActorState.AState.Sleep:
+                    if (next > 975)
                      interactWithObject(level, ActorState.AState.Play);
                     if (next <= 1) controlledActor.State = new ActorState(ActorState.AState.Seek);
                    // controlledActor.State.State = ActorState.AState.Seek;
@@ -175,6 +178,8 @@ namespace Rain_On_Your_Parade
                     {
                         controlledActor.State = new ActorState(ActorState.AState.Walk);
                     }
+
+                    if (next <= 10) controlledActor.State = new ActorState(ActorState.AState.Seek);
                     break;
                 //Actor runs from the cloud if it's in the same square, with a delay
                 case ActorState.AState.Run:
@@ -548,6 +553,7 @@ namespace Rain_On_Your_Parade
                           //  {
                                 //o.activate();
                                 controlledActor.NurtureLevel--;
+                                controlledActor.DecrementMood();
                                 if (controlledActor.NurtureLevel < 0) controlledActor.NurtureLevel = 0;
                                 interacted = true;
                            // }
@@ -557,6 +563,7 @@ namespace Rain_On_Your_Parade
                           //  {
                                // o.activate();
                                 controlledActor.PlayLevel--;
+                                controlledActor.DecrementMood();
                                 if (controlledActor.PlayLevel < 0) controlledActor.PlayLevel = 0;
                                 interacted = true;
                           //  }
@@ -565,11 +572,14 @@ namespace Rain_On_Your_Parade
                            // if (o.Type.SleepLevel > 2)
                            // {
                                 controlledActor.SleepLevel--;
+                                controlledActor.DecrementMood();
                                 if (controlledActor.SleepLevel < 0) controlledActor.SleepLevel = 0;
                                 interacted = true;
                            // }
                             break;
                     //}
+                            if (controlledActor.Mood > 5) controlledActor.Mood = 5;
+                            if (controlledActor.Mood < 0) controlledActor.Mood = 0;
                 }
             }
             return interacted;

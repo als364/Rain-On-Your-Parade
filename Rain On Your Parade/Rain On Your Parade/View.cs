@@ -54,9 +54,17 @@ namespace Rain_On_Your_Parade
                                                                         viewedModel.spriteWidth, viewedModel.spriteHeight), Color.Brown);
 
                     Texture2D[] moods = new Texture2D[6] {actor.mood1,actor.mood2,actor.mood3,actor.mood4,actor.mood5,actor.mood6};
+                    Console.WriteLine(actor.Mood);
 
                     spriteBatch.Draw(moods[actor.Mood], new Rectangle((int)viewedModel.PixelPosition.X - 18,
                                                                         (int)viewedModel.PixelPosition.Y-25, 40, 40), Color.White);
+
+                 if (actor.State.State == ActorState.AState.Nurture)
+                     spriteBatch.Draw(actor.nurtureImg, new Rectangle((int)viewedModel.PixelPosition.X + 18, (int)viewedModel.PixelPosition.Y-25, 40, 40), Color.White);
+                 if (actor.State.State == ActorState.AState.Play)
+                     spriteBatch.Draw(actor.playImg, new Rectangle((int)viewedModel.PixelPosition.X + 18, (int)viewedModel.PixelPosition.Y-25, 40, 40), Color.White);
+                 if (actor.State.State == ActorState.AState.Sleep)
+                     spriteBatch.Draw(actor.sleepImg, new Rectangle((int)viewedModel.PixelPosition.X + 18, (int)viewedModel.PixelPosition.Y-25, 40, 40), Color.White);
 
                 }
                 else

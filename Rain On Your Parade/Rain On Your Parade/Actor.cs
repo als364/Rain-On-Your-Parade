@@ -155,12 +155,16 @@ namespace Rain_On_Your_Parade
 
         public void IncrementMood()
         {
-            mood++;
+            if (mood+1 > 5) mood = 5;
+            else  mood++;
         }
 
         public void DecrementMood()
         {
+            if (mood - 1 < 0) mood = 0;
+            else
             mood--;
+
         }
 
 

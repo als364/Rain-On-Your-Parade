@@ -228,14 +228,14 @@ namespace Rain_On_Your_Parade
                 }
             }
 
-            foreach (Actor act in actors)
+       /*     foreach (Actor act in actors)
             {
                 totalSleep += act.SleepLevel;
                 totalPlay += act.PlayLevel;
                 totalNurture += act.NurtureLevel;
                 totalRampage += act.RampageLevel;
             }
-
+            */
         }
 
         public bool Contains(Vector2 point)

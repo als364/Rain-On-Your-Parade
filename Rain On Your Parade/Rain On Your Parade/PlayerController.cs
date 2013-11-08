@@ -177,17 +177,18 @@ namespace Rain_On_Your_Parade
                 {
                     if (player.GridspacePosition == a.GridspacePosition)
                     {
-                        a.IncrementMood();                        
-                        /*if (a.State.State == a.TargetState)
+                       
+                       if (a.State.State == a.TargetState)
                         {
-                            a.IncrementMood();
+                           a.IncrementMood();
+                           a.IncrementMood();
                         }
                         else
                         {
                             a.IncrementMood();
-                        }*/
+                        }
                     }
-                    if (a.Mood > 5) a.Mood = 5;
+
                    
                 }
 
@@ -246,6 +247,7 @@ namespace Rain_On_Your_Parade
                     {
                         player.Rain++;
                         o.WaterLevel--;
+                        o.deactivate();
                     }
                     if (o.Type.IsWetObject && o.WaterLevel == 0)
                     {
@@ -258,11 +260,13 @@ namespace Rain_On_Your_Parade
                         else
                         {
                             o.deactivate();
+                            Console.Write("DEACTIVATE/n");
                         }
                     }
                     else
                     {
                         o.activate();
+                        Console.Write("ACTIVATE/n");
                     }
                 }
 
