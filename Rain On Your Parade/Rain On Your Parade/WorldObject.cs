@@ -10,15 +10,15 @@ namespace Rain_On_Your_Parade
     {
         private ObjectType type;
         private bool activated;
-        private bool containsWater;
+        private int waterLevel;
 
-        public WorldObject(ObjectType.Type oType, Point pos)
+        public WorldObject(ObjectType.Type oType, Point pos, int waterAmt)
         {
             type = new ObjectType(oType);
             PixelPosition =  new Vector2(pos.X * Canvas.SQUARE_SIZE, pos.Y * Canvas.SQUARE_SIZE);
             GridspacePosition = pos;
-            activated = type.StartsActivated;
-            containsWater = type.StartsContainingWater;
+            activated = type.StartsWet;
+            waterLevel = waterAmt;
         }
 
         public override void LoadContent(ContentManager content)
@@ -55,15 +55,15 @@ namespace Rain_On_Your_Parade
             }
         }
 
-        public bool ContainsWater
+        public int WaterLevel
         {
             get
             {
-                return containsWater;
+                return waterLevel;
             }
             set
             {
-                containsWater = value;
+                waterLevel = value;
             }
         }
         #endregion

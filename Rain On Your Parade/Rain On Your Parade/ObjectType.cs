@@ -10,14 +10,9 @@ namespace Rain_On_Your_Parade
         Hashtable activatedImages = new Hashtable();
         Hashtable deactivatedImages = new Hashtable();
         private Type typeName;
-        private bool canActivate;
-        private bool startsActivated;
-        private bool rainActivates;
-        private bool rainDeactivates;
-        private bool absorbActivates;
-        private bool absorbDeactivates;
-        private bool startsContainingWater;
-        private bool canContainWater;
+        private bool canActivate;   //actor can activate this object
+        private bool isWetObject;   //object deactivates if absorbed upon
+        private bool startsWet;
         private int sleepLevel;
         private int playLevel;
         private int nurtureLevel;
@@ -31,110 +26,78 @@ namespace Rain_On_Your_Parade
             switch (typeName)
             {
                 case ObjectType.Type.SunnySpot:
-                    startsActivated = false;
+                    isWetObject = false;
+                    startsWet = false;
                     canActivate = false;
                     sleepLevel = 3;
                     playLevel = 0;
                     nurtureLevel = 0;
                     rampageLevel = 0;
-                    rainActivates = true;
-                    rainDeactivates = false;
-                    absorbActivates = false;
-                    absorbDeactivates = true;
-                    startsContainingWater = false;
-                    canContainWater = false;
                     passable = true;
                     activatedImages.Add(Type.SunnySpot, "rainbow");
                     deactivatedImages.Add(Type.SunnySpot, "sunspot");
                     break;
 
                 case ObjectType.Type.Garden:
-                    startsActivated = true;
+                    isWetObject = true;
+                    startsWet = true;
                     canActivate = true;
                     sleepLevel = 0;
                     playLevel = 0;
                     nurtureLevel = 3;
                     rampageLevel = 0;
-                    rainActivates = true;
-                    rainDeactivates = false;
-                    absorbActivates = false;
-                    absorbDeactivates = true;
-                    startsContainingWater = true;
-                    canContainWater = true;
                     passable = true;
                     activatedImages.Add(Type.Garden, "garden2");
                     deactivatedImages.Add(Type.Garden, "drygarden");
                     break;
 
                 case ObjectType.Type.Pool:
-                    startsActivated = true;
+                    isWetObject = true;
                     canActivate = false;
+                    startsWet = true;
                     sleepLevel = 0;
                     playLevel = 3;
                     nurtureLevel = 0;
                     rampageLevel = 0;
-                    rainActivates = true;
-                    rainDeactivates = false;
-                    absorbActivates = false;
-                    absorbDeactivates = true;
-                    startsContainingWater = true;
-                    canContainWater = true;
                     passable = true;
                     activatedImages.Add(Type.Pool, "pool");
                     deactivatedImages.Add(Type.Pool, "poolempty");
                     break;
 
                 case ObjectType.Type.Chalking:
-                    startsActivated = false;
+                    isWetObject = false;
                     canActivate = true;
+                    startsWet = false;  //chalking is questionable
                     sleepLevel = 0;
                     playLevel = 0;
                     nurtureLevel = 0;
                     rampageLevel = 0;
-                    rainActivates = false;
-                    rainDeactivates = true;
-                    absorbActivates = false;
-                    absorbDeactivates = true;
-                    startsContainingWater = false;
-                    canContainWater = false;
                     passable = true;
                     activatedImages.Add(Type.Chalking, "chalksidewalk");
                     deactivatedImages.Add(Type.Chalking, "sidewalk");
                     break;
 
                 case ObjectType.Type.Laundry:
-                    startsActivated = true;
+                    isWetObject = true;
                     canActivate = true;
+                    startsWet = false;
                     sleepLevel = 0;
                     playLevel = 0;
                     nurtureLevel = 0;
                     rampageLevel = 0;
-                    rainActivates = false;
-                    rainDeactivates = true;
-                    absorbActivates = true;
-                    absorbDeactivates = false;
-                    startsContainingWater = false;
-                    canContainWater = true;
                     passable = true;
                     activatedImages.Add(Type.Laundry, "laundry");
                     deactivatedImages.Add(Type.Laundry, "wetlaundry");
                     break;
 
                 case ObjectType.Type.House:
-                    startsActivated = false;
+                    isWetObject = false;
                     canActivate = false;
-                    sleepLevel = 0;
-                    startsActivated = true;
+                    startsWet = false;
                     sleepLevel = 0;
                     playLevel = 0;
                     nurtureLevel = 0;
                     rampageLevel = 0;
-                    rainActivates = false;
-                    rainDeactivates = false;
-                    absorbActivates = false;
-                    absorbDeactivates = false;
-                    startsContainingWater = false;
-                    canContainWater = false;
                     passable = false;
                     activatedImages.Add(Type.House, "house");
                     deactivatedImages.Add(Type.House, "house");
@@ -142,11 +105,12 @@ namespace Rain_On_Your_Parade
             }
         }
 
-        public ObjectType(Type oType, bool oActivated, int oSleep, int oPlay, int oNurture, int oRampage)
+        public ObjectType(Type oType, bool startWet, bool wetGood, int oSleep, int oPlay, int oNurture, int oRampage)
         {
             typeName = oType;
             canActivate = false;
-            startsActivated = oActivated;
+            startsWet = startWet;
+            isWetObject = wetGood;
             sleepLevel = oSleep;
             playLevel = oPlay;
             nurtureLevel = oNurture;
@@ -172,10 +136,16 @@ namespace Rain_On_Your_Parade
             set {typeName = value; }
         }
 
-        public bool StartsActivated
+        public bool IsWetObject
         {
-            get { return startsActivated; }
-            set { startsActivated = value; }
+            get { return isWetObject; }
+            set { isWetObject = value; }
+        }
+
+        public bool StartsWet
+        {
+            get { return startsWet; }
+            set { startsWet = value; }
         }
 
         public bool CanActivate
@@ -209,42 +179,6 @@ namespace Rain_On_Your_Parade
         {
             get { return passable; }
             set { passable = value; }
-        }
-
-        public bool RainActivates
-        {
-            get { return rainActivates; }
-            set { rainActivates = value; }
-        }
-
-        public bool RainDeactivates
-        {
-            get { return rainDeactivates; }
-            set { rainDeactivates = value; }
-        }
-
-        public bool AbsorbActivates
-        {
-            get { return absorbActivates; }
-            set { absorbActivates = value; }
-        }
-
-        public bool AbsorbDeactivates
-        {
-            get { return absorbDeactivates; }
-            set { absorbDeactivates = value; }
-        }
-
-        public bool StartsContainingWater
-        {
-            get { return startsContainingWater; }
-            set { startsContainingWater = value; }
-        }
-
-        public bool CanContainWater
-        {
-            get { return canContainWater; }
-            set { canContainWater = value; }
         }
 
         public string activatedStringName()

@@ -16,6 +16,7 @@ namespace Rain_On_Your_Parade
         private int coolDown;
         private Player player;
         public bool isRaining = false;
+        public int MAX_RAIN = 6;
 
         public PlayerController(Player player)
             : base(player)
@@ -170,43 +171,36 @@ namespace Rain_On_Your_Parade
             if (player.Rain > 0)
             {
                 isRaining = true;
-               // player.Rain--;
+                player.Rain--;
 
                 foreach (Actor a in level.Actors)
                 {
                     if (player.GridspacePosition == a.GridspacePosition)
                     {
-                        if (a.State.State == a.TargetState)
+                        a.IncrementMood();                        
+                        /*if (a.State.State == a.TargetState)
                         {
                             a.IncrementMood();
                         }
                         else
                         {
                             a.IncrementMood();
-                        }
+                        }*/
                     }
                     if (a.Mood > 5) a.Mood = 5;
                    
                 }
                 foreach (WorldObject o in level.Grid[player.GridspacePosition.X, player.GridspacePosition.Y].Objects)
                 {
-                    if (o.Type.CanContainWater)
+                    o.WaterLevel++;
+
+                    if (o.Type.IsWetObject)
                     {
-                        o.ContainsWater = true;
-                    }
-                    if (o.Activated)
-                    {
-                        if (o.Type.RainDeactivates)
-                        {
-                            o.deactivate();
-                        }
+                        o.activate();
                     }
                     else
                     {
-                        if (o.Type.RainActivates)
-                        {
-                            o.activate();
-                        }
+                        o.deactivate();
                     }
                 }
 
@@ -217,35 +211,29 @@ namespace Rain_On_Your_Parade
 
         private bool Absorb(Canvas level)
         {
-            List<WorldObject> objects = level.Grid[player.GridspacePosition.X, player.GridspacePosition.Y].Objects;
-            foreach (WorldObject o in objects)
+            if (player.Rain < MAX_RAIN)
             {
-                if (o.Type.CanContainWater)
+
+                List<WorldObject> objects = level.Grid[player.GridspacePosition.X, player.GridspacePosition.Y].Objects;
+                foreach (WorldObject o in objects)
                 {
-                    //Console.WriteLine(o.Type.TypeName + " can contain water");
-                    if (o.ContainsWater)
+                    if (o.WaterLevel > 0)
                     {
-                        o.ContainsWater = false;
                         player.Rain++;
-                        if (o.Activated)
-                        {
-                            if (o.Type.AbsorbDeactivates)
-                            {
-                                o.deactivate();
-                            }
-                        }
-                        else
-                        {
-                            if (o.Type.AbsorbActivates)
-                            {
-                                o.activate();
-                            }
-                        }
-                        return true;
+                        o.WaterLevel--;
+                    }
+                    if (o.Type.IsWetObject && o.WaterLevel == 0)
+                    {
+                        o.deactivate();
+                    }
+                    else
+                    {
+                        o.activate();
                     }
                 }
+                return true;
             }
-            return false;
+            else { return false; }
         }
     }
 }

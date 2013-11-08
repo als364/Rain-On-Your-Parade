@@ -163,7 +163,7 @@ namespace Rain_On_Your_Parade
 
         public GridSquare(ObjectType.Type newObj, Point location)
         {
-            WorldObject o = new WorldObject(newObj, location);
+            WorldObject o = new WorldObject(newObj, location, 0);
             objects = new List<WorldObject> () {o};
             actors = new List<Actor>();
             isPassable = o.Type.Passable;
