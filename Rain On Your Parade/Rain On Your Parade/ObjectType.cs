@@ -82,7 +82,7 @@ namespace Rain_On_Your_Parade
                     canActivate = true;
                     startsWet = false;  //chalking is questionable
                     sleepLevel = 0;
-                    playLevel = 0;
+                    playLevel = 3;
                     nurtureLevel = 0;
                     rampageLevel = 0;
                     passable = true;

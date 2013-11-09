@@ -16,6 +16,8 @@ namespace Rain_On_Your_Parade
         private int reactDelay = REACT_MAX;
         private const int REACT_MAX = 3;
         private int NeedIncreaseTimer;
+        private const int MAX_ENJOY_TIME = 300;
+        private int enjoyTime;
 
         public ActorController(Actor actor) : base(actor)
         {
@@ -69,23 +71,44 @@ namespace Rain_On_Your_Parade
             {
                 //TODO: Implement these four states
                 case ActorState.AState.Nurture:
-                    if (next > 975)
-                    interactWithObject(level, ActorState.AState.Nurture);
+                    if (enjoyTime == 0)
+                    {
+                        interactWithObject(level, ActorState.AState.Nurture);
+                        controlledActor.State = new ActorState(ActorState.AState.Seek);
+                    }
+                    else
+                    {
+                        enjoyTime--;
+                    }
                     
-                    if (next <= 1) controlledActor.State = new ActorState(ActorState.AState.Seek);
+                    //if (next <= 1) controlledActor.State = new ActorState(ActorState.AState.Seek);
                     break;
                 case ActorState.AState.Play:
-                    if (next > 975)
-                    interactWithObject(level, ActorState.AState.Play);
-                    if (next <= 1) controlledActor.State = new ActorState(ActorState.AState.Seek);
+                    if (enjoyTime == 0)
+                    {
+                        interactWithObject(level, ActorState.AState.Play);
+                        controlledActor.State = new ActorState(ActorState.AState.Seek);
+                    }
+                    else
+                    {
+                        enjoyTime--;
+                    }
+                    //if (next <= 1) controlledActor.State = new ActorState(ActorState.AState.Seek);
                     break;
                 case ActorState.AState.Rampage:
                     controlledActor.State = new ActorState(ActorState.AState.Seek);
                     break;
                 case ActorState.AState.Sleep:
-                    if (next > 975)
-                     interactWithObject(level, ActorState.AState.Play);
-                    if (next <= 1) controlledActor.State = new ActorState(ActorState.AState.Seek);
+                    if (enjoyTime == 0)
+                    {
+                        interactWithObject(level, ActorState.AState.Play);
+                        controlledActor.State = new ActorState(ActorState.AState.Seek);
+                    }
+                    else
+                    {
+                        enjoyTime--;
+                    }
+                    //if (next <= 1) controlledActor.State = new ActorState(ActorState.AState.Seek);
                    // controlledActor.State.State = ActorState.AState.Seek;
                     break;
                 case ActorState.AState.Seek:
@@ -128,6 +151,7 @@ namespace Rain_On_Your_Parade
                             {
                                 //controlledActor.Path.Clear();
                                 controlledActor.State = new ActorState(controlledActor.TargetState);
+                                enjoyTime = MAX_ENJOY_TIME;
                                 //controlledActor.Path[0].Actors.Remove(controlledActor);
                             }
                             else
@@ -326,31 +350,32 @@ namespace Rain_On_Your_Parade
             List<GridSquare> targets = new List<GridSquare>();
             foreach (Actor actor in level.Actors)
             {
-                if (squarePreference.ContainsKey(actor.GridspacePosition))
-                {
-                    squarePreference[actor.GridspacePosition] += Desirability(level.Grid[actor.GridspacePosition.X, actor.GridspacePosition.Y]);
-                }
-                else
-                {
+                //if (squarePreference.ContainsKey(actor.GridspacePosition))
+                //{
+                //    squarePreference[actor.GridspacePosition] += Desirability(level.Grid[actor.GridspacePosition.X, actor.GridspacePosition.Y]);
+                //}
+                //else
+                //{
                     squarePreference[actor.GridspacePosition] = Desirability(level.Grid[actor.GridspacePosition.X, actor.GridspacePosition.Y]);
-                }
+                //}
             }
             foreach (WorldObject entity in level.Objects)
             {
-                if (squarePreference.ContainsKey(entity.GridspacePosition))
-                {
-                    squarePreference[entity.GridspacePosition] += Desirability(level.Grid[entity.GridspacePosition.X, entity.GridspacePosition.Y]);
-                }
-                else
-                {
+                //if (squarePreference.ContainsKey(entity.GridspacePosition))
+                //{
+                //    squarePreference[entity.GridspacePosition] += Desirability(level.Grid[entity.GridspacePosition.X, entity.GridspacePosition.Y]);
+                //}
+                //else
+                //{
                     squarePreference[entity.GridspacePosition] = Desirability(level.Grid[entity.GridspacePosition.X, entity.GridspacePosition.Y]);
-                }
+                //}
             }
             foreach (Point point in squarePreference.Keys)
             {
                 if (squarePreference[point] > maxPreference)
                 {
                     targets.Clear();
+                    targets.Add(level.Grid[point.X, point.Y]);
                     maxPreference = squarePreference[point];
                 }
                 else if (squarePreference[point] == maxPreference && maxPreference != 0 && squarePreference[point] != 0)
@@ -551,7 +576,7 @@ namespace Rain_On_Your_Parade
                         case ActorState.AState.Nurture:
                            // if (o.Type.NurtureLevel > 2)
                           //  {
-                                //o.activate();
+                                o.activate();
                                 controlledActor.NurtureLevel--;
                                 controlledActor.DecrementMood();
                                 if (controlledActor.NurtureLevel < 0) controlledActor.NurtureLevel = 0;
@@ -561,7 +586,7 @@ namespace Rain_On_Your_Parade
                         case ActorState.AState.Play:
                           //  if (o.Type.PlayLevel > 2)
                           //  {
-                               // o.activate();
+                                o.activate();
                                 controlledActor.PlayLevel--;
                                 controlledActor.DecrementMood();
                                 if (controlledActor.PlayLevel < 0) controlledActor.PlayLevel = 0;
