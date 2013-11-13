@@ -14,7 +14,7 @@ namespace Rain_On_Your_Parade
         private Point actorSquare = new Point(0, 0);
         private bool nearCloud = false;
         private int reactDelay = REACT_MAX;
-        private const int REACT_MAX = 3;
+        private const int REACT_MAX = 1;
         private int NeedIncreaseTimer;
         private const int MAX_ENJOY_TIME = 300;
         private int enjoyTime;
@@ -195,7 +195,7 @@ namespace Rain_On_Your_Parade
                     break;
                 case ActorState.AState.Wander: 
                     List<GridSquare> wanderTarget = new List<GridSquare>();
-                    wanderTarget.Add(level.Grid[random.Next(level.Width),random.Next(level.Height)]);
+                    wanderTarget.Add(level.Grid[random.Next(level.Width), random.Next(level.Height)]);
                     controlledActor.Path = FindPath(wanderTarget, level.Grid[actorSquare.X, actorSquare.Y],
                                                     level.Grid, new Point[level.Width, level.Height]);
                     if (controlledActor.Path != null)
@@ -225,18 +225,18 @@ namespace Rain_On_Your_Parade
                         }
                         else
                         {
-                            target.Add(level.Grid[(int)MathHelper.Clamp(actorSquare.X - 3, 0, level.Width-1), actorSquare.Y]);
+                            target.Add(level.Grid[(int)MathHelper.Clamp(actorSquare.X - 3, 0, level.Width - 1), actorSquare.Y]);
                         }
                     }
                     else
                     {
                         if (yChange > 0)
                         {
-                            target.Add(level.Grid[actorSquare.X, (int)MathHelper.Clamp(actorSquare.Y + 3, 0, level.Height-1)]);
+                            target.Add(level.Grid[actorSquare.X, (int)MathHelper.Clamp(actorSquare.Y + 3, 0, level.Height - 1)]);
                         }
                         else
                         {
-                            target.Add(level.Grid[actorSquare.X, (int)MathHelper.Clamp(actorSquare.Y - 3, 0, level.Height-1)]);
+                            target.Add(level.Grid[actorSquare.X, (int)MathHelper.Clamp(actorSquare.Y - 3, 0, level.Height - 1)]);
                         }
                     }
 
@@ -356,7 +356,7 @@ namespace Rain_On_Your_Parade
                 //}
                 //else
                 //{
-                    squarePreference[actor.GridspacePosition] = Desirability(level.Grid[actor.GridspacePosition.X, actor.GridspacePosition.Y]);
+                squarePreference[actor.GridspacePosition] = Desirability(level.Grid[actor.GridspacePosition.X, actor.GridspacePosition.Y]);
                 //}
             }
             foreach (WorldObject entity in level.Objects)
@@ -367,7 +367,7 @@ namespace Rain_On_Your_Parade
                 //}
                 //else
                 //{
-                    squarePreference[entity.GridspacePosition] = Desirability(level.Grid[entity.GridspacePosition.X, entity.GridspacePosition.Y]);
+                squarePreference[entity.GridspacePosition] = Desirability(level.Grid[entity.GridspacePosition.X, entity.GridspacePosition.Y]);
                 //}
             }
             foreach (Point point in squarePreference.Keys)

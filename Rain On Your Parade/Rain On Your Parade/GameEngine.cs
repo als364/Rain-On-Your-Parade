@@ -67,7 +67,7 @@ namespace Rain_On_Your_Parade
             //This is where the level building goes. I don't care about an XML parsing framework yet
             level = new Canvas();
 
-           // Debug.WriteLine("Y: " + level.canvasGrid[6, 6].Actors[0].Position.Y);
+           // Debug.WriteLine("Y: " + level.Grid[6, 6].Actors[0].Position.Y);
             int quota = 100;
             //worldState = new WorldState(quota,level.Grid);
             level.MaliceObjective = quota;
@@ -82,7 +82,6 @@ namespace Rain_On_Your_Parade
             foreach (Actor a in level.Actors){
                 View actors = new View(a);
                 models.Add(a);
-                //Debug.WriteLine("Y: " + a.Position.Y);
                 views.Add(actors);
                 Controller actorController = new ActorController(a);
                 controllers.Add(actorController);
@@ -110,7 +109,6 @@ namespace Rain_On_Your_Parade
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            // TODO: use this.Content to load your game content here
             foreach (Model model in models)
             {
                 if (model != null)
@@ -158,11 +156,7 @@ namespace Rain_On_Your_Parade
             {
                 controller.Update(gameTime, level);
             }
-            foreach (GridSquare g in level.Grid)
-            {
-                g.calculateLevels();
-
-            }
+            level.upateGridSquares();
 
             base.Update(gameTime);
         }

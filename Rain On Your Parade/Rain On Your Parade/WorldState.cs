@@ -11,7 +11,7 @@ namespace Rain_On_Your_Parade
     {
         private int malice;                 //total malice generated
         private int maliceObjective;        //amount of malice needed to win level
-        private GridSquare[,] stateOfWorld;  //state array of each space in level
+        //private GridSquare[,] stateOfWorld;  //state array of each space in level
         private Player player;
         public int worldWidth;              //# gridsquares wide
         public int worldHeight;             //# gridsquares tall
@@ -127,14 +127,6 @@ namespace Rain_On_Your_Parade
             }
 
             return allObjects;
-        }
-
-        /// <summary>Public stuff about the method</summary>
-        /// <param name="foo">It's an integer apparently</param>
-        /// <devdoc>This method doesn't do anything yet.</devdoc>
-        public void doSomethingWorldState(int foo) 
-        {
-            //do stuff here
         }
 
         /// <summary>Initialize adjacency lists in level map for ease of search</summary>

@@ -10,7 +10,6 @@ namespace Rain_On_Your_Parade
         private int squaresWide = GameEngine.SCREEN_WIDTH / SQUARE_SIZE;
         private int squaresTall = GameEngine.SCREEN_HEIGHT / SQUARE_SIZE;
 
-        ///TODO: make this more extendable
         private GridSquare[,] canvasGrid;
         private Player player;
         private int malice;                 //total malice generated
@@ -20,7 +19,7 @@ namespace Rain_On_Your_Parade
 
         public Canvas()
         {
-            canvasGrid = new GridSquare[squaresWide, squaresTall];
+            Grid = new GridSquare[squaresWide, squaresTall];
             objects = new List<WorldObject>();
             actors = new List<Actor>();
 
@@ -28,7 +27,7 @@ namespace Rain_On_Your_Parade
             {
                 for (int j = 0; j < squaresTall; j++)
                 {
-                    canvasGrid[i,j] = new GridSquare(new List<WorldObject>(), new List<Actor>(), new Point(i, j));
+                    Grid[i,j] = new GridSquare(new List<WorldObject>(), new List<Actor>(), new Point(i, j));
                 }
             }
 
@@ -152,13 +151,13 @@ namespace Rain_On_Your_Parade
 
             foreach (WorldObject entity in objects)
             {
-                canvasGrid[entity.GridspacePosition.X, entity.GridspacePosition.Y].add(entity);
+                Grid[entity.GridspacePosition.X, entity.GridspacePosition.Y].add(entity);
             }
             foreach (Actor actor in actors)
             {
-                canvasGrid[actor.GridspacePosition.X, actor.GridspacePosition.Y].add(actor);
+                Grid[actor.GridspacePosition.X, actor.GridspacePosition.Y].add(actor);
             }
-            foreach (GridSquare square in canvasGrid)
+            foreach (GridSquare square in Grid)
             {
                 square.calculateLevels();
             }
@@ -274,8 +273,8 @@ namespace Rain_On_Your_Parade
                     {
                         if (y == 0) //top left
                         {
-                            if (SquareIsPassable(canvasGrid[x + 1, y])) currentSquare.adjacent.Add(canvasGrid[x + 1, y]);
-                            if (SquareIsPassable(canvasGrid[x, y + 1])) currentSquare.adjacent.Add(canvasGrid[x, y + 1]);
+                            if (SquareIsPassable(canvasGrid[x + 1, y])) currentSquare.adjacent.Add(Grid[x + 1, y]);
+                            if (SquareIsPassable(canvasGrid[x, y + 1])) currentSquare.adjacent.Add(Grid[x, y + 1]);
                         }
                         else if (y == squaresTall - 1) //bottom left
                         {
@@ -293,41 +292,41 @@ namespace Rain_On_Your_Parade
                     {
                         if (y == 0) //top right
                         {
-                            if (SquareIsPassable(canvasGrid[x - 1, y])) currentSquare.adjacent.Add(canvasGrid[x - 1, y]);
-                            if (SquareIsPassable(canvasGrid[x, y + 1])) currentSquare.adjacent.Add(canvasGrid[x, y + 1]);
+                            if (SquareIsPassable(Grid[x - 1, y])) currentSquare.adjacent.Add(Grid[x - 1, y]);
+                            if (SquareIsPassable(Grid[x, y + 1])) currentSquare.adjacent.Add(Grid[x, y + 1]);
                         }
                         else if (y == squaresTall - 1) //bottom right
                         {
-                            if (SquareIsPassable(canvasGrid[x - 1, y])) currentSquare.adjacent.Add(canvasGrid[x - 1, y]);
-                            if (SquareIsPassable(canvasGrid[x, y - 1])) currentSquare.adjacent.Add(canvasGrid[x, y - 1]);
+                            if (SquareIsPassable(Grid[x - 1, y])) currentSquare.adjacent.Add(Grid[x - 1, y]);
+                            if (SquareIsPassable(Grid[x, y - 1])) currentSquare.adjacent.Add(Grid[x, y - 1]);
                         }
                         else //right edge
                         {
-                            if (SquareIsPassable(canvasGrid[x - 1, y])) currentSquare.adjacent.Add(canvasGrid[x - 1, y]);
-                            if (SquareIsPassable(canvasGrid[x, y + 1])) currentSquare.adjacent.Add(canvasGrid[x, y + 1]);
-                            if (SquareIsPassable(canvasGrid[x, y - 1])) currentSquare.adjacent.Add(canvasGrid[x, y - 1]);
+                            if (SquareIsPassable(Grid[x - 1, y])) currentSquare.adjacent.Add(Grid[x - 1, y]);
+                            if (SquareIsPassable(Grid[x, y + 1])) currentSquare.adjacent.Add(Grid[x, y + 1]);
+                            if (SquareIsPassable(Grid[x, y - 1])) currentSquare.adjacent.Add(Grid[x, y - 1]);
                         }
                     }
                     else
                     {
                         if (y == 0) //top edge
                         {
-                            if (SquareIsPassable(canvasGrid[x + 1, y])) currentSquare.adjacent.Add(canvasGrid[x + 1, y]);
-                            if (SquareIsPassable(canvasGrid[x - 1, y])) currentSquare.adjacent.Add(canvasGrid[x - 1, y]);
-                            if (SquareIsPassable(canvasGrid[x, y + 1])) currentSquare.adjacent.Add(canvasGrid[x, y + 1]);
+                            if (SquareIsPassable(Grid[x + 1, y])) currentSquare.adjacent.Add(Grid[x + 1, y]);
+                            if (SquareIsPassable(Grid[x - 1, y])) currentSquare.adjacent.Add(Grid[x - 1, y]);
+                            if (SquareIsPassable(Grid[x, y + 1])) currentSquare.adjacent.Add(Grid[x, y + 1]);
                         }
                         else if (y == squaresTall - 1) //bottom edge
                         {
-                            if (SquareIsPassable(canvasGrid[x + 1, y])) currentSquare.adjacent.Add(canvasGrid[x + 1, y]);
-                            if (SquareIsPassable(canvasGrid[x - 1, y])) currentSquare.adjacent.Add(canvasGrid[x - 1, y]);
-                            if (SquareIsPassable(canvasGrid[x, y - 1])) currentSquare.adjacent.Add(canvasGrid[x, y - 1]);
+                            if (SquareIsPassable(Grid[x + 1, y])) currentSquare.adjacent.Add(Grid[x + 1, y]);
+                            if (SquareIsPassable(Grid[x - 1, y])) currentSquare.adjacent.Add(Grid[x - 1, y]);
+                            if (SquareIsPassable(Grid[x, y - 1])) currentSquare.adjacent.Add(Grid[x, y - 1]);
                         }
                         else //finally not a corner case
                         {
-                            if (SquareIsPassable(canvasGrid[x + 1, y])) currentSquare.adjacent.Add(canvasGrid[x + 1, y]);
-                            if (SquareIsPassable(canvasGrid[x - 1, y])) currentSquare.adjacent.Add(canvasGrid[x - 1, y]);
-                            if (SquareIsPassable(canvasGrid[x, y + 1])) currentSquare.adjacent.Add(canvasGrid[x, y + 1]);
-                            if (SquareIsPassable(canvasGrid[x, y - 1])) currentSquare.adjacent.Add(canvasGrid[x, y - 1]);
+                            if (SquareIsPassable(Grid[x + 1, y])) currentSquare.adjacent.Add(Grid[x + 1, y]);
+                            if (SquareIsPassable(Grid[x - 1, y])) currentSquare.adjacent.Add(Grid[x - 1, y]);
+                            if (SquareIsPassable(Grid[x, y + 1])) currentSquare.adjacent.Add(Grid[x, y + 1]);
+                            if (SquareIsPassable(Grid[x, y - 1])) currentSquare.adjacent.Add(Grid[x, y - 1]);
                         }
                     }
                 }
@@ -348,10 +347,33 @@ namespace Rain_On_Your_Parade
             return true;
         }
 
+        /// <summary>Update each grid square to contain the correct actors and objects</summary>
+        public void upateGridSquares()
+        {
+            foreach (GridSquare g in canvasGrid)
+            {
+                g.clearActObjLists();
+            }
+            foreach (WorldObject o in objects)
+            {
+                GridSquare square = Grid[o.GridspacePosition.X, o.GridspacePosition.Y];
+                square.add(o);
+            }
+            foreach (Actor a in actors)
+            {
+                GridSquare square = Grid[a.GridspacePosition.X, a.GridspacePosition.Y];
+                square.add(a);
+            }
+            foreach (GridSquare g in Grid)
+            {
+                g.calculateLevels();
+            }
+        }
+
         public override string ToString()
         {
             string grid = "";
-            foreach (GridSquare g in canvasGrid)
+            foreach (GridSquare g in Grid)
             {
                 grid += g.ToString() + "\n";
             }
