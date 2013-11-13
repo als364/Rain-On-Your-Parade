@@ -169,7 +169,7 @@ namespace Rain_On_Your_Parade
             isPassable = o.Type.Passable;
             this.location = location;
 
-            foreach (WorldObject obj in objects)
+        /*    foreach (WorldObject obj in objects)
             {
                 totalSleep += obj.Type.SleepLevel;
                 totalPlay += obj.Type.PlayLevel;
@@ -177,6 +177,7 @@ namespace Rain_On_Your_Parade
                 totalRampage += obj.Type.RampageLevel;
             }
             adjacent = new List<GridSquare>();
+         * */
         }
 
         public GridSquare(ActorType.Type newAct, Point location)
@@ -187,7 +188,7 @@ namespace Rain_On_Your_Parade
             isPassable = true;
             this.location = location;
 
-            foreach (Actor act in actors)
+          /*  foreach (Actor act in actors)
             {
                 totalSleep += act.SleepLevel;
                 totalPlay += act.PlayLevel;
@@ -196,6 +197,8 @@ namespace Rain_On_Your_Parade
             }
 
             adjacent = new List<GridSquare>();
+         */
+         
         }
 
         public GridSquare(List<WorldObject> o, List<Actor> a, Point location)
@@ -228,13 +231,13 @@ namespace Rain_On_Your_Parade
                 }
             }
 
-            foreach (Actor act in actors)
+        /*    foreach (Actor act in actors)
             {
                 totalSleep += act.SleepLevel;
                 totalPlay += act.PlayLevel;
                 totalNurture += act.NurtureLevel;
                 totalRampage += act.RampageLevel;
-            }
+            }*/
 
         }
 

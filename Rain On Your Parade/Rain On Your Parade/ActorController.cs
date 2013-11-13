@@ -15,6 +15,7 @@ namespace Rain_On_Your_Parade
         private int NeedIncreaseTimer;
         private const int MAX_ENJOY_TIME = 300;
         private int enjoyTime;
+        private int interactionTimer;
 
         public ActorController(Actor actor) : base(actor)
         {
@@ -29,6 +30,8 @@ namespace Rain_On_Your_Parade
         public override void Update(GameTime gameTime, Canvas level)
         {
             NeedIncreaseTimer++;
+            if (interactionTimer < 0) interactionTimer++;
+
             if (NeedIncreaseTimer % 720 == 0)
             {
                 controlledActor.increaseFastNeeds();
@@ -50,207 +53,234 @@ namespace Rain_On_Your_Parade
             if (level.nearEnoughForInteraction(level.Player, controlledActor))
             {
                 controlledActor.State = new ActorState(ActorState.AState.Run);
+                controlledActor.Path = null;
             }
 
-            //Console.WriteLine("State: " + controlledActor.State.State);
-            switch (controlledActor.State.State)
+            //Determines whether the actor is close enough to interact with another actor, and if so, changes its state to Run
+            foreach (Actor a in level.interactableActors(controlledActor))
             {
-                //TODO: Implement these four states
-                case ActorState.AState.Nurture:
-                    if (enjoyTime == 0)
+                if (level.nearEnoughForInteraction(a, controlledActor))
+                {
+                    if (interactionTimer >= 0 && ((a.Mood > 3 && controlledActor.Mood > 3) || (a.Mood == 5  || controlledActor.Mood ==5 )))
                     {
-                        interactWithObject(level, ActorState.AState.Nurture);
-                        controlledActor.State = new ActorState(ActorState.AState.Seek);
+                        controlledActor.State = new ActorState(ActorState.AState.Fight);
                     }
-                    else
-                    {
-                        enjoyTime--;
-                    }
-                    
-                    //if (next <= 1) controlledActor.State = new ActorState(ActorState.AState.Seek);
-                    break;
-                case ActorState.AState.Play:
-                    if (enjoyTime == 0)
-                    {
-                        interactWithObject(level, ActorState.AState.Play);
-                        controlledActor.State = new ActorState(ActorState.AState.Seek);
-                    }
-                    else
-                    {
-                        enjoyTime--;
-                    }
-                    //if (next <= 1) controlledActor.State = new ActorState(ActorState.AState.Seek);
-                    break;
-                case ActorState.AState.Rampage:
-                    controlledActor.State = new ActorState(ActorState.AState.Seek);
-                    break;
-                case ActorState.AState.Sleep:
-                    if (enjoyTime == 0)
-                    {
-                        interactWithObject(level, ActorState.AState.Play);
-                        controlledActor.State = new ActorState(ActorState.AState.Seek);
-                    }
-                    else
-                    {
-                        enjoyTime--;
-                    }
-                    //if (next <= 1) controlledActor.State = new ActorState(ActorState.AState.Seek);
-                   // controlledActor.State.State = ActorState.AState.Seek;
-                    break;
-                case ActorState.AState.Seek:
-                    //Actor figures out what state it wants to be 
-                    ActorState.AState newState = DetermineTargetState();
-                    controlledActor.TargetState = newState;
-                    //PreferenceSearch determines the most desired square.
-                    //FindPath finds a path to it.
-                    controlledActor.Path = FindPath(PreferenceSearch(level),
-                                                    level.Grid[actorSquare.X, actorSquare.Y],
-                                                    level.Grid, new Point[level.Width, level.Height]);
-                    //if none of the squares were desirable, Rampage
-                    if (controlledActor.Path == null) controlledActor.State = new ActorState(ActorState.AState.Wander);
-                    else
-                    {
-                        //Now, walk there.
-                        controlledActor.State = new ActorState(ActorState.AState.Walk);
-                    }
-                    break;
+                }
+            }
 
-                case ActorState.AState.Walk:
-                    //Shouldn't ever happen, really. This is a specialcase. Rather than throwing an error, just find something else to do.
-                    if (controlledActor.Path.Count == 0)
-                    {
-                        controlledActor.State = new ActorState(ActorState.AState.Seek);
-                    }
-                    //The actual moving along the path.
-                    else
-                    {
-                        //Console.WriteLine(controlledActor.Type.TypeName + " Position: " + controlledActor.GridspacePosition);
-                        GridSquare nextSquare = controlledActor.Path[0];
-                        float Velx;
-                        float Vely;
+                //Console.WriteLine("State: " + controlledActor.State.State);
+                switch (controlledActor.State.State)
+                {
+                    case ActorState.AState.Fight:
+                        interactionTimer++;
 
-                        //If I'm within the next square on the path, remove it from the path and set my velocity towards the next one
-                        if (nextSquare.Contains(controlledActor.GridspacePosition))
+                        if (interactionTimer >= 360)
                         {
-                            //At target square. Move to target state.  
-                            if (controlledActor.Path.Count == 1)
-                            {
-                                //controlledActor.Path.Clear();
-                                controlledActor.State = new ActorState(controlledActor.TargetState);
-                                enjoyTime = MAX_ENJOY_TIME;
-                            }
-                            else
-                            {
-                                controlledActor.Path.RemoveAt(0);
-                                nextSquare = controlledActor.Path[0];
-                                nextSquare.calculateLevels();
-                            }
+                            interactionTimer = -360;
+                            if (controlledActor.Mood < 5)
+                            controlledActor.Mood = controlledActor.Mood + 1;
+                            controlledActor.State = new ActorState(ActorState.AState.Seek);
                         }
-                        //If I'm not within the next square on the path, make sure my velocity is set correctly (necessary for first square) Move uniformly to the next square
-                        if (nextSquare.Location.X * Canvas.SQUARE_SIZE - controlledActor.PixelPosition.X <= 0)
+
+                        break;
+
+                    case ActorState.AState.Nurture:
+                        if (enjoyTime == 0)
                         {
-                            Velx = -1f;
+                            interactWithObject(level, ActorState.AState.Nurture);
+                            controlledActor.State = new ActorState(ActorState.AState.Seek);
                         }
                         else
                         {
-                            Velx = 1f;
+                            enjoyTime--;
                         }
-                        if (nextSquare.Location.Y * Canvas.SQUARE_SIZE - controlledActor.PixelPosition.Y <= 0)
+
+                        //if (next <= 1) controlledActor.State = new ActorState(ActorState.AState.Seek);
+                        break;
+                    case ActorState.AState.Play:
+                        if (enjoyTime == 0)
                         {
-                            Vely = -1f;
+                            interactWithObject(level, ActorState.AState.Play);
+                            controlledActor.State = new ActorState(ActorState.AState.Seek);
                         }
                         else
                         {
-                            Vely = 1f;
+                            enjoyTime--;
                         }
-                        controlledActor.Velocity = new Vector2(Velx, Vely);
-                        //controlledActor.Velocity = new Vector2(nextSquare.Location.X * Canvas.SQUARE_SIZE - controlledActor.Position.X, 
-                        //                                       nextSquare.Location.Y * Canvas.SQUARE_SIZE - controlledActor.Position.Y)/30
-                        //Move the actor
-                        controlledActor.PixelPosition = Vector2.Add(controlledActor.PixelPosition, controlledActor.Velocity);
-                        controlledActor.GridspacePosition = new Point((int)(controlledActor.PixelPosition.X / Canvas.SQUARE_SIZE), 
-                                                                      (int)(controlledActor.PixelPosition.Y / Canvas.SQUARE_SIZE));
-                    }
-                    break;
-                case ActorState.AState.Wander: 
-                    List<GridSquare> wanderTarget = new List<GridSquare>();
-                    wanderTarget.Add(level.Grid[random.Next(level.Width), random.Next(level.Height)]);
-                    controlledActor.Path = FindPath(wanderTarget, level.Grid[actorSquare.X, actorSquare.Y],
-                                                    level.Grid, new Point[level.Width, level.Height]);
-                    if (controlledActor.Path != null)
-                    {
-                        controlledActor.State = new ActorState(ActorState.AState.Walk);
-                    }
-
-                    if (next <= 10) controlledActor.State = new ActorState(ActorState.AState.Seek);
-                    break;
-                //Actor runs from the cloud if it's in the same square, with a delay
-                case ActorState.AState.Run:
-                    //Console.WriteLine("State: " + controlledActor.State.State);
-                    //Actor figures out what state it wants to be 
-                    newState = DetermineTargetState();
-                    controlledActor.TargetState = newState;
-
-                    //Determines which direction to run based on the player's movement direction
-                    List<GridSquare> target = new List<GridSquare>();
-                    float xChange = level.Player.PixelPosition.X - level.Player.PrevPos.X;
-                    float yChange = level.Player.PixelPosition.Y - level.Player.PrevPos.Y;
-                    Console.WriteLine("posChange: " + xChange + ", " + yChange);
-                    if (Math.Abs(xChange) > Math.Abs(yChange))
-                    {
-                        if (xChange > 0)
-                        {
-                            target.Add(level.Grid[(int)MathHelper.Clamp(actorSquare.X + 3, 0, level.Width-1), actorSquare.Y]);
-                        }
-                        else
-                        {
-                            target.Add(level.Grid[(int)MathHelper.Clamp(actorSquare.X - 3, 0, level.Width - 1), actorSquare.Y]);
-                        }
-                    }
-                    else
-                    {
-                        if (yChange > 0)
-                        {
-                            target.Add(level.Grid[actorSquare.X, (int)MathHelper.Clamp(actorSquare.Y + 3, 0, level.Height - 1)]);
-                        }
-                        else
-                        {
-                            target.Add(level.Grid[actorSquare.X, (int)MathHelper.Clamp(actorSquare.Y - 3, 0, level.Height - 1)]);
-                        }
-                    }
-
-                    //FindPath finds a path to it.
-                    controlledActor.Path = FindPath(target, level.Grid[actorSquare.X, actorSquare.Y],
-                                                    level.Grid, new Point[level.Width, level.Height]);
-
-                    //if none of the squares were desirable, Rampage
-                    if (controlledActor.Path == null) controlledActor.State = new ActorState(ActorState.AState.Rampage);
-                    else
-                    {
-                        //Now, walk there.
-                        controlledActor.State = new ActorState(ActorState.AState.Walk);
-                    }
-                    break;
-                //Again, a specialcase. Just dumps things into Seek, making sure to zero their velocity first.
-                default:
-                    if (controlledActor.Path.Count == 0)
-                    {
-                        controlledActor.Velocity = new Vector2();
+                        //if (next <= 1) controlledActor.State = new ActorState(ActorState.AState.Seek);
+                        break;
+                    case ActorState.AState.Rampage:
                         controlledActor.State = new ActorState(ActorState.AState.Seek);
-                    }
-                    else if (controlledActor.Path.Count == 1) //at target!
-                    {
-                        controlledActor.Velocity = new Vector2();
-                        if (!PreferenceSearch(level).Contains(controlledActor.Path[0]))
+                        break;
+                    case ActorState.AState.Sleep:
+                        if (enjoyTime == 0)
+                        {
+                            interactWithObject(level, ActorState.AState.Sleep);
+                            controlledActor.State = new ActorState(ActorState.AState.Seek);
+                        }
+                        else
+                        {
+                            enjoyTime--;
+                        }
+                        //if (next <= 1) controlledActor.State = new ActorState(ActorState.AState.Seek);
+                        // controlledActor.State.State = ActorState.AState.Seek;
+                        break;
+                    case ActorState.AState.Seek:
+                        //Actor figures out what state it wants to be 
+                        ActorState.AState newState = DetermineTargetState();
+                        controlledActor.TargetState = newState;
+                        //PreferenceSearch determines the most desired square.
+                        //FindPath finds a path to it.
+                        controlledActor.Path = FindPath(PreferenceSearch(level),
+                                                        level.Grid[actorSquare.X, actorSquare.Y],
+                                                        level.Grid, new Point[level.Width, level.Height]);
+                        //if none of the squares were desirable, Rampage
+                        if (controlledActor.Path == null) controlledActor.State = new ActorState(ActorState.AState.Wander);
+                        else
+                        {
+                            //Now, walk there.
+                            controlledActor.State = new ActorState(ActorState.AState.Walk);
+                        }
+                        break;
+
+                    case ActorState.AState.Walk:
+                        //Shouldn't ever happen, really. This is a specialcase. Rather than throwing an error, just find something else to do.
+                        if (controlledActor.Path.Count == 0)
                         {
                             controlledActor.State = new ActorState(ActorState.AState.Seek);
                         }
-                    }
-                    else
-                    {
-                    }
-                    break;
-            }
+                        //The actual moving along the path.
+                        else
+                        {
+                            //Console.WriteLine(controlledActor.Type.TypeName + " Position: " + controlledActor.GridspacePosition);
+                            GridSquare nextSquare = controlledActor.Path[0];
+                            float Velx;
+                            float Vely;
+
+                            //If I'm within the next square on the path, remove it from the path and set my velocity towards the next one
+                            if (nextSquare.Contains(controlledActor.GridspacePosition))
+                            {
+                                //At target square. Move to target state.  
+                                if (controlledActor.Path.Count == 1)
+                                {
+                                    //controlledActor.Path.Clear();
+                                    controlledActor.State = new ActorState(controlledActor.TargetState);
+                                    enjoyTime = MAX_ENJOY_TIME;
+                                }
+                                else
+                                {
+                                    controlledActor.Path.RemoveAt(0);
+                                    nextSquare = controlledActor.Path[0];
+                                    nextSquare.calculateLevels();
+                                }
+                            }
+                            //If I'm not within the next square on the path, make sure my velocity is set correctly (necessary for first square) Move uniformly to the next square
+                            if (nextSquare.Location.X * Canvas.SQUARE_SIZE - controlledActor.PixelPosition.X <= 0)
+                            {
+                                Velx = controlledActor.Mood > 4 ? -2f : -1f;
+                            }
+                            else
+                            {
+                                Velx = controlledActor.Mood > 4 ? 2f : 1f;
+                            }
+                            if (nextSquare.Location.Y * Canvas.SQUARE_SIZE - controlledActor.PixelPosition.Y <= 0)
+                            {
+                                Vely = controlledActor.Mood > 4 ? -2f : -1f;
+                            }
+                            else
+                            {
+                                Vely = controlledActor.Mood > 4 ? 2f : 1f;
+                            }
+                            controlledActor.Velocity = new Vector2(Velx, Vely);
+                            //controlledActor.Velocity = new Vector2(nextSquare.Location.X * Canvas.SQUARE_SIZE - controlledActor.Position.X, 
+                            //                                       nextSquare.Location.Y * Canvas.SQUARE_SIZE - controlledActor.Position.Y)/30
+                            //Move the actor
+                            controlledActor.PixelPosition = Vector2.Add(controlledActor.PixelPosition, controlledActor.Velocity);
+                            controlledActor.GridspacePosition = new Point((int)(controlledActor.PixelPosition.X / Canvas.SQUARE_SIZE),
+                                                                          (int)(controlledActor.PixelPosition.Y / Canvas.SQUARE_SIZE));
+                        }
+                        break;
+                    case ActorState.AState.Wander:
+                        List<GridSquare> wanderTarget = new List<GridSquare>();
+                        wanderTarget.Add(level.Grid[random.Next(level.Width), random.Next(level.Height)]);
+                        controlledActor.Path = FindPath(wanderTarget, level.Grid[actorSquare.X, actorSquare.Y],
+                                                        level.Grid, new Point[level.Width, level.Height]);
+                        if (controlledActor.Path != null)
+                        {
+                            controlledActor.State = new ActorState(ActorState.AState.Walk);
+                        }
+
+                        if (next <= 10) controlledActor.State = new ActorState(ActorState.AState.Seek);
+                        break;
+                    //Actor runs from the cloud if it's in the same square, with a delay
+                    case ActorState.AState.Run:
+                        //Console.WriteLine("State: " + controlledActor.State.State);
+                        //Actor figures out what state it wants to be 
+                        newState = DetermineTargetState();
+                        controlledActor.TargetState = newState;
+
+                        //Determines which direction to run based on the player's movement direction
+                        List<GridSquare> target = new List<GridSquare>();
+                        float xChange = level.Player.PixelPosition.X - level.Player.PrevPos.X;
+                        float yChange = level.Player.PixelPosition.Y - level.Player.PrevPos.Y;
+                        Console.WriteLine("posChange: " + xChange + ", " + yChange);
+                        if (Math.Abs(xChange) > Math.Abs(yChange))
+                        {
+                            if (xChange > 0)
+                            {
+                                target.Add(level.Grid[(int)MathHelper.Clamp(actorSquare.X + 3, 0, level.Width - 1), actorSquare.Y]);
+                            }
+                            else
+                            {
+                                target.Add(level.Grid[(int)MathHelper.Clamp(actorSquare.X - 3, 0, level.Width - 1), actorSquare.Y]);
+                            }
+                        }
+                        else
+                        {
+                            if (yChange > 0)
+                            {
+                                target.Add(level.Grid[actorSquare.X, (int)MathHelper.Clamp(actorSquare.Y + 3, 0, level.Height - 1)]);
+                            }
+                            else
+                            {
+                                target.Add(level.Grid[actorSquare.X, (int)MathHelper.Clamp(actorSquare.Y - 3, 0, level.Height - 1)]);
+                            }
+                        }
+
+                        //FindPath finds a path to it.
+                        controlledActor.Path = FindPath(target, level.Grid[actorSquare.X, actorSquare.Y],
+                                                        level.Grid, new Point[level.Width, level.Height]);
+
+                        //if none of the squares were desirable, Rampage
+                        if (controlledActor.Path == null) controlledActor.State = new ActorState(ActorState.AState.Rampage);
+                        else
+                        {
+                            //Now, walk there.
+                            controlledActor.State = new ActorState(ActorState.AState.Walk);
+                        }
+                        break;
+                    //Again, a specialcase. Just dumps things into Seek, making sure to zero their velocity first.
+                    default:
+                        if (controlledActor.Path.Count == 0)
+                        {
+                            controlledActor.Velocity = new Vector2();
+                            controlledActor.State = new ActorState(ActorState.AState.Seek);
+                        }
+                        else if (controlledActor.Path.Count == 1) //at target!
+                        {
+                            controlledActor.Velocity = new Vector2();
+                            if (!PreferenceSearch(level).Contains(controlledActor.Path[0]))
+                            {
+                                controlledActor.State = new ActorState(ActorState.AState.Seek);
+                            }
+                        }
+                        else
+                        {
+                        }
+                        break;
+                }
+
+            
         }
 
         /// <summary>
@@ -584,8 +614,6 @@ namespace Rain_On_Your_Parade
                            // }
                             break;
                     //}
-                            if (controlledActor.Mood > 5) controlledActor.Mood = 5;
-                            if (controlledActor.Mood < 0) controlledActor.Mood = 0;
                 }
             }
             return interacted;

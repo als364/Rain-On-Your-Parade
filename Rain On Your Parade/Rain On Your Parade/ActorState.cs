@@ -4,7 +4,7 @@ namespace Rain_On_Your_Parade
 {
     public class ActorState
     {
-        public enum AState { Sleep, Play, Nurture, Rampage, Seek, Walk, Wander, Run };
+        public enum AState { Sleep, Play, Nurture, Rampage, Seek, Walk, Wander, Run, Fight };
         private AState state;
 
         public ActorState(AState aState)

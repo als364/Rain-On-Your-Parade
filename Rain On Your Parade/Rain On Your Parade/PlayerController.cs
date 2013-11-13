@@ -29,7 +29,7 @@ namespace Rain_On_Your_Parade
             KeyboardState ks = Keyboard.GetState();
             level.Player.PrevPos = new Vector2(player.PixelPosition.X, player.PixelPosition.X);
 
-            if (coolDown == 0) //
+            if (coolDown == 0) 
             {
                 if (ks.IsKeyDown(Keys.R))
                 {
