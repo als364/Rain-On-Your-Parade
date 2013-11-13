@@ -12,9 +12,6 @@ namespace Rain_On_Your_Parade
     {
         Actor controlledActor;
         private Point actorSquare = new Point(0, 0);
-        private bool nearCloud = false;
-        private int reactDelay = REACT_MAX;
-        private const int REACT_MAX = 1;
         private int NeedIncreaseTimer;
         private const int MAX_ENJOY_TIME = 300;
         private int enjoyTime;
@@ -38,33 +35,22 @@ namespace Rain_On_Your_Parade
                 Console.WriteLine(controlledActor.ToString());
             }
             else
+            {
                 if (NeedIncreaseTimer % 1440 == 0)
+                {
                     controlledActor.increaseSlowNeeds();
-
-
-         
-
+                }
+            }
 
             Random random = new Random();
             int next = random.Next(1000); //Let the actor choose a new state in a random way
             actorSquare = controlledActor.GridspacePosition;
 
-            //Determines whether the actor is in the same square as the cloud, and implements a delayed reaction
-            if (level.Player.GridspacePosition.X == actorSquare.X
-                && level.Player.GridspacePosition.Y == actorSquare.Y)
+            //Determines whether the actor close to the cloud, and if so, changes its state to Run
+            if (level.nearEnoughForInteraction(level.Player, controlledActor))
             {
-                if (reactDelay > 0)
-                {
-                    nearCloud = false;
-                    reactDelay--;
-                }
-                else
-                {
-                    nearCloud = true;
-                    reactDelay = REACT_MAX;
-                }
+                controlledActor.State = new ActorState(ActorState.AState.Run);
             }
-            if (nearCloud) controlledActor.State = new ActorState(ActorState.AState.Run);
 
             //Console.WriteLine("State: " + controlledActor.State.State);
             switch (controlledActor.State.State)
@@ -152,20 +138,13 @@ namespace Rain_On_Your_Parade
                                 //controlledActor.Path.Clear();
                                 controlledActor.State = new ActorState(controlledActor.TargetState);
                                 enjoyTime = MAX_ENJOY_TIME;
-                                //controlledActor.Path[0].Actors.Remove(controlledActor);
                             }
                             else
                             {
-                                //  Console.WriteLine("REMOVING");
-                                level.Grid[actorSquare.X, actorSquare.Y].Actors.Remove(controlledActor);
                                 controlledActor.Path.RemoveAt(0);
-                                controlledActor.Path[0].Actors.Add(controlledActor);
                                 nextSquare = controlledActor.Path[0];
                                 nextSquare.calculateLevels();
                             }
-
-                            //controlledActor.Velocity = new Vector2(nextSquare.Location.X * Canvas.SQUARE_SIZE - controlledActor.Position.X, nextSquare.Location.Y * Canvas.SQUARE_SIZE - controlledActor.Position.Y)/30;
-                            //Console.WriteLine("Velocity: " + controlledActor.Velocity);
                         }
                         //If I'm not within the next square on the path, make sure my velocity is set correctly (necessary for first square) Move uniformly to the next square
                         if (nextSquare.Location.X * Canvas.SQUARE_SIZE - controlledActor.PixelPosition.X <= 0)
@@ -567,7 +546,9 @@ namespace Rain_On_Your_Parade
         {
             bool interacted = false;
 
-            foreach (WorldObject o in level.Grid[actorSquare.X, actorSquare.Y].Objects)
+            List<WorldObject> interactObjs = level.interactableObjects(controlledActor);
+
+            foreach (WorldObject o in interactObjs)
             {
                // if (o.Type.CanActivate)
                // {

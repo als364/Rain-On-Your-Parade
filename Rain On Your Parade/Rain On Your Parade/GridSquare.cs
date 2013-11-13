@@ -230,7 +230,7 @@ namespace Rain_On_Your_Parade
 
             foreach (Actor act in actors)
             {
-               totalSleep += act.SleepLevel;
+                totalSleep += act.SleepLevel;
                 totalPlay += act.PlayLevel;
                 totalNurture += act.NurtureLevel;
                 totalRampage += act.RampageLevel;

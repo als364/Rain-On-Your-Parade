@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using System.Diagnostics;
+using System;
 
 namespace Rain_On_Your_Parade
 {
@@ -16,6 +17,8 @@ namespace Rain_On_Your_Parade
         private int maliceObjective;        //amount of malice needed to win level
         private List<WorldObject> objects;
         private List<Actor> actors;
+
+        public const int INTERACT_RADIUS = 50;
 
         public Canvas()
         {
@@ -368,6 +371,35 @@ namespace Rain_On_Your_Parade
             {
                 g.calculateLevels();
             }
+        }
+
+        public List<Actor> interactableActors(Actor currAct)
+        {
+            List<Actor> acts = new List<Actor>();
+            foreach (Actor a in actors) {
+                if (Math.Abs(Vector2.Distance(currAct.PixelPosition, a.PixelPosition)) < INTERACT_RADIUS && !a.Equals(currAct)) {
+                    acts.Add(a);
+                }
+            }
+            return acts;
+        }
+
+        public List<WorldObject> interactableObjects(Actor currAct)
+        {
+            List<WorldObject> objs = new List<WorldObject>();
+            foreach (WorldObject o in objects)
+            {
+                if (Math.Abs(Vector2.Distance(currAct.PixelPosition, o.PixelPosition)) < INTERACT_RADIUS)
+                {
+                    objs.Add(o);
+                }
+            }
+            return objs;
+        }
+
+        public bool nearEnoughForInteraction(Model p, Model q)
+        {
+            return (Math.Abs(Vector2.Distance(p.PixelPosition, q.PixelPosition)) < INTERACT_RADIUS && !p.Equals(q));
         }
 
         public override string ToString()
