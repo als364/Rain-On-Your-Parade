@@ -15,7 +15,6 @@ namespace Rain_On_Your_Parade
         private int NeedIncreaseTimer;
         private const int MAX_ENJOY_TIME = 300;
         private int enjoyTime;
-        private int interactionTimer;
 
         public ActorController(Actor actor) : base(actor)
         {
@@ -30,7 +29,7 @@ namespace Rain_On_Your_Parade
         public override void Update(GameTime gameTime, Canvas level)
         {
             NeedIncreaseTimer++;
-            if (interactionTimer < 0) interactionTimer++;
+            if (controlledActor.InteractionTimer < 0) controlledActor.InteractionTimer++;
 
             if (NeedIncreaseTimer % 720 == 0)
             {
@@ -61,10 +60,15 @@ namespace Rain_On_Your_Parade
             {
                 if (level.nearEnoughForInteraction(a, controlledActor))
                 {
-                    if (interactionTimer >= 0 && ((a.Mood > 3 && controlledActor.Mood > 3) || (a.Mood == 5  || controlledActor.Mood ==5 )))
+                    if (controlledActor.InteractionTimer == 0 && a.InteractionTimer == 0 && ((a.Mood > 3 && controlledActor.Mood > 3) || (a.Mood == 5 || controlledActor.Mood == 5)))
                     {
                         controlledActor.State = new ActorState(ActorState.AState.Fight);
+                        a.State = new ActorState(ActorState.AState.Fight);
+                    }else if (controlledActor.InteractionTimer == 0 && DetermineTargetState() == ActorState.AState.Nurture && a.TargetState == ActorState.AState.Nurture ){
+                        controlledActor.State = new ActorState(ActorState.AState.Comfort);
+                        a.State = new ActorState(ActorState.AState.Comfort);
                     }
+                    
                 }
             }
 
@@ -72,13 +76,26 @@ namespace Rain_On_Your_Parade
                 switch (controlledActor.State.State)
                 {
                     case ActorState.AState.Fight:
-                        interactionTimer++;
+                        controlledActor.InteractionTimer++;
 
-                        if (interactionTimer >= 360)
+                        if (controlledActor.InteractionTimer >= 360)
                         {
-                            interactionTimer = -360;
+                            controlledActor.InteractionTimer = -360;
                             if (controlledActor.Mood < 5)
                             controlledActor.Mood = controlledActor.Mood + 1;
+                            controlledActor.State = new ActorState(ActorState.AState.Seek);
+                        }
+
+                        break;
+
+                    case ActorState.AState.Comfort:
+                        controlledActor.InteractionTimer++;
+
+                        if (controlledActor.InteractionTimer >= 360)
+                        {
+                            controlledActor.InteractionTimer = -360;
+                            if (controlledActor.Mood > 0) controlledActor.Mood = controlledActor.Mood - 1;
+                            controlledActor.NurtureLevel--;
                             controlledActor.State = new ActorState(ActorState.AState.Seek);
                         }
 

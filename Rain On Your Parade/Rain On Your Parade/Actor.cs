@@ -24,6 +24,7 @@ namespace Rain_On_Your_Parade
         private int gridNurtureEffect;
         private int gridRampageEffect;
         private List<GridSquare> path;
+        private int interactionTimer;
 
         public Texture2D mood1;
         public Texture2D mood2;
@@ -81,11 +82,7 @@ namespace Rain_On_Your_Parade
             get { return type; }
             set { type = value; }
         }
-        /*public Vector2 Position
-        {
-            get { return position; }
-            set { position = value; }
-        }*/
+
         public Vector2 Velocity
         {
             get { return velocity; }
@@ -95,6 +92,11 @@ namespace Rain_On_Your_Parade
         {
             get { return mood; }
             set { mood = value; }
+        }
+        public int InteractionTimer
+        {
+            get { return interactionTimer; }
+            set { interactionTimer = value; }
         }
         public ActorState State
         {

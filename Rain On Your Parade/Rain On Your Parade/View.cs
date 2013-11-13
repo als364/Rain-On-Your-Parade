@@ -66,7 +66,9 @@ namespace Rain_On_Your_Parade
                  if (actor.State.State == ActorState.AState.Sleep)
                      spriteBatch.Draw(actor.sleepImg, new Rectangle((int)viewedModel.PixelPosition.X + 18, (int)viewedModel.PixelPosition.Y-25, 40, 40), Color.White);
                  if (actor.State.State == ActorState.AState.Fight)
-                     spriteBatch.Draw(actor.mood6, new Rectangle((int)viewedModel.PixelPosition.X + 18, (int)viewedModel.PixelPosition.Y - 25, 50, 50), Color.White);
+                     spriteBatch.Draw(actor.mood6, new Rectangle((int)viewedModel.PixelPosition.X + 18, (int)viewedModel.PixelPosition.Y - 25, 60, 60), Color.White);
+                 if (actor.State.State == ActorState.AState.Comfort)
+                     spriteBatch.Draw(actor.nurtureImg, new Rectangle((int)viewedModel.PixelPosition.X + 18, (int)viewedModel.PixelPosition.Y - 25, 60, 60), Color.White);
                 }
                 else
                 {
