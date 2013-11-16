@@ -15,6 +15,8 @@ namespace Rain_On_Your_Parade
         private int NeedIncreaseTimer;
         private const int MAX_ENJOY_TIME = 300;
         private int enjoyTime;
+        private int runCoolDown = 0;
+        private const int MAX_RUN_COOLDOWN = 10;
 
         public ActorController(Actor actor) : base(actor)
         {
@@ -34,7 +36,7 @@ namespace Rain_On_Your_Parade
             if (NeedIncreaseTimer % 720 == 0)
             {
                 controlledActor.increaseFastNeeds();
-                Console.WriteLine(controlledActor.ToString());
+                //Console.WriteLine(controlledActor.ToString());
             }
             else
             {
@@ -51,8 +53,16 @@ namespace Rain_On_Your_Parade
             //Determines whether the actor close to the cloud, and if so, changes its state to Run
             if (level.nearEnoughForInteraction(level.Player, controlledActor))
             {
-                controlledActor.State = new ActorState(ActorState.AState.Run);
-                controlledActor.Path = null;
+                if (runCoolDown < 1)
+                {
+                    runCoolDown = MAX_RUN_COOLDOWN;
+                    controlledActor.State = new ActorState(ActorState.AState.Run);
+                    controlledActor.Path = null;
+                }
+                else
+                {
+                    runCoolDown--;
+                }
             }
 
             //Determines whether the actor is close enough to interact with another actor, and if so, changes its state to Run
@@ -71,8 +81,6 @@ namespace Rain_On_Your_Parade
                     
                 }
             }
-
-                //Console.WriteLine("State: " + controlledActor.State.State);
                 switch (controlledActor.State.State)
                 {
                     case ActorState.AState.Fight:
@@ -161,8 +169,7 @@ namespace Rain_On_Your_Parade
                         break;
 
                     case ActorState.AState.Walk:
-                        //Shouldn't ever happen, really. This is a specialcase. Rather than throwing an error, just find something else to do.
-                        if (controlledActor.Path.Count == 0)
+                        if (controlledActor.Path.Count < 1)
                         {
                             controlledActor.State = new ActorState(ActorState.AState.Seek);
                         }
@@ -231,24 +238,25 @@ namespace Rain_On_Your_Parade
                         break;
                     //Actor runs from the cloud if it's in the same square, with a delay
                     case ActorState.AState.Run:
-                        //Console.WriteLine("State: " + controlledActor.State.State);
-                        //Actor figures out what state it wants to be 
-                        newState = DetermineTargetState();
-                        controlledActor.TargetState = newState;
-
                         //Determines which direction to run based on the player's movement direction
                         List<GridSquare> target = new List<GridSquare>();
                         float xChange = level.Player.PixelPosition.X - level.Player.PrevPos.X;
                         float yChange = level.Player.PixelPosition.Y - level.Player.PrevPos.Y;
-                        Console.WriteLine("posChange: " + xChange + ", " + yChange);
+                        //Console.WriteLine("posChange: " + xChange + ", " + yChange);
                         if (Math.Abs(xChange) > Math.Abs(yChange))
                         {
                             if (xChange > 0)
                             {
                                 target.Add(level.Grid[(int)MathHelper.Clamp(actorSquare.X + 3, 0, level.Width - 1), actorSquare.Y]);
+                                target.Add(level.Grid[actorSquare.X, (int)MathHelper.Clamp(actorSquare.Y - 3, 0, level.Height - 1)]);
+                                target.Add(level.Grid[actorSquare.X, (int)MathHelper.Clamp(actorSquare.Y + 3, 0, level.Height - 1)]);
+                                target.Add(level.Grid[(int)MathHelper.Clamp(actorSquare.X - 3, 0, level.Width - 1), actorSquare.Y]);
                             }
                             else
                             {
+                                target.Add(level.Grid[(int)MathHelper.Clamp(actorSquare.X - 3, 0, level.Width - 1), actorSquare.Y]);
+                                target.Add(level.Grid[actorSquare.X, (int)MathHelper.Clamp(actorSquare.Y + 3, 0, level.Height - 1)]);
+                                target.Add(level.Grid[actorSquare.X, (int)MathHelper.Clamp(actorSquare.Y - 3, 0, level.Height - 1)]);
                                 target.Add(level.Grid[(int)MathHelper.Clamp(actorSquare.X - 3, 0, level.Width - 1), actorSquare.Y]);
                             }
                         }
@@ -257,10 +265,16 @@ namespace Rain_On_Your_Parade
                             if (yChange > 0)
                             {
                                 target.Add(level.Grid[actorSquare.X, (int)MathHelper.Clamp(actorSquare.Y + 3, 0, level.Height - 1)]);
+                                target.Add(level.Grid[(int)MathHelper.Clamp(actorSquare.X + 3, 0, level.Width - 1), actorSquare.Y]);
+                                target.Add(level.Grid[(int)MathHelper.Clamp(actorSquare.X - 3, 0, level.Width - 1), actorSquare.Y]);
+                                target.Add(level.Grid[actorSquare.X, (int)MathHelper.Clamp(actorSquare.Y - 3, 0, level.Height - 1)]);
                             }
                             else
                             {
                                 target.Add(level.Grid[actorSquare.X, (int)MathHelper.Clamp(actorSquare.Y - 3, 0, level.Height - 1)]);
+                                target.Add(level.Grid[(int)MathHelper.Clamp(actorSquare.X - 3, 0, level.Width - 1), actorSquare.Y]);
+                                target.Add(level.Grid[(int)MathHelper.Clamp(actorSquare.X + 3, 0, level.Width - 1), actorSquare.Y]);
+                                target.Add(level.Grid[actorSquare.X, (int)MathHelper.Clamp(actorSquare.Y + 3, 0, level.Height - 1)]);
                             }
                         }
 
@@ -268,8 +282,11 @@ namespace Rain_On_Your_Parade
                         controlledActor.Path = FindPath(target, level.Grid[actorSquare.X, actorSquare.Y],
                                                         level.Grid, new Point[level.Width, level.Height]);
 
-                        //if none of the squares were desirable, Rampage
-                        if (controlledActor.Path == null) controlledActor.State = new ActorState(ActorState.AState.Rampage);
+                        //if none of the squares were desirable, Wander
+                        if (controlledActor.Path == null)
+                        {
+                            controlledActor.State = new ActorState(ActorState.AState.Wander);
+                        }
                         else
                         {
                             //Now, walk there.

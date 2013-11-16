@@ -229,7 +229,6 @@ namespace Rain_On_Your_Parade
                     addedRainbow.activate();
                     objects.Add(addedRainbow);
                     objects.Remove(toReplace);
-                    //Console.Write("removed sunny and added rainbow\n");
                 }
 
                 return true;
