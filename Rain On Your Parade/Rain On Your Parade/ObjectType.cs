@@ -18,6 +18,7 @@ namespace Rain_On_Your_Parade
         private int nurtureLevel;
         private int rampageLevel;
         private bool passable;
+        private bool holdsWater;
 
 
         public ObjectType(Type oTypeName)
@@ -29,6 +30,7 @@ namespace Rain_On_Your_Parade
                     isWetObject = false;
                     startsWet = false;
                     canActivate = false;
+                    holdsWater = false;
                     sleepLevel = 3;
                     playLevel = 0;
                     nurtureLevel = 0;
@@ -42,6 +44,7 @@ namespace Rain_On_Your_Parade
                     isWetObject = true;
                     startsWet = true;
                     canActivate = false;
+                    holdsWater = false;
                     sleepLevel = 0;
                     playLevel = 10;
                     nurtureLevel = 10;
@@ -55,6 +58,7 @@ namespace Rain_On_Your_Parade
                     isWetObject = true;
                     startsWet = true;
                     canActivate = true;
+                    holdsWater = true;
                     sleepLevel = 0;
                     playLevel = 0;
                     nurtureLevel = 3;
@@ -68,6 +72,7 @@ namespace Rain_On_Your_Parade
                     isWetObject = true;
                     canActivate = false;
                     startsWet = true;
+                    holdsWater = true;
                     sleepLevel = 0;
                     playLevel = 3;
                     nurtureLevel = 0;
@@ -78,9 +83,10 @@ namespace Rain_On_Your_Parade
                     break;
 
                 case ObjectType.Type.Chalking:
-                    isWetObject = true;
+                    isWetObject = false;
                     canActivate = true;
-                    startsWet = false;  //chalking is questionable
+                    startsWet = true;
+                    holdsWater = false;
                     sleepLevel = 0;
                     playLevel = 3;
                     nurtureLevel = 0;
@@ -94,6 +100,7 @@ namespace Rain_On_Your_Parade
                     isWetObject = true;
                     canActivate = true;
                     startsWet = false;
+                    holdsWater = true;
                     sleepLevel = 0;
                     playLevel = 0;
                     nurtureLevel = 0;
@@ -107,6 +114,7 @@ namespace Rain_On_Your_Parade
                     isWetObject = false;
                     canActivate = false;
                     startsWet = false;
+                    holdsWater = false;
                     sleepLevel = 0;
                     playLevel = 0;
                     nurtureLevel = 0;
@@ -194,6 +202,11 @@ namespace Rain_On_Your_Parade
         {
             get { return passable; }
             set { passable = value; }
+        }
+
+        public bool HoldsWater
+        {
+            get { return holdsWater; }
         }
 
         public string activatedStringName()

@@ -17,7 +17,7 @@ namespace Rain_On_Your_Parade
             type = new ObjectType(oType);
             PixelPosition =  new Vector2(pos.X * Canvas.SQUARE_SIZE, pos.Y * Canvas.SQUARE_SIZE);
             GridspacePosition = pos;
-            activated = (type.StartsWet && type.IsWetObject) || !type.IsWetObject;
+            activated = (type.StartsWet && type.IsWetObject) || (!type.IsWetObject && !type.StartsWet);
             waterLevel = waterAmt;
         }
 

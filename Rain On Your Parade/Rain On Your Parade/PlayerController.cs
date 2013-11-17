@@ -202,7 +202,10 @@ namespace Rain_On_Your_Parade
                 List<WorldObject> objects = level.Grid[player.GridspacePosition.X, player.GridspacePosition.Y].Objects;
                 foreach (WorldObject o in objects)
                 {
-                    o.WaterLevel++;
+                    if (o.Type.HoldsWater)
+                    {
+                        o.WaterLevel++;
+                    }
 
                     //Console.Write(o.ToString() + "object rained upon\n");
 
@@ -215,7 +218,7 @@ namespace Rain_On_Your_Parade
 
                     if (o.Type.IsWetObject)
                     {
-                        if (o.Type.TypeName != ObjectType.Type.Chalking) o.activate();                    
+                        o.activate();                    
                     }
                     else
                     {
@@ -250,9 +253,22 @@ namespace Rain_On_Your_Parade
                     if (o.WaterLevel > 0)
                     {
                         player.Rain++;
-                        o.WaterLevel--;
-                        o.deactivate();
-
+                        if (--o.WaterLevel == 0)
+                        {
+                            if (o.Type.IsWetObject)
+                            {
+                                if (o.Type.TypeName == ObjectType.Type.Rainbow)
+                                {
+                                    //change to SunnySpot
+                                    toReplace = o;
+                                }
+                                o.deactivate();
+                            }
+                            else
+                            {
+                                o.activate();
+                            }
+                        }
 
                         foreach (Actor a in level.Actors)
                         {
@@ -269,32 +285,29 @@ namespace Rain_On_Your_Parade
                                     a.IncrementMood();
                                 }
                             }
-
-
-                        }
-
-
-
-                    }
-                    if (o.Type.IsWetObject && o.WaterLevel == 0)
-                    {
-                        if (o.Type.TypeName == ObjectType.Type.Rainbow)
-                        {
-                            //change to SunnySpot
-                            toReplace = o;
-                            o.deactivate();
-                        }
-                        else
-                        {
-                            o.deactivate();
-                            Console.Write("DEACTIVATE/n");
                         }
                     }
-                    else
-                    {
-                        o.activate();
-                        Console.Write("ACTIVATE/n");
-                    }
+                    else { return false; }
+
+                    //if (o.Type.IsWetObject && o.WaterLevel == 0)
+                    //{
+                    //    if (o.Type.TypeName == ObjectType.Type.Rainbow)
+                    //    {
+                    //        //change to SunnySpot
+                    //        toReplace = o;
+                    //        o.deactivate();
+                    //    }
+                    //    else
+                    //    {
+                    //        o.deactivate();
+                    //        Console.Write("DEACTIVATE/n");
+                    //    }
+                    //}
+                    //else
+                    //{
+                    //    o.activate();
+                    //    Console.Write("ACTIVATE/n");
+                    //}
                 }
 
                 if (toReplace != null)

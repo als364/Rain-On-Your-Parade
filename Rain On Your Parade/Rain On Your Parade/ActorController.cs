@@ -113,7 +113,7 @@ namespace Rain_On_Your_Parade
                         if (enjoyTime == 0)
                         {
                             interactWithObject(level, ActorState.AState.Nurture);
-                            controlledActor.State = new ActorState(ActorState.AState.Seek);
+                            controlledActor.State = new ActorState(ActorState.AState.Wander);
                         }
                         else
                         {
@@ -126,7 +126,7 @@ namespace Rain_On_Your_Parade
                         if (enjoyTime == 0)
                         {
                             interactWithObject(level, ActorState.AState.Play);
-                            controlledActor.State = new ActorState(ActorState.AState.Seek);
+                            controlledActor.State = new ActorState(ActorState.AState.Wander);
                         }
                         else
                         {
@@ -141,7 +141,7 @@ namespace Rain_On_Your_Parade
                         if (enjoyTime == 0)
                         {
                             interactWithObject(level, ActorState.AState.Sleep);
-                            controlledActor.State = new ActorState(ActorState.AState.Seek);
+                            controlledActor.State = new ActorState(ActorState.AState.Wander);
                         }
                         else
                         {
@@ -234,7 +234,7 @@ namespace Rain_On_Your_Parade
                             controlledActor.State = new ActorState(ActorState.AState.Walk);
                         }
 
-                        if (next <= 10) controlledActor.State = new ActorState(ActorState.AState.Seek);
+                        if (next <= 300) controlledActor.State = new ActorState(ActorState.AState.Seek);
                         break;
                     //Actor runs from the cloud if it's in the same square, with a delay
                     case ActorState.AState.Run:
