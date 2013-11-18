@@ -290,6 +290,7 @@ namespace Rain_On_Your_Parade
                         else
                         {
                             //Now, walk there.
+                            controlledActor.TargetState = ActorState.AState.Seek;
                             controlledActor.State = new ActorState(ActorState.AState.Walk);
                         }
                         break;
