@@ -175,7 +175,7 @@ namespace Rain_On_Your_Parade
                         controlledActor.TargetState = newState;
                         //PreferenceSearch determines the most desired square.
                         //FindPath finds a path to it.
-                        controlledActor.Path = FindPath(PreferenceSearch(level),
+                        controlledActor.Path = FindPath(PreferenceSearch(level).Keys.ToList(),
                                                         level.Grid[actorSquare.X, actorSquare.Y],
                                                         level.Grid, new Point[level.Width, level.Height]);
                         //if none of the squares were desirable, Rampage
@@ -207,7 +207,14 @@ namespace Rain_On_Your_Parade
                                 if (controlledActor.Path.Count == 1)
                                 {
                                     //controlledActor.Path.Clear();
-                                    controlledActor.State = new ActorState(controlledActor.TargetState);
+                                    if (controlledActor.ActorTarget != null && !nextSquare.Actors.Contains(controlledActor.ActorTarget))
+                                    {
+                                        controlledActor.State.State = ActorState.AState.Seek;
+                                    }
+                                    else
+                                    {
+                                        controlledActor.State = new ActorState(controlledActor.TargetState);
+                                    }
                                     enjoyTime = MAX_ENJOY_TIME;
                                 }
                                 else
@@ -326,7 +333,7 @@ namespace Rain_On_Your_Parade
                         else if (controlledActor.Path.Count == 1) //at target!
                         {
                             controlledActor.Velocity = new Vector2();
-                            if (!PreferenceSearch(level).Contains(controlledActor.Path[0]))
+                            if (!PreferenceSearch(level).Keys.ToList().Contains(controlledActor.Path[0]))
                             {
                                 controlledActor.State = new ActorState(ActorState.AState.Seek);
                             }
@@ -407,44 +414,67 @@ namespace Rain_On_Your_Parade
         /// </summary>
         /// <param name="worldState">The state of the game world</param>
         /// <returns>A list of equally suitable grid squares</returns>
-        private List<GridSquare> PreferenceSearch(Canvas level)
+        private Dictionary<GridSquare, Actor> PreferenceSearch(Canvas level)
         {
             double maxPreference = 0;
             Dictionary<Point, double> squarePreference = new Dictionary<Point, double>();
-            List<GridSquare> targets = new List<GridSquare>();
+            Dictionary<Point, Actor> actorsAtPoints = new Dictionary<Point, Actor>();
+            Dictionary<Point, bool> targetIsActor = new Dictionary<Point, bool>();
+            Dictionary<GridSquare, Actor> targets = new Dictionary<GridSquare, Actor>();
             foreach (Actor actor in level.Actors)
             {
-                //if (squarePreference.ContainsKey(actor.GridspacePosition))
-                //{
-                //    squarePreference[actor.GridspacePosition] += Desirability(level.Grid[actor.GridspacePosition.X, actor.GridspacePosition.Y]);
-                //}
-                //else
-                //{
-                squarePreference[actor.GridspacePosition] = Desirability(level.Grid[actor.GridspacePosition.X, actor.GridspacePosition.Y]);
-                //}
+                actorsAtPoints[actor.GridspacePosition] = actor;
+                targetIsActor[actor.GridspacePosition] = true;
+                if (squarePreference.ContainsKey(actor.GridspacePosition))
+                {
+                    squarePreference[actor.GridspacePosition] += Desirability(level.Grid[actor.GridspacePosition.X, actor.GridspacePosition.Y]);
+                }
+                else
+                {
+                    squarePreference[actor.GridspacePosition] = Desirability(level.Grid[actor.GridspacePosition.X, actor.GridspacePosition.Y]);
+                }
             }
             foreach (WorldObject entity in level.Objects)
             {
-                //if (squarePreference.ContainsKey(entity.GridspacePosition))
-                //{
-                //    squarePreference[entity.GridspacePosition] += Desirability(level.Grid[entity.GridspacePosition.X, entity.GridspacePosition.Y]);
-                //}
-                //else
-                //{
-                squarePreference[entity.GridspacePosition] = Desirability(level.Grid[entity.GridspacePosition.X, entity.GridspacePosition.Y]);
-                //}
+                if (targetIsActor.ContainsKey(entity.GridspacePosition) && targetIsActor[entity.GridspacePosition] && squarePreference[entity.GridspacePosition] < Desirability(level.Grid[entity.GridspacePosition.X, entity.GridspacePosition.Y]))
+                {
+                    targetIsActor[entity.GridspacePosition] = false;
+                }
+                if (squarePreference.ContainsKey(entity.GridspacePosition))
+                {
+                    squarePreference[entity.GridspacePosition] += Desirability(level.Grid[entity.GridspacePosition.X, entity.GridspacePosition.Y]);
+                }
+                else
+                {
+                    squarePreference[entity.GridspacePosition] = Desirability(level.Grid[entity.GridspacePosition.X, entity.GridspacePosition.Y]);
+                }
             }
+            squarePreference[controlledActor.GridspacePosition] = 0;
             foreach (Point point in squarePreference.Keys)
             {
                 if (squarePreference[point] > maxPreference)
                 {
                     targets.Clear();
-                    targets.Add(level.Grid[point.X, point.Y]);
+                    if (targetIsActor.ContainsKey(point) && targetIsActor[point])
+                    {
+                        targets.Add(level.Grid[point.X, point.Y], actorsAtPoints[point]);
+                    }
+                    else
+                    {
+                        targets.Add(level.Grid[point.X, point.Y], null);
+                    }
                     maxPreference = squarePreference[point];
                 }
                 else if (squarePreference[point] == maxPreference && maxPreference != 0 && squarePreference[point] != 0)
                 {
-                    targets.Add(level.Grid[point.X, point.Y]);
+                    if (targetIsActor.ContainsKey(point) && targetIsActor[point])
+                    {
+                        targets.Add(level.Grid[point.X, point.Y], actorsAtPoints[point]);
+                    }
+                    else
+                    {
+                        targets.Add(level.Grid[point.X, point.Y], null);
+                    }
                 }
             }
             return targets;
