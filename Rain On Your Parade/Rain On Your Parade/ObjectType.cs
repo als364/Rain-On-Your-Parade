@@ -36,8 +36,8 @@ namespace Rain_On_Your_Parade
                     nurtureLevel = 0;
                     rampageLevel = 0;
                     passable = true;
-                    activatedImages.Add(Type.SunnySpot, "sunspot");
-                    deactivatedImages.Add(Type.SunnySpot, "rainbow");
+                    activatedImages.Add(Type.SunnySpot, "sunspot_80");
+                    deactivatedImages.Add(Type.SunnySpot, "rainbow_80");
                     break;
 
                 case ObjectType.Type.Rainbow:
@@ -50,8 +50,8 @@ namespace Rain_On_Your_Parade
                     nurtureLevel = 10;
                     rampageLevel = 3;
                     passable = true;
-                    activatedImages.Add(Type.Rainbow, "rainbow");
-                    deactivatedImages.Add(Type.Rainbow, "sunspot");
+                    activatedImages.Add(Type.Rainbow, "rainbow_80");
+                    deactivatedImages.Add(Type.Rainbow, "sunspot_80");
                     break;
 
                 case ObjectType.Type.Garden:
@@ -64,8 +64,8 @@ namespace Rain_On_Your_Parade
                     nurtureLevel = 3;
                     rampageLevel = 0;
                     passable = true;
-                    activatedImages.Add(Type.Garden, "garden2");
-                    deactivatedImages.Add(Type.Garden, "drygarden");
+                    activatedImages.Add(Type.Garden, "garden2_80");
+                    deactivatedImages.Add(Type.Garden, "drygarden_80");
                     break;
 
                 case ObjectType.Type.Pool:
@@ -78,8 +78,8 @@ namespace Rain_On_Your_Parade
                     nurtureLevel = 0;
                     rampageLevel = 0;
                     passable = true;
-                    activatedImages.Add(Type.Pool, "pool");
-                    deactivatedImages.Add(Type.Pool, "poolempty");
+                    activatedImages.Add(Type.Pool, "pool_80");
+                    deactivatedImages.Add(Type.Pool, "poolempty_80");
                     break;
 
                 case ObjectType.Type.Chalking:
@@ -92,8 +92,8 @@ namespace Rain_On_Your_Parade
                     nurtureLevel = 0;
                     rampageLevel = 0;
                     passable = true;
-                    activatedImages.Add(Type.Chalking, "chalksidewalk");
-                    deactivatedImages.Add(Type.Chalking, "sidewalk");
+                    activatedImages.Add(Type.Chalking, "chalksidewalk_80");
+                    deactivatedImages.Add(Type.Chalking, "sidewalk_80");
                     break;
 
                 case ObjectType.Type.Laundry:
@@ -106,8 +106,8 @@ namespace Rain_On_Your_Parade
                     nurtureLevel = 0;
                     rampageLevel = 0;
                     passable = true;
-                    activatedImages.Add(Type.Laundry, "laundry");
-                    deactivatedImages.Add(Type.Laundry, "wetlaundry");
+                    activatedImages.Add(Type.Laundry, "laundry_80");
+                    deactivatedImages.Add(Type.Laundry, "wetlaundry_80");
                     break;
 
                 case ObjectType.Type.House:
@@ -120,8 +120,8 @@ namespace Rain_On_Your_Parade
                     nurtureLevel = 0;
                     rampageLevel = 0;
                     passable = false;
-                    activatedImages.Add(Type.House, "house");
-                    deactivatedImages.Add(Type.House, "house");
+                    activatedImages.Add(Type.House, "house_80");
+                    deactivatedImages.Add(Type.House, "house_80");
                     break;
             }
         }
@@ -137,20 +137,20 @@ namespace Rain_On_Your_Parade
             nurtureLevel = oNurture;
             rampageLevel = oRampage;
 
-            activatedImages.Add(Type.SunnySpot, "sunspot");
-            deactivatedImages.Add(Type.SunnySpot, "rainbow");
-            activatedImages.Add(Type.Rainbow, "rainbow");
-            deactivatedImages.Add(Type.Rainbow, "sunspot");
-            activatedImages.Add(Type.Garden, "garden2");
-            deactivatedImages.Add(Type.Garden, "drygarden");
-            activatedImages.Add(Type.Pool, "pool");
-            deactivatedImages.Add(Type.Pool, "poolempty");
-            activatedImages.Add(Type.Chalking, "chalksidewalk");
-            deactivatedImages.Add(Type.Chalking, "sidewalk");
-            activatedImages.Add(Type.Laundry, "laundry");
-            deactivatedImages.Add(Type.Laundry, "wetlaundry");
-            activatedImages.Add(Type.House, "house");
-            deactivatedImages.Add(Type.House, "house");
+            activatedImages.Add(Type.SunnySpot, "sunspot_80");
+            deactivatedImages.Add(Type.SunnySpot, "rainbow_80");
+            activatedImages.Add(Type.Rainbow, "rainbow_80");
+            deactivatedImages.Add(Type.Rainbow, "sunspot_80");
+            activatedImages.Add(Type.Garden, "garden2_80");
+            deactivatedImages.Add(Type.Garden, "drygarden_80");
+            activatedImages.Add(Type.Pool, "pool_80");
+            deactivatedImages.Add(Type.Pool, "poolempty_80");
+            activatedImages.Add(Type.Chalking, "chalksidewalk_80");
+            deactivatedImages.Add(Type.Chalking, "sidewalk_80");
+            activatedImages.Add(Type.Laundry, "laundry_80");
+            deactivatedImages.Add(Type.Laundry, "wetlaundry_80");
+            activatedImages.Add(Type.House, "house_80");
+            deactivatedImages.Add(Type.House, "house_80");
         }
 
         public Type TypeName

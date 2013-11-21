@@ -58,8 +58,15 @@ namespace Rain_On_Your_Parade
 
         public override void LoadContent(ContentManager content)
         {
-            activatedSprite = content.Load<Texture2D>(type.activatedStringName());
-            deactivatedSprite = content.Load<Texture2D>(type.activatedStringName());
+            Texture2D activatedTexture = content.Load<Texture2D>(type.activatedStringName());
+            //Texture2D deactivatedTexture = content.Load<Texture2D>(type.activatedStringName());
+
+            AnimatedTexture aniTexBaseActive = new AnimatedTexture(activatedTexture, 1, 1, false, false);
+            
+            List<AnimationSequence> aniSequencesAct = new List<AnimationSequence>(1);
+            aniSequencesAct.Add(new AnimationSequence(0, 5, true, true, 1, 0.1f, aniTexBaseActive, null));
+            activatedSprite = new AnimatedSprite(aniSequencesAct);
+            deactivatedSprite = new AnimatedSprite(aniSequencesAct);
 
             mood1 = content.Load<Texture2D>("Emote1");
             mood2 = content.Load<Texture2D>("Emote2");

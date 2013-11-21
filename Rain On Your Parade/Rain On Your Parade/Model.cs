@@ -15,8 +15,8 @@ namespace Rain_On_Your_Parade
         private Vector2 prevPos;
         private Vector2 pixelPosition;
         private Point gridspacePosition;
-        public Texture2D activatedSprite;
-        public Texture2D deactivatedSprite;
+        public AnimatedSprite activatedSprite;
+        public AnimatedSprite deactivatedSprite;
 
         public Model(){}
 

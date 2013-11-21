@@ -73,17 +73,17 @@ namespace Rain_On_Your_Parade
 
         public override void LoadContent(ContentManager content)
         {
-            activatedSprite = content.Load<Texture2D>("cloud");
+            Texture2D textureBase = content.Load<Texture2D>("white_cloud_base");
+            AnimatedTexture aniTexBase = new AnimatedTexture(textureBase, 12, 1, false, false);
+
+            List<AnimationSequence> aniSequences = new List<AnimationSequence>(2);
+            //aniSequences.Add(new AnimationSequence(0, 11, true, true, 1, 0.1f, aniTexBase, null));
+            aniSequences.Add(new AnimationSequence(11,5,true,false,1,0.1f,aniTexBase,null));
+            aniSequences.Add(new AnimationSequence(4,0,true,false,1,0.1f,aniTexBase,null));
+            activatedSprite = new AnimatedSprite(aniSequences);
+
             spriteWidth = 80;
             spriteHeight = 80;
-        }
-
-        /// <summary>Public stuff about the method</summary>
-        /// <param name="foo">It's an integer apparently</param>
-        /// <devdoc>This method doesn't do anything yet.</devdoc>
-        public void doSomethingPlayer(int foo) 
-        {
-            //do stuff here
         }
 
         public override string ToString()

@@ -20,8 +20,8 @@ namespace Rain_On_Your_Parade
 
         public virtual void Draw(SpriteBatch spriteBatch)
         {
-            Texture2D activatedImage = viewedModel.activatedSprite;
-            Texture2D deactivatedImage = viewedModel.deactivatedSprite;
+            AnimatedSprite activatedImage = viewedModel.activatedSprite;
+            AnimatedSprite deactivatedImage = viewedModel.deactivatedSprite;
 
             if (viewedModel is WorldObject)
             {
@@ -29,14 +29,10 @@ namespace Rain_On_Your_Parade
                 switch (current.Activated)
                 {
                     case true:
-                        spriteBatch.Draw(activatedImage, new Rectangle((int)viewedModel.PixelPosition.X, 
-                                                                       (int)viewedModel.PixelPosition.Y, 
-                                                                       viewedModel.spriteWidth, viewedModel.spriteHeight), Color.White);
+                        activatedImage.Draw(spriteBatch, viewedModel.PixelPosition, Color.White);
                         break;
                     case false:
-                        spriteBatch.Draw(deactivatedImage, new Rectangle((int)viewedModel.PixelPosition.X, 
-                                                                         (int)viewedModel.PixelPosition.Y, 
-                                                                         viewedModel.spriteWidth, viewedModel.spriteHeight), Color.White);
+                        deactivatedImage.Draw(spriteBatch, viewedModel.PixelPosition, Color.White);
                         break;
                 }
             }
@@ -46,15 +42,13 @@ namespace Rain_On_Your_Parade
                 {
                     Actor actor = (Actor)viewedModel;
                     if (actor.Mood < 4)
-                        spriteBatch.Draw(activatedImage, new Rectangle((int)viewedModel.PixelPosition.X,
-                                                                       (int)viewedModel.PixelPosition.Y,
-                                                                       viewedModel.spriteWidth, viewedModel.spriteHeight), Color.Azure);
-                    else spriteBatch.Draw(activatedImage, new Rectangle((int)viewedModel.PixelPosition.X,
-                                                                        (int)viewedModel.PixelPosition.Y,
-                                                                        viewedModel.spriteWidth, viewedModel.spriteHeight), Color.Brown);
+                        activatedImage.Draw(spriteBatch, viewedModel.PixelPosition, Color.Azure);
+                    else activatedImage.Draw(spriteBatch, viewedModel.PixelPosition, Color.Brown);
 
                     Texture2D[] moods = new Texture2D[6] {actor.mood1,actor.mood2,actor.mood3,actor.mood4,actor.mood5,actor.mood6};
                     //Console.WriteLine(actor.Mood);
+
+                    spriteBatch.Begin();
 
                     spriteBatch.Draw(moods[actor.Mood], new Rectangle((int)viewedModel.PixelPosition.X - 18,
                                                                         (int)viewedModel.PixelPosition.Y-25, 40, 40), Color.White);
@@ -69,12 +63,13 @@ namespace Rain_On_Your_Parade
                      spriteBatch.Draw(actor.mood6, new Rectangle((int)viewedModel.PixelPosition.X + 18, (int)viewedModel.PixelPosition.Y - 25, 60, 60), Color.White);
                  if (actor.State.State == ActorState.AState.Comfort)
                      spriteBatch.Draw(actor.nurtureImg, new Rectangle((int)viewedModel.PixelPosition.X + 18, (int)viewedModel.PixelPosition.Y - 25, 60, 60), Color.White);
+
+                 spriteBatch.End();
+
                 }
                 else
                 {
-                    spriteBatch.Draw(activatedImage, new Rectangle((int)viewedModel.PixelPosition.X, 
-                                                                   (int)viewedModel.PixelPosition.Y, 
-                                                                   viewedModel.spriteWidth, viewedModel.spriteHeight), Color.Azure);
+                    activatedImage.Draw(spriteBatch, viewedModel.PixelPosition, Color.Azure);
                 }
             }
         }

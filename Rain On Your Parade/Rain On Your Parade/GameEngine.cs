@@ -152,6 +152,20 @@ namespace Rain_On_Your_Parade
                 Exit();
 
             // TODO: Add your update logic here
+
+            foreach (Model model in models)
+            {
+                if (model != null)
+                {   //TODO: Encapsulate this in individual classes
+                    model.activatedSprite.Update();
+
+                    if (model.deactivatedSprite != null)
+                    {
+                        model.deactivatedSprite.Update();
+                    }
+                }
+            }
+
             foreach (Controller controller in controllers)
             {
                 controller.Update(gameTime, level);
@@ -168,13 +182,13 @@ namespace Rain_On_Your_Parade
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.LimeGreen);
-            spriteBatch.Begin();
+            
             // TODO: Add your drawing code here
             foreach (View view in views)
             {
-                view.Draw(spriteBatch);
+                view.Draw(spriteBatch); //calls the AnimatedSprite draw function which includes begin/end
             }
-
+            spriteBatch.Begin();
             //TODO: update this to reflect Player.MAX_RAIN
             spriteBatch.Draw(batterybar, new Rectangle(0, 0, 155, 30), Color.Azure);
             for (int i = 0; i < level.Player.Rain; i++)

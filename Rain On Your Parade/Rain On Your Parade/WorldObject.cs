@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
@@ -23,8 +24,19 @@ namespace Rain_On_Your_Parade
 
         public override void LoadContent(ContentManager content)
         {
-            activatedSprite = content.Load<Texture2D>(type.activatedStringName());
-            deactivatedSprite = content.Load<Texture2D>(type.deactivatedStringName());
+            Texture2D activatedTexture = content.Load<Texture2D>(type.activatedStringName());
+            Texture2D deactivatedTexture = content.Load<Texture2D>(type.deactivatedStringName());
+
+            AnimatedTexture aniTexBaseActive = new AnimatedTexture(activatedTexture, 1, 1, false, false);
+            AnimatedTexture aniTexBaseDeactive = new AnimatedTexture(deactivatedTexture, 1, 1, false, false);
+
+            List<AnimationSequence> aniSequencesAct = new List<AnimationSequence>(1);
+            aniSequencesAct.Add(new AnimationSequence(0, 5, true, true, 1, 0.1f, aniTexBaseActive, null));
+            activatedSprite = new AnimatedSprite(aniSequencesAct);
+
+            List<AnimationSequence> aniSequencesDeact = new List<AnimationSequence>(1);
+            aniSequencesDeact.Add(new AnimationSequence(0, 5, true, true, 1, 0.1f, aniTexBaseDeactive, null));
+            deactivatedSprite = new AnimatedSprite(aniSequencesDeact);
 
             spriteWidth = 80;
             spriteHeight = 80;

@@ -53,8 +53,8 @@ namespace Rain_On_Your_Parade
                     gridNurtureEffect = 1;
                     gridRampageEffect = 3;
                     initState = new ActorState(ActorState.AState.Sleep);
-                    activatedImages.Add(Type.Cat, "cat");
-                    deactivatedImages.Add(Type.Kid, "kid");
+                    activatedImages.Add(Type.Cat, "cat_80");
+                    deactivatedImages.Add(Type.Cat, "cat_80");
                     fastNeedIncrease = new int[3] {1, 0, 0};
                     slowNeedIncrease = new int[3] {0, 0, 1 };
                     break;
@@ -71,8 +71,8 @@ namespace Rain_On_Your_Parade
                     gridNurtureEffect = 3;
                     gridRampageEffect = 3;
                     initState = new ActorState(ActorState.AState.Seek);
-                    activatedImages.Add(Type.Kid, "kid");
-                    deactivatedImages.Add(Type.Kid, "kid");
+                    activatedImages.Add(Type.Kid, "kid_80");
+                    deactivatedImages.Add(Type.Kid, "kid_80");
                     fastNeedIncrease = new int[3] { 0, 1, 0 };
                     slowNeedIncrease = new int[3] { 1, 0, 0 };
                     break;
@@ -89,8 +89,8 @@ namespace Rain_On_Your_Parade
                     gridNurtureEffect = -1;
                     gridRampageEffect = 3;
                     initState = new ActorState(ActorState.AState.Seek);
-                    activatedImages.Add(Type.Mom, "mom");
-                    deactivatedImages.Add(Type.Mom, "mom");
+                    activatedImages.Add(Type.Mom, "mom_80");
+                    deactivatedImages.Add(Type.Mom, "mom_80");
                     fastNeedIncrease = new int[3] { 0, 0, 1 };
                     slowNeedIncrease = new int[3] { 0, 0, 0 };
                     break;
@@ -114,12 +114,12 @@ namespace Rain_On_Your_Parade
             gridNurtureEffect = aGridNurtureEffect;
             gridRampageEffect = aGridRampageEffect;
 
-            activatedImages.Add(Type.Cat, "cat");
-            activatedImages.Add(Type.Kid, "kid");
-            activatedImages.Add(Type.Mom, "mom");
-            deactivatedImages.Add(Type.Cat, "cat");
-            deactivatedImages.Add(Type.Kid, "kid");
-            deactivatedImages.Add(Type.Mom, "mom");
+            activatedImages.Add(Type.Cat, "cat_80");
+            activatedImages.Add(Type.Kid, "kid_80");
+            activatedImages.Add(Type.Mom, "mom_80");
+            deactivatedImages.Add(Type.Cat, "cat_80");
+            deactivatedImages.Add(Type.Kid, "kid_80");
+            deactivatedImages.Add(Type.Mom, "mom_80");
         }
 
         #region Getters and Setters
