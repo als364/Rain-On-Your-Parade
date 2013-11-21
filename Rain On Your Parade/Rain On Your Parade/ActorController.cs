@@ -259,10 +259,21 @@ namespace Rain_On_Your_Parade
 
                         newPosition = Vector2.Add(controlledActor.PixelPosition, newVelocity);
 
-                        Point newPosGridPos = new Point((int)((newPosition.X + controlledActor.spriteWidth / 2) / Canvas.SQUARE_SIZE), (int)((newPosition.Y + controlledActor.spriteHeight / 2) / Canvas.SQUARE_SIZE));
+                        Point newPosGridPos = new Point((int)((newPosition.X + controlledActor.spriteWidth / 2) / Canvas.SQUARE_SIZE),
+                            (int)((newPosition.Y + controlledActor.spriteHeight / 2) / Canvas.SQUARE_SIZE));
                         if (!level.Grid[newPosGridPos.X, newPosGridPos.Y].IsPassable)
                         {
-                            newPosition = controlledActor.PixelPosition;
+                            if (newPosGridPos.X != controlledActor.GridspacePosition.X) {
+                                velX = -velX;
+                                newVelocity = new Vector2(-newVelocity.X, newVelocity.Y);
+                            }
+                            if (newPosGridPos.Y != controlledActor.GridspacePosition.Y)
+                            {
+                                velY = -velY;
+                                newVelocity = new Vector2(newVelocity.X, -newVelocity.Y);
+                            }
+                            newPosition = Vector2.Add(controlledActor.PixelPosition, newVelocity);
+                            newVelocity = new Vector2(velX, velY);
                         }
 
                         if (newPosition.X + controlledActor.spriteWidth > GameEngine.SCREEN_WIDTH)
