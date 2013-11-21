@@ -27,7 +27,7 @@ namespace Rain_On_Your_Parade
         public override void Update(GameTime gameTime, Canvas level)
         {
             KeyboardState ks = Keyboard.GetState();
-            level.Player.PrevPos = new Vector2(player.PixelPosition.X, player.PixelPosition.X);
+            level.Player.PrevPos = new Vector2(player.PixelPosition.X, player.PixelPosition.Y);
 
             if (coolDown == 0) 
             {

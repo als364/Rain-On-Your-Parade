@@ -15,8 +15,11 @@ namespace Rain_On_Your_Parade
         private int NeedIncreaseTimer;
         private const int MAX_ENJOY_TIME = 300;
         private int enjoyTime;
-        private int runCoolDown = 0;
-        private const int MAX_RUN_COOLDOWN = 10;
+        private const int MAX_RUN_COOLDOWN = 80;
+        private int runCoolDown = MAX_RUN_COOLDOWN;
+        private const float RUN_SPEED = 2f;
+        private float velX = 0f;
+        private float velY = 0f;
 
         public ActorController(Actor actor) : base(actor)
         {
@@ -51,18 +54,30 @@ namespace Rain_On_Your_Parade
             actorSquare = controlledActor.GridspacePosition;
 
             //Determines whether the actor close to the cloud, and if so, changes its state to Run
-            if (level.nearEnoughForInteraction(level.Player, controlledActor))
+            if (controlledActor.State.State != ActorState.AState.Run && level.nearEnoughForInteraction(level.Player, controlledActor))
             {
-                if (runCoolDown < 1)
+                controlledActor.State = new ActorState(ActorState.AState.Run);
+                controlledActor.Path = null;
+
+                float xChange = level.Player.PixelPosition.X - level.Player.PrevPos.X;
+                float yChange = level.Player.PixelPosition.Y - level.Player.PrevPos.Y;
+
+                velX = 0f;
+                velY = 0f;
+
+                if (xChange > 0) { velX = RUN_SPEED; }
+                else if (xChange == 0) { velX = 0; }
+                else { velX = -RUN_SPEED; }
+
+                if (yChange > 0) { velY = RUN_SPEED; }
+                else if (yChange == 0) { velY = 0; }
+                else { velY = -RUN_SPEED; }
+
+                if (xChange == 0 && yChange == 0)
                 {
-                    runCoolDown = MAX_RUN_COOLDOWN;
-                    controlledActor.State = new ActorState(ActorState.AState.Run);
-                    controlledActor.Path = null;
+                    velX = RUN_SPEED;
                 }
-                else
-                {
-                    runCoolDown--;
-                }
+
             }
 
             //Determines whether the actor is close enough to interact with another actor, and if so, changes its state to Run
@@ -201,27 +216,27 @@ namespace Rain_On_Your_Parade
                             //If I'm not within the next square on the path, make sure my velocity is set correctly (necessary for first square) Move uniformly to the next square
                             if (nextSquare.Location.X * Canvas.SQUARE_SIZE - controlledActor.PixelPosition.X <= 0)
                             {
-                                Velx = controlledActor.Mood > 4 ? -2f : -1f;
+                                Velx = controlledActor.Mood > 4 ? -RUN_SPEED : -1f;
                             }
                             else
                             {
-                                Velx = controlledActor.Mood > 4 ? 2f : 1f;
+                                Velx = controlledActor.Mood > 4 ? RUN_SPEED : 1f;
                             }
                             if (nextSquare.Location.Y * Canvas.SQUARE_SIZE - controlledActor.PixelPosition.Y <= 0)
                             {
-                                Vely = controlledActor.Mood > 4 ? -2f : -1f;
+                                Vely = controlledActor.Mood > 4 ? -RUN_SPEED : -1f;
                             }
                             else
                             {
-                                Vely = controlledActor.Mood > 4 ? 2f : 1f;
+                                Vely = controlledActor.Mood > 4 ? RUN_SPEED : 1f;
                             }
                             controlledActor.Velocity = new Vector2(Velx, Vely);
                             //controlledActor.Velocity = new Vector2(nextSquare.Location.X * Canvas.SQUARE_SIZE - controlledActor.Position.X, 
                             //                                       nextSquare.Location.Y * Canvas.SQUARE_SIZE - controlledActor.Position.Y)/30
                             //Move the actor
                             controlledActor.PixelPosition = Vector2.Add(controlledActor.PixelPosition, controlledActor.Velocity);
-                            controlledActor.GridspacePosition = new Point((int)(controlledActor.PixelPosition.X / Canvas.SQUARE_SIZE),
-                                                                          (int)(controlledActor.PixelPosition.Y / Canvas.SQUARE_SIZE));
+                            //controlledActor.GridspacePosition = new Point((int)(controlledActor.PixelPosition.X / Canvas.SQUARE_SIZE),
+                                                                          //(int)(controlledActor.PixelPosition.Y / Canvas.SQUARE_SIZE));
                         }
                         break;
                     case ActorState.AState.Wander:
@@ -236,64 +251,56 @@ namespace Rain_On_Your_Parade
 
                         if (next <= 300) controlledActor.State = new ActorState(ActorState.AState.Seek);
                         break;
-                    //Actor runs from the cloud if it's in the same square, with a delay
+                    //Actor runs from the cloud if it's within a radius of the cloud
                     case ActorState.AState.Run:
-                        //Determines which direction to run based on the player's movement direction
-                        List<GridSquare> target = new List<GridSquare>();
-                        float xChange = level.Player.PixelPosition.X - level.Player.PrevPos.X;
-                        float yChange = level.Player.PixelPosition.Y - level.Player.PrevPos.Y;
-                        //Console.WriteLine("posChange: " + xChange + ", " + yChange);
-                        if (Math.Abs(xChange) > Math.Abs(yChange))
+
+                        Vector2 newPosition = controlledActor.PixelPosition;
+                        Vector2 newVelocity = new Vector2(velX, velY);
+
+                        newPosition = Vector2.Add(controlledActor.PixelPosition, newVelocity);
+
+                        Point newPosGridPos = new Point((int)((newPosition.X + controlledActor.spriteWidth / 2) / Canvas.SQUARE_SIZE), (int)((newPosition.Y + controlledActor.spriteHeight / 2) / Canvas.SQUARE_SIZE));
+                        if (!level.Grid[newPosGridPos.X, newPosGridPos.Y].IsPassable)
                         {
-                            if (xChange > 0)
-                            {
-                                target.Add(level.Grid[(int)MathHelper.Clamp(actorSquare.X + 3, 0, level.Width - 1), actorSquare.Y]);
-                                target.Add(level.Grid[actorSquare.X, (int)MathHelper.Clamp(actorSquare.Y - 3, 0, level.Height - 1)]);
-                                target.Add(level.Grid[actorSquare.X, (int)MathHelper.Clamp(actorSquare.Y + 3, 0, level.Height - 1)]);
-                                target.Add(level.Grid[(int)MathHelper.Clamp(actorSquare.X - 3, 0, level.Width - 1), actorSquare.Y]);
-                            }
-                            else
-                            {
-                                target.Add(level.Grid[(int)MathHelper.Clamp(actorSquare.X - 3, 0, level.Width - 1), actorSquare.Y]);
-                                target.Add(level.Grid[actorSquare.X, (int)MathHelper.Clamp(actorSquare.Y + 3, 0, level.Height - 1)]);
-                                target.Add(level.Grid[actorSquare.X, (int)MathHelper.Clamp(actorSquare.Y - 3, 0, level.Height - 1)]);
-                                target.Add(level.Grid[(int)MathHelper.Clamp(actorSquare.X - 3, 0, level.Width - 1), actorSquare.Y]);
-                            }
-                        }
-                        else
-                        {
-                            if (yChange > 0)
-                            {
-                                target.Add(level.Grid[actorSquare.X, (int)MathHelper.Clamp(actorSquare.Y + 3, 0, level.Height - 1)]);
-                                target.Add(level.Grid[(int)MathHelper.Clamp(actorSquare.X + 3, 0, level.Width - 1), actorSquare.Y]);
-                                target.Add(level.Grid[(int)MathHelper.Clamp(actorSquare.X - 3, 0, level.Width - 1), actorSquare.Y]);
-                                target.Add(level.Grid[actorSquare.X, (int)MathHelper.Clamp(actorSquare.Y - 3, 0, level.Height - 1)]);
-                            }
-                            else
-                            {
-                                target.Add(level.Grid[actorSquare.X, (int)MathHelper.Clamp(actorSquare.Y - 3, 0, level.Height - 1)]);
-                                target.Add(level.Grid[(int)MathHelper.Clamp(actorSquare.X - 3, 0, level.Width - 1), actorSquare.Y]);
-                                target.Add(level.Grid[(int)MathHelper.Clamp(actorSquare.X + 3, 0, level.Width - 1), actorSquare.Y]);
-                                target.Add(level.Grid[actorSquare.X, (int)MathHelper.Clamp(actorSquare.Y + 3, 0, level.Height - 1)]);
-                            }
+                            newPosition = controlledActor.PixelPosition;
                         }
 
-                        //FindPath finds a path to it.
-                        controlledActor.Path = FindPath(target, level.Grid[actorSquare.X, actorSquare.Y],
-                                                        level.Grid, new Point[level.Width, level.Height]);
-
-                        //if none of the squares were desirable, Wander
-                        if (controlledActor.Path == null)
+                        if (newPosition.X + controlledActor.spriteWidth > GameEngine.SCREEN_WIDTH)
                         {
-                            controlledActor.State = new ActorState(ActorState.AState.Wander);
+                            newPosition = new Vector2(GameEngine.SCREEN_WIDTH - controlledActor.spriteWidth, newPosition.Y);
+                            newVelocity = new Vector2(0, newVelocity.Y);
                         }
-                        else
+                        if (newPosition.X < 0)
                         {
-                            //Now, walk there.
+                            newPosition = new Vector2(0, newPosition.Y);
+                            newVelocity = new Vector2(0, newVelocity.Y);
+                        }
+                        if (newPosition.Y + controlledActor.spriteHeight > GameEngine.SCREEN_HEIGHT)
+                        {
+                            newPosition = new Vector2(newPosition.X, GameEngine.SCREEN_HEIGHT - controlledActor.spriteHeight);
+                            newVelocity = new Vector2(newVelocity.X, 0);
+                        }
+                        if (newPosition.Y < 0)
+                        {
+                            newPosition = new Vector2(newPosition.X, 0);
+                            newVelocity = new Vector2(newVelocity.X, 0);
+                        }
+                        
+                        if (runCoolDown < 1)
+                        {
                             controlledActor.TargetState = ActorState.AState.Seek;
-                            controlledActor.State = new ActorState(ActorState.AState.Walk);
+                            controlledActor.State = new ActorState(ActorState.AState.Seek);
+                            runCoolDown = MAX_RUN_COOLDOWN;
                         }
+                        else
+                        {
+                            controlledActor.PixelPosition = newPosition;
+                            controlledActor.Velocity = newVelocity;
+                            runCoolDown--;
+                        }
+
                         break;
+                    
                     //Again, a specialcase. Just dumps things into Seek, making sure to zero their velocity first.
                     default:
                         if (controlledActor.Path.Count == 0)
@@ -314,8 +321,6 @@ namespace Rain_On_Your_Parade
                         }
                         break;
                 }
-
-            
         }
 
         /// <summary>
