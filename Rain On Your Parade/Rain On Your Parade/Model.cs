@@ -17,6 +17,7 @@ namespace Rain_On_Your_Parade
         private Point gridspacePosition;
         public AnimatedSprite activatedSprite;
         public AnimatedSprite deactivatedSprite;
+        public float colorAlpha;
 
         public Model(){}
 
@@ -60,6 +61,18 @@ namespace Rain_On_Your_Parade
             set
             {
                 gridspacePosition = value;
+            }
+        }
+
+        public float ColorAlpha
+        {
+            get
+            {
+                return colorAlpha;
+            }
+            set
+            {
+                colorAlpha = value;
             }
         }
         #endregion

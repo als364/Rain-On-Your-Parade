@@ -42,6 +42,7 @@ namespace Rain_On_Your_Parade
             : base()
         {
             graphics = new GraphicsDeviceManager(this);
+            //GraphicsDevice.BlendState = BlendState.AlphaBlend;
             //content = new ContentManager(Services);
             Content.RootDirectory = "Content";
             models = new List<Model>();

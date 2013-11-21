@@ -23,7 +23,13 @@ namespace Rain_On_Your_Parade
             AnimatedSprite activatedImage = viewedModel.activatedSprite;
             AnimatedSprite deactivatedImage = viewedModel.deactivatedSprite;
 
-            if (viewedModel is WorldObject)
+            if (viewedModel is Player)
+            {
+                activatedImage.Draw(spriteBatch, viewedModel.PixelPosition,
+                    new Color(viewedModel.colorAlpha, viewedModel.colorAlpha, viewedModel.colorAlpha));
+            }
+
+            else if (viewedModel is WorldObject)
             {
                 WorldObject current = (WorldObject)viewedModel;
                 switch (current.Activated)

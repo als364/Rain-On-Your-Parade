@@ -38,7 +38,15 @@ namespace Rain_On_Your_Parade
         /// </devdoc>
         private void NextInSequence()
         {
-            seqIndex++;
+            if (currentSequence.OverlaySequence != null)
+            {
+                seqIndex += 2;
+            }
+            else
+            {
+                seqIndex++;
+            }
+
             if (seqIndex == sequences.Count)
             {
                 seqIndex = 0;
@@ -92,7 +100,7 @@ namespace Rain_On_Your_Parade
                         }
                         else
                         {
-                            Console.Write("incrementing counter and reversing\n");
+                            //Console.Write("incrementing counter and reversing\n");
                             // increment counter and set current
                             counter++;
                             currentSequence.GoForward = !currentSequence.GoForward;
@@ -141,8 +149,20 @@ namespace Rain_On_Your_Parade
             Rectangle sourceRectangle = new Rectangle(width * column, height * row, width, height);
             Rectangle destinationRectangle = new Rectangle((int)location.X, (int)location.Y, width, height);
 
+            //Get overlay sequence
+            AnimationSequence overlay = currentSequence.OverlaySequence;
+
             spriteBatch.Begin();
-            spriteBatch.Draw(currentSequence.Texture.Texture, destinationRectangle, sourceRectangle, color);
+            if (overlay != null)
+            {
+                spriteBatch.Draw(overlay.Texture.Texture, destinationRectangle, sourceRectangle, color);
+                spriteBatch.Draw(currentSequence.Texture.Texture, destinationRectangle, sourceRectangle, Color.White);
+            }
+            else
+            {
+                spriteBatch.Draw(currentSequence.Texture.Texture, destinationRectangle, sourceRectangle, color);
+            }
+            
             spriteBatch.End();
         }
     }

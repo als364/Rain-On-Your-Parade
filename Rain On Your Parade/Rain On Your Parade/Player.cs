@@ -69,6 +69,7 @@ namespace Rain_On_Your_Parade
             PixelPosition = new Vector2(GameEngine.SCREEN_WIDTH/2,GameEngine.SCREEN_HEIGHT/2);
             velocity = new Vector2();
             rain = MAX_RAIN;
+            colorAlpha = (1f - ((float)rain / (float)MAX_RAIN));
         }
 
         public override void LoadContent(ContentManager content)
@@ -76,10 +77,20 @@ namespace Rain_On_Your_Parade
             Texture2D textureBase = content.Load<Texture2D>("white_cloud_base");
             AnimatedTexture aniTexBase = new AnimatedTexture(textureBase, 12, 1, false, false);
 
-            List<AnimationSequence> aniSequences = new List<AnimationSequence>(2);
+            Texture2D textureFace = content.Load<Texture2D>("white_cloud_face");
+            AnimatedTexture aniTexFace = new AnimatedTexture(textureFace, 12, 1, false, false);
+
+            List<AnimationSequence> aniSequences = new List<AnimationSequence>(4);
             //aniSequences.Add(new AnimationSequence(0, 11, true, true, 1, 0.1f, aniTexBase, null));
-            aniSequences.Add(new AnimationSequence(11,5,true,false,1,0.1f,aniTexBase,null));
-            aniSequences.Add(new AnimationSequence(4,0,true,false,1,0.1f,aniTexBase,null));
+            
+            AnimationSequence cloud_face1 = new AnimationSequence(11, 5, true, false, 1, 0.1f, aniTexBase, null);
+            AnimationSequence cloud_face2 = new AnimationSequence(5, 0, true, false, 1, 0.1f, aniTexBase, null);
+            AnimationSequence cloud_1 = new AnimationSequence(11, 6, true, false, 1, 0.1f, aniTexFace, cloud_face1);
+            AnimationSequence cloud_2 = new AnimationSequence(5, 0, true, false, 1, 0.1f, aniTexFace, cloud_face2);
+            aniSequences.Add(cloud_1);
+            aniSequences.Add(cloud_face1);
+            aniSequences.Add(cloud_2);
+            aniSequences.Add(cloud_face2);
             activatedSprite = new AnimatedSprite(aniSequences);
 
             spriteWidth = 80;

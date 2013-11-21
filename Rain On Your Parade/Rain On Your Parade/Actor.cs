@@ -54,6 +54,7 @@ namespace Rain_On_Your_Parade
             gridPlayEffect = aType.GridPlayEffect;
             gridNurtureEffect = aType.GridNurtureEffect;
             gridRampageEffect = aType.GridRampageEffect;
+            colorAlpha = 0f;
         }
 
         public override void LoadContent(ContentManager content)

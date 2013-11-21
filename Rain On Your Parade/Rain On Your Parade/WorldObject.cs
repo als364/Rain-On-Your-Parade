@@ -20,6 +20,7 @@ namespace Rain_On_Your_Parade
             GridspacePosition = pos;
             activated = (type.StartsWet && type.IsWetObject) || (!type.IsWetObject && !type.StartsWet);
             waterLevel = waterAmt;
+            colorAlpha = 0f;
         }
 
         public override void LoadContent(ContentManager content)

@@ -172,6 +172,7 @@ namespace Rain_On_Your_Parade
             {
                 isRaining = true;
                 player.Rain--;
+                player.colorAlpha = (1f - ((float)player.Rain / (float)MAX_RAIN));
 
                 foreach (Actor a in level.Actors)
                 {
@@ -253,6 +254,8 @@ namespace Rain_On_Your_Parade
                     if (o.WaterLevel > 0)
                     {
                         player.Rain++;
+                        player.colorAlpha = (1f - ((float)player.Rain / (float)MAX_RAIN));
+
                         if (--o.WaterLevel == 0)
                         {
                             if (o.Type.IsWetObject)
