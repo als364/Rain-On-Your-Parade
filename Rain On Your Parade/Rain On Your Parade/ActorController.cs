@@ -90,7 +90,10 @@ namespace Rain_On_Your_Parade
                     {
                         controlledActor.State = new ActorState(ActorState.AState.Fight);
                         a.State = new ActorState(ActorState.AState.Fight);
-                    }else if (controlledActor.InteractionTimer == 0 && DetermineTargetState() == ActorState.AState.Nurture && a.TargetState == ActorState.AState.Nurture ){
+                    }else if (controlledActor.InteractionTimer == 0 &&
+                        (DetermineTargetState() == ActorState.AState.Nurture && a.Mood > 3 && controlledActor.Mood < 3) ||
+                        (a.TargetState == ActorState.AState.Nurture && controlledActor.Mood > 3 && a.Mood < 3))
+                    {
                         controlledActor.State = new ActorState(ActorState.AState.Comfort);
                         a.State = new ActorState(ActorState.AState.Comfort);
                     }
