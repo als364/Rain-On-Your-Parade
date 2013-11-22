@@ -15,7 +15,7 @@ namespace Rain_On_Your_Parade
         private int mood;
         private ActorState state;
         private ActorState.AState targetState;
-        private Actor actorTarget;
+        private bool targetIsActor;
         private int sleepLevel;
         private int playLevel;
         private int nurtureLevel;
@@ -55,7 +55,7 @@ namespace Rain_On_Your_Parade
             gridPlayEffect = aType.GridPlayEffect;
             gridNurtureEffect = aType.GridNurtureEffect;
             gridRampageEffect = aType.GridRampageEffect;
-            actorTarget = null;
+            targetIsActor = false;
             colorAlpha = 0f;
         }
 
@@ -177,10 +177,10 @@ namespace Rain_On_Your_Parade
             get { return gridRampageEffect; }
             set { gridRampageEffect = value; }
         }
-        public Actor ActorTarget
+        public bool TargetIsActor
         {
-            get { return actorTarget; }
-            set { actorTarget = value; }
+            get { return targetIsActor; }
+            set { targetIsActor = value; }
         }
         #endregion
 
