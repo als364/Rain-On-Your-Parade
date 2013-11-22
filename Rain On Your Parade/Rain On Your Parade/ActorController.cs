@@ -77,7 +77,7 @@ namespace Rain_On_Your_Parade
             actorSquare = controlledActor.GridspacePosition;
 
             //Determines whether the actor close to the cloud, and if so, changes its state to Run
-            if (controlledActor.State.State != ActorState.AState.Run && level.nearEnoughForInteraction(level.Player, controlledActor) && controlledActor.State.State != controlledActor.TargetState)
+            if (controlledActor.State.State != ActorState.AState.Run && level.nearEnoughForInteraction(level.Player, controlledActor))
             {
                 controlledActor.InteractionTimer = 0;
                 controlledActor.State = new ActorState(ActorState.AState.Run);
