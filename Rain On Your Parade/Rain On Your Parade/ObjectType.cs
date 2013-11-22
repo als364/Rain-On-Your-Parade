@@ -59,7 +59,7 @@ namespace Rain_On_Your_Parade
                     startsWet = true;
                     canActivate = true;
                     holdsWater = true;
-                    sleepLevel = 0;
+                    sleepLevel = 3;
                     playLevel = 0;
                     nurtureLevel = 3;
                     rampageLevel = 0;
