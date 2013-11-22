@@ -26,6 +26,7 @@ namespace Rain_On_Your_Parade
 
         public override void Update(GameTime gameTime, Canvas level)
         {
+            player.isRaining = isRaining;
             KeyboardState ks = Keyboard.GetState();
             level.Player.PrevPos = new Vector2(player.PixelPosition.X, player.PixelPosition.Y);
 
@@ -198,23 +199,21 @@ namespace Rain_On_Your_Parade
                    
                 }
 
-                WorldObject toReplace = null; //for sunnyspot to rainbow
+                //WorldObject toReplace = null; //for sunnyspot to rainbow
 
                 List<WorldObject> objects = level.Grid[player.GridspacePosition.X, player.GridspacePosition.Y].Objects;
                 foreach (WorldObject o in objects)
                 {
                     if (o.Type.HoldsWater)
                     {
-                        o.WaterLevel++;
+                        o.WaterLevel = 1;
                     }
 
                     //Console.Write(o.ToString() + "object rained upon\n");
 
-                    if (o.Type.TypeName == ObjectType.Type.SunnySpot)
+                    if (o.Type.TypeName == ObjectType.Type.SunnyRainbowSpot && !level.rainbows.ContainsKey(o))
                     {
-                        //change to rainbow
-                        toReplace = o;
-                        //o.deactivate();
+                        level.rainbows.Add(o, GameEngine.MAX_RAINBOW_TIME);
                     }
 
                     if (o.Type.IsWetObject)
@@ -227,13 +226,13 @@ namespace Rain_On_Your_Parade
                     }
                 }
 
-                if (toReplace != null)
-                {
-                    WorldObject addedRainbow = new WorldObject(ObjectType.Type.Rainbow, new Point(toReplace.GridspacePosition.X, toReplace.GridspacePosition.Y), 1);
-                    addedRainbow.activate();
-                    objects.Add(addedRainbow);
-                    objects.Remove(toReplace);
-                }
+                //if (toReplace != null)
+                //{
+                //    WorldObject addedRainbow = new WorldObject(ObjectType.Type.Rainbow, new Point(toReplace.GridspacePosition.X, toReplace.GridspacePosition.Y), 1);
+                //    addedRainbow.activate();
+                //    objects.Add(addedRainbow);
+                //    objects.Remove(toReplace);
+                //}
 
                 return true;
             }
@@ -244,7 +243,7 @@ namespace Rain_On_Your_Parade
         {
             if (player.Rain < MAX_RAIN)
             {
-                WorldObject toReplace = null; //for rainbow to sunnyspot
+                //WorldObject toReplace = null; //for rainbow to sunnyspot
 
                 List<WorldObject> objects = level.Grid[player.GridspacePosition.X, player.GridspacePosition.Y].Objects;
                 foreach (WorldObject o in objects)
@@ -260,11 +259,11 @@ namespace Rain_On_Your_Parade
                         {
                             if (o.Type.IsWetObject)
                             {
-                                if (o.Type.TypeName == ObjectType.Type.Rainbow)
-                                {
-                                    //change to SunnySpot
-                                    toReplace = o;
-                                }
+                                //if (o.Type.TypeName == ObjectType.Type.Rainbow)
+                                //{
+                                //    //change to SunnySpot
+                                //    toReplace = o;
+                                //}
                                 o.deactivate();
                             }
                             else
@@ -313,14 +312,14 @@ namespace Rain_On_Your_Parade
                     //}
                 }
 
-                if (toReplace != null)
-                {
-                    WorldObject addedSunny = new WorldObject(ObjectType.Type.SunnySpot, new Point(toReplace.GridspacePosition.X, toReplace.GridspacePosition.Y), 0);
-                    addedSunny.activate();
-                    objects.Add(addedSunny);
-                    objects.Remove(toReplace);
-                    //Console.Write("removed rainbow and added Sunny SUNNY!!/n");
-                }
+                //if (toReplace != null)
+                //{
+                //    WorldObject addedSunny = new WorldObject(ObjectType.Type.SunnySpot, new Point(toReplace.GridspacePosition.X, toReplace.GridspacePosition.Y), 0);
+                //    addedSunny.activate();
+                //    objects.Add(addedSunny);
+                //    objects.Remove(toReplace);
+                //    Console.Write("removed rainbow and added Sunny SUNNY!!/n");
+                //}
 
                 return true;
             }

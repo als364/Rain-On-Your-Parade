@@ -25,8 +25,27 @@ namespace Rain_On_Your_Parade
 
             if (viewedModel is Player)
             {
+                Player current = (Player)viewedModel;
+
+                if (current.isRaining)
+                {
+                    spriteBatch.Begin();
+                    spriteBatch.Draw(current.waterImg, new Rectangle((int)viewedModel.PixelPosition.X + 37, (int)viewedModel.PixelPosition.Y + 61, 26, 27), Color.White);
+                    spriteBatch.Draw(current.waterImg, new Rectangle((int)viewedModel.PixelPosition.X + 10, (int)viewedModel.PixelPosition.Y + 67, 20, 20), Color.White);
+                    spriteBatch.Draw(current.waterImg, new Rectangle((int)viewedModel.PixelPosition.X + 18, (int)viewedModel.PixelPosition.Y + 66, 20, 25), Color.White);
+                    spriteBatch.Draw(current.waterImg, new Rectangle((int)viewedModel.PixelPosition.X + 25, (int)viewedModel.PixelPosition.Y + 68, 23, 20), Color.White);
+                    spriteBatch.Draw(current.waterImg, new Rectangle((int)viewedModel.PixelPosition.X + 38, (int)viewedModel.PixelPosition.Y + 72, 20, 20), Color.White);
+                    spriteBatch.Draw(current.waterImg, new Rectangle((int)viewedModel.PixelPosition.X + 34, (int)viewedModel.PixelPosition.Y + 70, 20, 27), Color.White);
+                    spriteBatch.Draw(current.waterImg, new Rectangle((int)viewedModel.PixelPosition.X + 45, (int)viewedModel.PixelPosition.Y + 68, 23, 20), Color.White);
+                    spriteBatch.Draw(current.waterImg, new Rectangle((int)viewedModel.PixelPosition.X + 51, (int)viewedModel.PixelPosition.Y + 67, 22, 29), Color.White);
+
+                    spriteBatch.End();
+                }
+
                 activatedImage.Draw(spriteBatch, viewedModel.PixelPosition,
                     new Color(viewedModel.colorAlpha, viewedModel.colorAlpha, viewedModel.colorAlpha));
+           
+
             }
 
             else if (viewedModel is WorldObject)
@@ -35,6 +54,11 @@ namespace Rain_On_Your_Parade
                 switch (current.Activated)
                 {
                     case true:
+                        //if (current.Type.TypeName == ObjectType.Type.SunnyRainbowSpot)
+                        //{
+                        //    float alpha = ((int)level.rainbows[current] / (float)GameEngine.MAX_RAINBOW_TIME);
+                        //    activatedImage.Draw(spriteBatch, viewedModel.PixelPosition, new Color(alpha, alpha, alpha, alpha));
+                        //}
                         activatedImage.Draw(spriteBatch, viewedModel.PixelPosition, Color.White);
                         break;
                     case false:
