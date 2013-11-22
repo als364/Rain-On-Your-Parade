@@ -22,7 +22,7 @@ namespace Rain_On_Your_Parade
         public const int SCREEN_WIDTH = 880;
         public const int SCREEN_HEIGHT = 720;
 
-        public const int MAX_RAINBOW_TIME = 450;
+        public const int MAX_RAINBOW_TIME = 200;
 
         private int stage = 3;
 
