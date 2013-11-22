@@ -14,6 +14,8 @@ namespace Rain_On_Your_Parade
         private int rain;       //amount of rain held by player
 
         public const int MAX_RAIN = 6;
+        public bool isRaining = false;
+        public Texture2D waterImg;
 
         #region Getters and Setters
 
@@ -74,6 +76,8 @@ namespace Rain_On_Your_Parade
 
         public override void LoadContent(ContentManager content)
         {
+            waterImg = content.Load<Texture2D>("water");
+
             Texture2D textureBase = content.Load<Texture2D>("white_cloud_base");
             AnimatedTexture aniTexBase = new AnimatedTexture(textureBase, 12, 1, false, false);
 

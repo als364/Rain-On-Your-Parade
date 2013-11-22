@@ -207,12 +207,13 @@ namespace Rain_On_Your_Parade
                                 if (controlledActor.Path.Count == 1)
                                 {
                                     //controlledActor.Path.Clear();
-                                    if (controlledActor.ActorTarget != null && !nextSquare.Actors.Contains(controlledActor.ActorTarget))
+                                    if (controlledActor.ActorTarget != null && !nextSquare.Actors.Contains(controlledActor.ActorTarget) || nextSquare.Objects.Count() == 0)
                                     {
                                         controlledActor.State.State = ActorState.AState.Seek;
                                     }
                                     else
                                     {
+
                                         controlledActor.State = new ActorState(controlledActor.TargetState);
                                     }
                                     enjoyTime = MAX_ENJOY_TIME;
