@@ -54,7 +54,7 @@ namespace Rain_On_Your_Parade
             actorSquare = controlledActor.GridspacePosition;
 
             //Determines whether the actor close to the cloud, and if so, changes its state to Run
-            if (controlledActor.State.State != ActorState.AState.Run && level.nearEnoughForInteraction(level.Player, controlledActor))
+            if (controlledActor.State.State != ActorState.AState.Run && level.nearEnoughForInteraction(level.Player, controlledActor) && controlledActor.State.State != controlledActor.TargetState)
             {
                 controlledActor.InteractionTimer = 0;
                 controlledActor.State = new ActorState(ActorState.AState.Run);
@@ -88,14 +88,14 @@ namespace Rain_On_Your_Parade
                 {
                     if (controlledActor.InteractionTimer == 0 && a.InteractionTimer == 0 && ((a.Mood > 3 && controlledActor.Mood > 3) || (a.Mood == 5 || controlledActor.Mood == 5)))
                     {
-                        controlledActor.State = new ActorState(ActorState.AState.Fight);
-                        a.State = new ActorState(ActorState.AState.Fight);
+                        controlledActor.State.State = ActorState.AState.Fight;
+                        a.State.State = ActorState.AState.Fight;
                     }else if (controlledActor.InteractionTimer == 0 &&
                         (DetermineTargetState() == ActorState.AState.Nurture && a.Mood > 3 && controlledActor.Mood < 3) ||
                         (a.TargetState == ActorState.AState.Nurture && controlledActor.Mood > 3 && a.Mood < 3))
                     {
-                        controlledActor.State = new ActorState(ActorState.AState.Comfort);
-                        a.State = new ActorState(ActorState.AState.Comfort);
+                        controlledActor.State.State = ActorState.AState.Comfort;
+                        a.State.State = ActorState.AState.Comfort;
                     }
                     
                 }
@@ -110,7 +110,7 @@ namespace Rain_On_Your_Parade
                             controlledActor.InteractionTimer = -360;
                             if (controlledActor.Mood < 5)
                             controlledActor.Mood = controlledActor.Mood + 1;
-                            controlledActor.State = new ActorState(ActorState.AState.Seek);
+                            controlledActor.State.State = ActorState.AState.Seek;
                         }
 
                         break;
@@ -123,7 +123,7 @@ namespace Rain_On_Your_Parade
                             controlledActor.InteractionTimer = -360;
                             if (controlledActor.Mood > 0) controlledActor.Mood = controlledActor.Mood - 1;
                             controlledActor.NurtureLevel--;
-                            controlledActor.State = new ActorState(ActorState.AState.Seek);
+                            controlledActor.State.State = ActorState.AState.Seek;
                         }
 
                         break;
@@ -132,7 +132,7 @@ namespace Rain_On_Your_Parade
                         if (enjoyTime == 0)
                         {
                             interactWithObject(level, ActorState.AState.Nurture);
-                            controlledActor.State = new ActorState(ActorState.AState.Wander);
+                            controlledActor.State.State = ActorState.AState.Wander;
                         }
                         else
                         {
@@ -145,7 +145,7 @@ namespace Rain_On_Your_Parade
                         if (enjoyTime == 0)
                         {
                             interactWithObject(level, ActorState.AState.Play);
-                            controlledActor.State = new ActorState(ActorState.AState.Wander);
+                            controlledActor.State.State = ActorState.AState.Wander;
                         }
                         else
                         {
@@ -154,13 +154,13 @@ namespace Rain_On_Your_Parade
                         //if (next <= 1) controlledActor.State = new ActorState(ActorState.AState.Seek);
                         break;
                     case ActorState.AState.Rampage:
-                        controlledActor.State = new ActorState(ActorState.AState.Seek);
+                        controlledActor.State.State = ActorState.AState.Seek;
                         break;
                     case ActorState.AState.Sleep:
                         if (enjoyTime == 0)
                         {
                             interactWithObject(level, ActorState.AState.Sleep);
-                            controlledActor.State = new ActorState(ActorState.AState.Wander);
+                            controlledActor.State.State = ActorState.AState.Wander;
                         }
                         else
                         {
@@ -175,22 +175,22 @@ namespace Rain_On_Your_Parade
                         controlledActor.TargetState = newState;
                         //PreferenceSearch determines the most desired square.
                         //FindPath finds a path to it.
-                        controlledActor.Path = FindPath(PreferenceSearch(level).Keys.ToList(),
+                        controlledActor.Path = FindPath(PreferenceSearch(level),
                                                         level.Grid[actorSquare.X, actorSquare.Y],
                                                         level.Grid, new Point[level.Width, level.Height]);
                         //if none of the squares were desirable, Rampage
-                        if (controlledActor.Path == null) controlledActor.State = new ActorState(ActorState.AState.Wander);
+                        if (controlledActor.Path == null) controlledActor.State.State = ActorState.AState.Wander;
                         else
                         {
                             //Now, walk there.
-                            controlledActor.State = new ActorState(ActorState.AState.Walk);
+                            controlledActor.State.State = ActorState.AState.Walk;
                         }
                         break;
 
                     case ActorState.AState.Walk:
                         if (controlledActor.Path.Count < 1)
                         {
-                            controlledActor.State = new ActorState(ActorState.AState.Seek);
+                            controlledActor.State.State = ActorState.AState.Seek;
                         }
                         //The actual moving along the path.
                         else
@@ -207,14 +207,18 @@ namespace Rain_On_Your_Parade
                                 if (controlledActor.Path.Count == 1)
                                 {
                                     //controlledActor.Path.Clear();
-                                    if (controlledActor.ActorTarget != null && !nextSquare.Actors.Contains(controlledActor.ActorTarget) || nextSquare.Objects.Count() == 0)
+                                    if (controlledActor.TargetIsActor && nextSquare.Actors.Count == 0)
+                                    {
+                                        controlledActor.TargetIsActor = false;
+                                        controlledActor.State.State = ActorState.AState.Seek;
+                                    }
+                                    else if (!controlledActor.TargetIsActor && nextSquare.Objects.Count == 0)
                                     {
                                         controlledActor.State.State = ActorState.AState.Seek;
                                     }
                                     else
                                     {
-
-                                        controlledActor.State = new ActorState(controlledActor.TargetState);
+                                        controlledActor.State.State = controlledActor.TargetState;
                                     }
                                     enjoyTime = MAX_ENJOY_TIME;
                                 }
@@ -252,16 +256,16 @@ namespace Rain_On_Your_Parade
                         }
                         break;
                     case ActorState.AState.Wander:
-                        List<GridSquare> wanderTarget = new List<GridSquare>();
-                        wanderTarget.Add(level.Grid[random.Next(level.Width), random.Next(level.Height)]);
+                        Dictionary<GridSquare, Actor> wanderTarget = new Dictionary<GridSquare, Actor>();
+                        wanderTarget.Add(level.Grid[random.Next(level.Width), random.Next(level.Height)], null);
                         controlledActor.Path = FindPath(wanderTarget, level.Grid[actorSquare.X, actorSquare.Y],
                                                         level.Grid, new Point[level.Width, level.Height]);
                         if (controlledActor.Path != null)
                         {
-                            controlledActor.State = new ActorState(ActorState.AState.Walk);
+                            controlledActor.State.State = ActorState.AState.Walk;
                         }
 
-                        if (next <= 300) controlledActor.State = new ActorState(ActorState.AState.Seek);
+                        if (next <= 300) controlledActor.State.State = ActorState.AState.Seek;
                         break;
                     //Actor runs from the cloud if it's within a radius of the cloud
                     case ActorState.AState.Run:
@@ -312,7 +316,7 @@ namespace Rain_On_Your_Parade
                         if (runCoolDown < 1)
                         {
                             controlledActor.TargetState = ActorState.AState.Seek;
-                            controlledActor.State = new ActorState(ActorState.AState.Seek);
+                            controlledActor.State.State = ActorState.AState.Seek;
                             runCoolDown = MAX_RUN_COOLDOWN;
                         }
                         else
@@ -329,14 +333,14 @@ namespace Rain_On_Your_Parade
                         if (controlledActor.Path.Count == 0)
                         {
                             controlledActor.Velocity = new Vector2();
-                            controlledActor.State = new ActorState(ActorState.AState.Seek);
+                            controlledActor.State.State = ActorState.AState.Seek;
                         }
                         else if (controlledActor.Path.Count == 1) //at target!
                         {
                             controlledActor.Velocity = new Vector2();
                             if (!PreferenceSearch(level).Keys.ToList().Contains(controlledActor.Path[0]))
                             {
-                                controlledActor.State = new ActorState(ActorState.AState.Seek);
+                                controlledActor.State.State = ActorState.AState.Seek;
                             }
                         }
                         else
@@ -418,63 +422,66 @@ namespace Rain_On_Your_Parade
         private Dictionary<GridSquare, Actor> PreferenceSearch(Canvas level)
         {
             double maxPreference = 0;
-            Dictionary<Point, double> squarePreference = new Dictionary<Point, double>();
-            Dictionary<Point, Actor> actorsAtPoints = new Dictionary<Point, Actor>();
-            Dictionary<Point, bool> targetIsActor = new Dictionary<Point, bool>();
+            Dictionary<Actor, double> actorPreference = new Dictionary<Actor, double>();
+            Dictionary<Point, double> entityPreference = new Dictionary<Point, double>();
             Dictionary<GridSquare, Actor> targets = new Dictionary<GridSquare, Actor>();
             foreach (Actor actor in level.Actors)
             {
-                actorsAtPoints[actor.GridspacePosition] = actor;
-                targetIsActor[actor.GridspacePosition] = true;
-                if (squarePreference.ContainsKey(actor.GridspacePosition))
+                if (actorPreference.ContainsKey(actor))
                 {
-                    squarePreference[actor.GridspacePosition] += Desirability(level.Grid[actor.GridspacePosition.X, actor.GridspacePosition.Y]);
+                    actorPreference[actor] += Desirability(level.Grid[actor.GridspacePosition.X, actor.GridspacePosition.Y]);
                 }
                 else
                 {
-                    squarePreference[actor.GridspacePosition] = Desirability(level.Grid[actor.GridspacePosition.X, actor.GridspacePosition.Y]);
+                    actorPreference[actor] = Desirability(level.Grid[actor.GridspacePosition.X, actor.GridspacePosition.Y]);
                 }
             }
             foreach (WorldObject entity in level.Objects)
             {
-                if (targetIsActor.ContainsKey(entity.GridspacePosition) && targetIsActor[entity.GridspacePosition] && squarePreference[entity.GridspacePosition] < Desirability(level.Grid[entity.GridspacePosition.X, entity.GridspacePosition.Y]))
+                if (entityPreference.ContainsKey(entity.GridspacePosition))
                 {
-                    targetIsActor[entity.GridspacePosition] = false;
-                }
-                if (squarePreference.ContainsKey(entity.GridspacePosition))
-                {
-                    squarePreference[entity.GridspacePosition] += Desirability(level.Grid[entity.GridspacePosition.X, entity.GridspacePosition.Y]);
+                    entityPreference[entity.GridspacePosition] += Desirability(level.Grid[entity.GridspacePosition.X, entity.GridspacePosition.Y]);
                 }
                 else
                 {
-                    squarePreference[entity.GridspacePosition] = Desirability(level.Grid[entity.GridspacePosition.X, entity.GridspacePosition.Y]);
+                    entityPreference[entity.GridspacePosition] = Desirability(level.Grid[entity.GridspacePosition.X, entity.GridspacePosition.Y]);
                 }
             }
-            squarePreference[controlledActor.GridspacePosition] = 0;
-            foreach (Point point in squarePreference.Keys)
+            actorPreference[controlledActor] = 0;
+            entityPreference[controlledActor.GridspacePosition] = 0;
+            foreach (Actor actor in actorPreference.Keys)
             {
-                if (squarePreference[point] > maxPreference)
+                if (actorPreference[actor] > maxPreference)
                 {
                     targets.Clear();
-                    if (targetIsActor.ContainsKey(point) && targetIsActor[point])
-                    {
-                        targets.Add(level.Grid[point.X, point.Y], actorsAtPoints[point]);
-                    }
-                    else
-                    {
-                        targets.Add(level.Grid[point.X, point.Y], null);
-                    }
-                    maxPreference = squarePreference[point];
+                    targets.Add(level.Grid[actor.GridspacePosition.X, actor.GridspacePosition.Y], actor);
+                    maxPreference = actorPreference[actor];
                 }
-                else if (squarePreference[point] == maxPreference && maxPreference != 0 && squarePreference[point] != 0)
+                else if (actorPreference[actor] == maxPreference && maxPreference != 0 && actorPreference[actor] != 0)
                 {
-                    if (targetIsActor.ContainsKey(point) && targetIsActor[point])
+                    if (!targets.Keys.Contains(level.Grid[actor.GridspacePosition.X, actor.GridspacePosition.Y]))
                     {
-                        targets.Add(level.Grid[point.X, point.Y], actorsAtPoints[point]);
+                        targets.Add(level.Grid[actor.GridspacePosition.X, actor.GridspacePosition.Y], actor);
                     }
                     else
                     {
-                        targets.Add(level.Grid[point.X, point.Y], null);
+                        targets[level.Grid[actor.GridspacePosition.X, actor.GridspacePosition.Y]] = actor;
+                    }
+                }
+            }
+            foreach (Point entity in entityPreference.Keys)
+            {
+                if (entityPreference[entity] > maxPreference)
+                {
+                    targets.Clear();
+                    targets.Add(level.Grid[entity.X, entity.Y], null);
+                    maxPreference = entityPreference[entity];
+                }
+                else if (entityPreference[entity] == maxPreference && maxPreference != 0 && entityPreference[entity] != 0)
+                {
+                    if (!targets.Keys.Contains(level.Grid[entity.X, entity.Y]))
+                    {
+                        targets.Add(level.Grid[entity.X, entity.Y], null);
                     }
                 }
             }
@@ -526,7 +533,7 @@ namespace Rain_On_Your_Parade
         /// <param name="worldGrid">State space.</param>
         /// <param name="parentArray">For keeping track of the actual path. Keeps track of the progress of the BFS.</param>
         /// <returns></returns>
-        private List<GridSquare> FindPath(List<GridSquare> targets, GridSquare origin, GridSquare[,] worldGrid, Point[,] parentArray)
+        private List<GridSquare> FindPath(Dictionary<GridSquare, Actor> targets, GridSquare origin, GridSquare[,] worldGrid, Point[,] parentArray)
         {
             if (targets.Count == 0) return null;
             List<GridSquare> path = new List<GridSquare>();
@@ -537,15 +544,19 @@ namespace Rain_On_Your_Parade
 
             parentArray[origin.Location.X, origin.Location.Y] = new Point(-1, -1);
             gValues.Add(origin, 0);
-            pQueue.Enqueue(GetHValue(origin, targets), origin);
+            pQueue.Enqueue(GetHValue(origin, targets.Keys.ToList()), origin);
 
             while (pQueue.Count != 0)
             {
                 KeyValuePair<int, GridSquare> kvp = pQueue.Dequeue();
                 GridSquare lookingAt = kvp.Value;
                 //if we are looking at a target
-                if (targets.Contains(lookingAt))
+                if (targets.Keys.Contains(lookingAt))
                 {
+                    if (targets[lookingAt] != null)
+                    {
+                        controlledActor.TargetIsActor = true;
+                    }
                     List<Point> pointPath = ExtractPathFromTarget(parentArray, lookingAt.Location, origin.Location);
                     foreach (Point point in pointPath)
                     {
@@ -583,7 +594,7 @@ namespace Rain_On_Your_Parade
                                 GridSquare parent = worldGrid[lookingAt.Location.X, lookingAt.Location.Y];
                                 int fValue = gValues[parent] + 1;
                                 //evaluate hvalue and enqueue
-                                fValue += GetHValue(adjacentSquare, targets);
+                                fValue += GetHValue(adjacentSquare, targets.Keys.ToList());
                                 pQueue.Enqueue(fValue, adjacentSquare);
                             }
                             //if we are looking at the origin
@@ -592,7 +603,7 @@ namespace Rain_On_Your_Parade
                                 //parent gvalue = 0
                                 int fValue = 1;
                                 //evaluate hvalue and enqueue
-                                fValue += GetHValue(adjacentSquare, targets);
+                                fValue += GetHValue(adjacentSquare, targets.Keys.ToList());
                                 pQueue.Enqueue(fValue, adjacentSquare);
                             }
                         }
