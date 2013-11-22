@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections;
 using Microsoft.Xna.Framework;
 using System.Diagnostics;
 using System;
@@ -17,6 +18,12 @@ namespace Rain_On_Your_Parade
         private int maliceObjective;        //amount of malice needed to win level
         private List<WorldObject> objects;
         private List<Actor> actors;
+
+        public GameEngine.WinCondition win;
+        public List<Actor> maliceActors = new List<Actor>();
+        public List<WorldObject> maliceObjects = new List<WorldObject>();
+
+        public Hashtable rainbows = new Hashtable();
 
         public const int INTERACT_RADIUS = 50;
 
@@ -41,10 +48,10 @@ namespace Rain_On_Your_Parade
             actors.Add(new Actor(ActorType.Type.Cat, new Point(0, 6)));
             actors.Add(new Actor(ActorType.Type.Cat, new Point(5, 4)));
 
-            objects.Add(new WorldObject(ObjectType.Type.SunnySpot, new Point(8, 1), 0));
-            objects.Add(new WorldObject(ObjectType.Type.SunnySpot, new Point(2, 3), 0));
-            objects.Add(new WorldObject(ObjectType.Type.SunnySpot, new Point(2, 4), 0));
-            objects.Add(new WorldObject(ObjectType.Type.SunnySpot, new Point(8, 6), 0));
+            objects.Add(new WorldObject(ObjectType.Type.SunnyRainbowSpot, new Point(8, 1), 0));
+            objects.Add(new WorldObject(ObjectType.Type.SunnyRainbowSpot, new Point(2, 3), 0));
+            objects.Add(new WorldObject(ObjectType.Type.SunnyRainbowSpot, new Point(2, 4), 0));
+            objects.Add(new WorldObject(ObjectType.Type.SunnyRainbowSpot, new Point(8, 6), 0));
 
             objects.Add(new WorldObject(ObjectType.Type.Garden, new Point(2, 1), 1));
             objects.Add(new WorldObject(ObjectType.Type.Garden, new Point(3, 1), 1));
@@ -108,14 +115,14 @@ namespace Rain_On_Your_Parade
             objects.Add(new WorldObject(ObjectType.Type.Garden, new Point(9, 3), 2));
             #endregion leveltwo
             */
-            
+
             //Level 3
             #region levelthree
             actors.Add(new Actor(ActorType.Type.Cat, new Point(6, 0)));
             actors.Add(new Actor(ActorType.Type.Kid, new Point(1, 8)));
             actors.Add(new Actor(ActorType.Type.Mom, new Point(6, 6)));
-            objects.Add(new WorldObject(ObjectType.Type.SunnySpot, new Point(1, 1), 0));
-            objects.Add(new WorldObject(ObjectType.Type.SunnySpot, new Point(5, 7), 0));
+            objects.Add(new WorldObject(ObjectType.Type.SunnyRainbowSpot, new Point(1, 1), 0));
+            objects.Add(new WorldObject(ObjectType.Type.SunnyRainbowSpot, new Point(5, 7), 0));
             objects.Add(new WorldObject(ObjectType.Type.Garden, new Point(10, 2), 1));
             objects.Add(new WorldObject(ObjectType.Type.Garden, new Point(9, 7), 1));
             objects.Add(new WorldObject(ObjectType.Type.Pool, new Point(2, 3), 1));
@@ -147,6 +154,7 @@ namespace Rain_On_Your_Parade
             objects.Add(new WorldObject(ObjectType.Type.Chalking, new Point(8, 3), 0));
             objects.Add(new WorldObject(ObjectType.Type.Chalking, new Point(9, 3), 0));
             objects.Add(new WorldObject(ObjectType.Type.Chalking, new Point(10, 3), 0));
+            win = GameEngine.WinCondition.Actors;
             #endregion levelthree
            
             
@@ -159,6 +167,7 @@ namespace Rain_On_Your_Parade
             foreach (Actor actor in actors)
             {
                 Grid[actor.GridspacePosition.X, actor.GridspacePosition.Y].add(actor);
+                maliceActors.Add(actor);
             }
             foreach (GridSquare square in Grid)
             {

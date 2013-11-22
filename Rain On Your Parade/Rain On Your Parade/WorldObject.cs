@@ -111,13 +111,8 @@ namespace Rain_On_Your_Parade
                         type.RampageLevel = 0;
                         type.NurtureLevel = 3;
                         break;
-                    case ObjectType.Type.SunnySpot:
-                        type.SleepLevel = 3;
-                        type.NurtureLevel = 0;
-                        type.PlayLevel = 0;
-                        break;
-                    case ObjectType.Type.Rainbow:
-                        type.SleepLevel = 0;
+                    case ObjectType.Type.SunnyRainbowSpot:
+                        type.SleepLevel = 10;
                         type.NurtureLevel = 10;
                         type.PlayLevel = 10;
                         break;
@@ -156,14 +151,8 @@ namespace Rain_On_Your_Parade
                         type.NurtureLevel = -2;
                         activated = false;
                         break;
-                    case ObjectType.Type.SunnySpot:
-                        type.SleepLevel = 0;
-                        type.NurtureLevel = 0;
-                        type.PlayLevel = 0;
-                        activated = false;
-                        break;
-                    case ObjectType.Type.Rainbow:
-                        type.SleepLevel = 0;
+                    case ObjectType.Type.SunnyRainbowSpot:
+                        type.SleepLevel =3;
                         type.NurtureLevel = 0;
                         type.PlayLevel = 0;
                         activated = false;

@@ -6,7 +6,7 @@ namespace Rain_On_Your_Parade
     public class ObjectType
     {
 
-        public enum Type {SunnySpot, Rainbow, Garden, Pool, Chalking, Laundry, House};
+        public enum Type {SunnyRainbowSpot, Garden, Pool, Chalking, Laundry, House};
         Hashtable activatedImages = new Hashtable();
         Hashtable deactivatedImages = new Hashtable();
         private Type typeName;
@@ -26,8 +26,8 @@ namespace Rain_On_Your_Parade
             typeName = oTypeName;
             switch (typeName)
             {
-                case ObjectType.Type.SunnySpot:
-                    isWetObject = false;
+                case ObjectType.Type.SunnyRainbowSpot:
+                    isWetObject = true;
                     startsWet = false;
                     canActivate = false;
                     holdsWater = false;
@@ -36,23 +36,23 @@ namespace Rain_On_Your_Parade
                     nurtureLevel = 0;
                     rampageLevel = 0;
                     passable = true;
-                    activatedImages.Add(Type.SunnySpot, "sunspot_80");
-                    deactivatedImages.Add(Type.SunnySpot, "rainbow_80");
+                    activatedImages.Add(Type.SunnyRainbowSpot, "rainbow_80");
+                    deactivatedImages.Add(Type.SunnyRainbowSpot, "sunspot_80");
                     break;
 
-                case ObjectType.Type.Rainbow:
-                    isWetObject = true;
-                    startsWet = true;
-                    canActivate = false;
-                    holdsWater = false;
-                    sleepLevel = 0;
-                    playLevel = 10;
-                    nurtureLevel = 10;
-                    rampageLevel = 3;
-                    passable = true;
-                    activatedImages.Add(Type.Rainbow, "rainbow_80");
-                    deactivatedImages.Add(Type.Rainbow, "sunspot_80");
-                    break;
+                //case ObjectType.Type.:
+                //    isWetObject = true;
+                //    startsWet = true;
+                //    canActivate = false;
+                //    holdsWater = false;
+                //    sleepLevel = 0;
+                //    playLevel = 10;
+                //    nurtureLevel = 10;
+                //    rampageLevel = 3;
+                //    passable = true;
+                //    activatedImages.Add(Type.Rainbow, "rainbow_80");
+                //    deactivatedImages.Add(Type.Rainbow, "sunspot_80");
+                //    break;
 
                 case ObjectType.Type.Garden:
                     isWetObject = true;
@@ -137,10 +137,8 @@ namespace Rain_On_Your_Parade
             nurtureLevel = oNurture;
             rampageLevel = oRampage;
 
-            activatedImages.Add(Type.SunnySpot, "sunspot_80");
-            deactivatedImages.Add(Type.SunnySpot, "rainbow_80");
-            activatedImages.Add(Type.Rainbow, "rainbow_80");
-            deactivatedImages.Add(Type.Rainbow, "sunspot_80");
+            activatedImages.Add(Type.SunnyRainbowSpot, "rainbow_80");
+            deactivatedImages.Add(Type.SunnyRainbowSpot, "sunspot_80");
             activatedImages.Add(Type.Garden, "garden2_80");
             deactivatedImages.Add(Type.Garden, "drygarden_80");
             activatedImages.Add(Type.Pool, "pool_80");

@@ -54,6 +54,11 @@ namespace Rain_On_Your_Parade
                 switch (current.Activated)
                 {
                     case true:
+                        //if (current.Type.TypeName == ObjectType.Type.SunnyRainbowSpot)
+                        //{
+                        //    float alpha = ((int)level.rainbows[current] / (float)GameEngine.MAX_RAINBOW_TIME);
+                        //    activatedImage.Draw(spriteBatch, viewedModel.PixelPosition, new Color(alpha, alpha, alpha, alpha));
+                        //}
                         activatedImage.Draw(spriteBatch, viewedModel.PixelPosition, Color.White);
                         break;
                     case false:
