@@ -104,18 +104,20 @@ namespace Rain_On_Your_Parade
 
             }
 
-            //Determines whether the actor is close enough to interact with another actor, and if so, changes its state to Run
+            //Determines whether the actor is close enough to interact with another actor, and if so, changes its state appropriately
             foreach (Actor a in level.interactableActors(controlledActor))
             {
                 if (level.nearEnoughForInteraction(a, controlledActor))
                 {
-                    if (controlledActor.InteractionTimer == 0 && a.InteractionTimer == 0 && ((a.Mood > 3 && controlledActor.Mood > 3) || (a.Mood == 5 || controlledActor.Mood == 5)))
+                    if (controlledActor.InteractionTimer == 0 && a.InteractionTimer == 0 && 
+                        ((a.Mood > 3 && controlledActor.Mood > 3) || (a.Mood == 5 || controlledActor.Mood == 5)))
                     {
                         controlledActor.State.State = ActorState.AState.Fight;
                         a.State.State = ActorState.AState.Fight;
-                    }else if (controlledActor.InteractionTimer == 0 &&
-                        (DetermineTargetState() == ActorState.AState.Nurture && a.Mood > 3 && controlledActor.Mood < 3) ||
-                        (a.TargetState == ActorState.AState.Nurture && controlledActor.Mood > 3 && a.Mood < 3))
+                    }
+                    else if (controlledActor.InteractionTimer == 0 &&
+                            (DetermineTargetState() == ActorState.AState.Nurture && a.Mood > 3 && controlledActor.Mood < 3) ||
+                            (a.TargetState == ActorState.AState.Nurture && controlledActor.Mood > 3 && a.Mood < 3))
                     {
                         controlledActor.State.State = ActorState.AState.Comfort;
                         a.State.State = ActorState.AState.Comfort;
@@ -633,7 +635,7 @@ namespace Rain_On_Your_Parade
         }
 
         /// <summary>
-        /// Breadth-first search.
+        /// A* search.
         /// </summary>
         /// <param name="targets">Goal states.</param>
         /// <param name="origin">Starting state.</param>
