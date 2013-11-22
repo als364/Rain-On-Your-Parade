@@ -17,10 +17,14 @@ namespace Rain_On_Your_Parade
     /// </summary>
     public class GameEngine : Game
     {
+        public enum WinCondition { Objects, Actors, Malice };
+
         public const int SCREEN_WIDTH = 880;
         public const int SCREEN_HEIGHT = 720;
 
-        public const int LOG_FRAMES = 60;
+        public const int MAX_RAINBOW_TIME = 450;
+
+        public const int LOG_FRAMES = 120;
         private int framesTillLog = 0;
 
         GraphicsDeviceManager graphics;
@@ -65,6 +69,10 @@ namespace Rain_On_Your_Parade
             graphics.PreferredBackBufferHeight = SCREEN_HEIGHT;
             graphics.IsFullScreen = false;
             graphics.ApplyChanges();
+
+            models.Clear();
+            views.Clear();
+            controllers.Clear();
 
             //This is where the level building goes. I don't care about an XML parsing framework yet
             level = new Canvas();
@@ -151,10 +159,61 @@ namespace Rain_On_Your_Parade
                 framesTillLog--;
             }
 
+            switch (level.win)
+            {
+                case WinCondition.Malice:
+                    if (level.Malice == level.MaliceObjective)
+                    {
+                        Initialize();
+                        return;
+                    }
+                    break;
+                case WinCondition.Actors:
+                    bool win = true;
+                    foreach (Actor a in level.maliceActors)
+                    {
+                        win &= a.Mood == 6;
+                    }
+                    if (win)
+                    {
+                        Initialize();
+                        return;
+                    }
+                    break;
+                case WinCondition.Objects:
+                    break;
+            }
+
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
+            if (Keyboard.GetState().IsKeyDown(Keys.P))
+            {
+                Initialize();
+                return;
+            }
 
             // TODO: Add your update logic here
+
+            List<WorldObject> toRemove = new List<WorldObject>();
+            List<WorldObject> rainbowKeys = new List<WorldObject>();
+            foreach (WorldObject r in level.rainbows.Keys)
+            {
+                rainbowKeys.Add(r);
+            }
+            foreach (WorldObject r in rainbowKeys)
+            {
+                level.rainbows[r] = (int)level.rainbows[r] - 1;
+                if (((int)level.rainbows[r]) == 0)
+                {
+                    toRemove.Add(r);
+                }
+            }
+            foreach (WorldObject r in toRemove)
+            {
+                r.deactivate();
+                level.rainbows.Remove(r);
+            }
+
 
             foreach (Model model in models)
             {
