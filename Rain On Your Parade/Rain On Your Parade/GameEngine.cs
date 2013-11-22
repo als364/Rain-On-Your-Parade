@@ -24,6 +24,8 @@ namespace Rain_On_Your_Parade
 
         public const int MAX_RAINBOW_TIME = 450;
 
+        private int stage = 3;
+
         public const int LOG_FRAMES = 120;
         private int framesTillLog = 0;
 
@@ -75,7 +77,7 @@ namespace Rain_On_Your_Parade
             controllers.Clear();
 
             //This is where the level building goes. I don't care about an XML parsing framework yet
-            level = new Canvas();
+            level = new Canvas(stage);
 
            // Debug.WriteLine("Y: " + level.Grid[6, 6].Actors[0].Position.Y);
             int quota = 100;
@@ -163,7 +165,11 @@ namespace Rain_On_Your_Parade
             {
                 case WinCondition.Malice:
                     if (level.Malice == level.MaliceObjective)
-                    {
+                    {                        
+                        if (--stage == 0)
+                        {
+                            stage = 3;
+                        }
                         Initialize();
                         return;
                     }
@@ -172,10 +178,14 @@ namespace Rain_On_Your_Parade
                     bool win = true;
                     foreach (Actor a in level.maliceActors)
                     {
-                        win &= a.Mood == 6;
+                        win &= a.Mood == 5;
                     }
                     if (win)
-                    {
+                    {                        
+                        if (--stage == 0)
+                        {
+                            stage = 3;
+                        }
                         Initialize();
                         return;
                     }
