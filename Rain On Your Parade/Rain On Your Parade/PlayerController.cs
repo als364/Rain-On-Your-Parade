@@ -205,7 +205,7 @@ namespace Rain_On_Your_Parade
                 {
                     if (o.Type.HoldsWater)
                     {
-                        o.WaterLevel++;
+                        o.WaterLevel = 1;
                     }
 
                     //Console.Write(o.ToString() + "object rained upon\n");

@@ -35,6 +35,7 @@ namespace Rain_On_Your_Parade
 
         Texture2D batterybar;
         Texture2D battery;
+        Texture2D background;
 
         Logger log;
 
@@ -120,6 +121,7 @@ namespace Rain_On_Your_Parade
 
             batterybar = Content.Load<Texture2D>("batterybar");
             battery = Content.Load<Texture2D>("grass");
+            background = Content.Load<Texture2D>("background");
 
         }
 
@@ -183,19 +185,24 @@ namespace Rain_On_Your_Parade
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.LimeGreen);
+            spriteBatch.Begin();
+            spriteBatch.Draw(background, new Rectangle(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT), Color.White);
+            spriteBatch.End();
             
             // TODO: Add your drawing code here
             foreach (View view in views)
             {
                 view.Draw(spriteBatch); //calls the AnimatedSprite draw function which includes begin/end
             }
-            spriteBatch.Begin();
+          
             //TODO: update this to reflect Player.MAX_RAIN
+            spriteBatch.Begin();
             spriteBatch.Draw(batterybar, new Rectangle(0, 0, 155, 30), Color.Azure);
             for (int i = 0; i < level.Player.Rain; i++)
             {
                 spriteBatch.Draw(battery, new Rectangle(i*150/6 +5 , 3, 150/6, 25), Color.Azure);
             }
+
             spriteBatch.End();
             base.Draw(gameTime);
 
