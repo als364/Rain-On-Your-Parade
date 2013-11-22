@@ -12,6 +12,7 @@ namespace Rain_On_Your_Parade
         private ObjectType type;
         private bool activated;
         private int waterLevel;
+        private int initialWaterLevel;
 
         public WorldObject(ObjectType.Type oType, Point pos, int waterAmt)
         {
@@ -20,6 +21,7 @@ namespace Rain_On_Your_Parade
             GridspacePosition = pos;
             activated = (type.StartsWet && type.IsWetObject) || (!type.IsWetObject && !type.StartsWet);
             waterLevel = waterAmt;
+            initialWaterLevel = waterAmt;
             colorAlpha = 0f;
         }
 
@@ -32,11 +34,11 @@ namespace Rain_On_Your_Parade
             AnimatedTexture aniTexBaseDeactive = new AnimatedTexture(deactivatedTexture, 1, 1, false, false);
 
             List<AnimationSequence> aniSequencesAct = new List<AnimationSequence>(1);
-            aniSequencesAct.Add(new AnimationSequence(0, 5, true, true, 1, 0.1f, aniTexBaseActive, null));
+            aniSequencesAct.Add(new AnimationSequence(0, 5, true, 1, 0.1f, aniTexBaseActive, null));
             activatedSprite = new AnimatedSprite(aniSequencesAct);
 
             List<AnimationSequence> aniSequencesDeact = new List<AnimationSequence>(1);
-            aniSequencesDeact.Add(new AnimationSequence(0, 5, true, true, 1, 0.1f, aniTexBaseDeactive, null));
+            aniSequencesDeact.Add(new AnimationSequence(0, 5, true, 1, 0.1f, aniTexBaseDeactive, null));
             deactivatedSprite = new AnimatedSprite(aniSequencesDeact);
 
             spriteWidth = 80;
@@ -91,11 +93,13 @@ namespace Rain_On_Your_Parade
                 {
                     case ObjectType.Type.Pool:
                         type.PlayLevel = 3;
+                        waterLevel = initialWaterLevel;
                         break;
                     case ObjectType.Type.Garden:
                         type.PlayLevel = 0;
                         type.SleepLevel = 0;
                         type.NurtureLevel = 3;
+                        waterLevel = initialWaterLevel;
                         break;
                     case ObjectType.Type.Chalking:
                         type.PlayLevel = 0;

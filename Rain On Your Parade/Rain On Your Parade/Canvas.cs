@@ -65,7 +65,7 @@ namespace Rain_On_Your_Parade
             objects.Add(new WorldObject(ObjectType.Type.Garden, new Point(3, 6), 1));
             objects.Add(new WorldObject(ObjectType.Type.Garden, new Point(2, 6), 1));
             #endregion levelone
-            */
+            
             //Level 2
             #region leveltwo
             actors.Add(new Actor(ActorType.Type.Kid, new Point(10, 6)));
@@ -107,8 +107,8 @@ namespace Rain_On_Your_Parade
             objects.Add(new WorldObject(ObjectType.Type.Garden, new Point(5, 7), 2));
             objects.Add(new WorldObject(ObjectType.Type.Garden, new Point(9, 3), 2));
             #endregion leveltwo
+            */
             
-            /*
             //Level 3
             #region levelthree
             actors.Add(new Actor(ActorType.Type.Cat, new Point(6, 0)));
@@ -148,8 +148,8 @@ namespace Rain_On_Your_Parade
             objects.Add(new WorldObject(ObjectType.Type.Chalking, new Point(9, 3), 0));
             objects.Add(new WorldObject(ObjectType.Type.Chalking, new Point(10, 3), 0));
             #endregion levelthree
-           */
-
+           
+            
             player = new Player();
 
             foreach (WorldObject entity in objects)

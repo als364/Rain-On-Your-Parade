@@ -83,10 +83,11 @@ namespace Rain_On_Your_Parade
             List<AnimationSequence> aniSequences = new List<AnimationSequence>(4);
             //aniSequences.Add(new AnimationSequence(0, 11, true, true, 1, 0.1f, aniTexBase, null));
             
-            AnimationSequence cloud_face1 = new AnimationSequence(11, 5, true, false, 1, 0.1f, aniTexBase, null);
-            AnimationSequence cloud_face2 = new AnimationSequence(5, 0, true, false, 1, 0.1f, aniTexBase, null);
-            AnimationSequence cloud_1 = new AnimationSequence(11, 6, true, false, 1, 0.1f, aniTexFace, cloud_face1);
-            AnimationSequence cloud_2 = new AnimationSequence(5, 0, true, false, 1, 0.1f, aniTexFace, cloud_face2);
+            AnimationSequence cloud_face1 = new AnimationSequence(11, 5, true, 1, 0.1f, aniTexFace, null);
+            AnimationSequence cloud_face2 = new AnimationSequence(4, 0, true, 1, 0.1f, aniTexFace, null);
+            AnimationSequence cloud_1 = new AnimationSequence(11, 5, true, 1, 0.1f, aniTexBase, cloud_face1);
+            AnimationSequence cloud_2 = new AnimationSequence(4, 0, true, 1, 0.1f, aniTexBase, cloud_face2);
+            
             aniSequences.Add(cloud_1);
             aniSequences.Add(cloud_face1);
             aniSequences.Add(cloud_2);

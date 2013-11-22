@@ -64,12 +64,26 @@ namespace Rain_On_Your_Parade
             Texture2D activatedTexture = content.Load<Texture2D>(type.activatedStringName());
             //Texture2D deactivatedTexture = content.Load<Texture2D>(type.activatedStringName());
 
-            AnimatedTexture aniTexBaseActive = new AnimatedTexture(activatedTexture, 1, 1, false, false);
-            
-            List<AnimationSequence> aniSequencesAct = new List<AnimationSequence>(1);
-            aniSequencesAct.Add(new AnimationSequence(0, 5, true, true, 1, 0.1f, aniTexBaseActive, null));
-            activatedSprite = new AnimatedSprite(aniSequencesAct);
-            deactivatedSprite = new AnimatedSprite(aniSequencesAct);
+            if (type.TypeName == ActorType.Type.Kid)
+            {
+                AnimatedTexture aniTexBaseActive = new AnimatedTexture(activatedTexture, 6, 3, false, false);
+                List<AnimationSequence> aniSequencesAct = new List<AnimationSequence>(2);
+                //aniSequencesAct.Add(new AnimationSequence(9,14, true, 1, 0.1f, aniTexBaseActive, null));
+                aniSequencesAct.Add(new AnimationSequence(8, 14, true, 1, 0.1f, aniTexBaseActive, null));
+                aniSequencesAct.Add(new AnimationSequence(7, 0, true, 1, 0.1f, aniTexBaseActive, null));
+
+                activatedSprite = new AnimatedSprite(aniSequencesAct);
+                deactivatedSprite = null;
+            }
+            else
+            {
+                AnimatedTexture aniTexBaseActive = new AnimatedTexture(activatedTexture, 1, 1, false, false);
+                List<AnimationSequence> aniSequencesAct = new List<AnimationSequence>(1);
+                aniSequencesAct.Add(new AnimationSequence(0, 0, true, 1, 0.1f, aniTexBaseActive, null));
+
+                activatedSprite = new AnimatedSprite(aniSequencesAct);
+                deactivatedSprite = new AnimatedSprite(aniSequencesAct);
+            }
 
             mood1 = content.Load<Texture2D>("Emote1");
             mood2 = content.Load<Texture2D>("Emote2");

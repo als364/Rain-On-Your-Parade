@@ -11,7 +11,6 @@ namespace Rain_On_Your_Parade
         private int startFrame; 		// first frame of the sequence
         private int endFrame; 		    // last frame of the sequence
         private bool reverseFrames; 	// 1,2...9,10,9,...2,1
-        private bool startForward;
         private bool goForward; 		// whether to increment or decrement frame count this update
         private int seqCounter; 		// how many times to play this sequence before switching
         private float timePerFrame;		// frame rate for this sequence
@@ -23,7 +22,6 @@ namespace Rain_On_Your_Parade
         /// <param name="a">sprite sheet frame index of first frame in sequence</param>
         /// <param name="z">sprite sheet frame index of last frame in sequence</param>
         /// <param name="rev">is last frame followed by second-to-last frame?</param>
-        /// <param name="rev">should we go forward or reverse first?</param>
         /// <param name="rpt">how many times should this sequence iterate through the frames?</param>
         /// <param name="fRate">frame rate for this sequence</param>
         /// <param name="tex">AnimatedTexture spritesheet for this sequence</param>
@@ -34,14 +32,13 @@ namespace Rain_On_Your_Parade
         /// keeping sprite sheets reasonably sized and memory efficient
         /// </devdoc>
         
-        public AnimationSequence(int a, int z, bool rev, bool forward, int rpt, float fRate, 
+        public AnimationSequence(int a, int z, bool rev, int rpt, float fRate, 
             AnimatedTexture tex, AnimationSequence aSeq)
         {
             startFrame = a;
             endFrame = z;
             reverseFrames = rev;
-            startForward = forward;
-            goForward = startForward;
+            goForward = (a < z);
             seqCounter = rpt;
             timePerFrame = fRate;
             texture = tex;
@@ -82,18 +79,6 @@ namespace Rain_On_Your_Parade
             set
             {
                 reverseFrames = value;
-            }
-        }
-
-        public bool StartForward
-        {
-            get
-            {
-                return startForward;
-            }
-            set
-            {
-                startForward = value;
             }
         }
 

@@ -15,6 +15,8 @@ namespace Rain_On_Your_Parade
         private float timeElapsed;					    // for maintaining frame rate
         private int counter;                            // keep track of the number of iterations
         private int seqIndex;                           // keep track of current sequence index
+        private int max;
+        private int min;
 
         /// <summary>AnimatedSprite Constructor</summary>
         /// <param name="seq">list of AnimationSequences that make up this animation</param>
@@ -31,6 +33,8 @@ namespace Rain_On_Your_Parade
             currentFrame = seq[0].StartFrame;
             counter = 0;
             seqIndex = 0;
+            min = Math.Min(currentSequence.EndFrame, currentSequence.StartFrame);
+            max = Math.Max(currentSequence.EndFrame, currentSequence.StartFrame);
         }
 
         /// <devdoc>
@@ -53,7 +57,9 @@ namespace Rain_On_Your_Parade
             }
             currentSequence = sequences[seqIndex];
             currentFrame = currentSequence.StartFrame;
-            currentSequence.GoForward = currentSequence.StartForward;
+            currentSequence.GoForward = (currentSequence.StartFrame < currentSequence.EndFrame);
+            min = Math.Min(currentSequence.EndFrame, currentSequence.StartFrame);
+            max = Math.Max(currentSequence.EndFrame, currentSequence.StartFrame);
         }
 
         /// <devdoc>
@@ -87,8 +93,7 @@ namespace Rain_On_Your_Parade
                     }
 
                     // check if we reached the end of an iteration
-                    if (currentFrame == currentSequence.StartFrame || 
-                        currentFrame == currentSequence.EndFrame)
+                    if (currentFrame == min || currentFrame > max)
                     {
                         // check if we need to switch to the next sequence
                         if (counter == currentSequence.SeqCounter)
@@ -114,7 +119,7 @@ namespace Rain_On_Your_Parade
                     currentFrame++;
 
                     // check if we reached the end of an iteration
-                    if (currentFrame == currentSequence.EndFrame)
+                    if (currentFrame == max)
                     {
                         if (counter == currentSequence.SeqCounter)
                         {
@@ -126,7 +131,7 @@ namespace Rain_On_Your_Parade
                         {
                             // increment counter and set current
                             counter++;
-                            currentFrame = currentSequence.StartFrame;
+                            currentFrame = min;
                         }
                     }
                 }
@@ -146,6 +151,8 @@ namespace Rain_On_Your_Parade
             int row = (int)((float)currentFrame / (float)currentSequence.Texture.Columns);
             int column = currentFrame % currentSequence.Texture.Columns;
 
+            //Console.Write("("+row.ToString()+", "+column.ToString()+")\n");
+
             Rectangle sourceRectangle = new Rectangle(width * column, height * row, width, height);
             Rectangle destinationRectangle = new Rectangle((int)location.X, (int)location.Y, width, height);
 
@@ -155,8 +162,9 @@ namespace Rain_On_Your_Parade
             spriteBatch.Begin();
             if (overlay != null)
             {
-                spriteBatch.Draw(overlay.Texture.Texture, destinationRectangle, sourceRectangle, color);
-                spriteBatch.Draw(currentSequence.Texture.Texture, destinationRectangle, sourceRectangle, Color.White);
+                spriteBatch.Draw(currentSequence.Texture.Texture, destinationRectangle, sourceRectangle, color);
+                spriteBatch.Draw(overlay.Texture.Texture, destinationRectangle, sourceRectangle, Color.White);
+                
             }
             else
             {
