@@ -97,7 +97,7 @@ namespace Rain_On_Your_Parade
                         break;
                     case ObjectType.Type.Garden:
                         type.PlayLevel = 0;
-                        type.SleepLevel = 0;
+                        type.SleepLevel = 3;
                         type.NurtureLevel = 3;
                         waterLevel = initialWaterLevel;
                         break;
