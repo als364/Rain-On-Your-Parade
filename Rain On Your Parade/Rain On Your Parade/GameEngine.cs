@@ -55,7 +55,6 @@ namespace Rain_On_Your_Parade
             models = new List<Model>();
             views = new List<View>();
             controllers = new List<Controller>();
-            //worldState = new WorldState();
         }
 
         /// <summary>
@@ -67,6 +66,11 @@ namespace Rain_On_Your_Parade
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
+            resetGame();
+        }
+
+        public void resetGame()
+        {
             graphics.PreferredBackBufferWidth = SCREEN_WIDTH;
             graphics.PreferredBackBufferHeight = SCREEN_HEIGHT;
             graphics.IsFullScreen = false;
@@ -79,7 +83,7 @@ namespace Rain_On_Your_Parade
             //This is where the level building goes. I don't care about an XML parsing framework yet
             level = new Canvas(stage);
 
-           // Debug.WriteLine("Y: " + level.Grid[6, 6].Actors[0].Position.Y);
+            // Debug.WriteLine("Y: " + level.Grid[6, 6].Actors[0].Position.Y);
             int quota = 100;
             //worldState = new WorldState(quota,level.Grid);
             level.MaliceObjective = quota;
@@ -91,14 +95,15 @@ namespace Rain_On_Your_Parade
                 models.Add(o);
                 views.Add(objects);
             }
-            foreach (Actor a in level.Actors){
+            foreach (Actor a in level.Actors)
+            {
                 View actors = new View(a);
                 models.Add(a);
                 views.Add(actors);
                 Controller actorController = new ActorController(a);
                 controllers.Add(actorController);
             }
-            
+
             View player = new View(level.Player);
             views.Add(player);
             models.Add(level.Player);
@@ -159,6 +164,13 @@ namespace Rain_On_Your_Parade
             else
             {
                 framesTillLog--;
+            }
+
+            KeyboardState ks = Keyboard.GetState();
+
+            if (ks.IsKeyDown(Keys.R))
+            {
+                resetGame();
             }
 
             switch (level.win)
@@ -243,6 +255,7 @@ namespace Rain_On_Your_Parade
                 controller.Update(gameTime, level);
             }
             level.upateGridSquares();
+
 
             base.Update(gameTime);
         }

@@ -27,12 +27,12 @@ namespace Rain_On_Your_Parade
         public override void Update(GameTime gameTime, Canvas level)
         {
             player.isRaining = isRaining;
-            KeyboardState ks = Keyboard.GetState();
             level.Player.PrevPos = new Vector2(player.PixelPosition.X, player.PixelPosition.Y);
+            KeyboardState ks = Keyboard.GetState();
 
-            if (coolDown == 0) 
+            if (coolDown == 0)
             {
-                if (ks.IsKeyDown(Keys.R))
+                if (ks.IsKeyDown(Keys.LeftShift) || ks.IsKeyDown(Keys.RightShift))
                 {
                     if (Absorb(level))
                     {
@@ -52,27 +52,27 @@ namespace Rain_On_Your_Parade
 
                 //if (player.Velocity.Length() < MAX_SPEED)
                 //{
-                    if (ks.IsKeyDown(Keys.W) || ks.IsKeyDown(Keys.Up))
-                    {
-                       player.Velocity = Vector2.Subtract(player.Velocity,new Vector2(0, ACCELERATION));
-                    }
-                    if (ks.IsKeyDown(Keys.D) || ks.IsKeyDown(Keys.Right))
-                    {
-                        player.Velocity = Vector2.Add(player.Velocity, new Vector2(ACCELERATION, 0));
-                    }
-                    if (ks.IsKeyDown(Keys.S) || ks.IsKeyDown(Keys.Down))
-                    {
-                        player.Velocity = Vector2.Add(player.Velocity, new Vector2(0, ACCELERATION));
-                    }
-                    if (ks.IsKeyDown(Keys.A) || ks.IsKeyDown(Keys.Left))
-                    {
-                        player.Velocity = Vector2.Subtract(player.Velocity, new Vector2(ACCELERATION, 0));
-                    }
+                if (ks.IsKeyDown(Keys.W) || ks.IsKeyDown(Keys.Up))
+                {
+                    player.Velocity = Vector2.Subtract(player.Velocity, new Vector2(0, ACCELERATION));
+                }
+                if (ks.IsKeyDown(Keys.D) || ks.IsKeyDown(Keys.Right))
+                {
+                    player.Velocity = Vector2.Add(player.Velocity, new Vector2(ACCELERATION, 0));
+                }
+                if (ks.IsKeyDown(Keys.S) || ks.IsKeyDown(Keys.Down))
+                {
+                    player.Velocity = Vector2.Add(player.Velocity, new Vector2(0, ACCELERATION));
+                }
+                if (ks.IsKeyDown(Keys.A) || ks.IsKeyDown(Keys.Left))
+                {
+                    player.Velocity = Vector2.Subtract(player.Velocity, new Vector2(ACCELERATION, 0));
+                }
 
-                    if (player.Velocity.Length() > MAX_SPEED)
-                    {
-                        player.Velocity = Vector2.Multiply(Vector2.Normalize(player.Velocity), MAX_SPEED);
-                    }
+                if (player.Velocity.Length() > MAX_SPEED)
+                {
+                    player.Velocity = Vector2.Multiply(Vector2.Normalize(player.Velocity), MAX_SPEED);
+                }
                 //}
 
                 if (Math.Abs(player.Velocity.X) > 0 && ks.IsKeyUp(Keys.A) && ks.IsKeyUp(Keys.D))
@@ -85,9 +85,9 @@ namespace Rain_On_Your_Parade
                         }
                         else
                         {
-                            player.Velocity = Vector2.Subtract(player.Velocity,new Vector2(DECELERATION,0));
+                            player.Velocity = Vector2.Subtract(player.Velocity, new Vector2(DECELERATION, 0));
                         }
-                        
+
                     }
                     else
                     {
@@ -97,9 +97,9 @@ namespace Rain_On_Your_Parade
                         }
                         else
                         {
-                            player.Velocity = Vector2.Add(player.Velocity, new Vector2(DECELERATION,0));
+                            player.Velocity = Vector2.Add(player.Velocity, new Vector2(DECELERATION, 0));
                         }
-                        
+
                     }
                 }
 
@@ -113,9 +113,9 @@ namespace Rain_On_Your_Parade
                         }
                         else
                         {
-                            player.Velocity = Vector2.Subtract(player.Velocity,new Vector2(0, DECELERATION));
+                            player.Velocity = Vector2.Subtract(player.Velocity, new Vector2(0, DECELERATION));
                         }
-                        
+
                     }
                     else
                     {
@@ -127,7 +127,7 @@ namespace Rain_On_Your_Parade
                         {
                             player.Velocity = Vector2.Add(player.Velocity, new Vector2(0, DECELERATION));
                         }
-                        
+
                     }
                 }
             }
@@ -163,8 +163,8 @@ namespace Rain_On_Your_Parade
                 player.Velocity = new Vector2(player.Velocity.X, 0);
             }
 
-            player.GridspacePosition = new Point((int)(player.PixelPosition.X / Canvas.SQUARE_SIZE), 
-                                                 (int)(player.PixelPosition.Y / Canvas.SQUARE_SIZE));
+            player.GridspacePosition = new Point((int)(player.PixelPosition.X / Canvas.SQUARE_SIZE),
+                                                    (int)(player.PixelPosition.Y / Canvas.SQUARE_SIZE));
         }
 
         private bool Rain(Canvas level)
