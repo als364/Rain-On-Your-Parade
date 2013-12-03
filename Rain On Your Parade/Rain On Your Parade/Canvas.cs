@@ -23,12 +23,16 @@ namespace Rain_On_Your_Parade
         public List<Actor> maliceActors = new List<Actor>();
         public List<WorldObject> maliceObjects = new List<WorldObject>();
 
+        public int levelNum;
+
         public Hashtable rainbows = new Hashtable();
 
         public const int INTERACT_RADIUS = 50;
 
         public Canvas(int level)
         {
+            levelNum = level;
+
             Grid = new GridSquare[squaresWide, squaresTall];
             objects = new List<WorldObject>();
             actors = new List<Actor>();
@@ -37,7 +41,7 @@ namespace Rain_On_Your_Parade
             {
                 for (int j = 0; j < squaresTall; j++)
                 {
-                    Grid[i,j] = new GridSquare(new List<WorldObject>(), new List<Actor>(), new Point(i, j));
+                    Grid[i, j] = new GridSquare(new List<WorldObject>(), new List<Actor>(), new Point(i, j));
                 }
             }
 
@@ -164,8 +168,8 @@ namespace Rain_On_Your_Parade
                     break;
                 default: break;
             }
-           
-            
+
+
             player = new Player();
 
             foreach (WorldObject entity in objects)

@@ -59,7 +59,6 @@ namespace Rain_On_Your_Parade
             models = new List<Model>();
             views = new List<View>();
             controllers = new List<Controller>();
-            //worldState = new WorldState();
         }
 
         /// <summary>
@@ -72,6 +71,11 @@ namespace Rain_On_Your_Parade
         {
             
             // TODO: Add your initialization logic here
+            resetGame();
+        }
+
+        public void resetGame()
+        {
             graphics.PreferredBackBufferWidth = SCREEN_WIDTH;
             graphics.PreferredBackBufferHeight = SCREEN_HEIGHT;
             graphics.IsFullScreen = false;
@@ -267,6 +271,7 @@ namespace Rain_On_Your_Parade
                 Initialize();
                 return;
             }
+
 
             base.Update(gameTime);
         }

@@ -192,9 +192,12 @@ namespace Rain_On_Your_Parade
 
         public void DecrementMood()
         {
-            if (mood - 1 < 0) mood = 0;
-            else
-            mood--;
+            if (mood < 5)
+            {
+                if (mood - 1 < 0) mood = 0;
+                else
+                    mood--;
+            }
 
         }
 
