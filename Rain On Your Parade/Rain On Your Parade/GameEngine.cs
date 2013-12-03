@@ -26,6 +26,7 @@ namespace Rain_On_Your_Parade
 
         private int stage = 3;
 
+        public static int STAGE_NUM= 20;
         public const int LOG_FRAMES = 120;
         private int framesTillLog = 0;
 
@@ -44,6 +45,9 @@ namespace Rain_On_Your_Parade
         Texture2D background;
 
         Logger log;
+
+        Menu menu;
+        Boolean menuOn = true;
 
         public GameEngine()
             : base()
@@ -66,6 +70,7 @@ namespace Rain_On_Your_Parade
         /// </summary>
         protected override void Initialize()
         {
+            
             // TODO: Add your initialization logic here
             graphics.PreferredBackBufferWidth = SCREEN_WIDTH;
             graphics.PreferredBackBufferHeight = SCREEN_HEIGHT;
@@ -76,41 +81,47 @@ namespace Rain_On_Your_Parade
             views.Clear();
             controllers.Clear();
 
-            //This is where the level building goes. I don't care about an XML parsing framework yet
-            level = new Canvas(stage);
-
-           // Debug.WriteLine("Y: " + level.Grid[6, 6].Actors[0].Position.Y);
-            int quota = 100;
-            //worldState = new WorldState(quota,level.Grid);
-            level.MaliceObjective = quota;
-
-            //Debug.WriteLine("Y: " + worldState.getActors().ToArray()[1].Position.Y);
-            foreach (WorldObject o in level.Objects)
+            menu = new Menu();
+            if (menuOn) menu.Initialize();
+            else
             {
-                View objects = new View(o);
-                models.Add(o);
-                views.Add(objects);
+                //This is where the level building goes. I don't care about an XML parsing framework yet
+                level = new Canvas(stage);
+
+                // Debug.WriteLine("Y: " + level.Grid[6, 6].Actors[0].Position.Y);
+                int quota = 100;
+                //worldState = new WorldState(quota,level.Grid);
+                level.MaliceObjective = quota;
+
+                //Debug.WriteLine("Y: " + worldState.getActors().ToArray()[1].Position.Y);
+                foreach (WorldObject o in level.Objects)
+                {
+                    View objects = new View(o);
+                    models.Add(o);
+                    views.Add(objects);
+                }
+                foreach (Actor a in level.Actors)
+                {
+                    View actors = new View(a);
+                    models.Add(a);
+                    views.Add(actors);
+                    Controller actorController = new ActorController(a);
+                    controllers.Add(actorController);
+                }
+
+                View player = new View(level.Player);
+                views.Add(player);
+                models.Add(level.Player);
+                controllers.Add(new PlayerController(level.Player));
+
+                //models.Add(slider);
+                //views.Add(sliderView);
+                //controllers.Add(sliderController);
             }
-            foreach (Actor a in level.Actors){
-                View actors = new View(a);
-                models.Add(a);
-                views.Add(actors);
-                Controller actorController = new ActorController(a);
-                controllers.Add(actorController);
-            }
+                log = new Logger();
+
+                base.Initialize();
             
-            View player = new View(level.Player);
-            views.Add(player);
-            models.Add(level.Player);
-            controllers.Add(new PlayerController(level.Player));
-
-            //models.Add(slider);
-            //views.Add(sliderView);
-            //controllers.Add(sliderController);
-
-            log = new Logger();
-
-            base.Initialize();
         }
 
         /// <summary>
@@ -132,6 +143,7 @@ namespace Rain_On_Your_Parade
             batterybar = Content.Load<Texture2D>("batterybar");
             battery = Content.Load<Texture2D>("grass");
             background = Content.Load<Texture2D>("background");
+            menu.LoadContent(this.Content);
 
         }
 
@@ -151,47 +163,101 @@ namespace Rain_On_Your_Parade
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            if (framesTillLog == 0)
+            if (!menuOn)
             {
-                log.Log(level, gameTime);
-                framesTillLog = LOG_FRAMES;
-            }
-            else
-            {
-                framesTillLog--;
+                if (framesTillLog == 0)
+                {
+                    log.Log(level, gameTime);
+                    framesTillLog = LOG_FRAMES;
+                }
+                else
+                {
+                    framesTillLog--;
+                }
+
+                switch (level.win)
+                {
+                    case WinCondition.Malice:
+                        if (level.Malice == level.MaliceObjective)
+                        {
+                            if (--stage == 0)
+                            {
+                                stage = 3;
+                            }
+                            Initialize();
+                            return;
+                        }
+                        break;
+                    case WinCondition.Actors:
+                        bool win = true;
+                        foreach (Actor a in level.maliceActors)
+                        {
+                            win &= a.Mood == 5;
+                        }
+                        if (win)
+                        {
+                            if (--stage == 0)
+                            {
+                                stage = 3;
+                            }
+                            Initialize();
+                            return;
+                        }
+                        break;
+                    case WinCondition.Objects:
+                        break;
+                }
+
+                // TODO: Add your update logic here
+
+                List<WorldObject> toRemove = new List<WorldObject>();
+                List<WorldObject> rainbowKeys = new List<WorldObject>();
+                foreach (WorldObject r in level.rainbows.Keys)
+                {
+                    rainbowKeys.Add(r);
+                }
+                foreach (WorldObject r in rainbowKeys)
+                {
+                    level.rainbows[r] = (int)level.rainbows[r] - 1;
+                    if (((int)level.rainbows[r]) == 0)
+                    {
+                        toRemove.Add(r);
+                    }
+                }
+                foreach (WorldObject r in toRemove)
+                {
+                    r.deactivate();
+                    level.rainbows.Remove(r);
+                }
+
+
+                foreach (Model model in models)
+                {
+                    if (model != null)
+                    {   //TODO: Encapsulate this in individual classes
+                        model.activatedSprite.Update();
+
+                        if (model.deactivatedSprite != null)
+                        {
+                            model.deactivatedSprite.Update();
+                        }
+                    }
+                }
+
+                foreach (Controller controller in controllers)
+                {
+                    controller.Update(gameTime, level);
+                }
+                level.upateGridSquares();
             }
 
-            switch (level.win)
+            int selected = menu.Update();
+            if (selected > 0)
             {
-                case WinCondition.Malice:
-                    if (level.Malice == level.MaliceObjective)
-                    {                        
-                        if (--stage == 0)
-                        {
-                            stage = 3;
-                        }
-                        Initialize();
-                        return;
-                    }
-                    break;
-                case WinCondition.Actors:
-                    bool win = true;
-                    foreach (Actor a in level.maliceActors)
-                    {
-                        win &= a.Mood == 5;
-                    }
-                    if (win)
-                    {                        
-                        if (--stage == 0)
-                        {
-                            stage = 3;
-                        }
-                        Initialize();
-                        return;
-                    }
-                    break;
-                case WinCondition.Objects:
-                    break;
+                menuOn = false;
+                stage = selected;
+                Initialize();
+                return;
             }
 
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
@@ -201,48 +267,6 @@ namespace Rain_On_Your_Parade
                 Initialize();
                 return;
             }
-
-            // TODO: Add your update logic here
-
-            List<WorldObject> toRemove = new List<WorldObject>();
-            List<WorldObject> rainbowKeys = new List<WorldObject>();
-            foreach (WorldObject r in level.rainbows.Keys)
-            {
-                rainbowKeys.Add(r);
-            }
-            foreach (WorldObject r in rainbowKeys)
-            {
-                level.rainbows[r] = (int)level.rainbows[r] - 1;
-                if (((int)level.rainbows[r]) == 0)
-                {
-                    toRemove.Add(r);
-                }
-            }
-            foreach (WorldObject r in toRemove)
-            {
-                r.deactivate();
-                level.rainbows.Remove(r);
-            }
-
-
-            foreach (Model model in models)
-            {
-                if (model != null)
-                {   //TODO: Encapsulate this in individual classes
-                    model.activatedSprite.Update();
-
-                    if (model.deactivatedSprite != null)
-                    {
-                        model.deactivatedSprite.Update();
-                    }
-                }
-            }
-
-            foreach (Controller controller in controllers)
-            {
-                controller.Update(gameTime, level);
-            }
-            level.upateGridSquares();
 
             base.Update(gameTime);
         }
@@ -257,22 +281,26 @@ namespace Rain_On_Your_Parade
             spriteBatch.Begin();
             spriteBatch.Draw(background, new Rectangle(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT), Color.White);
             spriteBatch.End();
-            
-            // TODO: Add your drawing code here
-            foreach (View view in views)
-            {
-                view.Draw(spriteBatch); //calls the AnimatedSprite draw function which includes begin/end
-            }
-          
-            //TODO: update this to reflect Player.MAX_RAIN
-            spriteBatch.Begin();
-            spriteBatch.Draw(batterybar, new Rectangle(0, 0, 155, 30), Color.Azure);
-            for (int i = 0; i < level.Player.Rain; i++)
-            {
-                spriteBatch.Draw(battery, new Rectangle(i*150/6 +5 , 3, 150/6, 25), Color.Azure);
-            }
 
-            spriteBatch.End();
+            if (menuOn) menu.Draw(spriteBatch);
+            else
+            {
+                // TODO: Add your drawing code here
+                foreach (View view in views)
+                {
+                    view.Draw(spriteBatch); //calls the AnimatedSprite draw function which includes begin/end
+                }
+
+                //TODO: update this to reflect Player.MAX_RAIN
+                spriteBatch.Begin();
+                spriteBatch.Draw(batterybar, new Rectangle(0, 0, 155, 30), Color.Azure);
+                for (int i = 0; i < level.Player.Rain; i++)
+                {
+                    spriteBatch.Draw(battery, new Rectangle(i * 150 / 6 + 5, 3, 150 / 6, 25), Color.Azure);
+                }
+
+                spriteBatch.End();
+            }
             base.Draw(gameTime);
 
         }
