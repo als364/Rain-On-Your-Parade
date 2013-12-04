@@ -33,7 +33,8 @@ namespace Rain_On_Your_Parade
         float height = 0f;
         SpriteFont font;
 
-        public int STAGE_ROWS = 1;
+        public int STAGE_ROWS = 1;
+
 
         public Menu()
         {
@@ -108,7 +109,8 @@ namespace Rain_On_Your_Parade
                 return selectedIndex+1;
             }
             return -1;
-        }
+        }
+
         /// <summary>
         /// This is called when the game should draw itself.
         /// </summary>

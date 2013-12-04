@@ -4,7 +4,7 @@ namespace Rain_On_Your_Parade
 {
     public class ActorState
     {
-        public enum AState { Sleep, Play, Nurture, Rampage, Seek, Walk, Wander, Run, Fight, Comfort, Rainbow, RainbowWalk };
+        public enum AState { Sleep, Play, Nurture, Rampage, Seek, Walk, Hunt, Wander, Run, Fight, Comfort, Rainbow, RainbowWalk };
         private AState state;
 
         public ActorState(AState aState)
@@ -28,6 +28,7 @@ namespace Rain_On_Your_Parade
                 case AState.Rampage: return "State: Rampage";
                 case AState.Seek: return "State: Seek";
                 case AState.Walk: return "State: Walk";
+                case AState.Hunt: return "State: Hunt";
                 case AState.Wander: return "State: Wander";
                 case AState.Run: return "State: Run";
                 case AState.Rainbow: return "State: Rainbow";

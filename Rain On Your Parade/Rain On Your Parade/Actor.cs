@@ -15,6 +15,7 @@ namespace Rain_On_Your_Parade
         private int mood;
         private ActorState state;
         private ActorState.AState targetState;
+        private Actor targetActor;
         private bool targetIsActor;
         private int sleepLevel;
         private int playLevel;
@@ -181,6 +182,11 @@ namespace Rain_On_Your_Parade
         {
             get { return targetIsActor; }
             set { targetIsActor = value; }
+        }
+        public Actor TargetActor
+        {
+            get { return targetActor; }
+            set { targetActor = value; }
         }
         #endregion
 

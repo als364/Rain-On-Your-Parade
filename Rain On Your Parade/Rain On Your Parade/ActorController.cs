@@ -125,338 +125,451 @@ namespace Rain_On_Your_Parade
                     
                 }
             }
-                switch (controlledActor.State.State)
-                {
-                    case ActorState.AState.Rainbow:
-                        if (level.Grid[controlledActor.GridspacePosition.X, controlledActor.GridspacePosition.Y].Objects[0].Type.TypeName == ObjectType.Type.SunnyRainbowSpot 
-                            && level.Grid[controlledActor.GridspacePosition.X, controlledActor.GridspacePosition.Y].Objects[0].Activated)
-                        {
-                            break;
-                        }
-                        else
-                        {
-                            controlledActor.State.State = ActorState.AState.Seek;
-                            break;
-                        }
-                    case ActorState.AState.Fight:
-                        controlledActor.InteractionTimer++;
-
-                        if (controlledActor.InteractionTimer >= 360)
-                        {
-                            controlledActor.InteractionTimer = -360;
-                            if (controlledActor.Mood < 5)
-                            controlledActor.Mood = controlledActor.Mood + 1;
-                            controlledActor.State.State = ActorState.AState.Seek;
-                        }
-
+            switch (controlledActor.State.State)
+            {
+                #region RainbowState
+                case ActorState.AState.Rainbow:
+                    if (level.Grid[controlledActor.GridspacePosition.X, controlledActor.GridspacePosition.Y].Objects[0].Type.TypeName == ObjectType.Type.SunnyRainbowSpot 
+                        && level.Grid[controlledActor.GridspacePosition.X, controlledActor.GridspacePosition.Y].Objects[0].Activated)
+                    {
                         break;
-
-                    case ActorState.AState.Comfort:
-                        controlledActor.InteractionTimer++;
-
-                        if (controlledActor.InteractionTimer >= 360)
-                        {
-                            controlledActor.InteractionTimer = -360;
-                            if (controlledActor.Mood > 0) controlledActor.Mood = controlledActor.Mood - 1;
-                            controlledActor.NurtureLevel--;
-                            controlledActor.State.State = ActorState.AState.Seek;
-                        }
-
-                        break;
-
-                    case ActorState.AState.Nurture:
-                        if (enjoyTime == 0)
-                        {
-                            interactWithObject(level, ActorState.AState.Nurture);
-                            controlledActor.State.State = ActorState.AState.Wander;
-                        }
-                        else
-                        {
-                            enjoyTime--;
-                        }
-
-                        //if (next <= 1) controlledActor.State = new ActorState(ActorState.AState.Seek);
-                        break;
-                    case ActorState.AState.Play:
-                        if (enjoyTime == 0)
-                        {
-                            interactWithObject(level, ActorState.AState.Play);
-                            controlledActor.State.State = ActorState.AState.Wander;
-                        }
-                        else
-                        {
-                            enjoyTime--;
-                        }
-                        //if (next <= 1) controlledActor.State = new ActorState(ActorState.AState.Seek);
-                        break;
-                    case ActorState.AState.Rampage:
+                    }
+                    else
+                    {
                         controlledActor.State.State = ActorState.AState.Seek;
                         break;
-                    case ActorState.AState.Sleep:
-                        if (enjoyTime == 0)
+                    }
+                #endregion
+                #region FightState
+                case ActorState.AState.Fight:
+                    controlledActor.InteractionTimer++;
+
+                    if (controlledActor.InteractionTimer >= 360)
+                    {
+                        controlledActor.InteractionTimer = -360;
+                        if (controlledActor.Mood < 5)
+                        controlledActor.Mood = controlledActor.Mood + 1;
+                        controlledActor.State.State = ActorState.AState.Seek;
+                    }
+
+                    break;
+                #endregion
+                #region ComfortState
+                case ActorState.AState.Comfort:
+                    controlledActor.InteractionTimer++;
+
+                    if (controlledActor.InteractionTimer >= 360)
+                    {
+                        controlledActor.InteractionTimer = -360;
+                        if (controlledActor.Mood > 0) controlledActor.Mood = controlledActor.Mood - 1;
+                        controlledActor.NurtureLevel--;
+                        controlledActor.State.State = ActorState.AState.Seek;
+                    }
+
+                    break;
+                #endregion
+                #region NurtureState
+                case ActorState.AState.Nurture:
+                    if (enjoyTime == 0)
+                    {
+                        interactWithObject(level, ActorState.AState.Nurture);
+                        controlledActor.State.State = ActorState.AState.Wander;
+                    }
+                    else
+                    {
+                        enjoyTime--;
+                    }
+
+                    //if (next <= 1) controlledActor.State = new ActorState(ActorState.AState.Seek);
+                    break;
+                #endregion
+                #region PlayState
+                case ActorState.AState.Play:
+                    if (enjoyTime == 0)
+                    {
+                        interactWithObject(level, ActorState.AState.Play);
+                        controlledActor.State.State = ActorState.AState.Wander;
+                    }
+                    else
+                    {
+                        enjoyTime--;
+                    }
+                    //if (next <= 1) controlledActor.State = new ActorState(ActorState.AState.Seek);
+                    break;
+                #endregion
+                #region RampageState
+                case ActorState.AState.Rampage:
+                    controlledActor.State.State = ActorState.AState.Seek;
+                    break;
+                #endregion
+                #region SleepState
+                case ActorState.AState.Sleep:
+                    if (enjoyTime == 0)
+                    {
+                        interactWithObject(level, ActorState.AState.Sleep);
+                        controlledActor.State.State = ActorState.AState.Wander;
+                    }
+                    else
+                    {
+                        enjoyTime--;
+                    }
+                    //if (next <= 1) controlledActor.State = new ActorState(ActorState.AState.Seek);
+                    // controlledActor.State.State = ActorState.AState.Seek;
+                    break;
+                #endregion
+                #region SeekState
+                case ActorState.AState.Seek:
+                    //Actor figures out what state it wants to be 
+                    ActorState.AState newState = DetermineTargetState();
+                    controlledActor.TargetState = newState;
+                    //PreferenceSearch determines the most desired square.
+                    //FindPath finds a path to it.
+                    controlledActor.Path = FindPath(PreferenceSearch(level),
+                                                    level.Grid[actorSquare.X, actorSquare.Y],
+                                                    level.Grid, new Point[level.Width, level.Height]);
+                    //if none of the squares were desirable, Rampage
+                    if (controlledActor.Path == null) controlledActor.State.State = ActorState.AState.Wander;
+                    else
+                    {
+                        //Now, walk there.
+                        if (controlledActor.TargetIsActor)
                         {
-                            interactWithObject(level, ActorState.AState.Sleep);
-                            controlledActor.State.State = ActorState.AState.Wander;
+                            controlledActor.State.State = ActorState.AState.Hunt;
                         }
                         else
                         {
-                            enjoyTime--;
-                        }
-                        //if (next <= 1) controlledActor.State = new ActorState(ActorState.AState.Seek);
-                        // controlledActor.State.State = ActorState.AState.Seek;
-                        break;
-                    case ActorState.AState.Seek:
-                        //Actor figures out what state it wants to be 
-                        ActorState.AState newState = DetermineTargetState();
-                        controlledActor.TargetState = newState;
-                        //PreferenceSearch determines the most desired square.
-                        //FindPath finds a path to it.
-                        controlledActor.Path = FindPath(PreferenceSearch(level),
-                                                        level.Grid[actorSquare.X, actorSquare.Y],
-                                                        level.Grid, new Point[level.Width, level.Height]);
-                        //if none of the squares were desirable, Rampage
-                        if (controlledActor.Path == null) controlledActor.State.State = ActorState.AState.Wander;
-                        else
-                        {
-                            //Now, walk there.
                             controlledActor.State.State = ActorState.AState.Walk;
                         }
-                        break;
+                    }
+                    break;
+                #endregion
+                #region WalkState
+                case ActorState.AState.Walk:
+                    if (controlledActor.Path.Count < 1)
+                    {
+                        controlledActor.State.State = ActorState.AState.Seek;
+                    }
+                    //The actual moving along the path.
+                    else
+                    {
+                        //Console.WriteLine(controlledActor.Type.TypeName + " Position: " + controlledActor.GridspacePosition);
+                        GridSquare nextSquare = controlledActor.Path[0];
+                        float Velx;
+                        float Vely;
 
-                    case ActorState.AState.Walk:
-                        if (controlledActor.Path.Count < 1)
+                        //If I'm within the next square on the path, remove it from the path and set my velocity towards the next one
+                        if (nextSquare.Contains(controlledActor.GridspacePosition))
                         {
-                            controlledActor.State.State = ActorState.AState.Seek;
-                        }
-                        //The actual moving along the path.
-                        else
-                        {
-                            //Console.WriteLine(controlledActor.Type.TypeName + " Position: " + controlledActor.GridspacePosition);
-                            GridSquare nextSquare = controlledActor.Path[0];
-                            float Velx;
-                            float Vely;
-
-                            //If I'm within the next square on the path, remove it from the path and set my velocity towards the next one
-                            if (nextSquare.Contains(controlledActor.GridspacePosition))
+                            //At target square. Move to target state.  
+                            if (controlledActor.Path.Count == 1)
                             {
-                                //At target square. Move to target state.  
-                                if (controlledActor.Path.Count == 1)
+                                //controlledActor.Path.Clear();
+                                if (controlledActor.TargetIsActor && nextSquare.Actors.Count == 0)
                                 {
-                                    //controlledActor.Path.Clear();
-                                    if (controlledActor.TargetIsActor && nextSquare.Actors.Count == 0)
-                                    {
-                                        controlledActor.TargetIsActor = false;
-                                        controlledActor.State.State = ActorState.AState.Seek;
-                                    }
-                                    else if (!controlledActor.TargetIsActor && nextSquare.Objects.Count == 0)
-                                    {
-                                        controlledActor.State.State = ActorState.AState.Seek;
-                                    }
-                                    else
-                                    {
-                                        controlledActor.State.State = controlledActor.TargetState;
-                                    }
-                                    enjoyTime = MAX_ENJOY_TIME;
+                                    controlledActor.TargetIsActor = false;
+                                    controlledActor.State.State = ActorState.AState.Seek;
+                                }
+                                else if (!controlledActor.TargetIsActor && nextSquare.Objects.Count == 0)
+                                {
+                                    controlledActor.State.State = ActorState.AState.Seek;
                                 }
                                 else
                                 {
-                                    controlledActor.Path.RemoveAt(0);
-                                    nextSquare = controlledActor.Path[0];
-                                    nextSquare.calculateLevels();
+                                    controlledActor.State.State = controlledActor.TargetState;
                                 }
-                            }
-                            //If I'm not within the next square on the path, make sure my velocity is set correctly (necessary for first square) Move uniformly to the next square
-                            if (nextSquare.Location.X * Canvas.SQUARE_SIZE - controlledActor.PixelPosition.X <= 0)
-                            {
-                                Velx = controlledActor.Mood > 4 ? -RUN_SPEED : -1f;
+                                enjoyTime = MAX_ENJOY_TIME;
                             }
                             else
                             {
-                                Velx = controlledActor.Mood > 4 ? RUN_SPEED : 1f;
+                                controlledActor.Path.RemoveAt(0);
+                                nextSquare = controlledActor.Path[0];
+                                nextSquare.calculateLevels();
                             }
-                            if (nextSquare.Location.Y * Canvas.SQUARE_SIZE - controlledActor.PixelPosition.Y <= 0)
-                            {
-                                Vely = controlledActor.Mood > 4 ? -RUN_SPEED : -1f;
-                            }
-                            else
-                            {
-                                Vely = controlledActor.Mood > 4 ? RUN_SPEED : 1f;
-                            }
-                            controlledActor.Velocity = new Vector2(Velx, Vely);
-                            //controlledActor.Velocity = new Vector2(nextSquare.Location.X * Canvas.SQUARE_SIZE - controlledActor.Position.X, 
-                            //                                       nextSquare.Location.Y * Canvas.SQUARE_SIZE - controlledActor.Position.Y)/30
-                            //Move the actor
-                            controlledActor.PixelPosition = Vector2.Add(controlledActor.PixelPosition, controlledActor.Velocity);
-                            //controlledActor.GridspacePosition = new Point((int)(controlledActor.PixelPosition.X / Canvas.SQUARE_SIZE),
-                                                                          //(int)(controlledActor.PixelPosition.Y / Canvas.SQUARE_SIZE));
                         }
+                        //If I'm not within the next square on the path, make sure my velocity is set correctly (necessary for first square) Move uniformly to the next square
+                        if (nextSquare.Location.X * Canvas.SQUARE_SIZE - controlledActor.PixelPosition.X <= 0)
+                        {
+                            Velx = controlledActor.Mood > 4 ? -RUN_SPEED : -1f;
+                        }
+                        else
+                        {
+                            Velx = controlledActor.Mood > 4 ? RUN_SPEED : 1f;
+                        }
+                        if (nextSquare.Location.Y * Canvas.SQUARE_SIZE - controlledActor.PixelPosition.Y <= 0)
+                        {
+                            Vely = controlledActor.Mood > 4 ? -RUN_SPEED : -1f;
+                        }
+                        else
+                        {
+                            Vely = controlledActor.Mood > 4 ? RUN_SPEED : 1f;
+                        }
+                        controlledActor.Velocity = new Vector2(Velx, Vely);
+                        //controlledActor.Velocity = new Vector2(nextSquare.Location.X * Canvas.SQUARE_SIZE - controlledActor.Position.X, 
+                        //                                       nextSquare.Location.Y * Canvas.SQUARE_SIZE - controlledActor.Position.Y)/30
+                        //Move the actor
+                        controlledActor.PixelPosition = Vector2.Add(controlledActor.PixelPosition, controlledActor.Velocity);
+                        //controlledActor.GridspacePosition = new Point((int)(controlledActor.PixelPosition.X / Canvas.SQUARE_SIZE),
+                                                                        //(int)(controlledActor.PixelPosition.Y / Canvas.SQUARE_SIZE));
+                    }
+                    break;
+                #endregion
+                #region HuntState
+                case ActorState.AState.Hunt:
+                    if (controlledActor.TargetActor == null)
+                    {
+                        controlledActor.TargetIsActor = false;
+                        controlledActor.State.State = ActorState.AState.Seek;
                         break;
-                    case ActorState.AState.RainbowWalk:
-                        if (controlledActor.Path.Count < 1)
+                    }
+                    if (controlledActor.Path.Count < 1)
+                    {
+                        controlledActor.State.State = ActorState.AState.Seek;
+                    }
+                    //The actual moving along the path.
+                    else
+                    {
+                        if (!controlledActor.Path.Contains(level.Grid[controlledActor.TargetActor.GridspacePosition.X, controlledActor.TargetActor.GridspacePosition.Y]))
+                        {
+                            Dictionary<GridSquare, Actor> newTarget = new Dictionary<GridSquare,Actor>();
+                            newTarget.Add(level.Grid[controlledActor.TargetActor.GridspacePosition.X, controlledActor.TargetActor.GridspacePosition.Y], null);
+                            controlledActor.Path = FindPath(newTarget,
+                                                            level.Grid[actorSquare.X, actorSquare.Y],
+                                                            level.Grid, new Point[level.Width, level.Height]);
+                        }
+                        //Console.WriteLine(controlledActor.Type.TypeName + " Position: " + controlledActor.GridspacePosition);
+                        GridSquare nextSquare = controlledActor.Path[0];
+                        float Velx;
+                        float Vely;
+
+                        //If I'm within the next square on the path, remove it from the path and set my velocity towards the next one
+                        if (nextSquare.Contains(controlledActor.GridspacePosition))
+                        {
+                            //At target square. Move to target state.  
+                            if (controlledActor.Path.Count == 1)
+                            {
+                                //controlledActor.Path.Clear();
+                                if (controlledActor.TargetIsActor && nextSquare.Actors.Count == 0)
+                                {
+                                    controlledActor.TargetIsActor = false;
+                                    controlledActor.State.State = ActorState.AState.Seek;
+                                }
+                                else if (!controlledActor.TargetIsActor && nextSquare.Objects.Count == 0)
+                                {
+                                    controlledActor.State.State = ActorState.AState.Seek;
+                                }
+                                else
+                                {
+                                    controlledActor.State.State = controlledActor.TargetState;
+                                }
+                                enjoyTime = MAX_ENJOY_TIME;
+                            }
+                            else
+                            {
+                                controlledActor.Path.RemoveAt(0);
+                                nextSquare = controlledActor.Path[0];
+                                nextSquare.calculateLevels();
+                            }
+                        }
+                        //If I'm not within the next square on the path, make sure my velocity is set correctly (necessary for first square) Move uniformly to the next square
+                        if (nextSquare.Location.X * Canvas.SQUARE_SIZE - controlledActor.PixelPosition.X <= 0)
+                        {
+                            Velx = controlledActor.Mood > 4 ? -RUN_SPEED : -1f;
+                        }
+                        else
+                        {
+                            Velx = controlledActor.Mood > 4 ? RUN_SPEED : 1f;
+                        }
+                        if (nextSquare.Location.Y * Canvas.SQUARE_SIZE - controlledActor.PixelPosition.Y <= 0)
+                        {
+                            Vely = controlledActor.Mood > 4 ? -RUN_SPEED : -1f;
+                        }
+                        else
+                        {
+                            Vely = controlledActor.Mood > 4 ? RUN_SPEED : 1f;
+                        }
+                        controlledActor.Velocity = new Vector2(Velx, Vely);
+                        //controlledActor.Velocity = new Vector2(nextSquare.Location.X * Canvas.SQUARE_SIZE - controlledActor.Position.X, 
+                        //                                       nextSquare.Location.Y * Canvas.SQUARE_SIZE - controlledActor.Position.Y)/30
+                        //Move the actor
+                        controlledActor.PixelPosition = Vector2.Add(controlledActor.PixelPosition, controlledActor.Velocity);
+                        //controlledActor.GridspacePosition = new Point((int)(controlledActor.PixelPosition.X / Canvas.SQUARE_SIZE),
+                        //(int)(controlledActor.PixelPosition.Y / Canvas.SQUARE_SIZE));
+                    }
+                    break;
+                #endregion
+                #region RainbowWalkState
+                case ActorState.AState.RainbowWalk:
+                    if (controlledActor.Path.Count < 1)
+                    {
+                        controlledActor.State = new ActorState(ActorState.AState.Seek);
+                    }
+                    //The actual moving along the path.
+                    else
+                    {
+                        if (!controlledActor.Path.ElementAt(controlledActor.Path.Count - 1).Objects[0].Activated)
                         {
                             controlledActor.State = new ActorState(ActorState.AState.Seek);
+                            break;
                         }
-                        //The actual moving along the path.
-                        else
-                        {
-                            if (!controlledActor.Path.ElementAt(controlledActor.Path.Count - 1).Objects[0].Activated)
-                            {
-                                controlledActor.State = new ActorState(ActorState.AState.Seek);
-                                break;
-                            }
-                            //Console.WriteLine(controlledActor.Type.TypeName + " Position: " + controlledActor.GridspacePosition);
-                            GridSquare nextSquare = controlledActor.Path[0];
-                            float Velx;
-                            float Vely;
+                        //Console.WriteLine(controlledActor.Type.TypeName + " Position: " + controlledActor.GridspacePosition);
+                        GridSquare nextSquare = controlledActor.Path[0];
+                        float Velx;
+                        float Vely;
 
-                            //If I'm within the next square on the path, remove it from the path and set my velocity towards the next one
-                            if (nextSquare.Contains(controlledActor.GridspacePosition))
+                        //If I'm within the next square on the path, remove it from the path and set my velocity towards the next one
+                        if (nextSquare.Contains(controlledActor.GridspacePosition))
+                        {
+                            //At target square. Move to target state.  
+                            if (controlledActor.Path.Count == 1)
                             {
-                                //At target square. Move to target state.  
-                                if (controlledActor.Path.Count == 1)
+                                //controlledActor.Path.Clear();
+                                if (controlledActor.TargetIsActor && nextSquare.Actors.Count == 0)
                                 {
-                                    //controlledActor.Path.Clear();
-                                    if (controlledActor.TargetIsActor && nextSquare.Actors.Count == 0)
-                                    {
-                                        controlledActor.TargetIsActor = false;
-                                        controlledActor.State.State = ActorState.AState.Seek;
-                                    }
-                                    else if (!controlledActor.TargetIsActor && nextSquare.Objects.Count == 0)
-                                    {
-                                        controlledActor.State.State = ActorState.AState.Seek;
-                                    }
-                                    else
-                                    {
-                                        controlledActor.State.State = controlledActor.TargetState;
-                                    }
-                                    enjoyTime = MAX_ENJOY_TIME;
+                                    controlledActor.TargetIsActor = false;
+                                    controlledActor.State.State = ActorState.AState.Seek;
+                                }
+                                else if (!controlledActor.TargetIsActor && nextSquare.Objects.Count == 0)
+                                {
+                                    controlledActor.State.State = ActorState.AState.Seek;
                                 }
                                 else
                                 {
-                                    controlledActor.Path.RemoveAt(0);
-                                    nextSquare = controlledActor.Path[0];
-                                    nextSquare.calculateLevels();
+                                    controlledActor.State.State = controlledActor.TargetState;
                                 }
-                            }
-                            //If I'm not within the next square on the path, make sure my velocity is set correctly (necessary for first square) Move uniformly to the next square
-                            if (nextSquare.Location.X * Canvas.SQUARE_SIZE - controlledActor.PixelPosition.X <= 0)
-                            {
-                                Velx = controlledActor.Mood > 4 ? -RUN_SPEED : -1f;
+                                enjoyTime = MAX_ENJOY_TIME;
                             }
                             else
                             {
-                                Velx = controlledActor.Mood > 4 ? RUN_SPEED : 1f;
+                                controlledActor.Path.RemoveAt(0);
+                                nextSquare = controlledActor.Path[0];
+                                nextSquare.calculateLevels();
                             }
-                            if (nextSquare.Location.Y * Canvas.SQUARE_SIZE - controlledActor.PixelPosition.Y <= 0)
-                            {
-                                Vely = controlledActor.Mood > 4 ? -RUN_SPEED : -1f;
-                            }
-                            else
-                            {
-                                Vely = controlledActor.Mood > 4 ? RUN_SPEED : 1f;
-                            }
-                            controlledActor.Velocity = new Vector2(Velx, Vely);
-                            //controlledActor.Velocity = new Vector2(nextSquare.Location.X * Canvas.SQUARE_SIZE - controlledActor.Position.X, 
-                            //                                       nextSquare.Location.Y * Canvas.SQUARE_SIZE - controlledActor.Position.Y)/30
-                            //Move the actor
-                            controlledActor.PixelPosition = Vector2.Add(controlledActor.PixelPosition, controlledActor.Velocity);
-                            //controlledActor.GridspacePosition = new Point((int)(controlledActor.PixelPosition.X / Canvas.SQUARE_SIZE),
-                            //(int)(controlledActor.PixelPosition.Y / Canvas.SQUARE_SIZE));
                         }
-                        break;
-                    case ActorState.AState.Wander:
-                        Dictionary<GridSquare, Actor> wanderTarget = new Dictionary<GridSquare, Actor>();
-                        wanderTarget.Add(level.Grid[random.Next(level.Width), random.Next(level.Height)], null);
-                        controlledActor.Path = FindPath(wanderTarget, level.Grid[actorSquare.X, actorSquare.Y],
-                                                        level.Grid, new Point[level.Width, level.Height]);
-                        if (controlledActor.Path != null)
+                        //If I'm not within the next square on the path, make sure my velocity is set correctly (necessary for first square) Move uniformly to the next square
+                        if (nextSquare.Location.X * Canvas.SQUARE_SIZE - controlledActor.PixelPosition.X <= 0)
                         {
-                            controlledActor.State.State = ActorState.AState.Walk;
+                            Velx = controlledActor.Mood > 4 ? -RUN_SPEED : -1f;
                         }
+                        else
+                        {
+                            Velx = controlledActor.Mood > 4 ? RUN_SPEED : 1f;
+                        }
+                        if (nextSquare.Location.Y * Canvas.SQUARE_SIZE - controlledActor.PixelPosition.Y <= 0)
+                        {
+                            Vely = controlledActor.Mood > 4 ? -RUN_SPEED : -1f;
+                        }
+                        else
+                        {
+                            Vely = controlledActor.Mood > 4 ? RUN_SPEED : 1f;
+                        }
+                        controlledActor.Velocity = new Vector2(Velx, Vely);
+                        //controlledActor.Velocity = new Vector2(nextSquare.Location.X * Canvas.SQUARE_SIZE - controlledActor.Position.X, 
+                        //                                       nextSquare.Location.Y * Canvas.SQUARE_SIZE - controlledActor.Position.Y)/30
+                        //Move the actor
+                        controlledActor.PixelPosition = Vector2.Add(controlledActor.PixelPosition, controlledActor.Velocity);
+                        //controlledActor.GridspacePosition = new Point((int)(controlledActor.PixelPosition.X / Canvas.SQUARE_SIZE),
+                        //(int)(controlledActor.PixelPosition.Y / Canvas.SQUARE_SIZE));
+                    }
+                    break;
+                #endregion
+                #region WanderState
+                case ActorState.AState.Wander:
+                    Dictionary<GridSquare, Actor> wanderTarget = new Dictionary<GridSquare, Actor>();
+                    wanderTarget.Add(level.Grid[random.Next(level.Width), random.Next(level.Height)], null);
+                    controlledActor.Path = FindPath(wanderTarget, level.Grid[actorSquare.X, actorSquare.Y],
+                                                    level.Grid, new Point[level.Width, level.Height]);
+                    if (controlledActor.Path != null)
+                    {
+                        controlledActor.State.State = ActorState.AState.Walk;
+                    }
 
-                        if (next <= 300) controlledActor.State.State = ActorState.AState.Seek;
-                        break;
-                    //Actor runs from the cloud if it's within a radius of the cloud
-                    case ActorState.AState.Run:
+                    if (next <= 300) controlledActor.State.State = ActorState.AState.Seek;
+                    break;
+                #endregion
+                #region RunState
+                //Actor runs from the cloud if it's within a radius of the cloud
+                case ActorState.AState.Run:
 
-                        Vector2 newPosition = controlledActor.PixelPosition;
-                        Vector2 newVelocity = new Vector2(velX, velY);
+                    Vector2 newPosition = controlledActor.PixelPosition;
+                    Vector2 newVelocity = new Vector2(velX, velY);
 
+                    newPosition = Vector2.Add(controlledActor.PixelPosition, newVelocity);
+
+                    Point newPosGridPos = new Point((int)((newPosition.X + controlledActor.spriteWidth / 2) / Canvas.SQUARE_SIZE),
+                        (int)((newPosition.Y + controlledActor.spriteHeight / 2) / Canvas.SQUARE_SIZE));
+                    if (!level.Grid[newPosGridPos.X, newPosGridPos.Y].IsPassable)
+                    {
+                        if (newPosGridPos.X != controlledActor.GridspacePosition.X) {
+                            velX = -velX;
+                            newVelocity = new Vector2(-newVelocity.X, newVelocity.Y);
+                        }
+                        if (newPosGridPos.Y != controlledActor.GridspacePosition.Y)
+                        {
+                            velY = -velY;
+                            newVelocity = new Vector2(newVelocity.X, -newVelocity.Y);
+                        }
                         newPosition = Vector2.Add(controlledActor.PixelPosition, newVelocity);
+                        newVelocity = new Vector2(velX, velY);
+                    }
 
-                        Point newPosGridPos = new Point((int)((newPosition.X + controlledActor.spriteWidth / 2) / Canvas.SQUARE_SIZE),
-                            (int)((newPosition.Y + controlledActor.spriteHeight / 2) / Canvas.SQUARE_SIZE));
-                        if (!level.Grid[newPosGridPos.X, newPosGridPos.Y].IsPassable)
-                        {
-                            if (newPosGridPos.X != controlledActor.GridspacePosition.X) {
-                                velX = -velX;
-                                newVelocity = new Vector2(-newVelocity.X, newVelocity.Y);
-                            }
-                            if (newPosGridPos.Y != controlledActor.GridspacePosition.Y)
-                            {
-                                velY = -velY;
-                                newVelocity = new Vector2(newVelocity.X, -newVelocity.Y);
-                            }
-                            newPosition = Vector2.Add(controlledActor.PixelPosition, newVelocity);
-                            newVelocity = new Vector2(velX, velY);
-                        }
-
-                        if (newPosition.X + controlledActor.spriteWidth > GameEngine.SCREEN_WIDTH)
-                        {
-                            newPosition = new Vector2(GameEngine.SCREEN_WIDTH - controlledActor.spriteWidth, newPosition.Y);
-                            newVelocity = new Vector2(0, newVelocity.Y);
-                        }
-                        if (newPosition.X < 0)
-                        {
-                            newPosition = new Vector2(0, newPosition.Y);
-                            newVelocity = new Vector2(0, newVelocity.Y);
-                        }
-                        if (newPosition.Y + controlledActor.spriteHeight > GameEngine.SCREEN_HEIGHT)
-                        {
-                            newPosition = new Vector2(newPosition.X, GameEngine.SCREEN_HEIGHT - controlledActor.spriteHeight);
-                            newVelocity = new Vector2(newVelocity.X, 0);
-                        }
-                        if (newPosition.Y < 0)
-                        {
-                            newPosition = new Vector2(newPosition.X, 0);
-                            newVelocity = new Vector2(newVelocity.X, 0);
-                        }
+                    if (newPosition.X + controlledActor.spriteWidth > GameEngine.SCREEN_WIDTH)
+                    {
+                        newPosition = new Vector2(GameEngine.SCREEN_WIDTH - controlledActor.spriteWidth, newPosition.Y);
+                        newVelocity = new Vector2(0, newVelocity.Y);
+                    }
+                    if (newPosition.X < 0)
+                    {
+                        newPosition = new Vector2(0, newPosition.Y);
+                        newVelocity = new Vector2(0, newVelocity.Y);
+                    }
+                    if (newPosition.Y + controlledActor.spriteHeight > GameEngine.SCREEN_HEIGHT)
+                    {
+                        newPosition = new Vector2(newPosition.X, GameEngine.SCREEN_HEIGHT - controlledActor.spriteHeight);
+                        newVelocity = new Vector2(newVelocity.X, 0);
+                    }
+                    if (newPosition.Y < 0)
+                    {
+                        newPosition = new Vector2(newPosition.X, 0);
+                        newVelocity = new Vector2(newVelocity.X, 0);
+                    }
                         
-                        if (runCoolDown < 1)
-                        {
-                            controlledActor.TargetState = ActorState.AState.Seek;
-                            controlledActor.State.State = ActorState.AState.Seek;
-                            runCoolDown = MAX_RUN_COOLDOWN;
-                        }
-                        else
-                        {
-                            controlledActor.PixelPosition = newPosition;
-                            controlledActor.Velocity = newVelocity;
-                            runCoolDown--;
-                        }
+                    if (runCoolDown < 1)
+                    {
+                        controlledActor.TargetState = ActorState.AState.Seek;
+                        controlledActor.State.State = ActorState.AState.Seek;
+                        runCoolDown = MAX_RUN_COOLDOWN;
+                    }
+                    else
+                    {
+                        controlledActor.PixelPosition = newPosition;
+                        controlledActor.Velocity = newVelocity;
+                        runCoolDown--;
+                    }
 
-                        break;
-                    
-                    //Again, a specialcase. Just dumps things into Seek, making sure to zero their velocity first.
-                    default:
-                        if (controlledActor.Path.Count == 0)
+                    break;
+                #endregion
+                #region DefaultState
+                //Again, a specialcase. Just dumps things into Seek, making sure to zero their velocity first.
+                default:
+                    if (controlledActor.Path.Count == 0)
+                    {
+                        controlledActor.Velocity = new Vector2();
+                        controlledActor.State.State = ActorState.AState.Seek;
+                    }
+                    else if (controlledActor.Path.Count == 1) //at target!
+                    {
+                        controlledActor.Velocity = new Vector2();
+                        if (!PreferenceSearch(level).Keys.ToList().Contains(controlledActor.Path[0]))
                         {
-                            controlledActor.Velocity = new Vector2();
                             controlledActor.State.State = ActorState.AState.Seek;
                         }
-                        else if (controlledActor.Path.Count == 1) //at target!
-                        {
-                            controlledActor.Velocity = new Vector2();
-                            if (!PreferenceSearch(level).Keys.ToList().Contains(controlledActor.Path[0]))
-                            {
-                                controlledActor.State.State = ActorState.AState.Seek;
-                            }
-                        }
-                        else
-                        {
-                        }
-                        break;
-                }
+                    }
+                    else
+                    {
+                    }
+                    break;
+                #endregion
+            }
         }
 
         /// <summary>
@@ -532,32 +645,23 @@ namespace Rain_On_Your_Parade
         {
             double maxPreference = 0;
             Dictionary<Actor, double> actorPreference = new Dictionary<Actor, double>();
-            Dictionary<Point, double> entityPreference = new Dictionary<Point, double>();
+            Dictionary<Point, double> objectPreference = new Dictionary<Point, double>();
             Dictionary<GridSquare, Actor> targets = new Dictionary<GridSquare, Actor>();
+            
+            //Desirability of each actor and object
             foreach (Actor actor in level.Actors)
             {
-                if (actorPreference.ContainsKey(actor))
-                {
-                    actorPreference[actor] += Desirability(level.Grid[actor.GridspacePosition.X, actor.GridspacePosition.Y]);
-                }
-                else
-                {
-                    actorPreference[actor] = Desirability(level.Grid[actor.GridspacePosition.X, actor.GridspacePosition.Y]);
-                }
+                actorPreference[actor] = Desirability(level.Grid[actor.GridspacePosition.X, actor.GridspacePosition.Y]);
             }
             foreach (WorldObject entity in level.Objects)
             {
-                if (entityPreference.ContainsKey(entity.GridspacePosition))
-                {
-                    entityPreference[entity.GridspacePosition] += Desirability(level.Grid[entity.GridspacePosition.X, entity.GridspacePosition.Y]);
-                }
-                else
-                {
-                    entityPreference[entity.GridspacePosition] = Desirability(level.Grid[entity.GridspacePosition.X, entity.GridspacePosition.Y]);
-                }
+                objectPreference[entity.GridspacePosition] = Desirability(level.Grid[entity.GridspacePosition.X, entity.GridspacePosition.Y]);
             }
+
             actorPreference[controlledActor] = 0;
-            entityPreference[controlledActor.GridspacePosition] = 0;
+            objectPreference[controlledActor.GridspacePosition] = 0;
+
+            //Preference of each actor and object
             foreach (Actor actor in actorPreference.Keys)
             {
                 if (actorPreference[actor] > maxPreference)
@@ -578,15 +682,15 @@ namespace Rain_On_Your_Parade
                     }
                 }
             }
-            foreach (Point entity in entityPreference.Keys)
+            foreach (Point entity in objectPreference.Keys)
             {
-                if (entityPreference[entity] > maxPreference)
+                if (objectPreference[entity] > maxPreference)
                 {
                     targets.Clear();
                     targets.Add(level.Grid[entity.X, entity.Y], null);
-                    maxPreference = entityPreference[entity];
+                    maxPreference = objectPreference[entity];
                 }
-                else if (entityPreference[entity] == maxPreference && maxPreference != 0 && entityPreference[entity] != 0)
+                else if (objectPreference[entity] == maxPreference && maxPreference != 0 && objectPreference[entity] != 0)
                 {
                     if (!targets.Keys.Contains(level.Grid[entity.X, entity.Y]))
                     {
@@ -594,6 +698,7 @@ namespace Rain_On_Your_Parade
                     }
                 }
             }
+
             return targets;
         }
 
@@ -665,6 +770,12 @@ namespace Rain_On_Your_Parade
                     if (targets[lookingAt] != null)
                     {
                         controlledActor.TargetIsActor = true;
+                        controlledActor.TargetActor = targets[lookingAt];
+                    }
+                    else
+                    {
+                        controlledActor.TargetIsActor = false;
+                        controlledActor.TargetActor = null;
                     }
                     List<Point> pointPath = ExtractPathFromTarget(parentArray, lookingAt.Location, origin.Location);
                     foreach (Point point in pointPath)
