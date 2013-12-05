@@ -84,18 +84,30 @@ namespace Rain_On_Your_Parade
             Texture2D textureFace = content.Load<Texture2D>("white_cloud_face");
             AnimatedTexture aniTexFace = new AnimatedTexture(textureFace, 12, 1, false, false);
 
-            List<AnimationSequence> aniSequences = new List<AnimationSequence>(4);
-            //aniSequences.Add(new AnimationSequence(0, 11, true, true, 1, 0.1f, aniTexBase, null));
+            Texture2D textureShadow = content.Load<Texture2D>("CloudShadow_padded");
+            AnimatedTexture aniTexShadow = new AnimatedTexture(textureShadow, 6, 1, false, false);
+
+            List<AnimationSequence> aniSequences = new List<AnimationSequence>(2);
+            List<AnimationSequence> overlay1 = new List<AnimationSequence>();
+            List<AnimationSequence> overlay2 = new List<AnimationSequence>();
+
+            AnimationSequence cloud_1 = new AnimationSequence(6, 11, true, 1, 0.1f, aniTexBase, null);
+            AnimationSequence cloud_2 = new AnimationSequence(5, 0, true, 1, 0.1f, aniTexBase, null);
+
+            AnimationSequence cloud_face1 = new AnimationSequence(6, 11, true, 1, 0.2f, aniTexFace, null);
+            AnimationSequence cloud_face2 = new AnimationSequence(5, 0, true, 1, 0.2f, aniTexFace, null);
+
+            //Draw shadow first, then cloud, then face
+            overlay1.Add(cloud_1);
+            overlay1.Add(cloud_face1);
+            overlay2.Add(cloud_2);
+            overlay2.Add(cloud_face2);
             
-            AnimationSequence cloud_face1 = new AnimationSequence(11, 5, true, 1, 0.1f, aniTexFace, null);
-            AnimationSequence cloud_face2 = new AnimationSequence(4, 0, true, 1, 0.1f, aniTexFace, null);
-            AnimationSequence cloud_1 = new AnimationSequence(11, 5, true, 1, 0.1f, aniTexBase, cloud_face1);
-            AnimationSequence cloud_2 = new AnimationSequence(4, 0, true, 1, 0.1f, aniTexBase, cloud_face2);
-            
-            aniSequences.Add(cloud_1);
-            aniSequences.Add(cloud_face1);
-            aniSequences.Add(cloud_2);
-            aniSequences.Add(cloud_face2);
+            AnimationSequence cloud_shadow1 = new AnimationSequence(5, 0, true, 1, 0.1f, aniTexShadow, overlay1);
+            AnimationSequence cloud_shadow2 = new AnimationSequence(5, 0, true, 1, 0.1f, aniTexShadow, overlay2);
+
+            aniSequences.Add(cloud_shadow1);
+            aniSequences.Add(cloud_shadow2);
             activatedSprite = new AnimatedSprite(aniSequences);
 
             spriteWidth = 80;

@@ -15,7 +15,7 @@ namespace Rain_On_Your_Parade
         private int seqCounter; 		// how many times to play this sequence before switching
         private float timePerFrame;		// frame rate for this sequence
         private AnimatedTexture texture;            //spritesheet for this sequence
-        private AnimationSequence overlaySequence;	//which AS should overlay this sequence
+        private List<AnimationSequence> overlaySequence;	//which AS should overlay this sequence
         #endregion
 
         /// <summary>AnimationSequence Constructor</summary>
@@ -25,7 +25,7 @@ namespace Rain_On_Your_Parade
         /// <param name="rpt">how many times should this sequence iterate through the frames?</param>
         /// <param name="fRate">frame rate for this sequence</param>
         /// <param name="tex">AnimatedTexture spritesheet for this sequence</param>
-        /// <param name="aSeq">animation sequence that overlays this sequence
+        /// <param name="aSeq">animation sequence list that overlays this sequence
         /// aSeq should occur DIRECTLY AFTER this sequence in AnimatedSprite's sequence list</param>
         /// <devdoc>
         /// Used by AnimatedSprite to process complex animations while
@@ -33,7 +33,7 @@ namespace Rain_On_Your_Parade
         /// </devdoc>
         
         public AnimationSequence(int a, int z, bool rev, int rpt, float fRate, 
-            AnimatedTexture tex, AnimationSequence aSeq)
+            AnimatedTexture tex, List<AnimationSequence> aSeq)
         {
             startFrame = a;
             endFrame = z;
@@ -130,7 +130,7 @@ namespace Rain_On_Your_Parade
             }
         }
         
-        public AnimationSequence OverlaySequence
+        public List<AnimationSequence> OverlaySequence
         {
             get
             {
