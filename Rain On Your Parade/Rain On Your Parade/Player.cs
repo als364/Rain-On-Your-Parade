@@ -68,7 +68,7 @@ namespace Rain_On_Your_Parade
         /// </devdoc>
         public Player()
         {
-            PixelPosition = new Vector2(GameEngine.SCREEN_WIDTH/2,GameEngine.SCREEN_HEIGHT/2);
+            PixelPosition = new Vector2(GameEngine.SCREEN_WIDTH/2 - 40,GameEngine.SCREEN_HEIGHT/2 - 80);
             velocity = new Vector2();
             rain = MAX_RAIN;
             colorAlpha = (1f - ((float)rain / (float)MAX_RAIN));
@@ -111,7 +111,7 @@ namespace Rain_On_Your_Parade
             activatedSprite = new AnimatedSprite(aniSequences);
 
             spriteWidth = 80;
-            spriteHeight = 80;
+            spriteHeight = 160;
         }
 
         public override string ToString()
