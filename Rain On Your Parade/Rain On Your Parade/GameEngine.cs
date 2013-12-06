@@ -19,6 +19,8 @@ namespace Rain_On_Your_Parade
     {
         public enum WinCondition { Objects, Actors, Malice };
 
+        public enum GameState { MainMenu, PauseMenu, Game };
+
         public const int SCREEN_WIDTH = 880;
         public const int SCREEN_HEIGHT = 720;
 
@@ -46,8 +48,9 @@ namespace Rain_On_Your_Parade
 
         Logger log;
 
-        Menu menu;
-        Boolean menuOn = true;
+        GameState state;
+        MainMenu mainMenu;
+        //Boolean menuOn = true;
 
         public GameEngine()
             : base()
@@ -59,6 +62,7 @@ namespace Rain_On_Your_Parade
             models = new List<Model>();
             views = new List<View>();
             controllers = new List<Controller>();
+            state = GameState.MainMenu;
         }
 
         /// <summary>
@@ -85,42 +89,49 @@ namespace Rain_On_Your_Parade
             views.Clear();
             controllers.Clear();
 
-            menu = new Menu();
-            if (menuOn) menu.Initialize();
-            else
+            mainMenu = new MainMenu();
+            //if (menuOn) mainMenu.Initialize();
+            switch (state)
             {
-                //This is where the level building goes. I don't care about an XML parsing framework yet
-                level = new Canvas(stage);
+                case GameState.Game:
+                    //This is where the level building goes. I don't care about an XML parsing framework yet
+                    level = new Canvas(stage);
 
-                // Debug.WriteLine("Y: " + level.Grid[6, 6].Actors[0].Position.Y);
-                int quota = 100;
-                //worldState = new WorldState(quota,level.Grid);
-                level.MaliceObjective = quota;
+                    // Debug.WriteLine("Y: " + level.Grid[6, 6].Actors[0].Position.Y);
+                    int quota = 100;
+                    //worldState = new WorldState(quota,level.Grid);
+                    level.MaliceObjective = quota;
 
-                //Debug.WriteLine("Y: " + worldState.getActors().ToArray()[1].Position.Y);
-                foreach (WorldObject o in level.Objects)
-                {
-                    View objects = new View(o);
-                    models.Add(o);
-                    views.Add(objects);
-                }
-                foreach (Actor a in level.Actors)
-                {
-                    View actors = new View(a);
-                    models.Add(a);
-                    views.Add(actors);
-                    Controller actorController = new ActorController(a);
-                    controllers.Add(actorController);
-                }
+                    //Debug.WriteLine("Y: " + worldState.getActors().ToArray()[1].Position.Y);
+                    foreach (WorldObject o in level.Objects)
+                    {
+                        View objects = new View(o);
+                        models.Add(o);
+                        views.Add(objects);
+                    }
+                    foreach (Actor a in level.Actors)
+                    {
+                        View actors = new View(a);
+                        models.Add(a);
+                        views.Add(actors);
+                        Controller actorController = new ActorController(a);
+                        controllers.Add(actorController);
+                    }
 
-                View player = new View(level.Player);
-                views.Add(player);
-                models.Add(level.Player);
-                controllers.Add(new PlayerController(level.Player));
+                    View player = new View(level.Player);
+                    views.Add(player);
+                    models.Add(level.Player);
+                    controllers.Add(new PlayerController(level.Player));
 
-                //models.Add(slider);
-                //views.Add(sliderView);
-                //controllers.Add(sliderController);
+                    //models.Add(slider);
+                    //views.Add(sliderView);
+                    //controllers.Add(sliderController);
+                    break;
+                case GameState.MainMenu:
+                    mainMenu.Initialize();
+                    break;
+                case GameState.PauseMenu:
+                    break;
             }
                 log = new Logger();
 
@@ -147,7 +158,7 @@ namespace Rain_On_Your_Parade
             batterybar = Content.Load<Texture2D>("batterybar");
             battery = Content.Load<Texture2D>("grass");
             background = Content.Load<Texture2D>("background");
-            menu.LoadContent(this.Content);
+            mainMenu.LoadContent(this.Content);
 
         }
 
@@ -167,105 +178,115 @@ namespace Rain_On_Your_Parade
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            if (!menuOn)
+            //if (!menuOn)
+            switch (state)
             {
-                if (framesTillLog == 0)
-                {
-                    log.Log(level, gameTime);
-                    framesTillLog = LOG_FRAMES;
-                }
-                else
-                {
-                    framesTillLog--;
-                }
-
-                switch (level.win)
-                {
-                    case WinCondition.Malice:
-                        if (level.Malice == level.MaliceObjective)
-                        {
-                            if (--stage == 0)
-                            {
-                                stage = 3;
-                            }
-                            Initialize();
-                            return;
-                        }
-                        break;
-                    case WinCondition.Actors:
-                        bool win = true;
-                        foreach (Actor a in level.maliceActors)
-                        {
-                            win &= a.Mood == 5;
-                        }
-                        if (win)
-                        {
-                            if (--stage == 0)
-                            {
-                                stage = 3;
-                            }
-                            Initialize();
-                            return;
-                        }
-                        break;
-                    case WinCondition.Objects:
-                        break;
-                }
-
-                // TODO: Add your update logic here
-
-                List<WorldObject> toRemove = new List<WorldObject>();
-                List<WorldObject> rainbowKeys = new List<WorldObject>();
-                foreach (WorldObject r in level.rainbows.Keys)
-                {
-                    rainbowKeys.Add(r);
-                }
-                foreach (WorldObject r in rainbowKeys)
-                {
-                    level.rainbows[r] = (int)level.rainbows[r] - 1;
-                    if (((int)level.rainbows[r]) == 0)
+                case GameState.Game:
+                    if (framesTillLog == 0)
                     {
-                        toRemove.Add(r);
+                        log.Log(level, gameTime);
+                        framesTillLog = LOG_FRAMES;
                     }
-                }
-                foreach (WorldObject r in toRemove)
-                {
-                    r.deactivate();
-                    level.rainbows.Remove(r);
-                }
+                    else
+                    {
+                        framesTillLog--;
+                    }
 
+                    switch (level.win)
+                    {
+                        case WinCondition.Malice:
+                            if (level.Malice == level.MaliceObjective)
+                            {
+                                if (--stage == 0)
+                                {
+                                    stage = 3;
+                                }
+                                Initialize();
+                                return;
+                            }
+                            break;
+                        case WinCondition.Actors:
+                            bool win = true;
+                            foreach (Actor a in level.maliceActors)
+                            {
+                                win &= a.Mood == 5;
+                            }
+                            if (win)
+                            {
+                                if (--stage == 0)
+                                {
+                                    stage = 3;
+                                }
+                                Initialize();
+                                return;
+                            }
+                            break;
+                        case WinCondition.Objects:
+                            break;
+                    }
 
-                foreach (Model model in models)
-                {
-                    if (model != null)
-                    {   //TODO: Encapsulate this in individual classes
-                        model.activatedSprite.Update();
+                    // TODO: Add your update logic here
 
-                        if (model.deactivatedSprite != null)
+                    List<WorldObject> toRemove = new List<WorldObject>();
+                    List<WorldObject> rainbowKeys = new List<WorldObject>();
+                    foreach (WorldObject r in level.rainbows.Keys)
+                    {
+                        rainbowKeys.Add(r);
+                    }
+                    foreach (WorldObject r in rainbowKeys)
+                    {
+                        level.rainbows[r] = (int)level.rainbows[r] - 1;
+                        if (((int)level.rainbows[r]) == 0)
                         {
-                            model.deactivatedSprite.Update();
+                            toRemove.Add(r);
                         }
                     }
-                }
+                    foreach (WorldObject r in toRemove)
+                    {
+                        r.deactivate();
+                        level.rainbows.Remove(r);
+                    }
 
-                foreach (Controller controller in controllers)
-                {
-                    controller.Update(gameTime, level);
-                }
-                level.upateGridSquares();
+
+                    foreach (Model model in models)
+                    {
+                        if (model != null)
+                        {   //TODO: Encapsulate this in individual classes
+                            model.activatedSprite.Update();
+
+                            if (model.deactivatedSprite != null)
+                            {
+                                model.deactivatedSprite.Update();
+                            }
+                        }
+                    }
+
+                    foreach (Controller controller in controllers)
+                    {
+                        controller.Update(gameTime, level);
+                    }
+                    level.upateGridSquares();
+                    break;
+                case GameState.MainMenu:
+                    int selected = mainMenu.Update();
+                    if (selected > 0)
+                    {
+                        state = GameState.Game;
+                        stage = selected;
+                        Initialize();
+                        return;
+                    }
+                    break;
+                case GameState.PauseMenu:
+                    break;
             }
 
-            int selected = menu.Update();
-            if (selected > 0)
-            {
-                menuOn = false;
-                stage = selected;
-                Initialize();
-                return;
-            }
-
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
+            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Back))
                 Exit();
+            if (Keyboard.GetState().IsKeyDown(Keys.Escape))
+            {
+                state = GameState.MainMenu;
+            }
             if (Keyboard.GetState().IsKeyDown(Keys.P))
             {
                 Initialize();
@@ -287,24 +308,34 @@ namespace Rain_On_Your_Parade
             spriteBatch.Draw(background, new Rectangle(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT), Color.White);
             spriteBatch.End();
 
-            if (menuOn) menu.Draw(spriteBatch);
-            else
+            //if (menuOn) mainMenu.Draw(spriteBatch);
+            //else
+            //{
+            switch (state)
             {
-                // TODO: Add your drawing code here
-                foreach (View view in views)
-                {
-                    view.Draw(spriteBatch); //calls the AnimatedSprite draw function which includes begin/end
-                }
+                case GameState.Game:
+                    // TODO: Add your drawing code here
+                    foreach (View view in views)
+                    {
+                        view.Draw(spriteBatch); //calls the AnimatedSprite draw function which includes begin/end
+                    }
 
-                //TODO: update this to reflect Player.MAX_RAIN
-                spriteBatch.Begin();
-                spriteBatch.Draw(batterybar, new Rectangle(0, 0, 155, 30), Color.Azure);
-                for (int i = 0; i < level.Player.Rain; i++)
-                {
-                    spriteBatch.Draw(battery, new Rectangle(i * 150 / 6 + 5, 3, 150 / 6, 25), Color.Azure);
-                }
+                    //TODO: update this to reflect Player.MAX_RAIN
+                    spriteBatch.Begin();
+                    spriteBatch.Draw(batterybar, new Rectangle(0, 0, 155, 30), Color.Azure);
+                    for (int i = 0; i < level.Player.Rain; i++)
+                    {
+                        spriteBatch.Draw(battery, new Rectangle(i * 150 / 6 + 5, 3, 150 / 6, 25), Color.Azure);
+                    }
 
-                spriteBatch.End();
+                    spriteBatch.End();
+                    break;
+                case GameState.MainMenu:
+                    mainMenu.Draw(spriteBatch);
+                    break;
+                case GameState.PauseMenu:
+                    //TODO: implement pause menu
+                    break;
             }
             base.Draw(gameTime);
 
