@@ -836,6 +836,28 @@ namespace Rain_On_Your_Parade
             return (Math.Abs(Vector2.Distance(p_pos, q.PixelPosition)) < INTERACT_RADIUS && !p.Equals(q));
         }
 
+        public void updateMalice()
+        {
+            maliceActors = new List<Actor>();
+            maliceObjects = new List<WorldObject>();
+            malice = 0;
+
+            foreach(Actor a in actors) {
+                malice += a.Mood;
+                if (a.Mood >= 5)
+                {
+                    maliceActors.Add(a);
+                }
+            }
+            foreach(WorldObject o in objects)
+            {
+                if (o.Type.CanActivate && !o.Activated)
+                {
+                    maliceObjects.Add(o);
+                }
+            }
+        }
+
         public override string ToString()
         {
             string grid = "";
