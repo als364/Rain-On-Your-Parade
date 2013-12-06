@@ -16,7 +16,7 @@ namespace Rain_On_Your_Parade
         private int coolDown;
         private Player player;
         public bool isRaining = false;
-        public int MAX_RAIN = 6;
+        public int MAX_RAIN = GameEngine.SCREEN_WIDTH / 10 - 1;
 
         public PlayerController(Player player)
             : base(player)
