@@ -691,7 +691,8 @@ namespace Rain_On_Your_Parade
         #endregion
 
         public float maliceTint() {
-            return 1 - malice / maliceObjective;
+            //return 1 - malice / maliceObjective;
+            return 1;
     }
 
         /// <summary>Initialize adjacency lists in level map for ease of search</summary>
