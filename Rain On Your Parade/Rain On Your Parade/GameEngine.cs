@@ -362,10 +362,11 @@ namespace Rain_On_Your_Parade
                     spriteBatch.DrawString(font, "Water", new Vector2(20, 5), Color.White, 0, new Vector2(0, 0), 0.5f, SpriteEffects.None, 0);
               
                     spriteBatch.Draw(batterybar, new Rectangle(0, 40, SCREEN_WIDTH, 40), Color.Black);
-                    int percentInt = (int)(level.percentWon * SCREEN_WIDTH);
+                    int percentInt = (int)(level.percentWon * SCREEN_WIDTH/2);
                     spriteBatch.Draw(batterybar, new Rectangle(0, 45, percentInt, 30), Color.Firebrick);
                     spriteBatch.DrawString(font, "Goal", new Vector2(20, 45), Color.White, 0, new Vector2(0, 0), 0.5f, SpriteEffects.None, 0);
-                    spriteBatch.DrawString(font, level.objectiveMessage, new Vector2(20, SCREEN_HEIGHT-60), Color.Black, 0, new Vector2(0, 0), 0.5f, SpriteEffects.None, 0);
+                    //spriteBatch.DrawString(font, level.objectiveMessage, new Vector2(20, SCREEN_HEIGHT-60), Color.Black, 0, new Vector2(0, 0), 0.5f, SpriteEffects.None, 0);
+                    spriteBatch.DrawString(font, level.objectiveMessage, new Vector2(440, 5), Color.White, 0, new Vector2(0, 0), 0.5f, SpriteEffects.None, 0);
 
                     spriteBatch.End();
                     break;
