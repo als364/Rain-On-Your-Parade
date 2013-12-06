@@ -89,9 +89,9 @@ namespace Rain_On_Your_Parade
                 velX = 0f;
                 velY = 0f;
 
-                if (xChange > 0) { velX = RUN_SPEED; }
+                if (xChange > 0) { velX = RUN_SPEED; controlledActor.FacesLeft = false; }
                 else if (xChange == 0) { velX = 0; }
-                else { velX = -RUN_SPEED; }
+                else { velX = -RUN_SPEED; controlledActor.FacesLeft = true; }
 
                 if (yChange > 0) { velY = RUN_SPEED; }
                 else if (yChange == 0) { velY = 0; }

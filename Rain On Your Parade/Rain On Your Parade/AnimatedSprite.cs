@@ -137,7 +137,7 @@ namespace Rain_On_Your_Parade
         /// <devdoc>
         /// Draw the current frame to spritebatch
         /// </devdoc>
-        public void Draw(SpriteBatch spriteBatch, Vector2 location, Color color)
+        public void Draw(SpriteBatch spriteBatch, Vector2 location, Color color, bool flip, float rot)
         {
             int width = currentSequence.Texture.Texture.Width / currentSequence.Texture.Columns;
             int height = currentSequence.Texture.Texture.Height / currentSequence.Texture.Rows;
@@ -148,6 +148,8 @@ namespace Rain_On_Your_Parade
 
             Rectangle sourceRectangle = new Rectangle(width * column, height * row, width, height);
             Rectangle destinationRectangle = new Rectangle((int)location.X, (int)location.Y, width, height);
+            //Vector2 origin = new Vector2((float)width/2f, (float)height/2f);
+            Vector2 origin = new Vector2(0f, 0f);
 
             //Get overlay sequence
             List<AnimationSequence> overlays = currentSequence.OverlaySequence;
@@ -155,7 +157,12 @@ namespace Rain_On_Your_Parade
             spriteBatch.Begin();
 
             //Draw current sequence
-            spriteBatch.Draw(currentSequence.Texture.Texture, destinationRectangle, sourceRectangle, color);
+            SpriteEffects effect = (flip) ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
+            
+            //Console.Write(flip.ToString() + "\n");
+            //Console.Write(rot.ToString() + "\n");
+
+            spriteBatch.Draw(currentSequence.Texture.Texture, destinationRectangle, sourceRectangle, color, rot, origin, effect, 0f);
 
             if (overlays != null)
             {
@@ -172,7 +179,10 @@ namespace Rain_On_Your_Parade
 
                     Rectangle o_sourceRectangle = new Rectangle(o_width * o_column, o_height * o_row, o_width, o_height);
                     Rectangle o_destinationRectangle = new Rectangle((int)location.X, (int)location.Y, o_width, o_height);
-                  spriteBatch.Draw(o.Texture.Texture, o_destinationRectangle, o_sourceRectangle, Color.White);
+                    //Vector2 o_origin = new Vector2((float)o_width / 2f, (float)o_height / 2f);
+                    Vector2 o_origin = new Vector2(0f, 0f);
+
+                    spriteBatch.Draw(o.Texture.Texture, o_destinationRectangle, o_sourceRectangle, Color.White, rot, o_origin, effect, 0f);
                 }                
             }
             
