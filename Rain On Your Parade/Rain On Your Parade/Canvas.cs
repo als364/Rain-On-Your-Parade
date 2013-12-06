@@ -18,6 +18,8 @@ namespace Rain_On_Your_Parade
         private int maliceObjective;        //amount of malice needed to win level
         private List<WorldObject> objects;
         private List<Actor> actors;
+        public float percentWon;
+        public string objectiveMessage;
 
         public GameEngine.WinCondition win;
         public List<Actor> maliceActors = new List<Actor>();
@@ -36,6 +38,8 @@ namespace Rain_On_Your_Parade
             Grid = new GridSquare[squaresWide, squaresTall];
             objects = new List<WorldObject>();
             actors = new List<Actor>();
+            percentWon = 0f;
+            objectiveMessage = "";
 
             for (int i = 0; i < squaresWide; i++)
             {
@@ -64,6 +68,7 @@ namespace Rain_On_Your_Parade
                     #region levelone
 
                     initialRain = (GameEngine.SCREEN_WIDTH/20);
+                    objectiveMessage = "Goal: Anger the cat\nPress [Spacebar] to Rain";
 
                     //fence 1,9 to 8,9 
                     objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(1, 7), 0));
@@ -108,6 +113,7 @@ namespace Rain_On_Your_Parade
                     #region level2
 
                     initialRain = 10;
+                    objectiveMessage = "Goal: Ruin the Garden\nPress [Shift] to Absorb";
 
                     //fence 2,2 to 7,2
                     objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(2, 2), 0));
@@ -163,6 +169,7 @@ namespace Rain_On_Your_Parade
                     #region level3
 
                     initialRain = 20;
+                    objectiveMessage = "Goal: Anger the Kid\nTake advantage of kids and their \nfavorite things";
 
                     //fence 0,5 to 0,9
                     objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(0, 5), 0));
@@ -233,6 +240,7 @@ namespace Rain_On_Your_Parade
                     #region level5
 
                     initialRain = 10;
+                    objectiveMessage = "Goal: Ruin the Garden\nIt's a race against mom!";
 
                     //mom 1,1 4,4 8,7
                     actors.Add(new Actor(ActorType.Type.Mom, new Point(1, 1)));
@@ -292,6 +300,7 @@ namespace Rain_On_Your_Parade
                     #region level4
 
                     initialRain = 30;
+                    objectiveMessage = "Goal: Malice\nRaining on Sunny Spots generates a temporary Rainbow.";
 
                     //flower 4,0 5,0 4,9 5,9
                     objects.Add(new WorldObject(ObjectType.Type.Laundry, new Point(4, 1), 3));
@@ -340,6 +349,7 @@ namespace Rain_On_Your_Parade
                     #region level6
 
                     initialRain = 10;
+                    objectiveMessage = "Goal: Anger the Cats\nPit angry cats against each other!";
 
                     //fence 2,0 to 2,3
                     objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(2, 0), 0));

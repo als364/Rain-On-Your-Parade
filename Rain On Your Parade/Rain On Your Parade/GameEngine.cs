@@ -201,7 +201,8 @@ namespace Rain_On_Your_Parade
                     switch (level.win)
                     {
                         case WinCondition.Malice:
-                            if (level.Malice >= level.MaliceObjective)
+                            level.percentWon = ((float)level.Malice) / ((float)level.MaliceObjective);
+                            if (level.percentWon >= .99)
                             {
                                 if (--stage == 0)
                                 {
@@ -212,7 +213,8 @@ namespace Rain_On_Your_Parade
                             }
                             break;
                         case WinCondition.Actors:
-                            if (level.maliceActors.Count >= level.Actors.Count)
+                            level.percentWon = ((float)level.maliceActors.Count) / (float)level.Actors.Count;
+                            if (level.percentWon >= .99)
                             {
                                 if (--stage == 0)
                                 {
@@ -231,7 +233,8 @@ namespace Rain_On_Your_Parade
                                     activableObjCount++;
                                 }
                             }
-                            if (level.maliceObjects.Count >= activableObjCount)
+                            level.percentWon = ((float)level.maliceObjects.Count) / (float)activableObjCount;
+                            if (level.percentWon >= .99)
                             {
                                 if (--stage == 0)
                                 {
@@ -356,6 +359,9 @@ namespace Rain_On_Your_Parade
                             new Rectangle(i * 10 + 5, 5, 10, 30), Color.Blue);
                     }
                     spriteBatch.DrawString(font, "Water", new Vector2(20, 5), Color.White, 0, new Vector2(0, 0), 0.5f, SpriteEffects.None, 0);
+
+                    spriteBatch.DrawString(font, level.objectiveMessage, new Vector2(20, 20), Color.White, 0, new Vector2(0, 0), 0.5f, SpriteEffects.None, 0);
+
 
                     /*
                     spriteBatch.Draw(batterybar, new Rectangle(0, 40, SCREEN_WIDTH, 40), Color.Black);
