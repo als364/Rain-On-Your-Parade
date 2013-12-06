@@ -107,7 +107,7 @@ namespace Rain_On_Your_Parade
                     //Level 2 - Kill the Flowers (Goal: WorldObject Garden)
                     #region level2
 
-                    initialRain = 10;
+                    initialRain = 5;
 
                     //fence 2,2 to 7,2
                     objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(2, 2), 0));
@@ -229,10 +229,10 @@ namespace Rain_On_Your_Parade
                     #endregion level3
                     break;
                 case 4:
-                    //Level 5 - Kill the Flowers v2.0 (Goal: WorldObject Garden)
-                    #region level5
+                    //Level 4 - Kill the Flowers v2.0 (Goal: WorldObject Garden)
+                    #region level4
 
-                    initialRain = 10;
+                    initialRain = 5;
 
                     //mom 1,1 4,4 8,7
                     actors.Add(new Actor(ActorType.Type.Mom, new Point(1, 1)));
@@ -285,11 +285,11 @@ namespace Rain_On_Your_Parade
                     objects.Add(new WorldObject(ObjectType.Type.Garden, new Point(9, 9), 1));
 
                     win = GameEngine.WinCondition.Objects;
-                    #endregion level5
+                    #endregion level4
                     break;
                 case 5:
-                    //Level 4 - Lambs to the Slaughter (Goal: Some Reasonable Malice Quota for 3 actors)
-                    #region level4
+                    //Level 5 - Lambs to the Slaughter (Goal: Some Reasonable Malice Quota for 3 actors)
+                    #region level5
 
                     initialRain = 30;
 
@@ -333,7 +333,7 @@ namespace Rain_On_Your_Parade
                     actors.Add(new Actor(ActorType.Type.Cat, new Point(3, 7)));
 
                     win = GameEngine.WinCondition.Malice;
-                    #endregion level4
+                    #endregion level5
                     break;
                 case 6:
                     //Level 6 - Showdown (Goal: Actor Cat)
@@ -400,10 +400,10 @@ namespace Rain_On_Your_Parade
                     actors.Add(new Actor(ActorType.Type.Kid, new Point(9, 1)));
 
                     //flower 0,5 1,5 8,4 9,4
-                    objects.Add(new WorldObject(ObjectType.Type.Garden, new Point(0, 6), 1));
-                    objects.Add(new WorldObject(ObjectType.Type.Garden, new Point(1, 6), 1));
-                    objects.Add(new WorldObject(ObjectType.Type.Garden, new Point(8, 4), 1));
-                    objects.Add(new WorldObject(ObjectType.Type.Garden, new Point(9, 4), 1));
+                    objects.Add(new WorldObject(ObjectType.Type.Garden, new Point(0, 6), 2));
+                    objects.Add(new WorldObject(ObjectType.Type.Garden, new Point(1, 6), 2));
+                    objects.Add(new WorldObject(ObjectType.Type.Garden, new Point(8, 4), 2));
+                    objects.Add(new WorldObject(ObjectType.Type.Garden, new Point(9, 4), 2));
 
                     //sunnyspot 4,5 5,4
                     objects.Add(new WorldObject(ObjectType.Type.SunnyRainbowSpot, new Point(4, 6), 0));
@@ -548,7 +548,6 @@ namespace Rain_On_Your_Parade
                     objects.Add(new WorldObject(ObjectType.Type.House, new Point(8, 1), 0));
                     objects.Add(new WorldObject(ObjectType.Type.House, new Point(9, 1), 0));
                     objects.Add(new WorldObject(ObjectType.Type.House, new Point(2, 8), 0));
-                    objects.Add(new WorldObject(ObjectType.Type.House, new Point(9, 2), 0));
                     objects.Add(new WorldObject(ObjectType.Type.House, new Point(3, 2), 0));
                     objects.Add(new WorldObject(ObjectType.Type.House, new Point(4, 2), 0));
                     objects.Add(new WorldObject(ObjectType.Type.House, new Point(3, 3), 0));
