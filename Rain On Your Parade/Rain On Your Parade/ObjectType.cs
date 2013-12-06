@@ -134,8 +134,8 @@ namespace Rain_On_Your_Parade
                     nurtureLevel = 0;
                     rampageLevel = 0;
                     passable = true;
-                    activatedImages.Add(Type.Laundry, "laundry");
-                    deactivatedImages.Add(Type.Laundry, "wetlaundry");
+                    activatedImages.Add(Type.Laundry, "wetlaundry");
+                    deactivatedImages.Add(Type.Laundry, "laundry");
                     break;
 
                 case ObjectType.Type.House:
@@ -173,8 +173,8 @@ namespace Rain_On_Your_Parade
             deactivatedImages.Add(Type.Pool, "drypool");
             activatedImages.Add(Type.Chalking, "chalking");
             deactivatedImages.Add(Type.Chalking, "sidewalk_80");
-            activatedImages.Add(Type.Laundry, "laundry");
-            deactivatedImages.Add(Type.Laundry, "wetlaundry");
+            activatedImages.Add(Type.Laundry, "wetlaundry");
+            deactivatedImages.Add(Type.Laundry, "laundry");
             activatedImages.Add(Type.House, "house");
             deactivatedImages.Add(Type.House, "house");
             activatedImages.Add(Type.Sidewalk, "sidewalk_80");

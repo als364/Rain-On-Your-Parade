@@ -41,7 +41,7 @@ namespace Rain_On_Your_Parade
             aniSequencesDeact.Add(new AnimationSequence(0, 5, true, 1, 0.1f, aniTexBaseDeactive, null));
             deactivatedSprite = new AnimatedSprite(aniSequencesDeact);
 
-            spriteWidth = 80;
+            spriteWidth = (type.TypeName == ObjectType.Type.Laundry) ? 160 : 80;
             spriteHeight = 80;
         }
 

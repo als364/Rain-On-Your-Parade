@@ -303,8 +303,8 @@ namespace Rain_On_Your_Parade
                     objectiveMessage = "Goal: Malice\nRaining on Sunny Spots generates a temporary Rainbow.";
 
                     //flower 4,0 5,0 4,9 5,9
-                    objects.Add(new WorldObject(ObjectType.Type.Laundry, new Point(4, 1), 3));
-                    objects.Add(new WorldObject(ObjectType.Type.Laundry, new Point(4, 9), 3));
+                    objects.Add(new WorldObject(ObjectType.Type.Laundry, new Point(4, 1), 1));
+                    objects.Add(new WorldObject(ObjectType.Type.Laundry, new Point(4, 9), 1));
 
                     //sunnyspot 1,1 1,8 8,8 8,1
                     objects.Add(new WorldObject(ObjectType.Type.SunnyRainbowSpot, new Point(1, 1), 0));
@@ -701,7 +701,8 @@ namespace Rain_On_Your_Parade
         #endregion
 
         public float maliceTint() {
-            return 1 - malice / maliceObjective;
+            //return 1 - malice / maliceObjective;
+            return 1;
     }
 
         /// <summary>Initialize adjacency lists in level map for ease of search</summary>

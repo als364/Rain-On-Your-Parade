@@ -26,7 +26,7 @@ namespace Rain_On_Your_Parade
 
         public const int MAX_RAINBOW_TIME = 200;
 
-        private int stage = 3;
+        private int stage = 1;
 
         public static int STAGE_NUM= 10;
         public const int LOG_FRAMES = 120;
@@ -204,9 +204,9 @@ namespace Rain_On_Your_Parade
                             level.percentWon = ((float)level.Malice) / ((float)level.MaliceObjective);
                             if (level.percentWon >= .99)
                             {
-                                if (--stage == 0)
+                                if (stage++ > STAGE_NUM)
                                 {
-                                    stage = 3;
+                                    stage = 1;
                                 }
                                 Initialize();
                                 return;
@@ -216,9 +216,9 @@ namespace Rain_On_Your_Parade
                             level.percentWon = ((float)level.maliceActors.Count) / (float)level.Actors.Count;
                             if (level.percentWon >= .99)
                             {
-                                if (--stage == 0)
+                                if (stage++ > STAGE_NUM)
                                 {
-                                    stage = 3;
+                                    stage = 1;
                                 }
                                 Initialize();
                                 return;
@@ -236,9 +236,9 @@ namespace Rain_On_Your_Parade
                             level.percentWon = ((float)level.maliceObjects.Count) / (float)activableObjCount;
                             if (level.percentWon >= .99)
                             {
-                                if (--stage == 0)
+                                if (stage++ > STAGE_NUM)
                                 {
-                                    stage = 3;
+                                    stage = 1;
                                 }
                                 Initialize();
                                 return;
@@ -342,6 +342,7 @@ namespace Rain_On_Your_Parade
             {
                 case GameState.Game:
                     // TODO: Add your drawing code here
+                    //Console.Write(level.Malice.ToString()+"\n"+level.MaliceObjective.ToString()+"\n");
                     spriteBatch.Begin();
                     spriteBatch.Draw(background, new Rectangle(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT), new Color(level.maliceTint(),level.maliceTint(),level.maliceTint()));
                     spriteBatch.End();
@@ -360,18 +361,21 @@ namespace Rain_On_Your_Parade
                     }
                     spriteBatch.DrawString(font, "Water", new Vector2(20, 5), Color.White, 0, new Vector2(0, 0), 0.5f, SpriteEffects.None, 0);
 
+<<<<<<< HEAD
                     spriteBatch.DrawString(font, level.objectiveMessage, new Vector2(20, 20), Color.White, 0, new Vector2(0, 0), 0.5f, SpriteEffects.None, 0);
 
 
                     /*
+=======
+>>>>>>> 3da7431c3285db042e7ace52aa03f8106e92e7d3
                     spriteBatch.Draw(batterybar, new Rectangle(0, 40, SCREEN_WIDTH, 40), Color.Black);
                     for (int i = 0; i < level.Malice; i++)
                     {
                         spriteBatch.Draw(batterybar,
-                            new Rectangle(i * 10 + 5, 5, 10, 30), Color.Firebrick);
+                            new Rectangle(i * 10 + 5, 45, 10, 30), Color.Firebrick);
                     }
                     spriteBatch.DrawString(font, "Malice", new Vector2(20, 45), Color.White, 0, new Vector2(0, 0), 0.5f, SpriteEffects.None, 0);
-                    */
+                    
                     spriteBatch.End();
                     break;
                 case GameState.MainMenu:
