@@ -26,6 +26,8 @@ namespace Rain_On_Your_Parade
         private int gridRampageEffect;
         private List<GridSquare> path;
         private int interactionTimer;
+        private int rot_mode;
+        private bool facesLeft;
 
         public Texture2D mood1;
         public Texture2D mood2;
@@ -57,6 +59,8 @@ namespace Rain_On_Your_Parade
             gridRampageEffect = aType.GridRampageEffect;
             targetIsActor = false;
             colorAlpha = 0f;
+            rot_mode = -1;
+            facesLeft = false;
         }
 
         public override void LoadContent(ContentManager content)
@@ -198,6 +202,12 @@ namespace Rain_On_Your_Parade
             get { return targetIsActor; }
             set { targetIsActor = value; }
         }
+        public bool FacesLeft
+        {
+            get { return facesLeft; }
+            set { facesLeft = value; }
+        }
+
         #endregion
 
         public void IncrementMood()
@@ -231,6 +241,39 @@ namespace Rain_On_Your_Parade
             playLevel += type.SlowNeedIncrease[1];
             nurtureLevel += type.SlowNeedIncrease[2];
 
+        }
+
+        public bool isFacingLeft()
+        {
+            if (path != null && path.Count != 0) return (path[0].Location.X < GridspacePosition.X);
+            if (facesLeft && state.State == ActorState.AState.Run) return true;
+            else return false;
+        }
+
+        public float rot_level() // rot_mode is -1 or 1 for rotate 0, -2 for rotate negative, 2 for rotate positive 
+        {
+            float x = 0f;
+            if (state.State == ActorState.AState.Fight || state.State == ActorState.AState.Rampage)
+            {
+                switch (rot_mode)
+                {
+                    case -2:
+                        rot_mode++;
+                        x = -0.02f;
+                        break;
+                    case -1:
+                        rot_mode += 3;
+                        break;
+                    case 1:
+                        rot_mode -= 3;
+                        break;
+                    case 2:
+                        rot_mode--;
+                        x = 0.02f;
+                        break;
+                }
+            }
+            return x;
         }
 
         public override string ToString()

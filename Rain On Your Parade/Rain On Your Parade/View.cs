@@ -43,7 +43,7 @@ namespace Rain_On_Your_Parade
                 }
 
                 activatedImage.Draw(spriteBatch, viewedModel.PixelPosition,
-                    new Color(viewedModel.colorAlpha, viewedModel.colorAlpha, viewedModel.colorAlpha));
+                    new Color(viewedModel.colorAlpha, viewedModel.colorAlpha, viewedModel.colorAlpha),false,0f);
            
 
             }
@@ -59,10 +59,10 @@ namespace Rain_On_Your_Parade
                         //    float alpha = ((int)level.rainbows[current] / (float)GameEngine.MAX_RAINBOW_TIME);
                         //    activatedImage.Draw(spriteBatch, viewedModel.PixelPosition, new Color(alpha, alpha, alpha, alpha));
                         //}
-                        activatedImage.Draw(spriteBatch, viewedModel.PixelPosition, Color.White);
+                        activatedImage.Draw(spriteBatch, viewedModel.PixelPosition, Color.White,false,0f);
                         break;
                     case false:
-                        deactivatedImage.Draw(spriteBatch, viewedModel.PixelPosition, Color.White);
+                        deactivatedImage.Draw(spriteBatch, viewedModel.PixelPosition, Color.White,false,0f);
                         break;
                 }
             }
@@ -71,13 +71,15 @@ namespace Rain_On_Your_Parade
                 if (viewedModel is Actor)
                 {
                     Actor actor = (Actor)viewedModel;
+
                     if (actor.Mood < 4)
                     {
                         if (actor.State.State == ActorState.AState.Run) {
-                            deactivatedImage.Draw(spriteBatch, viewedModel.PixelPosition, Color.GhostWhite);
-                        } else activatedImage.Draw(spriteBatch, viewedModel.PixelPosition, Color.Azure);
+                            deactivatedImage.Draw(spriteBatch, viewedModel.PixelPosition, Color.GhostWhite, actor.isFacingLeft(), actor.rot_level());
+                        }
+                        else activatedImage.Draw(spriteBatch, viewedModel.PixelPosition, Color.Azure, actor.isFacingLeft(), actor.rot_level());
                     }
-                    else deactivatedImage.Draw(spriteBatch, viewedModel.PixelPosition, Color.Brown);
+                    else deactivatedImage.Draw(spriteBatch, viewedModel.PixelPosition, Color.Brown, actor.isFacingLeft(), actor.rot_level());
 
                     Texture2D[] moods = new Texture2D[6] {actor.mood1,actor.mood2,actor.mood3,actor.mood4,actor.mood5,actor.mood6};
                     //Console.WriteLine(actor.Mood);
@@ -103,7 +105,7 @@ namespace Rain_On_Your_Parade
                 }
                 else
                 {
-                    activatedImage.Draw(spriteBatch, viewedModel.PixelPosition, Color.Azure);
+                    activatedImage.Draw(spriteBatch, viewedModel.PixelPosition, Color.Azure,false,0f);
                 }
             }
         }
