@@ -420,7 +420,8 @@ namespace Rain_On_Your_Parade
 
         public bool nearEnoughForInteraction(Model p, Model q)
         {
-            return (Math.Abs(Vector2.Distance(p.PixelPosition, q.PixelPosition)) < INTERACT_RADIUS && !p.Equals(q));
+            Vector2 p_pos = (p is Player) ? (p.PixelPosition + new Vector2(0,80)) : p.PixelPosition; //detect cloud when near shadow
+            return (Math.Abs(Vector2.Distance(p_pos, q.PixelPosition)) < INTERACT_RADIUS && !p.Equals(q));
         }
 
         public override string ToString()

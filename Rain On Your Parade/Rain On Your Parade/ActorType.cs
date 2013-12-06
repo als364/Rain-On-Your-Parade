@@ -72,7 +72,7 @@ namespace Rain_On_Your_Parade
                     gridRampageEffect = 3;
                     initState = new ActorState(ActorState.AState.Seek);
                     activatedImages.Add(Type.Kid, "KidWalkingForward");
-                    deactivatedImages.Add(Type.Kid, "KidWalkingForward");
+                    deactivatedImages.Add(Type.Kid, "KidFlailing");
                     fastNeedIncrease = new int[3] { 0, 1, 0 };
                     slowNeedIncrease = new int[3] { 1, 0, 0 };
                     break;
@@ -89,8 +89,8 @@ namespace Rain_On_Your_Parade
                     gridNurtureEffect = -1;
                     gridRampageEffect = 3;
                     initState = new ActorState(ActorState.AState.Seek);
-                    activatedImages.Add(Type.Mom, "mom_80");
-                    deactivatedImages.Add(Type.Mom, "mom_80");
+                    activatedImages.Add(Type.Mom, "MomWalkingForward");
+                    deactivatedImages.Add(Type.Mom, "MomFlailing");
                     fastNeedIncrease = new int[3] { 0, 0, 1 };
                     slowNeedIncrease = new int[3] { 0, 0, 0 };
                     break;
@@ -116,10 +116,10 @@ namespace Rain_On_Your_Parade
 
             activatedImages.Add(Type.Cat, "cat_80");
             activatedImages.Add(Type.Kid, "KidWalkingForward");
-            activatedImages.Add(Type.Mom, "mom_80");
+            activatedImages.Add(Type.Mom, "MomWalkingForward");
             deactivatedImages.Add(Type.Cat, "cat_80");
-            deactivatedImages.Add(Type.Kid, "KidWalkingForward");
-            deactivatedImages.Add(Type.Mom, "mom_80");
+            deactivatedImages.Add(Type.Kid, "KidFlailing");
+            deactivatedImages.Add(Type.Mom, "MomFlailing");
         }
 
         #region Getters and Setters
@@ -206,6 +206,10 @@ namespace Rain_On_Your_Parade
         public string activatedStringName()
         {
             return (string)activatedImages[typeName];
+        }
+        public string deactivatedStringName()
+        {
+            return (string)deactivatedImages[typeName];
         }
         #endregion
 

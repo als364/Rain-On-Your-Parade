@@ -42,14 +42,7 @@ namespace Rain_On_Your_Parade
         /// </devdoc>
         private void NextInSequence()
         {
-            if (currentSequence.OverlaySequence != null)
-            {
-                seqIndex += 2;
-            }
-            else
-            {
-                seqIndex++;
-            }
+            seqIndex++;
 
             if (seqIndex == sequences.Count)
             {
@@ -157,18 +150,30 @@ namespace Rain_On_Your_Parade
             Rectangle destinationRectangle = new Rectangle((int)location.X, (int)location.Y, width, height);
 
             //Get overlay sequence
-            AnimationSequence overlay = currentSequence.OverlaySequence;
+            List<AnimationSequence> overlays = currentSequence.OverlaySequence;
 
             spriteBatch.Begin();
-            if (overlay != null)
+
+            //Draw current sequence
+            spriteBatch.Draw(currentSequence.Texture.Texture, destinationRectangle, sourceRectangle, color);
+
+            if (overlays != null)
             {
-                spriteBatch.Draw(currentSequence.Texture.Texture, destinationRectangle, sourceRectangle, color);
-                spriteBatch.Draw(overlay.Texture.Texture, destinationRectangle, sourceRectangle, Color.White);
-                
-            }
-            else
-            {
-                spriteBatch.Draw(currentSequence.Texture.Texture, destinationRectangle, sourceRectangle, color);
+                //Draw overlays
+                foreach (AnimationSequence o in overlays) {
+                    int shift = Math.Max(o.StartFrame,o.EndFrame) - Math.Max(currentSequence.StartFrame, currentSequence.EndFrame);
+
+                    int o_width = o.Texture.Texture.Width / o.Texture.Columns;
+                    int o_height = o.Texture.Texture.Height / o.Texture.Rows;
+                    int o_row = (int)((float)(currentFrame+shift) / (float)o.Texture.Columns);
+                    int o_column = (currentFrame+shift) % o.Texture.Columns;
+
+                    //Console.Write((currentFrame+shift).ToString() + "\n");
+
+                    Rectangle o_sourceRectangle = new Rectangle(o_width * o_column, o_height * o_row, o_width, o_height);
+                    Rectangle o_destinationRectangle = new Rectangle((int)location.X, (int)location.Y, o_width, o_height);
+                  spriteBatch.Draw(o.Texture.Texture, o_destinationRectangle, o_sourceRectangle, Color.White);
+                }                
             }
             
             spriteBatch.End();
