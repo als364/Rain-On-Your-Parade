@@ -360,7 +360,7 @@ namespace Rain_On_Your_Parade
                             new Rectangle(i * 10 + 5, 5, 10, 30), Color.Blue);
                     }
                     spriteBatch.DrawString(font, "Water", new Vector2(20, 5), Color.White, 0, new Vector2(0, 0), 0.5f, SpriteEffects.None, 0);
-                    spriteBatch.DrawString(font, level.objectiveMessage, new Vector2(20, 20), Color.White, 0, new Vector2(0, 0), 0.5f, SpriteEffects.None, 0);
+                    spriteBatch.DrawString(font, level.objectiveMessage, new Vector2(20, SCREEN_HEIGHT - 60), Color.Black, 0, new Vector2(0, 0), 0.5f, SpriteEffects.None, 0);
 
 
               
