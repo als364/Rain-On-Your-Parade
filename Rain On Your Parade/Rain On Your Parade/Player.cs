@@ -10,10 +10,11 @@ namespace Rain_On_Your_Parade
 {
     class Player : Model
     {
+        public const int MAX_RAIN = GameEngine.SCREEN_WIDTH/10 -1;
         private Vector2 velocity;       //velocity of player
         private int rain;       //amount of rain held by player
-
-        public const int MAX_RAIN = 6;
+        //public const int MAX_RAIN = 6;
+        public int rainInit;
         public bool isRaining = false;
         public Texture2D waterImg;
 
@@ -66,11 +67,12 @@ namespace Rain_On_Your_Parade
         /// Create a player with position pos = center of screen,
         /// velocity v = 0.0, and rain = full capacity
         /// </devdoc>
-        public Player()
+        public Player(int rInit)
         {
             PixelPosition = new Vector2(GameEngine.SCREEN_WIDTH/2 - 40,GameEngine.SCREEN_HEIGHT/2 - 80);
             velocity = new Vector2();
-            rain = MAX_RAIN;
+            rain = rInit;
+            rainInit = rInit;
             colorAlpha = (1f - ((float)rain / (float)MAX_RAIN));
         }
 

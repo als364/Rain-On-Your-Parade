@@ -156,7 +156,7 @@ namespace Rain_On_Your_Parade
                 }
             }
 
-            batterybar = Content.Load<Texture2D>("batterybar");
+            batterybar = Content.Load<Texture2D>("SliderBackground");
             battery = Content.Load<Texture2D>("grass");
             background = Content.Load<Texture2D>("background");
             menu_background = Content.Load<Texture2D>("menu_bg");
@@ -334,10 +334,11 @@ namespace Rain_On_Your_Parade
 
                     //TODO: update this to reflect Player.MAX_RAIN
                     spriteBatch.Begin();
-                    spriteBatch.Draw(batterybar, new Rectangle(0, 0, 155, 30), Color.Azure);
+                    spriteBatch.Draw(batterybar, new Rectangle(0, 0, SCREEN_WIDTH, 40), Color.Black);
                     for (int i = 0; i < level.Player.Rain; i++)
                     {
-                        spriteBatch.Draw(battery, new Rectangle(i * 150 / 6 + 5, 3, 150 / 6, 25), Color.Azure);
+                        spriteBatch.Draw(batterybar,
+                            new Rectangle(i * 10 + 5, 5, 10, 30), Color.SkyBlue);
                     }
 
                     spriteBatch.End();
