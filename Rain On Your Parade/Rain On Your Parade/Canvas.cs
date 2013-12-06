@@ -300,7 +300,7 @@ namespace Rain_On_Your_Parade
                     #region level5
 
                     initialRain = 30;
-                    objectiveMessage = "Goal: Malice\nRaining on Sunny Spots generates a temporary Rainbow.";
+                    objectiveMessage = "Goal: Malice\nRaining on Sunny Spots generates \na temporary Rainbow.";
 
                     //flower 4,0 5,0 4,9 5,9
                     objects.Add(new WorldObject(ObjectType.Type.Laundry, new Point(4, 1), 1));
