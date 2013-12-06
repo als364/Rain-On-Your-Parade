@@ -74,7 +74,12 @@ namespace Rain_On_Your_Parade
 
                     if (actor.Mood < 4)
                     {
-                        if (actor.State.State == ActorState.AState.Run) {
+                        if (actor.State.State == ActorState.AState.Run ||
+                            actor.State.State == ActorState.AState.Nurture ||
+                            actor.State.State == ActorState.AState.Rampage ||
+                            actor.State.State == ActorState.AState.Fight ||
+                            actor.State.State == ActorState.AState.Comfort)
+                        {
                             deactivatedImage.Draw(spriteBatch, viewedModel.PixelPosition, Color.GhostWhite, actor.isFacingLeft(), actor.rot_level());
                         }
                         else activatedImage.Draw(spriteBatch, viewedModel.PixelPosition, Color.Azure, actor.isFacingLeft(), actor.rot_level());

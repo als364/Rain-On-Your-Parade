@@ -47,9 +47,120 @@ namespace Rain_On_Your_Parade
 
             switch (level)
             {
-                case 2:
-                    //Level One
+                case 1:
+                    //Level 1 - Soak the Cat (endless water, Goal: Actor Cat)
                     #region levelone
+
+                    //fence 1,9 to 8,9 
+
+                    //fence 1,5 to 1,8 and 7,5 to 7,8
+
+                    //fence 2,5 3,5 6,5 7,5
+
+                    //house 3,4 5,3 4,4 5,4
+
+                    //cat 2,8
+
+                    #endregion levelone
+                    break;
+                case 2:
+                    //Level 2 - Kill the Flowers (Goal: WorldObject Garden)
+                    #region level2
+
+                    //fence 2,2 to 7,2
+
+                    //fence 7,3 to 7,7
+
+                    //fence 2,3 to 2,7
+
+                    //garden 3,3 to 6,6
+
+
+                    #endregion level2
+                    break;
+                case 3:
+                    //Level 3 - Make Kids Cry (Goal: Actor Kid)
+                    #region level3
+
+                    //fence 0,5 to 0,9
+
+                    //fence 4,5 to 4,9
+
+                    //fence 5,0 to 5,4
+
+                    //fence 9,0 to 9,4
+
+                    //sidewalk 0,0 0,2 0,4 9,5 9,7 9,9
+
+                    //chalking 0,1 0,3 9,6 9,6
+
+                    //pool 2,7 7,2
+
+                    //house 2,1 3,2 
+
+                    //house 6,7 7,8
+
+                    //kid 3,3 and 6,6
+
+
+
+                    #endregion level3
+                    break;
+                case 4:
+                    //Level 4 - Lambs to the Slaughter (Goal: Some Reasonable Malice Quota for 3 actors)
+                    #region level4
+
+                    //flower 4,0 5,0 4,9 5,9
+
+                    //sunnyspot 1,1 1,8 8,8 8,1
+
+                    //pool 0,4 9,4
+
+                    //sidewalk 4,1 to 4,8 and 5,1 to 5,8
+
+                    //kid 3,2
+
+                    //mom 7,6
+
+                    //cat 3,7
+
+                    #endregion level4
+                    break;
+                case 5:
+                    //Level 5 - Kill the Flowers v2.0 (Goal: WorldObject Garden)
+                    #region level5
+
+
+
+                    #endregion level5
+                    break;
+                case 6:
+                    //Level 6 - Showdown (Goal: Actor Cat)
+                    #region level6
+
+                    //fence 2,0 to 2,3
+
+                    //fence 3,3 to 9,3
+
+                    //fence 0,6 to 7,6
+
+                    //fence 7,6 to 7,9
+
+                    //sunnyspot 0,5 5,4 4,5 9,4
+
+                    //cat 0,0 and 9,9
+
+                    #endregion level6
+                    break;
+                case 7:
+                    //Level 7 - Showdown v2.0 (Goal: Some reasonable malice level given 2 kids, 2 moms)
+                    #region level7
+
+                    #endregion level7
+                    break;
+                case 8:
+                    //Level 8
+                    #region level8
                     actors.Add(new Actor(ActorType.Type.Cat, new Point(10, 6)));
                     actors.Add(new Actor(ActorType.Type.Cat, new Point(0, 6)));
                     actors.Add(new Actor(ActorType.Type.Cat, new Point(5, 4)));
@@ -78,11 +189,11 @@ namespace Rain_On_Your_Parade
                     objects.Add(new WorldObject(ObjectType.Type.Garden, new Point(3, 6), 1));
                     objects.Add(new WorldObject(ObjectType.Type.Garden, new Point(2, 6), 1));
                     win = GameEngine.WinCondition.Actors;
-                    #endregion levelone
+                    #endregion level8
                     break;
-                case 1:
-                    //Level 2
-                    #region leveltwo
+                case 9:
+                    //Level 9
+                    #region level9
                     actors.Add(new Actor(ActorType.Type.Kid, new Point(10, 6)));
                     actors.Add(new Actor(ActorType.Type.Kid, new Point(5, 6)));
                     actors.Add(new Actor(ActorType.Type.Kid, new Point(0, 6)));
@@ -122,11 +233,11 @@ namespace Rain_On_Your_Parade
                     objects.Add(new WorldObject(ObjectType.Type.Garden, new Point(5, 7), 2));
                     objects.Add(new WorldObject(ObjectType.Type.Garden, new Point(9, 3), 2));
                     win = GameEngine.WinCondition.Actors;
-                    #endregion leveltwo
+                    #endregion level9
                     break;
-                case 3:
-                    //Level 3
-                    #region levelthree
+                case 10:
+                    //Level 10
+                    #region level10
                     actors.Add(new Actor(ActorType.Type.Cat, new Point(6, 0)));
                     actors.Add(new Actor(ActorType.Type.Kid, new Point(1, 8)));
                     actors.Add(new Actor(ActorType.Type.Mom, new Point(6, 6)));
@@ -164,7 +275,7 @@ namespace Rain_On_Your_Parade
                     objects.Add(new WorldObject(ObjectType.Type.Chalking, new Point(9, 3), 0));
                     objects.Add(new WorldObject(ObjectType.Type.Chalking, new Point(10, 3), 0));
                     win = GameEngine.WinCondition.Actors;
-                    #endregion levelthree
+                    #endregion level10
                     break;
                 default: break;
             }

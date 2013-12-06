@@ -53,25 +53,25 @@ namespace Rain_On_Your_Parade
             STAGE_ROWS = GameEngine.SCREEN_WIDTH / iconWidth;
                         
             levelTitles.Add("Soak the Cat");
-            levelSubTitles.Add("Press [Spacebar] to Rain");
+            levelSubTitles.Add("Goal: Cat\n\nPress [Spacebar] to Rain");
             levelTitles.Add("Kill the Flowers");
-            levelSubTitles.Add("Press [Shift] to Absorb");
+            levelSubTitles.Add("Goal: Garden\n\nPress [Shift] to Absorb");
             levelTitles.Add("Make Kids Cry");
-            levelSubTitles.Add("Take advantage of kids and their \nfavorite things");
+            levelSubTitles.Add("Goal: Kid\n\nTake advantage of kids and their \nfavorite things");
+            levelTitles.Add("Kill the Flowers V2.0");
+            levelSubTitles.Add("Goal: Garden\n\nIt's a race against mom!");
             levelTitles.Add("Lambs to the Slaughter");
-            levelSubTitles.Add("Raining on Sunny Spots generates a \ntemporary Rainbow");
-            levelTitles.Add("Manipulate the Masses");
-            levelSubTitles.Add("Pit angry people against each other");
+            levelSubTitles.Add("Goal: Malice\n\nRaining on Sunny Spots generates a \ntemporary Rainbow");
+            levelTitles.Add("Showdown");
+            levelSubTitles.Add("Goal: Cat\n\nPit angry cats against each other!");
+            levelTitles.Add("Showdown V2.0");
+            levelSubTitles.Add("Goal: Malice\n\nThis time it's mom and son");
             levelTitles.Add("Not yet created");
-            levelSubTitles.Add("...");
+            levelSubTitles.Add("...seem familiar?");
             levelTitles.Add("Not yet created");
-            levelSubTitles.Add("...");
+            levelSubTitles.Add("...it should");
             levelTitles.Add("Not yet created");
-            levelSubTitles.Add("...");
-            levelTitles.Add("Not yet created");
-            levelSubTitles.Add("...");
-            levelTitles.Add("Not yet created");
-            levelSubTitles.Add("...");
+            levelSubTitles.Add("...yeeeah");
         }
 
 

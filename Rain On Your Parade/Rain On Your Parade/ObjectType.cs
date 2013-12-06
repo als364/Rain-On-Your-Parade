@@ -6,7 +6,7 @@ namespace Rain_On_Your_Parade
     public class ObjectType
     {
 
-        public enum Type {SunnyRainbowSpot, Garden, Pool, Chalking, Laundry, House};
+        public enum Type {SunnyRainbowSpot, Garden, Pool, Chalking, Sidewalk, Fence, Laundry, House};
         Hashtable activatedImages = new Hashtable();
         Hashtable deactivatedImages = new Hashtable();
         private Type typeName;
@@ -96,6 +96,34 @@ namespace Rain_On_Your_Parade
                     deactivatedImages.Add(Type.Chalking, "sidewalk_80");
                     break;
 
+                case ObjectType.Type.Sidewalk:
+                    isWetObject = false;
+                    canActivate = false;
+                    startsWet = false;
+                    holdsWater = false;
+                    sleepLevel = 0;
+                    playLevel = 0;
+                    nurtureLevel = 0;
+                    rampageLevel = 0;
+                    passable = true;
+                    activatedImages.Add(Type.Sidewalk, "sidewalk_80");
+                    deactivatedImages.Add(Type.Sidewalk, "sidewalk_80");
+                    break;
+
+                case ObjectType.Type.Fence:
+                    isWetObject = false;
+                    canActivate = false;
+                    startsWet = false;
+                    holdsWater = false;
+                    sleepLevel = 0;
+                    playLevel = 0;
+                    nurtureLevel = 0;
+                    rampageLevel = 0;
+                    passable = false;
+                    activatedImages.Add(Type.Fence, "bush");
+                    deactivatedImages.Add(Type.Fence, "bush");
+                    break;
+
                 case ObjectType.Type.Laundry:
                     isWetObject = true;
                     canActivate = true;
@@ -149,6 +177,10 @@ namespace Rain_On_Your_Parade
             deactivatedImages.Add(Type.Laundry, "wetlaundry_80");
             activatedImages.Add(Type.House, "house");
             deactivatedImages.Add(Type.House, "house");
+            activatedImages.Add(Type.Sidewalk, "sidewalk_80");
+            deactivatedImages.Add(Type.Sidewalk, "sidewalk_80");
+            activatedImages.Add(Type.Fence, "bush");
+            deactivatedImages.Add(Type.Fence, "bush");
         }
 
         public Type TypeName
