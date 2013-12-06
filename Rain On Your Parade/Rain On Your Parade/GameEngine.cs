@@ -196,10 +196,12 @@ namespace Rain_On_Your_Parade
                         framesTillLog--;
                     }
 
+                    level.updateMalice();
+
                     switch (level.win)
                     {
                         case WinCondition.Malice:
-                            if (level.Malice == level.MaliceObjective)
+                            if (level.Malice >= level.MaliceObjective)
                             {
                                 if (--stage == 0)
                                 {
@@ -210,12 +212,7 @@ namespace Rain_On_Your_Parade
                             }
                             break;
                         case WinCondition.Actors:
-                            bool win = true;
-                            foreach (Actor a in level.maliceActors)
-                            {
-                                win &= a.Mood == 5;
-                            }
-                            if (win)
+                            if (level.maliceActors.Count >= level.Actors.Count)
                             {
                                 if (--stage == 0)
                                 {
@@ -226,6 +223,23 @@ namespace Rain_On_Your_Parade
                             }
                             break;
                         case WinCondition.Objects:
+                            int activableObjCount = 0;
+                            foreach (WorldObject o in level.Objects)
+                            {
+                                if (o.Type.CanActivate)
+                                {
+                                    activableObjCount++;
+                                }
+                            }
+                            if (level.maliceObjects.Count >= activableObjCount)
+                            {
+                                if (--stage == 0)
+                                {
+                                    stage = 3;
+                                }
+                                Initialize();
+                                return;
+                            }
                             break;
                     }
 
@@ -334,7 +348,6 @@ namespace Rain_On_Your_Parade
                         view.Draw(spriteBatch); //calls the AnimatedSprite draw function which includes begin/end
                     }
 
-                    //TODO: update this to reflect Player.MAX_RAIN
                     spriteBatch.Begin();
                     spriteBatch.Draw(batterybar, new Rectangle(0, 0, SCREEN_WIDTH, 40), Color.Black);
                     for (int i = 0; i < level.Player.Rain; i++)
@@ -344,7 +357,8 @@ namespace Rain_On_Your_Parade
                     }
                     spriteBatch.DrawString(font, "Water", new Vector2(20, 5), Color.White, 0, new Vector2(0, 0), 0.5f, SpriteEffects.None, 0);
 
-                    /*spriteBatch.Draw(batterybar, new Rectangle(0, 40, SCREEN_WIDTH, 40), Color.Black);
+                    /*
+                    spriteBatch.Draw(batterybar, new Rectangle(0, 40, SCREEN_WIDTH, 40), Color.Black);
                     for (int i = 0; i < level.Malice; i++)
                     {
                         spriteBatch.Draw(batterybar,
