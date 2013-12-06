@@ -360,14 +360,10 @@ namespace Rain_On_Your_Parade
                             new Rectangle(i * 10 + 5, 5, 10, 30), Color.Blue);
                     }
                     spriteBatch.DrawString(font, "Water", new Vector2(20, 5), Color.White, 0, new Vector2(0, 0), 0.5f, SpriteEffects.None, 0);
-
-<<<<<<< HEAD
                     spriteBatch.DrawString(font, level.objectiveMessage, new Vector2(20, 20), Color.White, 0, new Vector2(0, 0), 0.5f, SpriteEffects.None, 0);
 
 
-                    /*
-=======
->>>>>>> 3da7431c3285db042e7ace52aa03f8106e92e7d3
+              
                     spriteBatch.Draw(batterybar, new Rectangle(0, 40, SCREEN_WIDTH, 40), Color.Black);
                     for (int i = 0; i < level.Malice; i++)
                     {
