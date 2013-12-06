@@ -22,7 +22,7 @@ namespace Rain_On_Your_Parade
         public enum GameState { MainMenu, PauseMenu, Game };
 
         public const int SCREEN_WIDTH = 880;
-        public const int SCREEN_HEIGHT = 720;
+        public const int SCREEN_HEIGHT =800;
 
         public const int MAX_RAINBOW_TIME = 200;
 
