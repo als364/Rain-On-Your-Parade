@@ -28,7 +28,7 @@ namespace Rain_On_Your_Parade
 
         private int stage = 3;
 
-        public static int STAGE_NUM= 20;
+        public static int STAGE_NUM= 10;
         public const int LOG_FRAMES = 120;
         private int framesTillLog = 0;
 

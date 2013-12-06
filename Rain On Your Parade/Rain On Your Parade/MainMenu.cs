@@ -17,7 +17,7 @@ namespace Rain_On_Your_Parade
     /// </summary>
     public class MainMenu
     {
-
+        Texture2D topbar;
         Texture2D levelicon;
         Texture2D levelSelected;
 
@@ -33,12 +33,45 @@ namespace Rain_On_Your_Parade
         float height = 0f;
         SpriteFont font;
 
+        int num_col = 2;
+        int iconHeight = 90;
+        int iconWidth = 90;
+
+        int marLeft = 90;
+        int marTop = 150;
+        int padLeft = 28;
+        int padTop = 28;
+
+        List<String> levelTitles = new List<String>();
+        List<String> levelSubTitles = new List<String>();
+
         public int STAGE_ROWS = 1;
 
 
         public MainMenu()
         {
-            STAGE_ROWS = GameEngine.SCREEN_WIDTH / 150;
+            STAGE_ROWS = GameEngine.SCREEN_WIDTH / iconWidth;
+                        
+            levelTitles.Add("Soak the Cat");
+            levelSubTitles.Add("Press [Spacebar] to Rain");
+            levelTitles.Add("Kill the Flowers");
+            levelSubTitles.Add("Press [Shift] to Absorb");
+            levelTitles.Add("Make Kids Cry");
+            levelSubTitles.Add("Take advantage of kids and their \nfavorite things");
+            levelTitles.Add("Lambs to the Slaughter");
+            levelSubTitles.Add("Raining on Sunny Spots generates a \ntemporary Rainbow");
+            levelTitles.Add("Manipulate the Masses");
+            levelSubTitles.Add("Pit angry people against each other");
+            levelTitles.Add("Not yet created");
+            levelSubTitles.Add("...");
+            levelTitles.Add("Not yet created");
+            levelSubTitles.Add("...");
+            levelTitles.Add("Not yet created");
+            levelSubTitles.Add("...");
+            levelTitles.Add("Not yet created");
+            levelSubTitles.Add("...");
+            levelTitles.Add("Not yet created");
+            levelSubTitles.Add("...");
         }
 
 
@@ -52,7 +85,9 @@ namespace Rain_On_Your_Parade
 
         public void LoadContent(ContentManager content)
         {
-            levelicon = content.Load<Texture2D>("poolempty");
+            //levelicon = content.Load<Texture2D>("poolempty");
+            topbar = content.Load<Texture2D>("SliderBackground");
+            levelicon = content.Load<Texture2D>("cloud5");
             levelSelected = content.Load<Texture2D>("pool");
             font = content.Load<SpriteFont>("DefaultFont");
 
@@ -87,13 +122,13 @@ namespace Rain_On_Your_Parade
             }
             if (CheckKey(Keys.Down))
             {
-                selectedIndex += STAGE_ROWS;
+                selectedIndex += num_col;
                 if (selectedIndex >= GameEngine.STAGE_NUM)
                     selectedIndex -= GameEngine.STAGE_NUM;
             }
             if (CheckKey(Keys.Up))
             {
-                selectedIndex -= STAGE_ROWS;
+                selectedIndex -= num_col;
                 if (selectedIndex < 0)
                     selectedIndex += GameEngine.STAGE_NUM;
             }
@@ -117,16 +152,40 @@ namespace Rain_On_Your_Parade
         public  void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Begin();
+
+            //Header
+            spriteBatch.Draw(topbar, new Rectangle(0,0,GameEngine.SCREEN_WIDTH,100), Color.Black);
+            spriteBatch.DrawString(font, "Select a Level", new Vector2(10,10), Color.White);
+            spriteBatch.DrawString(font, "(arrows to select, enter to confirm)", new Vector2(10, 50), Color.White, 0, new Vector2(0, 0), 0.6f, SpriteEffects.None, 0);
+
+            //Side panel
+            spriteBatch.Draw(topbar, new Rectangle(GameEngine.SCREEN_WIDTH / 2, marTop - 20, 3 * GameEngine.SCREEN_WIDTH / 4, 3 * GameEngine.SCREEN_HEIGHT / 4), Color.Black);
+
+            //Controls list
+            string controls = "[WASD] or [ARROWS] to Move\n[SPACEBAR] to Rain\n[SHIFT] to Absorb\n[ESC] to Pause\n[P] to Restart";
+            spriteBatch.DrawString(font, "Controls", new Vector2(GameEngine.SCREEN_WIDTH / 2 + 10, 3* marTop), Color.White, 0, new Vector2(0, 0), 0.8f, SpriteEffects.None, 0);
+            spriteBatch.DrawString(font, controls, new Vector2(GameEngine.SCREEN_WIDTH / 2 + 10, 3 * marTop + 30), Color.White, 0, new Vector2(0, 0), 0.6f, SpriteEffects.None, 0);
+
          for (int i=0; i< GameEngine.STAGE_NUM; i++){
+
+             string num = (i < 9) ? "0" + (i+1) : "" + (i+1);
+             int row = (i % num_col);
+             int col = (i / num_col);
+
              if (i == selectedIndex)
              {
-                 spriteBatch.Draw(levelSelected, new Rectangle(i * 150 - ((i / STAGE_ROWS) * 750), (i / STAGE_ROWS) * 150, 90, 80), Color.White);
-                 spriteBatch.DrawString(font, (""+(i + 1)), new Vector2(20+ i * 150 - ((i / STAGE_ROWS) * 750), 20 + (i / STAGE_ROWS) * 150), Color.White);
+                 //Side panel info
+                 spriteBatch.DrawString(font, "Level " + num + "\n" + levelTitles[i], new Vector2(GameEngine.SCREEN_WIDTH / 2 + 10, marTop - 20), Color.White, 0, new Vector2(0, 0), 0.8f, SpriteEffects.None, 0);
+                 spriteBatch.DrawString(font, levelSubTitles[i], new Vector2(GameEngine.SCREEN_WIDTH / 2 +10, 3*marTop/2), Color.White, 0, new Vector2(0, 0), 0.6f, SpriteEffects.None, 0);
+
+                 //Highlight icon
+                 spriteBatch.Draw(levelicon, new Rectangle(iconWidth*row + row*iconWidth/2 + marLeft, iconHeight*col + col*iconHeight/8 + marTop, iconWidth, iconHeight), Color.Black);
+                 spriteBatch.DrawString(font, num, new Vector2(iconWidth*row + row*iconWidth/2 + marLeft + padLeft, iconHeight*col + col*iconHeight/8 + marTop + padTop), Color.White);
              }
              else
              {
-                 spriteBatch.Draw(levelicon, new Rectangle(i * 150 - ((i / STAGE_ROWS) * 750), (i / STAGE_ROWS) * 150, 90, 80), Color.White);
-                 spriteBatch.DrawString(font, (""+(i + 1)), new Vector2(20+ i * 150 - ((i / STAGE_ROWS) * 750), 20 + (i / STAGE_ROWS) * 150), Color.Black);
+                 spriteBatch.Draw(levelicon, new Rectangle(iconWidth * row + row * iconWidth / 2 + marLeft, iconHeight * col + col * iconHeight / 8 + marTop, iconWidth, iconHeight), Color.White);
+                 spriteBatch.DrawString(font, num, new Vector2(iconWidth * row + row * iconWidth / 2 + marLeft + padLeft, iconHeight * col + col * iconHeight / 8 + marTop + padTop), Color.Black);
              }
 
              
