@@ -45,6 +45,7 @@ namespace Rain_On_Your_Parade
         Texture2D batterybar;
         Texture2D battery;
         Texture2D background;
+        Texture2D menu_background;
 
         Logger log;
 
@@ -158,6 +159,7 @@ namespace Rain_On_Your_Parade
             batterybar = Content.Load<Texture2D>("batterybar");
             battery = Content.Load<Texture2D>("grass");
             background = Content.Load<Texture2D>("background");
+            menu_background = Content.Load<Texture2D>("menu_bg");
             mainMenu.LoadContent(this.Content);
 
         }
@@ -258,6 +260,15 @@ namespace Rain_On_Your_Parade
                             {
                                 model.deactivatedSprite.Update();
                             }
+
+                            /*int maliceSum = 0;
+
+                            if (model is Actor)
+                            {
+                                Actor actor = (Actor)model;
+                                maliceSum += actor.Mood;
+                            }
+                            level.Malice = maliceSum;*/
                         }
                     }
 
@@ -304,9 +315,6 @@ namespace Rain_On_Your_Parade
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.LimeGreen);
-            spriteBatch.Begin();
-            spriteBatch.Draw(background, new Rectangle(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT), Color.White);
-            spriteBatch.End();
 
             //if (menuOn) mainMenu.Draw(spriteBatch);
             //else
@@ -315,6 +323,10 @@ namespace Rain_On_Your_Parade
             {
                 case GameState.Game:
                     // TODO: Add your drawing code here
+                    spriteBatch.Begin();
+                    spriteBatch.Draw(background, new Rectangle(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT), new Color(level.maliceTint(),level.maliceTint(),level.maliceTint()));
+                    spriteBatch.End();
+
                     foreach (View view in views)
                     {
                         view.Draw(spriteBatch); //calls the AnimatedSprite draw function which includes begin/end
@@ -331,6 +343,9 @@ namespace Rain_On_Your_Parade
                     spriteBatch.End();
                     break;
                 case GameState.MainMenu:
+                    spriteBatch.Begin();
+                    spriteBatch.Draw(menu_background, new Rectangle(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT), Color.White);
+                    spriteBatch.End();
                     mainMenu.Draw(spriteBatch);
                     break;
                 case GameState.PauseMenu:

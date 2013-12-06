@@ -181,8 +181,8 @@ namespace Rain_On_Your_Parade
                     Rectangle o_destinationRectangle = new Rectangle((int)location.X, (int)location.Y, o_width, o_height);
                     //Vector2 o_origin = new Vector2((float)o_width / 2f, (float)o_height / 2f);
                     Vector2 o_origin = new Vector2(0f, 0f);
-
-                    spriteBatch.Draw(o.Texture.Texture, o_destinationRectangle, o_sourceRectangle, Color.White, rot, o_origin, effect, 0f);
+                    Color c = (o.Texture.Texture.Name == "white_cloud_face") ? Color.White : color;
+                    spriteBatch.Draw(o.Texture.Texture, o_destinationRectangle, o_sourceRectangle, c, rot, o_origin, effect, 0f);
                 }                
             }
             

@@ -37,7 +37,7 @@ namespace Rain_On_Your_Parade
                     rampageLevel = 0;
                     passable = true;
                     activatedImages.Add(Type.SunnyRainbowSpot, "rainbow_80");
-                    deactivatedImages.Add(Type.SunnyRainbowSpot, "sunspot_80");
+                    deactivatedImages.Add(Type.SunnyRainbowSpot, "sunspot");
                     break;
 
                 //case ObjectType.Type.:
@@ -64,8 +64,8 @@ namespace Rain_On_Your_Parade
                     nurtureLevel = 3;
                     rampageLevel = 0;
                     passable = true;
-                    activatedImages.Add(Type.Garden, "garden2_80");
-                    deactivatedImages.Add(Type.Garden, "drygarden_80");
+                    activatedImages.Add(Type.Garden, "garden");
+                    deactivatedImages.Add(Type.Garden, "drygarden");
                     break;
 
                 case ObjectType.Type.Pool:
@@ -120,8 +120,8 @@ namespace Rain_On_Your_Parade
                     nurtureLevel = 0;
                     rampageLevel = 0;
                     passable = false;
-                    activatedImages.Add(Type.House, "house_80");
-                    deactivatedImages.Add(Type.House, "house_80");
+                    activatedImages.Add(Type.House, "house");
+                    deactivatedImages.Add(Type.House, "house");
                     break;
             }
         }
@@ -138,17 +138,17 @@ namespace Rain_On_Your_Parade
             rampageLevel = oRampage;
 
             activatedImages.Add(Type.SunnyRainbowSpot, "rainbow_80");
-            deactivatedImages.Add(Type.SunnyRainbowSpot, "sunspot_80");
-            activatedImages.Add(Type.Garden, "garden2_80");
-            deactivatedImages.Add(Type.Garden, "drygarden_80");
+            deactivatedImages.Add(Type.SunnyRainbowSpot, "sunspot");
+            activatedImages.Add(Type.Garden, "garden");
+            deactivatedImages.Add(Type.Garden, "drygarden");
             activatedImages.Add(Type.Pool, "pool_80");
             deactivatedImages.Add(Type.Pool, "poolempty_80");
             activatedImages.Add(Type.Chalking, "chalksidewalk_80");
             deactivatedImages.Add(Type.Chalking, "sidewalk_80");
             activatedImages.Add(Type.Laundry, "laundry_80");
             deactivatedImages.Add(Type.Laundry, "wetlaundry_80");
-            activatedImages.Add(Type.House, "house_80");
-            deactivatedImages.Add(Type.House, "house_80");
+            activatedImages.Add(Type.House, "house");
+            deactivatedImages.Add(Type.House, "house");
         }
 
         public Type TypeName

@@ -282,6 +282,10 @@ namespace Rain_On_Your_Parade
         }
         #endregion
 
+        public float maliceTint() {
+            return 1 - malice / maliceObjective;
+    }
+
         /// <summary>Initialize adjacency lists in level map for ease of search</summary>
         /// <devdoc>
         /// Sets up adjacency lists for the entire levelmap. This will use pointers if at all possible later, but for now, I have an i7.
