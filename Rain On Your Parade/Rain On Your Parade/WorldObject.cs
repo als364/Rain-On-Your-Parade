@@ -41,8 +41,8 @@ namespace Rain_On_Your_Parade
             aniSequencesDeact.Add(new AnimationSequence(0, 5, true, 1, 0.1f, aniTexBaseDeactive, null));
             deactivatedSprite = new AnimatedSprite(aniSequencesDeact);
 
-            spriteWidth = (type.TypeName == ObjectType.Type.Laundry) ? 160 : 80;
-            spriteHeight = 80;
+            spriteWidth = (type.TypeName == ObjectType.Type.Laundry || type.TypeName == ObjectType.Type.House) ? 160 : 80;
+            spriteHeight = (type.TypeName == ObjectType.Type.House ) ? 160 : 80;
         }
 
         #region Getters and Setters

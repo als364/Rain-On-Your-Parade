@@ -64,11 +64,6 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Content\house.png">
-      <Name>house</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
     <Compile Include="Content\pool.png">
       <Name>pool</Name>
       <Importer>TextureImporter</Importer>
@@ -422,6 +417,20 @@
   <ItemGroup>
     <Compile Include="Content\chalking.png">
       <Name>chalking</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Content\house.png">
+      <Name>house</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Content\invisible.png">
+      <Name>invisible</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

@@ -24,6 +24,12 @@ namespace Rain_On_Your_Parade
             this.player = player;
         }
 
+        public Point shadowPointXY()
+        {
+            return new Point((int)((player.PixelPosition.X + 40) / Canvas.SQUARE_SIZE), 
+                (int)((player.PixelPosition.Y + 120) / Canvas.SQUARE_SIZE));
+        }
+
         public override void Update(GameTime gameTime, Canvas level)
         {
             player.isRaining = isRaining;
@@ -177,10 +183,14 @@ namespace Rain_On_Your_Parade
 
                 foreach (Actor a in level.Actors)
                 {
-                    Vector2 playerPos = player.PixelPosition;
+                    Vector2 shadowPos = new Vector2((player.PixelPosition.X + 40), (player.PixelPosition.Y + 120));
                     Vector2 actorPos = a.PixelPosition;
 
-                    float dist = Vector2.Distance(playerPos, actorPos);
+                    //Console.Write(shadowPos.X.ToString() + ", " + shadowPos.Y.ToString() + "\n");
+
+                    float dist = Vector2.Distance(shadowPos, actorPos);
+
+                    Console.Write(dist.ToString() + "\n");
 
                     if (Math.Abs(dist) < 100)
                     {
@@ -201,7 +211,9 @@ namespace Rain_On_Your_Parade
 
                 //WorldObject toReplace = null; //for sunnyspot to rainbow
 
-                List<WorldObject> objects = level.Grid[player.GridspacePosition.X, player.GridspacePosition.Y].Objects;
+                Point shadowPoint = shadowPointXY();
+
+                List<WorldObject> objects = level.Grid[shadowPoint.X, shadowPoint.Y].Objects;
                 foreach (WorldObject o in objects)
                 {
                     if (o.Type.HoldsWater)
@@ -245,7 +257,10 @@ namespace Rain_On_Your_Parade
             {
                 //WorldObject toReplace = null; //for rainbow to sunnyspot
 
-                List<WorldObject> objects = level.Grid[player.GridspacePosition.X, player.GridspacePosition.Y].Objects;
+                Point shadowPoint = shadowPointXY();
+                
+
+                List<WorldObject> objects = level.Grid[shadowPoint.X, shadowPoint.Y].Objects;
                 foreach (WorldObject o in objects)
                 {
                     //Console.Write(o.ToString() + "object ABSORBED upon\n");
@@ -274,7 +289,7 @@ namespace Rain_On_Your_Parade
 
                         foreach (Actor a in level.Actors)
                         {
-                            if (player.GridspacePosition == a.GridspacePosition)
+                            if (shadowPoint == a.GridspacePosition)
                             {
 
                                 if (a.State.State == a.TargetState)
