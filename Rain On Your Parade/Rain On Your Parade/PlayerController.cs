@@ -216,11 +216,6 @@ namespace Rain_On_Your_Parade
                 List<WorldObject> objects = level.Grid[shadowPoint.X, shadowPoint.Y].Objects;
                 foreach (WorldObject o in objects)
                 {
-                    if (o.Type.HoldsWater)
-                    {
-                        o.WaterLevel = 1;
-                    }
-
                     //Console.Write(o.ToString() + "object rained upon\n");
 
                     if (o.Type.TypeName == ObjectType.Type.SunnyRainbowSpot && !level.rainbows.ContainsKey(o))

@@ -28,11 +28,11 @@ namespace Rain_On_Your_Parade
         KeyboardState oldKeyboardState;
         SpriteFont font;
 
-        int num_col = 2;
+        int num_col = 3;
         int iconHeight = 90;
         int iconWidth = 90;
 
-        int marLeft = 90;
+        int marLeft = 60;
         int marTop = 150;
         int padLeft = 28;
         int padTop = 28;
@@ -65,6 +65,10 @@ namespace Rain_On_Your_Parade
             levelSubTitles.Add("or is it catnip?");
             levelTitles.Add("The American Dream");
             levelSubTitles.Add("...according to Helen");
+            levelTitles.Add("Guide the Kid");
+            levelSubTitles.Add("Make him refill the water\nand then CRUSH HIM");
+            levelTitles.Add("Guide the Kid");
+            levelSubTitles.Add("Make him refill the water\nand then CRUSH HIM");
             levelTitles.Add("Guide the Kid");
             levelSubTitles.Add("Make him refill the water\nand then CRUSH HIM");
         }
@@ -174,13 +178,13 @@ namespace Rain_On_Your_Parade
                  spriteBatch.DrawString(font, levelSubTitles[i], new Vector2(GameEngine.SCREEN_WIDTH / 2 +10, 3*marTop/2), Color.White, 0, new Vector2(0, 0), 0.6f, SpriteEffects.None, 0);
 
                  //Highlight icon
-                 spriteBatch.Draw(levelicon, new Rectangle(iconWidth*row + row*iconWidth/2 + marLeft, iconHeight*col + col*iconHeight/8 + marTop, iconWidth, iconHeight), Color.Black);
-                 spriteBatch.DrawString(font, num, new Vector2(iconWidth*row + row*iconWidth/2 + marLeft + padLeft, iconHeight*col + col*iconHeight/8 + marTop + padTop), Color.White);
+                 spriteBatch.Draw(levelicon, new Rectangle(iconWidth*row + row*iconWidth/2 + marLeft, iconHeight*col + col*iconHeight/8 + marTop + 25, iconWidth, iconHeight), Color.Black);
+                 spriteBatch.DrawString(font, num, new Vector2(iconWidth*row + row*iconWidth/2 + marLeft + padLeft, iconHeight*col + col*iconHeight/8 + marTop + 25 + padTop), Color.White);
              }
              else
              {
-                 spriteBatch.Draw(levelicon, new Rectangle(iconWidth * row + row * iconWidth / 2 + marLeft, iconHeight * col + col * iconHeight / 8 + marTop, iconWidth, iconHeight), Color.White);
-                 spriteBatch.DrawString(font, num, new Vector2(iconWidth * row + row * iconWidth / 2 + marLeft + padLeft, iconHeight * col + col * iconHeight / 8 + marTop + padTop), Color.Black);
+                 spriteBatch.Draw(levelicon, new Rectangle(iconWidth * row + row * iconWidth / 2 + marLeft, iconHeight * col + col * iconHeight / 8 + marTop + 25, iconWidth, iconHeight), Color.White);
+                 spriteBatch.DrawString(font, num, new Vector2(iconWidth * row + row * iconWidth / 2 + marLeft + padLeft, iconHeight * col + col * iconHeight / 8 + marTop + 25 + padTop), Color.Black);
              }
 
              

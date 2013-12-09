@@ -93,13 +93,13 @@ namespace Rain_On_Your_Parade
                 {
                     case ObjectType.Type.Pool:
                         type.PlayLevel = 3;
-                        waterLevel = initialWaterLevel;
+                        waterLevel++; //CHECK THIS
                         break;
                     case ObjectType.Type.Garden:
                         type.PlayLevel = 0;
                         type.SleepLevel = 3;
                         type.NurtureLevel = 3;
-                        waterLevel = initialWaterLevel;
+                        waterLevel++; //CHECK THIS
                         break;
                     case ObjectType.Type.Chalking:
                         type.PlayLevel = 0;
@@ -150,6 +150,7 @@ namespace Rain_On_Your_Parade
                         type.RampageLevel = 0;
                         type.NurtureLevel = -2;
                         activated = false;
+                        waterLevel++;
                         break;
                     case ObjectType.Type.SunnyRainbowSpot:
                         type.SleepLevel =3;
