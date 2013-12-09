@@ -72,6 +72,7 @@
     <Compile Include="Canvas.cs" />
     <Compile Include="AnimatedTexture.cs" />
     <Compile Include="AnimationSequence.cs" />
+    <Compile Include="LevelParser.cs" />
     <Compile Include="MainMenu.cs" />
     <Compile Include="Controller.cs" />
     <Compile Include="AnimatedSprite.cs" />
@@ -109,6 +110,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\Levels\sample.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Icon.ico" />
   </ItemGroup>
   <ItemGroup>

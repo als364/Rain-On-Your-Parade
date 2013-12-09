@@ -97,7 +97,7 @@ namespace Rain_On_Your_Parade
             {
                 case GameState.Game:
                     //This is where the level building goes. I don't care about an XML parsing framework yet
-                    level = new Canvas(stage);
+                    level = LevelParser.parse("Sample.xml");
 
                     // Debug.WriteLine("Y: " + level.Grid[6, 6].Actors[0].Position.Y);
                     int quota = 100;
