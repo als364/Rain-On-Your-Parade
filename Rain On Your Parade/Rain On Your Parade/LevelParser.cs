@@ -27,12 +27,19 @@ namespace Rain_On_Your_Parade
             ObjectType.Type otype = ObjectType.Type.Chalking;
             GameEngine.WinCondition cond = GameEngine.WinCondition.Actors;
             int water = 0;
+            string message = "";
+            bool isMalice = false;
+            List<Actor> maliceActors = new List<Actor>();
+            List<WorldObject> maliceObjects = new List<WorldObject>();
 
             while (reader.Read())
             {
                 switch (reader.Name)
                 {
                     case "level": break;
+                    case "objectiveMessage":
+                        message = reader.ReadInnerXml();
+                        break;
                     case "objects":
                         while (reader.NodeType != XmlNodeType.EndElement || reader.Name != "objects")
                         {
@@ -59,6 +66,12 @@ namespace Rain_On_Your_Parade
                                                     break;
                                                 case "Laundry": otype = ObjectType.Type.Laundry;
                                                     break;
+                                                case "Fence": otype = ObjectType.Type.Fence;
+                                                    break;
+                                                case "Invisible": otype = ObjectType.Type.Invisible;
+                                                    break;
+                                                case "Sidewalk": otype = ObjectType.Type.Sidewalk;
+                                                    break;
                                                 default: break;
                                             }
                                             break;
@@ -78,10 +91,19 @@ namespace Rain_On_Your_Parade
                                             break;
                                         case "water": water = int.Parse(reader.ReadInnerXml());
                                             break;
+                                        case "malice":
+                                            isMalice = bool.Parse(reader.ReadInnerXml());
+                                            break;
                                         default: break;
                                     }
                                 }
-                                objects.Add(new WorldObject(otype, new Microsoft.Xna.Framework.Point(x, y), water));
+                                WorldObject o = new WorldObject(otype, new Microsoft.Xna.Framework.Point(x, y), water);
+                                if (isMalice)
+                                {
+                                    maliceObjects.Add(o);
+                                    isMalice = false;
+                                }
+                                objects.Add(o);
                             }
                         }
                         break;
@@ -122,10 +144,19 @@ namespace Rain_On_Your_Parade
                                                 }
                                             }
                                             break;
+                                        case "malice":
+                                            isMalice = bool.Parse(reader.ReadInnerXml());
+                                            break;
                                         default: break;
                                     }
                                 }
-                                actors.Add(new Actor(atype, new Microsoft.Xna.Framework.Point(x, y)));
+                                Actor a = new Actor(atype, new Microsoft.Xna.Framework.Point(x, y));
+                                if (isMalice)
+                                {
+                                    maliceActors.Add(a);
+                                    isMalice = false;
+                                }
+                                actors.Add(a);
                             }
                         }
                         break;
@@ -196,7 +227,7 @@ namespace Rain_On_Your_Parade
                 }
             }
 
-            return new Canvas(width, height, malice, cond, objects, actors, player);
+            return new Canvas(width, height, malice, cond, objects, actors, player, message, maliceObjects, maliceActors);
         }
     }
 }
