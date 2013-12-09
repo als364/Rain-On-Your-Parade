@@ -21,16 +21,11 @@ namespace Rain_On_Your_Parade
         Texture2D levelicon;
         Texture2D levelSelected;
 
-        string[] menuItems;
         int selectedIndex;
         Color normal = Color.White;
         Color hilite = Color.Yellow;
         KeyboardState keyboardState;
         KeyboardState oldKeyboardState;
-        SpriteFont spriteFont;
-        Vector2 position;
-        float width = 0f;
-        float height = 0f;
         SpriteFont font;
 
         int num_col = 2;
@@ -66,12 +61,12 @@ namespace Rain_On_Your_Parade
             levelSubTitles.Add("Goal: Cat\n\nPit angry cats against each other!");
             levelTitles.Add("Showdown V2.0");
             levelSubTitles.Add("Goal: Malice\n\nThis time it's mom and son");
-            levelTitles.Add("Not yet created");
-            levelSubTitles.Add("...seem familiar?");
-            levelTitles.Add("Not yet created");
-            levelSubTitles.Add("...it should");
-            levelTitles.Add("Not yet created");
-            levelSubTitles.Add("...yeeeah");
+            levelTitles.Add("Cats and Sunflowers");
+            levelSubTitles.Add("or is it catnip?");
+            levelTitles.Add("The American Dream");
+            levelSubTitles.Add("...according to Helen");
+            levelTitles.Add("Guide the Kid");
+            levelSubTitles.Add("Make him refill the water\nand then CRUSH HIM");
         }
 
 
@@ -139,7 +134,7 @@ namespace Rain_On_Your_Parade
                     selectedIndex = GameEngine.STAGE_NUM - 1;
             }
 
-            if (Keyboard.GetState().IsKeyDown(Keys.Enter))
+            if (Keyboard.GetState().IsKeyDown(Keys.Enter) || Keyboard.GetState().IsKeyDown(Keys.Space))
             {
                 return selectedIndex+1;
             }

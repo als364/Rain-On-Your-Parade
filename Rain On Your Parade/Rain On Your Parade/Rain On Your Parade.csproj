@@ -72,6 +72,8 @@
     <Compile Include="Canvas.cs" />
     <Compile Include="AnimatedTexture.cs" />
     <Compile Include="AnimationSequence.cs" />
+    <Compile Include="LevelStart.cs" />
+    <Compile Include="LevelComplete.cs" />
     <Compile Include="MainMenu.cs" />
     <Compile Include="Controller.cs" />
     <Compile Include="AnimatedSprite.cs" />
@@ -367,6 +369,16 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\invisible.xnb">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\DosisTitle.xnb">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\trans_box.xnb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

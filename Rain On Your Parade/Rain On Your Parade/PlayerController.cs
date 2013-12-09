@@ -190,7 +190,7 @@ namespace Rain_On_Your_Parade
 
                     float dist = Vector2.Distance(shadowPos, actorPos);
 
-                    Console.Write(dist.ToString() + "\n");
+                    //Console.Write(dist.ToString() + "\n");
 
                     if (Math.Abs(dist) < 100)
                     {
