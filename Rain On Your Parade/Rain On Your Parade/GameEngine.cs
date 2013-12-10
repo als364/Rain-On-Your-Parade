@@ -264,15 +264,15 @@ namespace Rain_On_Your_Parade
                     #endregion GameStart
 
 
-                    if (framesTillLog == 0)
-                    {
-                        log.Log(level, gameTime);
-                        framesTillLog = LOG_FRAMES;
-                    }
-                    else
-                    {
-                        framesTillLog--;
-                    }
+                    //if (framesTillLog == 0)
+                    //{
+                    //    log.Log(level, gameTime);
+                    //    framesTillLog = LOG_FRAMES;
+                    //}
+                    //else
+                    //{
+                    //    framesTillLog--;
+                    //}
 
                     level.updateMalice();
 
