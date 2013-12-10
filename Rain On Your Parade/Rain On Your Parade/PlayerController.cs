@@ -16,7 +16,7 @@ namespace Rain_On_Your_Parade
         private int coolDown;
         private Player player;
         public bool isRaining = false;
-        public int MAX_RAIN = GameEngine.SCREEN_WIDTH / 10 - 1;
+
 
         public PlayerController(Player player)
             : base(player)
@@ -179,7 +179,7 @@ namespace Rain_On_Your_Parade
             {
                 isRaining = true;
                 player.Rain--;
-                player.colorAlpha = (1f - ((float)player.Rain / (float)MAX_RAIN));
+                player.colorAlpha = (1f - ((float)player.Rain / (float)Player.MAX_RAIN));
 
                 foreach (Actor a in level.Actors)
                 {
@@ -199,6 +199,8 @@ namespace Rain_On_Your_Parade
                         {
                            a.IncrementMood();
                            a.IncrementMood();
+                           a.State.State = ActorState.AState.Seek;
+                           Console.WriteLine("RAINED ON TARGET ITEM");
                         }
                         else
                         {
@@ -253,7 +255,7 @@ namespace Rain_On_Your_Parade
 
         private bool Absorb(Canvas level)
         {
-            if (player.Rain < MAX_RAIN)
+            if (player.Rain < Player.MAX_RAIN)
             {
                 //WorldObject toReplace = null; //for rainbow to sunnyspot
 
@@ -268,7 +270,7 @@ namespace Rain_On_Your_Parade
                     if (o.WaterLevel > 0)
                     {
                         player.Rain++;
-                        player.colorAlpha = (1f - ((float)player.Rain / (float)MAX_RAIN));
+                        player.colorAlpha = (1f - ((float)player.Rain / (float)Player.MAX_RAIN));
 
                         if (--o.WaterLevel == 0)
                         {
@@ -296,6 +298,9 @@ namespace Rain_On_Your_Parade
                                 {
                                     a.IncrementMood();
                                     a.IncrementMood();
+                                    a.State.State = ActorState.AState.Seek;
+                                    Console.WriteLine("RAINED ON TARGET ITEM");
+                        
                                 }
                                 else
                                 {

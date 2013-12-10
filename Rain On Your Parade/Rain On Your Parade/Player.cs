@@ -10,7 +10,7 @@ namespace Rain_On_Your_Parade
 {
     class Player : Model
     {
-        public const int MAX_RAIN = GameEngine.SCREEN_WIDTH/10 -1;
+        public const int MAX_RAIN = 10;
         private Vector2 velocity;       //velocity of player
         private int rain;       //amount of rain held by player
         //public const int MAX_RAIN = 6;

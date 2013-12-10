@@ -432,7 +432,11 @@ namespace Rain_On_Your_Parade
                     for (int i = 0; i < level.Player.Rain; i++)
                     {
                         spriteBatch.Draw(batterybar,
-                            new Rectangle(i * 10 + 5, 5, 10, 30), Color.Blue);
+                            new Rectangle(i * 40 + 5, 5, 40, 30), Color.Blue);
+                        spriteBatch.Draw(batterybar,
+                            new Rectangle(i * 40 + 5, 5, 1, 30), Color.White);
+                        
+                        
                     }
                     spriteBatch.DrawString(font, "Water", new Vector2(20, 5), Color.White, 0, new Vector2(0, 0), 0.5f, SpriteEffects.None, 0);
               

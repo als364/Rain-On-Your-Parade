@@ -21,6 +21,7 @@ namespace Rain_On_Your_Parade
         private float velX = 0f;
         private float velY = 0f;
 
+
         public ActorController(Actor actor) : base(actor)
         {
             controlledActor = actor;
@@ -79,9 +80,18 @@ namespace Rain_On_Your_Parade
             //Determines whether the actor close to the cloud, and if so, changes its state to Run
             if (controlledActor.State.State != ActorState.AState.Run && level.nearEnoughForInteraction(level.Player, controlledActor)) //&& controlledActor.State.State != controlledActor.TargetState)
             {
-                controlledActor.InteractionTimer = 0;
                 controlledActor.State = new ActorState(ActorState.AState.Run);
                 controlledActor.Path = null;
+
+                if (controlledActor.InteractingActor != null){
+                    Console.WriteLine("Ending interaction");
+                    controlledActor.InteractionTimer = -120;
+                    controlledActor.InteractingActor.State.State = ActorState.AState.Seek;
+                    controlledActor.InteractingActor.InteractionTimer = -120;
+                    controlledActor.InteractingActor.InteractingActor = null;
+                    controlledActor.InteractingActor = null;
+
+                }
 
                 float xChange = level.Player.PixelPosition.X - level.Player.PrevPos.X;
                 float yChange = level.Player.PixelPosition.Y - level.Player.PrevPos.Y;
@@ -113,7 +123,9 @@ namespace Rain_On_Your_Parade
                         ((a.Mood > 3 && controlledActor.Mood > 3) || (a.Mood == 5 || controlledActor.Mood == 5)))
                     {
                         controlledActor.State.State = ActorState.AState.Fight;
+                        controlledActor.InteractingActor = a;
                         a.State.State = ActorState.AState.Fight;
+                        a.InteractingActor = controlledActor;
                     }
                     else if (controlledActor.InteractionTimer == 0 &&
                             (DetermineTargetState() == ActorState.AState.Nurture && a.Mood > 3 && controlledActor.Mood < 3) ||
@@ -121,6 +133,8 @@ namespace Rain_On_Your_Parade
                     {
                         controlledActor.State.State = ActorState.AState.Comfort;
                         a.State.State = ActorState.AState.Comfort;
+                        controlledActor.InteractingActor = a;
+                        a.InteractingActor = controlledActor;
                     }
                     
                 }
@@ -146,10 +160,11 @@ namespace Rain_On_Your_Parade
 
                     if (controlledActor.InteractionTimer >= 360)
                     {
-                        controlledActor.InteractionTimer = -360;
+                        controlledActor.InteractionTimer = -300;
                         if (controlledActor.Mood < 5)
                         controlledActor.Mood = controlledActor.Mood + 1;
                         controlledActor.State.State = ActorState.AState.Seek;
+                        controlledActor.InteractingActor = null;
                     }
 
                     break;
@@ -160,10 +175,11 @@ namespace Rain_On_Your_Parade
 
                     if (controlledActor.InteractionTimer >= 360)
                     {
-                        controlledActor.InteractionTimer = -360;
+                        controlledActor.InteractionTimer = -300;
                         if (controlledActor.Mood > 0) controlledActor.Mood = controlledActor.Mood - 1;
                         controlledActor.NurtureLevel--;
                         controlledActor.State.State = ActorState.AState.Seek;
+                        controlledActor.InteractingActor = null;
                     }
 
                     break;
@@ -884,6 +900,16 @@ namespace Rain_On_Your_Parade
             return minimumDistance;
         }
 
+
+
+        private bool ObjectStillInteractable(Canvas level, ActorState.AState action)
+        {
+
+
+
+
+            return false;
+        }
         /// <summary>
         /// Activates any objects in that actor's grid square if they can be activated by an actor
         /// in their current state.
