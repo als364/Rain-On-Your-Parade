@@ -20,6 +20,7 @@ namespace Rain_On_Your_Parade
         private const float RUN_SPEED = 2f;
         private float velX = 0f;
         private float velY = 0f;
+        private const double RAINBOW_RADIUS = 100;
 
 
         public ActorController(Actor actor) : base(actor)
@@ -39,7 +40,11 @@ namespace Rain_On_Your_Parade
                 Dictionary<GridSquare, Actor> rainbows = new Dictionary<GridSquare, Actor>();
                 foreach (WorldObject r in level.rainbows.Keys)
                 {
-                    rainbows.Add(level.Grid[r.GridspacePosition.X, r.GridspacePosition.Y], null);
+                    if (Utils.EuclideanDistance(r.PixelPosition, controlledActor.PixelPosition) <= RAINBOW_RADIUS)
+                    {
+                        rainbows.Add(level.Grid[r.GridspacePosition.X, r.GridspacePosition.Y], null);
+                    }
+                    
                 }
                 if (rainbows.Count != 0)
                 {

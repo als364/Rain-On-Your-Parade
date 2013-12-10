@@ -437,14 +437,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Content\DosisTitle.spritefont">
-      <Name>DosisTitle</Name>
-      <Importer>FontDescriptionImporter</Importer>
-      <Processor>FontDescriptionProcessor</Processor>
-      <SubType>Designer</SubType>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Content\trans_box.png">
       <Name>trans_box</Name>
       <Importer>TextureImporter</Importer>
