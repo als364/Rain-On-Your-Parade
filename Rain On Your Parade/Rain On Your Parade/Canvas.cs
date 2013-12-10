@@ -31,7 +31,7 @@ namespace Rain_On_Your_Parade
 
         public const int INTERACT_RADIUS = 50;
 
-        public Canvas(int width, int height, int maliceGoal, GameEngine.WinCondition cond, List<WorldObject> o, List<Actor> a, Player p, string message, List<WorldObject> maliceObjs, List<Actor> maliceActors)
+        public Canvas(int width, int height, GameEngine.WinCondition cond, List<WorldObject> o, List<Actor> a, Player p, string message, List<WorldObject> maliceObjs, List<Actor> maliceActors)
         {
             squaresTall = height;
             squaresWide = width;

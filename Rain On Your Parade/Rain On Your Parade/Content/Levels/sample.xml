@@ -3,10 +3,12 @@
     <width>10</width>
     <height>10</height>
   </size>
+  <winCondition>actors</winCondition>
+  <objectiveMessage>Test</objectiveMessage>
 	<player>
 		<position>
-			<x>5</x>
-			<y>5</y>
+			<x>500</x>
+			<y>500</y>
 		</position>
 		<initialRain>6</initialRain>
 	</player>
@@ -17,6 +19,7 @@
 				<x>6</x>
 				<y>0</y>
 			</position>
+      <malice>true</malice>
 		</actor>
 		<actor>
 			<type>Kid</type>
@@ -24,6 +27,7 @@
 				<x>1</x>
 				<y>8</y>
 			</position>
+      <malice>true</malice>
 		</actor>
 		<actor>
 			<type>Mom</type>
@@ -31,6 +35,7 @@
 				<x>6</x>
 				<y>6</y>
 			</position>
+      <malice>true</malice>
 		</actor>
 	</actors>
 	<objects>
@@ -54,6 +59,7 @@
 				<x>9</x>
 				<y>1</y>
 			</position>
+      <water>1</water>
 		</object>
 	</objects>
 </level>

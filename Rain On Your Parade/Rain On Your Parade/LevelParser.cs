@@ -160,8 +160,8 @@ namespace Rain_On_Your_Parade
                             }
                         }
                         break;
-                    case "targetMalice": malice = int.Parse(reader.ReadInnerXml());
-                        break;
+                    //case "targetMalice": malice = int.Parse(reader.ReadInnerXml());
+                    //    break;
                     case "size":
                         while (reader.NodeType != XmlNodeType.EndElement || reader.Name != "size")
                         {
@@ -198,12 +198,12 @@ namespace Rain_On_Your_Parade
                                             default: break;
                                         }
                                     }
-                                    player = new Player(water);
-                                    player.PixelPosition = new Microsoft.Xna.Framework.Vector2(x, y);
+                                    
                                     break;
                             }
                         }
-                        
+                        player = new Player(water);
+                        player.PixelPosition = new Microsoft.Xna.Framework.Vector2(x, y);
                         break;
                     case "winCondition":
                         switch (reader.ReadInnerXml())
@@ -227,7 +227,7 @@ namespace Rain_On_Your_Parade
                 }
             }
 
-            return new Canvas(width, height, malice, cond, objects, actors, player, message, maliceObjects, maliceActors);
+            return new Canvas(width, height, cond, objects, actors, player, message, maliceObjects, maliceActors);
         }
     }
 }
