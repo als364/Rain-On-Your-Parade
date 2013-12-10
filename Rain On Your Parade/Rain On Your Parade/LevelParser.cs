@@ -31,6 +31,7 @@ namespace Rain_On_Your_Parade
             bool isMalice = false;
             List<Actor> maliceActors = new List<Actor>();
             List<WorldObject> maliceObjects = new List<WorldObject>();
+            string title = "";
 
             while (reader.Read())
             {
@@ -39,6 +40,9 @@ namespace Rain_On_Your_Parade
                     case "level": break;
                     case "objectiveMessage":
                         message = reader.ReadInnerXml();
+                        break;
+                    case "title":
+                        title = reader.ReadInnerXml();
                         break;
                     case "objects":
                         while (reader.NodeType != XmlNodeType.EndElement || reader.Name != "objects")
@@ -227,7 +231,7 @@ namespace Rain_On_Your_Parade
                 }
             }
 
-            return new Canvas(width, height, cond, objects, actors, player, message, maliceObjects, maliceActors, malice);
+            return new Canvas(title, width, height, cond, objects, actors, player, message, maliceObjects, maliceActors, malice);
         }
     }
 }

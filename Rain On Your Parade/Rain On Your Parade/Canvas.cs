@@ -33,8 +33,9 @@ namespace Rain_On_Your_Parade
 
         public const int INTERACT_RADIUS = 50;
 
-        public Canvas(int width, int height, GameEngine.WinCondition cond, List<WorldObject> o, List<Actor> a, Player p, string message, List<WorldObject> maliceObjs, List<Actor> maliceActors, int maliceGoal)
+        public Canvas(string title, int width, int height, GameEngine.WinCondition cond, List<WorldObject> o, List<Actor> a, Player p, string message, List<WorldObject> maliceObjs, List<Actor> maliceActors, int maliceGoal)
         {
+            this.title = title;
             squaresTall = height;
             squaresWide = width;
             Grid = new GridSquare[squaresWide, squaresTall];
@@ -726,7 +727,7 @@ namespace Rain_On_Your_Parade
             foreach (Actor actor in actors)
             {
                 Grid[actor.GridspacePosition.X, actor.GridspacePosition.Y].add(actor);
-                maliceActors.Add(actor);
+                //maliceActors.Add(actor);
             }
             foreach (GridSquare square in Grid)
             {

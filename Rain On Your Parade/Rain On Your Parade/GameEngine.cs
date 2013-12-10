@@ -59,6 +59,11 @@ namespace Rain_On_Your_Parade
         bool levelHasEnded;
         //Boolean menuOn = true;
 
+        //Add levels to Levels folder and then add name to this array
+        string[] levels = { "sample.xml",
+                              "Level1.xml",
+                          "sample.xml"};
+
         public GameEngine()
             : base()
         {
@@ -110,12 +115,15 @@ namespace Rain_On_Your_Parade
                 case GameState.Game:
                     //This is where the level building goes. I don't care about an XML parsing framework yet
                     level = new Canvas(stage);
-                    //level = LevelParser.parse("Sample.xml");
+
+                    //////////////////////////////////////////////
+                    //level = LevelParser.parse(levels[stage]);
+                    ///////////////////////////////////////////
 
                     // Debug.WriteLine("Y: " + level.Grid[6, 6].Actors[0].Position.Y);
-                    int quota = 100;
-                    //worldState = new WorldState(quota,level.Grid);
-                    level.MaliceObjective = quota;
+                    //int quota = 100;
+                    ////worldState = new WorldState(quota,level.Grid);
+                    //level.MaliceObjective = quota;
 
                     //Debug.WriteLine("Y: " + worldState.getActors().ToArray()[1].Position.Y);
                     foreach (WorldObject o in level.Objects)
