@@ -216,6 +216,15 @@ namespace Rain_On_Your_Parade
                 List<WorldObject> objects = level.Grid[shadowPoint.X, shadowPoint.Y].Objects;
                 foreach (WorldObject o in objects)
                 {
+                    if (o.ActorsInteracted.Count > 0)
+                    {
+                        foreach (Actor a in o.ActorsInteracted)
+                        {
+                            a.IncrementMood();
+                        }
+                        o.ActorsInteracted.Clear();
+                    }
+
                     int workAround = o.WaterLevel;
 
                     //Console.Write(o.ToString() + "object rained upon\n");
@@ -224,7 +233,6 @@ namespace Rain_On_Your_Parade
                     {
                         level.rainbows.Add(o, GameEngine.MAX_RAINBOW_TIME);
                     }
-
                     if (o.Type.IsWetObject)
                     {
                         o.activate();                                        

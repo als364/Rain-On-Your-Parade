@@ -13,6 +13,7 @@ namespace Rain_On_Your_Parade
         private bool activated;
         private int waterLevel;
         private int initialWaterLevel;
+        private List<Actor> actorsInteracted;
 
         public WorldObject(ObjectType.Type oType, Point pos, int waterAmt)
         {
@@ -23,6 +24,7 @@ namespace Rain_On_Your_Parade
             waterLevel = waterAmt;
             initialWaterLevel = waterAmt;
             colorAlpha = 0f;
+            actorsInteracted = new List<Actor>();
         }
 
         public override void LoadContent(ContentManager content)
@@ -46,6 +48,11 @@ namespace Rain_On_Your_Parade
         }
 
         #region Getters and Setters
+        public List<Actor> ActorsInteracted
+        {
+            get { return actorsInteracted; }
+            set { actorsInteracted = value; }
+        }
         public ObjectType Type
         {
             get
@@ -82,6 +89,11 @@ namespace Rain_On_Your_Parade
             }
         }
         #endregion
+
+        public void AddInteractingActor(Actor actor)
+        {
+            actorsInteracted.Add(actor);
+        }
 
         public void activate()
         {

@@ -85,17 +85,24 @@ namespace Rain_On_Your_Parade
             //Determines whether the actor close to the cloud, and if so, changes its state to Run
             if (controlledActor.State.State != ActorState.AState.Run && level.nearEnoughForInteraction(level.Player, controlledActor)) //&& controlledActor.State.State != controlledActor.TargetState)
             {
-                controlledActor.State = new ActorState(ActorState.AState.Run);
+                controlledActor.State.State = ActorState.AState.Run;
                 controlledActor.Path = null;
 
-                if (controlledActor.InteractingActor != null){
+                if (controlledActor.InteractingActor != null)
+                {
+                    controlledActor.IncrementMood();
                     Console.WriteLine("Ending interaction");
                     controlledActor.InteractionTimer = -120;
                     controlledActor.InteractingActor.State.State = ActorState.AState.Seek;
                     controlledActor.InteractingActor.InteractionTimer = -120;
                     controlledActor.InteractingActor.InteractingActor = null;
                     controlledActor.InteractingActor = null;
+                }
 
+                if (controlledActor.InteractingObject != null)
+                {
+                    controlledActor.IncrementMood();
+                    controlledActor.InteractingObject = null;
                 }
 
                 float xChange = level.Player.PixelPosition.X - level.Player.PrevPos.X;
@@ -155,6 +162,7 @@ namespace Rain_On_Your_Parade
                     }
                     else
                     {
+                        controlledActor.InteractingObject = null;
                         controlledActor.State.State = ActorState.AState.Seek;
                         break;
                     }
@@ -194,6 +202,7 @@ namespace Rain_On_Your_Parade
                     if (enjoyTime == 0)
                     {
                         interactWithObject(level, ActorState.AState.Nurture);
+                        controlledActor.InteractingObject = null;
                         controlledActor.State.State = ActorState.AState.Wander;
                     }
                     else
@@ -209,6 +218,7 @@ namespace Rain_On_Your_Parade
                     if (enjoyTime == 0)
                     {
                         interactWithObject(level, ActorState.AState.Play);
+                        controlledActor.InteractingObject = null;
                         controlledActor.State.State = ActorState.AState.Wander;
                     }
                     else
@@ -220,6 +230,7 @@ namespace Rain_On_Your_Parade
                 #endregion
                 #region RampageState
                 case ActorState.AState.Rampage:
+                    controlledActor.InteractingObject = null;
                     controlledActor.State.State = ActorState.AState.Seek;
                     break;
                 #endregion
@@ -228,6 +239,7 @@ namespace Rain_On_Your_Parade
                     if (enjoyTime == 0)
                     {
                         interactWithObject(level, ActorState.AState.Sleep);
+                        controlledActor.InteractingObject = null;
                         controlledActor.State.State = ActorState.AState.Wander;
                     }
                     else
@@ -296,6 +308,15 @@ namespace Rain_On_Your_Parade
                                 }
                                 else
                                 {
+                                    if (nextSquare.Objects.Count > 0)
+                                    {
+                                        controlledActor.InteractingObject = nextSquare.Objects[0];
+                                        nextSquare.Objects[0].AddInteractingActor(controlledActor);
+                                    }
+                                    else
+                                    {
+                                        Debug.WriteLine("People are interacting with empty squares that don't even have people in them.");
+                                    }
                                     controlledActor.State.State = controlledActor.TargetState;
                                 }
                                 enjoyTime = MAX_ENJOY_TIME;
