@@ -344,13 +344,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Content\DefaultFont.spritefont">
-      <Name>DefaultFont</Name>
-      <Importer>FontDescriptionImporter</Importer>
-      <Processor>FontDescriptionProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Content\CloudShadow.png">
       <Name>CloudShadow</Name>
       <Importer>TextureImporter</Importer>
@@ -433,14 +426,6 @@
       <Name>invisible</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Content\DosisTitle.spritefont">
-      <Name>DosisTitle</Name>
-      <Importer>FontDescriptionImporter</Importer>
-      <Processor>FontDescriptionProcessor</Processor>
-      <SubType>Designer</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
