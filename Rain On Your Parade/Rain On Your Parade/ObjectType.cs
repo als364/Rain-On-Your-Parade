@@ -70,7 +70,7 @@ namespace Rain_On_Your_Parade
 
                 case ObjectType.Type.Pool:
                     isWetObject = true;
-                    canActivate = false;
+                    canActivate = true;
                     startsWet = true;
                     holdsWater = true;
                     sleepLevel = 0;
@@ -125,7 +125,7 @@ namespace Rain_On_Your_Parade
                     break;
 
                 case ObjectType.Type.Laundry:
-                    isWetObject = true;
+                    isWetObject = false;
                     canActivate = true;
                     startsWet = false;
                     holdsWater = true;
@@ -134,8 +134,8 @@ namespace Rain_On_Your_Parade
                     nurtureLevel = 0;
                     rampageLevel = 0;
                     passable = true;
-                    activatedImages.Add(Type.Laundry, "wetlaundry");
-                    deactivatedImages.Add(Type.Laundry, "laundry");
+                    activatedImages.Add(Type.Laundry, "laundry");
+                    deactivatedImages.Add(Type.Laundry, "wetlaundry");
                     break;
 
                 case ObjectType.Type.House:

@@ -20,7 +20,7 @@ namespace Rain_On_Your_Parade
         private const float RUN_SPEED = 2f;
         private float velX = 0f;
         private float velY = 0f;
-        private const double RAINBOW_RADIUS = 100;
+        private const double RAINBOW_RADIUS = 400;
 
         public ActorController(Actor actor) : base(actor)
         {
@@ -902,41 +902,39 @@ namespace Rain_On_Your_Parade
 
             foreach (WorldObject o in interactObjs)
             {
-               // if (o.Type.CanActivate)
-               // {
-                    switch (action)
-                    {
-                        case ActorState.AState.Nurture:
-                           // if (o.Type.NurtureLevel > 2)
-                          //  {
-                                o.activate();
-                                controlledActor.NurtureLevel--;
-                                controlledActor.DecrementMood();
-                                if (controlledActor.NurtureLevel < 0) controlledActor.NurtureLevel = 0;
-                                interacted = true;
-                           // }
-                            break;
-                        case ActorState.AState.Play:
-                          //  if (o.Type.PlayLevel > 2)
-                          //  {
-                                o.activate();
-                                controlledActor.PlayLevel--;
-                                controlledActor.DecrementMood();
-                                if (controlledActor.PlayLevel < 0) controlledActor.PlayLevel = 0;
-                                interacted = true;
-                          //  }
-                            break;
-                        case ActorState.AState.Sleep:
-                           // if (o.Type.SleepLevel > 2)
-                           // {
-                                controlledActor.SleepLevel--;
-                                controlledActor.DecrementMood();
-                                if (controlledActor.SleepLevel < 0) controlledActor.SleepLevel = 0;
-                                interacted = true;
-                           // }
-                            break;
-                    //}
+                switch (action)
+                {
+                    case ActorState.AState.Nurture:
+                        // if (o.Type.NurtureLevel > 2)
+                        //  {
+                        if(o.Type.CanActivate) o.activate();
+                        controlledActor.NurtureLevel--;
+                        controlledActor.DecrementMood();
+                        if (controlledActor.NurtureLevel < 0) controlledActor.NurtureLevel = 0;
+                        interacted = true;
+                        // }
+                        break;
+                    case ActorState.AState.Play:
+                        //  if (o.Type.PlayLevel > 2)
+                        //  {
+                        if(o.Type.CanActivate) o.activate();
+                        controlledActor.PlayLevel--;
+                        controlledActor.DecrementMood();
+                        if (controlledActor.PlayLevel < 0) controlledActor.PlayLevel = 0;
+                        interacted = true;
+                        //  }
+                        break;
+                    case ActorState.AState.Sleep:
+                        // if (o.Type.SleepLevel > 2)
+                        // {
+                        controlledActor.SleepLevel--;
+                        controlledActor.DecrementMood();
+                        if (controlledActor.SleepLevel < 0) controlledActor.SleepLevel = 0;
+                        interacted = true;
+                        // }
+                        break;
                 }
+                
             }
             return interacted;
         }
