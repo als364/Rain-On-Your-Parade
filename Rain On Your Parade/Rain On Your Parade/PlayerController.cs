@@ -211,17 +211,12 @@ namespace Rain_On_Your_Parade
                    
                 }
 
-                //WorldObject toReplace = null; //for sunnyspot to rainbow
-
                 Point shadowPoint = shadowPointXY();
 
                 List<WorldObject> objects = level.Grid[shadowPoint.X, shadowPoint.Y].Objects;
                 foreach (WorldObject o in objects)
                 {
-                    if (o.Type.HoldsWater)
-                    {
-                        o.WaterLevel = 1;
-                    }
+                    int workAround = o.WaterLevel;
 
                     //Console.Write(o.ToString() + "object rained upon\n");
 
@@ -232,21 +227,18 @@ namespace Rain_On_Your_Parade
 
                     if (o.Type.IsWetObject)
                     {
-                        o.activate();                    
+                        o.activate();                                        
                     }
                     else
                     {
                         o.deactivate();
                     }
-                }
 
-                //if (toReplace != null)
-                //{
-                //    WorldObject addedRainbow = new WorldObject(ObjectType.Type.Rainbow, new Point(toReplace.GridspacePosition.X, toReplace.GridspacePosition.Y), 1);
-                //    addedRainbow.activate();
-                //    objects.Add(addedRainbow);
-                //    objects.Remove(toReplace);
-                //}
+                    if (o.Type.HoldsWater)
+                    {
+                        o.WaterLevel = workAround + 1;
+                    } 
+                }
 
                 return true;
             }
@@ -257,11 +249,8 @@ namespace Rain_On_Your_Parade
         {
             if (player.Rain < Player.MAX_RAIN)
             {
-                //WorldObject toReplace = null; //for rainbow to sunnyspot
-
                 Point shadowPoint = shadowPointXY();
                 
-
                 List<WorldObject> objects = level.Grid[shadowPoint.X, shadowPoint.Y].Objects;
                 foreach (WorldObject o in objects)
                 {
@@ -276,11 +265,6 @@ namespace Rain_On_Your_Parade
                         {
                             if (o.Type.IsWetObject)
                             {
-                                //if (o.Type.TypeName == ObjectType.Type.Rainbow)
-                                //{
-                                //    //change to SunnySpot
-                                //    toReplace = o;
-                                //}
                                 o.deactivate();
                             }
                             else
@@ -310,37 +294,7 @@ namespace Rain_On_Your_Parade
                         }
                     }
                     else { return false; }
-
-                    //if (o.Type.IsWetObject && o.WaterLevel == 0)
-                    //{
-                    //    if (o.Type.TypeName == ObjectType.Type.Rainbow)
-                    //    {
-                    //        //change to SunnySpot
-                    //        toReplace = o;
-                    //        o.deactivate();
-                    //    }
-                    //    else
-                    //    {
-                    //        o.deactivate();
-                    //        Console.Write("DEACTIVATE/n");
-                    //    }
-                    //}
-                    //else
-                    //{
-                    //    o.activate();
-                    //    Console.Write("ACTIVATE/n");
-                    //}
                 }
-
-                //if (toReplace != null)
-                //{
-                //    WorldObject addedSunny = new WorldObject(ObjectType.Type.SunnySpot, new Point(toReplace.GridspacePosition.X, toReplace.GridspacePosition.Y), 0);
-                //    addedSunny.activate();
-                //    objects.Add(addedSunny);
-                //    objects.Remove(toReplace);
-                //    Console.Write("removed rainbow and added Sunny SUNNY!!/n");
-                //}
-
                 return true;
             }
             else { return false; }
