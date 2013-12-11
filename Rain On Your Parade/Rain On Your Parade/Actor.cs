@@ -43,6 +43,9 @@ namespace Rain_On_Your_Parade
         public Texture2D playImg;
         public Texture2D sleepImg;
 
+        public Texture2D personWet;
+        public Texture2D catWet;
+
         private Actor interactingActor;
         private WorldObject interactingObject;
 
@@ -120,6 +123,9 @@ namespace Rain_On_Your_Parade
             mood4 = content.Load<Texture2D>("Emote4");
             mood5 = content.Load<Texture2D>("Emote5");
             mood6 = content.Load<Texture2D>("Emote6");
+
+            catWet = content.Load<Texture2D>("wetCat");
+            personWet = content.Load<Texture2D>("wetPerson");
 
             nurtureImg = content.Load<Texture2D>("EmoteNurture");
             playImg = content.Load<Texture2D>("EmotePlay");

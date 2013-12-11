@@ -29,17 +29,9 @@ namespace Rain_On_Your_Parade
 
                 if (current.isRaining)
                 {
-                    spriteBatch.Begin();
-                    spriteBatch.Draw(current.waterImg, new Rectangle((int)viewedModel.PixelPosition.X + 37, (int)viewedModel.PixelPosition.Y + 61, 26, 27), Color.White);
-                    spriteBatch.Draw(current.waterImg, new Rectangle((int)viewedModel.PixelPosition.X + 10, (int)viewedModel.PixelPosition.Y + 67, 20, 20), Color.White);
-                    spriteBatch.Draw(current.waterImg, new Rectangle((int)viewedModel.PixelPosition.X + 18, (int)viewedModel.PixelPosition.Y + 66, 20, 25), Color.White);
-                    spriteBatch.Draw(current.waterImg, new Rectangle((int)viewedModel.PixelPosition.X + 25, (int)viewedModel.PixelPosition.Y + 68, 23, 20), Color.White);
-                    spriteBatch.Draw(current.waterImg, new Rectangle((int)viewedModel.PixelPosition.X + 38, (int)viewedModel.PixelPosition.Y + 72, 20, 20), Color.White);
-                    spriteBatch.Draw(current.waterImg, new Rectangle((int)viewedModel.PixelPosition.X + 34, (int)viewedModel.PixelPosition.Y + 70, 20, 27), Color.White);
-                    spriteBatch.Draw(current.waterImg, new Rectangle((int)viewedModel.PixelPosition.X + 45, (int)viewedModel.PixelPosition.Y + 68, 23, 20), Color.White);
-                    spriteBatch.Draw(current.waterImg, new Rectangle((int)viewedModel.PixelPosition.X + 51, (int)viewedModel.PixelPosition.Y + 67, 22, 29), Color.White);
 
-                    spriteBatch.End();
+                    current.rainSprite.Draw(spriteBatch, viewedModel.PixelPosition,Color.White, false, 0f);
+         
                 }
 
                 activatedImage.Draw(spriteBatch, viewedModel.PixelPosition,
@@ -108,9 +100,10 @@ namespace Rain_On_Your_Parade
                  if (actor.rainCooldown > 0)
                  {
                      if (actor.Type.TypeName == ActorType.Type.Cat)
-                         spriteBatch.Draw(actor.nurtureImg, new Rectangle((int)viewedModel.PixelPosition.X, (int)viewedModel.PixelPosition.Y, 80, 80), Color.White);
+
+                         spriteBatch.Draw(actor.catWet, new Rectangle((int)viewedModel.PixelPosition.X, (int)viewedModel.PixelPosition.Y, 80, 80), Color.White);
                      else 
-                         spriteBatch.Draw(actor.nurtureImg, new Rectangle((int)viewedModel.PixelPosition.X, (int)viewedModel.PixelPosition.Y, 80, 80), Color.White);
+                         spriteBatch.Draw(actor.personWet, new Rectangle((int)viewedModel.PixelPosition.X, (int)viewedModel.PixelPosition.Y, 80, 80), Color.White);
                  }
 
 

@@ -1216,7 +1216,7 @@ namespace Rain_On_Your_Parade
         {
             foreach (WorldObject entity in square.Objects)
             {
-                Debug.WriteLine("Square " + square.Location + " is passable: " + entity.Type.Passable);
+                //Debug.WriteLine("Square " + square.Location + " is passable: " + entity.Type.Passable);
                 if (!entity.Type.Passable)
                 {
                     square.IsPassable = false;

@@ -11,7 +11,7 @@ namespace Rain_On_Your_Parade
     public class Player : Model
     {
         //public const int MAX_RAIN = (GameEngine.SCREEN_WIDTH / 2 - 35)/5;
-        public const int MAX_RAIN = 75;
+        public const int MAX_RAIN = 10;
 
         private Vector2 velocity;       //velocity of player
         private int rain;       //amount of rain held by player
@@ -19,6 +19,7 @@ namespace Rain_On_Your_Parade
         public int rainInit;
         public bool isRaining = false;
         public Texture2D waterImg;
+        public AnimatedSprite rainSprite;
 
         #region Getters and Setters
 
@@ -80,7 +81,7 @@ namespace Rain_On_Your_Parade
 
         public override void LoadContent(ContentManager content)
         {
-            waterImg = content.Load<Texture2D>("water");
+         
 
             Texture2D textureBase = content.Load<Texture2D>("white_cloud_base");
             AnimatedTexture aniTexBase = new AnimatedTexture(textureBase, 12, 1, false, false);
@@ -90,6 +91,16 @@ namespace Rain_On_Your_Parade
 
             Texture2D textureShadow = content.Load<Texture2D>("CloudShadow_padded");
             AnimatedTexture aniTexShadow = new AnimatedTexture(textureShadow, 6, 1, false, false);
+
+            Texture2D waterImg = content.Load<Texture2D>("CloudRain");
+
+            AnimatedTexture RainSequence = new AnimatedTexture(waterImg, 3, 1, false, false);
+            List<AnimationSequence> rain = new List<AnimationSequence>(1);
+            rain.Add(new AnimationSequence(0, 2, false, 1, 0.1f, RainSequence, null));
+
+            rainSprite = new AnimatedSprite(rain);
+
+          
 
             List<AnimationSequence> aniSequences = new List<AnimationSequence>(2);
             List<AnimationSequence> overlay1 = new List<AnimationSequence>();
