@@ -6,7 +6,7 @@ using System;
 
 namespace Rain_On_Your_Parade
 {
-    class Canvas
+    public class Canvas
     {
         public const int SQUARE_SIZE = 80;
         private int squaresWide = GameEngine.SCREEN_WIDTH / SQUARE_SIZE;

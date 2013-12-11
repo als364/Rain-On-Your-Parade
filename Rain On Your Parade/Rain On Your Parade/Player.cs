@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Rain_On_Your_Parade
 {
-    class Player : Model
+    public class Player : Model
     {
         //public const int MAX_RAIN = (GameEngine.SCREEN_WIDTH / 2 - 35)/5;
         public const int MAX_RAIN = 75;

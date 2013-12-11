@@ -25,10 +25,7 @@ namespace Rain_On_Your_Parade
         public const int SCREEN_HEIGHT = 720;
 
         public const int MAX_RAINBOW_TIME = 400;
-
-        private int stage = 1;
-
-        public static int STAGE_NUM= 12;
+        
         public const int LOG_FRAMES = 120;
         private int framesTillLog = 0;
 
@@ -66,9 +63,18 @@ namespace Rain_On_Your_Parade
         //Boolean menuOn = true;
 
         //Add levels to Levels folder and then add name to this array
-        string[] levels = { "sample.xml",
-                              "Level1.xml",
-                          "sample.xml"};
+        public static string[] levels = { "sample.xml",
+                                          "Level1.xml",
+                                          "Soak the Cat.xml",
+                                          "Kill the Flowers.xml",
+                                          "Kill the Flowers v2.xml",
+                                          "Make Kids Cry.xml",
+                                          "Showdown.xml",
+                                          "Errand Boys.xml"};
+
+        private int stage = 1;
+
+        public static int STAGE_NUM = levels.GetLength(0) ;
 
         public GameEngine()
             : base()
@@ -122,10 +128,10 @@ namespace Rain_On_Your_Parade
             {
                 case GameState.Game:
                     //This is where the level building goes. I don't care about an XML parsing framework yet
-                    level = new Canvas(stage);
+                    //level = new Canvas(stage);
 
                     //////////////////////////////////////////////
-                    //level = LevelParser.parse(levels[stage]);
+                    level = LevelParser.parse(levels[stage]);
                     ///////////////////////////////////////////
 
                     // Debug.WriteLine("Y: " + level.Grid[6, 6].Actors[0].Position.Y);
@@ -229,9 +235,9 @@ namespace Rain_On_Your_Parade
 
                         if (optionSelected == 0) //Continue
                         {
-                            if (stage++ > STAGE_NUM - 1)
+                            if (stage++ > STAGE_NUM)
                             {
-                                stage = 1;
+                                stage = 0;
                             }
                             levelHasEnded = false;
                             levelNotStarted = true;

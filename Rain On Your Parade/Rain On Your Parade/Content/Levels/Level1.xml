@@ -5,7 +5,7 @@
   Use [WASD] or [Arrow] to move.</objectiveMessage>
   <size>
     <width>10</width>
-    <height>10</height>
+    <height>9</height>
   </size>
   <winCondition>actors</winCondition>
   <player>
