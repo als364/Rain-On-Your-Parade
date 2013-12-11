@@ -131,17 +131,20 @@ namespace Rain_On_Your_Parade
             {
                 if (level.nearEnoughForInteraction(a, controlledActor))
                 {
+                    //if we're allowed to interact with each other and everyone is mad enough, fight
                     if (controlledActor.InteractionTimer == 0 && a.InteractionTimer == 0 && 
-                        ((a.Mood > 3 && controlledActor.Mood > 3) || (a.Mood == 5 || controlledActor.Mood == 5)))
+                        ((a.Mood + controlledActor.Mood) >= 5))
+                        //old: (a.Mood > 3 && controlledActor.Mood > 3) || (a.Mood == 5 || controlledActor.Mood == 5)))
                     {
                         controlledActor.State.State = ActorState.AState.Fight;
                         controlledActor.InteractingActor = a;
                         a.State.State = ActorState.AState.Fight;
                         a.InteractingActor = controlledActor;
                     }
-                    else if (controlledActor.InteractionTimer == 0 &&
-                            (DetermineTargetState() == ActorState.AState.Nurture && a.Mood > 3 && controlledActor.Mood < 3) ||
-                            (a.TargetState == ActorState.AState.Nurture && controlledActor.Mood > 3 && a.Mood < 3))
+                    //if we're allowed to interact with each other and people aren't mad enough, nurture
+                    else if (controlledActor.InteractionTimer == 0 && a.InteractionTimer == 0 &&
+                            (DetermineTargetState() == ActorState.AState.Nurture && (a.Mood + controlledActor.Mood) <= 5) ||
+                            (a.TargetState == ActorState.AState.Nurture && (a.Mood + controlledActor.Mood) <= 5))
                     {
                         controlledActor.State.State = ActorState.AState.Comfort;
                         a.State.State = ActorState.AState.Comfort;
