@@ -50,7 +50,7 @@ namespace Rain_On_Your_Parade
             levelTitles.Add("Soak the Cat");
             levelSubTitles.Add("Goal: Cat\n\nPress [Spacebar] to Rain");
             levelTitles.Add("Kill the Flowers");
-            levelSubTitles.Add("Goal: Garden\n\nPress [Shift] to Absorb");
+            levelSubTitles.Add("Goal: Garden\n\nPress [Alt] to Absorb");
             levelTitles.Add("Make Kids Cry");
             levelSubTitles.Add("Goal: Kid\n\nTake advantage of kids and their \nfavorite things");
             levelTitles.Add("Kill the Flowers V2.0");
@@ -157,7 +157,7 @@ namespace Rain_On_Your_Parade
             spriteBatch.Draw(topbar, new Rectangle(GameEngine.SCREEN_WIDTH / 2, marTop - 20, 3 * GameEngine.SCREEN_WIDTH / 4, 3 * GameEngine.SCREEN_HEIGHT / 4), Color.Black);
 
             //Controls list
-            string controls = "[WASD] or [ARROWS] to Move\n[SPACEBAR] to Rain\n[SHIFT] to Absorb\n[ESC] to Pause\n[P] to Restart";
+            string controls = "[WASD] or [ARROWS] to Move\n[SPACEBAR] to Rain\n[ALT] to Absorb\n[ESC] to Pause\n[P] to Restart";
             spriteBatch.DrawString(font, "Controls", new Vector2(GameEngine.SCREEN_WIDTH / 2 + 10, 3* marTop), Color.White, 0, new Vector2(0, 0), 0.8f, SpriteEffects.None, 0);
             spriteBatch.DrawString(font, controls, new Vector2(GameEngine.SCREEN_WIDTH / 2 + 10, 3 * marTop + 30), Color.White, 0, new Vector2(0, 0), 0.6f, SpriteEffects.None, 0);
 

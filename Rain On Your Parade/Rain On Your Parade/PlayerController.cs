@@ -38,7 +38,7 @@ namespace Rain_On_Your_Parade
 
             if (coolDown == 0)
             {
-                if (ks.IsKeyDown(Keys.LeftShift) || ks.IsKeyDown(Keys.RightShift))
+                if (ks.IsKeyDown(Keys.LeftAlt) || ks.IsKeyDown(Keys.RightAlt))
                 {
                     if (Absorb(level))
                     {

@@ -17,7 +17,8 @@ namespace Rain_On_Your_Parade
         private int enjoyTime;
         private const int MAX_RUN_COOLDOWN = 80;
         private int runCoolDown = MAX_RUN_COOLDOWN;
-        private const float RUN_SPEED = 2f;
+        private const float RUN_SPEED = 2.5f;
+        private const float WALK_SPEED = .75f;
         private float velX = 0f;
         private float velY = 0f;
         private const double RAINBOW_RADIUS = 400;
@@ -331,19 +332,19 @@ namespace Rain_On_Your_Parade
                         //If I'm not within the next square on the path, make sure my velocity is set correctly (necessary for first square) Move uniformly to the next square
                         if (nextSquare.Location.X * Canvas.SQUARE_SIZE - controlledActor.PixelPosition.X <= 0)
                         {
-                            Velx = controlledActor.Mood > 4 ? -RUN_SPEED : -1f;
+                            Velx = controlledActor.Mood > 4 ? -RUN_SPEED : -WALK_SPEED;
                         }
                         else
                         {
-                            Velx = controlledActor.Mood > 4 ? RUN_SPEED : 1f;
+                            Velx = controlledActor.Mood > 4 ? RUN_SPEED : WALK_SPEED;
                         }
                         if (nextSquare.Location.Y * Canvas.SQUARE_SIZE - controlledActor.PixelPosition.Y <= 0)
                         {
-                            Vely = controlledActor.Mood > 4 ? -RUN_SPEED : -1f;
+                            Vely = controlledActor.Mood > 4 ? -RUN_SPEED : -WALK_SPEED;
                         }
                         else
                         {
-                            Vely = controlledActor.Mood > 4 ? RUN_SPEED : 1f;
+                            Vely = controlledActor.Mood > 4 ? RUN_SPEED : WALK_SPEED;
                         }
                         controlledActor.Velocity = new Vector2(Velx, Vely);
                         //controlledActor.Velocity = new Vector2(nextSquare.Location.X * Canvas.SQUARE_SIZE - controlledActor.Position.X, 
@@ -415,19 +416,19 @@ namespace Rain_On_Your_Parade
                         //If I'm not within the next square on the path, make sure my velocity is set correctly (necessary for first square) Move uniformly to the next square
                         if (nextSquare.Location.X * Canvas.SQUARE_SIZE - controlledActor.PixelPosition.X <= 0)
                         {
-                            Velx = controlledActor.Mood > 4 ? -RUN_SPEED : -1f;
+                            Velx = controlledActor.Mood > 4 ? -RUN_SPEED : -WALK_SPEED;
                         }
                         else
                         {
-                            Velx = controlledActor.Mood > 4 ? RUN_SPEED : 1f;
+                            Velx = controlledActor.Mood > 4 ? RUN_SPEED : WALK_SPEED;
                         }
                         if (nextSquare.Location.Y * Canvas.SQUARE_SIZE - controlledActor.PixelPosition.Y <= 0)
                         {
-                            Vely = controlledActor.Mood > 4 ? -RUN_SPEED : -1f;
+                            Vely = controlledActor.Mood > 4 ? -RUN_SPEED : -WALK_SPEED;
                         }
                         else
                         {
-                            Vely = controlledActor.Mood > 4 ? RUN_SPEED : 1f;
+                            Vely = controlledActor.Mood > 4 ? RUN_SPEED : WALK_SPEED;
                         }
                         controlledActor.Velocity = new Vector2(Velx, Vely);
                         //controlledActor.Velocity = new Vector2(nextSquare.Location.X * Canvas.SQUARE_SIZE - controlledActor.Position.X, 
@@ -490,19 +491,19 @@ namespace Rain_On_Your_Parade
                         //If I'm not within the next square on the path, make sure my velocity is set correctly (necessary for first square) Move uniformly to the next square
                         if (nextSquare.Location.X * Canvas.SQUARE_SIZE - controlledActor.PixelPosition.X <= 0)
                         {
-                            Velx = controlledActor.Mood > 4 ? -RUN_SPEED : -1f;
+                            Velx = controlledActor.Mood > 4 ? -RUN_SPEED : -WALK_SPEED;
                         }
                         else
                         {
-                            Velx = controlledActor.Mood > 4 ? RUN_SPEED : 1f;
+                            Velx = controlledActor.Mood > 4 ? RUN_SPEED : WALK_SPEED;
                         }
                         if (nextSquare.Location.Y * Canvas.SQUARE_SIZE - controlledActor.PixelPosition.Y <= 0)
                         {
-                            Vely = controlledActor.Mood > 4 ? -RUN_SPEED : -1f;
+                            Vely = controlledActor.Mood > 4 ? -RUN_SPEED : -WALK_SPEED;
                         }
                         else
                         {
-                            Vely = controlledActor.Mood > 4 ? RUN_SPEED : 1f;
+                            Vely = controlledActor.Mood > 4 ? RUN_SPEED : WALK_SPEED;
                         }
                         controlledActor.Velocity = new Vector2(Velx, Vely);
                         //controlledActor.Velocity = new Vector2(nextSquare.Location.X * Canvas.SQUARE_SIZE - controlledActor.Position.X, 
