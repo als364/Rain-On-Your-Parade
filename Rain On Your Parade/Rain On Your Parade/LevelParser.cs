@@ -20,7 +20,7 @@ namespace Rain_On_Your_Parade
             Player player = null;
             int height = 0;
             int width = 0;
-            int malice = 0;
+            int mood = 0;
             int x = 0;
             int y = 0;
             ActorType.Type atype = ActorType.Type.Cat;
@@ -28,9 +28,9 @@ namespace Rain_On_Your_Parade
             GameEngine.WinCondition cond = GameEngine.WinCondition.Actors;
             int water = 0;
             string message = "";
-            bool isMalice = false;
-            List<Actor> maliceActors = new List<Actor>();
-            List<WorldObject> maliceObjects = new List<WorldObject>();
+            bool isMood = false;
+            List<Actor> angerActors = new List<Actor>();
+            List<WorldObject> angerObjects = new List<WorldObject>();
             string title = "";
 
             while (reader.Read())
@@ -96,16 +96,16 @@ namespace Rain_On_Your_Parade
                                         case "water": water = int.Parse(reader.ReadInnerXml());
                                             break;
                                         case "malice":
-                                            isMalice = bool.Parse(reader.ReadInnerXml());
+                                            isMood = bool.Parse(reader.ReadInnerXml());
                                             break;
                                         default: break;
                                     }
                                 }
                                 WorldObject o = new WorldObject(otype, new Microsoft.Xna.Framework.Point(x, y), water);
-                                if (isMalice)
+                                if (isMood)
                                 {
-                                    maliceObjects.Add(o);
-                                    isMalice = false;
+                                    angerObjects.Add(o);
+                                    isMood = false;
                                 }
                                 objects.Add(o);
                             }
@@ -149,22 +149,22 @@ namespace Rain_On_Your_Parade
                                             }
                                             break;
                                         case "malice":
-                                            isMalice = bool.Parse(reader.ReadInnerXml());
+                                            isMood = bool.Parse(reader.ReadInnerXml());
                                             break;
                                         default: break;
                                     }
                                 }
                                 Actor a = new Actor(atype, new Microsoft.Xna.Framework.Point(x, y));
-                                if (isMalice)
+                                if (isMood)
                                 {
-                                    maliceActors.Add(a);
-                                    isMalice = false;
+                                    angerActors.Add(a);
+                                    isMood = false;
                                 }
                                 actors.Add(a);
                             }
                         }
                         break;
-                    case "targetMalice": malice = int.Parse(reader.ReadInnerXml());
+                    case "targetMalice": mood = int.Parse(reader.ReadInnerXml());
                         break;
                     case "size":
                         while (reader.NodeType != XmlNodeType.EndElement || reader.Name != "size")
@@ -213,7 +213,7 @@ namespace Rain_On_Your_Parade
                         switch (reader.ReadInnerXml())
                         {
                             case "malice":
-                                cond = GameEngine.WinCondition.Malice;
+                                cond = GameEngine.WinCondition.Mood;
                                 break;
                             case "actors":
                                 cond = GameEngine.WinCondition.Actors;
@@ -231,7 +231,7 @@ namespace Rain_On_Your_Parade
                 }
             }
 
-            return new Canvas(title, width, height, cond, objects, actors, player, message, maliceObjects, maliceActors, malice);
+            return new Canvas(title, width, height, cond, objects, actors, player, message, angerObjects, angerActors, mood);
         }
     }
 }

@@ -56,11 +56,11 @@ namespace Rain_On_Your_Parade
             levelTitles.Add("Kill the Flowers V2.0");
             levelSubTitles.Add("Goal: Garden\n\nIt's a race against mom!");
             levelTitles.Add("Lambs to the Slaughter");
-            levelSubTitles.Add("Goal: Malice\n\nRaining on Sunny Spots generates a \ntemporary Rainbow");
+            levelSubTitles.Add("Goal: Mood\n\nRaining on Sunny Spots generates a \ntemporary Rainbow");
             levelTitles.Add("Showdown");
             levelSubTitles.Add("Goal: Cat\n\nPit angry cats against each other!");
             levelTitles.Add("Showdown V2.0");
-            levelSubTitles.Add("Goal: Malice\n\nThis time it's mom and son");
+            levelSubTitles.Add("Goal: Mood\n\nThis time it's mom and son");
             levelTitles.Add("Cats and Sunflowers");
             levelSubTitles.Add("or is it catnip?");
             levelTitles.Add("The American Dream");

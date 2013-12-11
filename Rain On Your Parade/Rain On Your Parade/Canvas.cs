@@ -14,8 +14,8 @@ namespace Rain_On_Your_Parade
 
         private GridSquare[,] canvasGrid;
         private Player player;
-        private int malice;                 //total malice generated
-        private int maliceObjective;        //amount of malice needed to win level
+        private int mood;                 //total mood
+        private int moodObjective;        //amount of mood needed to win level
         private List<WorldObject> objects;
         private List<Actor> actors;
         public float percentWon;
@@ -24,8 +24,8 @@ namespace Rain_On_Your_Parade
         public int initialRain;
 
         public GameEngine.WinCondition win;
-        public List<Actor> maliceActors = new List<Actor>();
-        public List<WorldObject> maliceObjects = new List<WorldObject>();
+        public List<Actor> angerActors = new List<Actor>();
+        public List<WorldObject> angerObjects = new List<WorldObject>();
 
         public int levelNum;
 
@@ -33,7 +33,7 @@ namespace Rain_On_Your_Parade
 
         public const int INTERACT_RADIUS = 50;
 
-        public Canvas(string title, int width, int height, GameEngine.WinCondition cond, List<WorldObject> o, List<Actor> a, Player p, string message, List<WorldObject> maliceObjs, List<Actor> maliceActors, int maliceGoal)
+        public Canvas(string title, int width, int height, GameEngine.WinCondition cond, List<WorldObject> o, List<Actor> a, Player p, string message, List<WorldObject> angerObjs, List<Actor> angerActors, int moodGoal)
         {
             this.title = title;
             squaresTall = height;
@@ -43,9 +43,9 @@ namespace Rain_On_Your_Parade
             actors = a;
             percentWon = 0f;
             objectiveMessage = message;
-            this.maliceActors = maliceActors;
-            maliceObjects = maliceObjs;
-            maliceObjective = maliceGoal;
+            this.angerActors = angerActors;
+            angerObjects = angerObjs;
+            moodObjective = moodGoal;
 
             for (int i = 0; i < squaresWide; i++)
             {
@@ -64,7 +64,7 @@ namespace Rain_On_Your_Parade
             foreach (Actor actor in actors)
             {
                 Grid[actor.GridspacePosition.X, actor.GridspacePosition.Y].add(actor);
-                //maliceActors.Add(actor);
+                //moodActors.Add(actor);
             }
             foreach (GridSquare square in Grid)
             {
@@ -354,7 +354,7 @@ namespace Rain_On_Your_Parade
                     #endregion level4
                     break;
                 case 5:
-                    //Level 5 - Lambs to the Slaughter (Goal: Some Reasonable Malice Quota for 3 actors)
+                    //Level 5 - Lambs to the Slaughter (Goal: Some Reasonable Mood Quota for 3 actors)
                     #region level5
 
                     initialRain = 5;
@@ -400,7 +400,7 @@ namespace Rain_On_Your_Parade
                     //cat 3,7
                     actors.Add(new Actor(ActorType.Type.Cat, new Point(3, 7)));
 
-                    win = GameEngine.WinCondition.Malice;
+                    win = GameEngine.WinCondition.Mood;
                     #endregion level5
                     break;
                 case 6:
@@ -456,7 +456,7 @@ namespace Rain_On_Your_Parade
                     #endregion level6
                     break;
                 case 7:
-                    //Level 7 - Showdown v2.0 (Goal: Some reasonable malice level given 2 kids, 2 moms)
+                    //Level 7 - Showdown v2.0 (Goal: Some reasonable mood level given 2 kids, 2 moms)
                     #region level7
 
                     initialRain = 5;
@@ -527,7 +527,7 @@ namespace Rain_On_Your_Parade
                     objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(7, 8), 0));
                     objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(7, 9), 0));
 
-                    win = GameEngine.WinCondition.Malice;
+                    win = GameEngine.WinCondition.Mood;
                     #endregion level7
                     break;
                 case 8:
@@ -727,7 +727,7 @@ namespace Rain_On_Your_Parade
             foreach (Actor actor in actors)
             {
                 Grid[actor.GridspacePosition.X, actor.GridspacePosition.Y].add(actor);
-                //maliceActors.Add(actor);
+                //angerActors.Add(actor);
             }
             foreach (GridSquare square in Grid)
             {
@@ -750,29 +750,29 @@ namespace Rain_On_Your_Parade
             }
         }
 
-        public int Malice
+        public int Mood
         {
             get
             {
-                return malice;
+                return mood;
             }
 
             set
             {
-                malice = value;
+                mood = value;
             }
         }
 
-        public int MaliceObjective
+        public int MoodObjective
         {
             get
             {
-                return maliceObjective;
+                return moodObjective;
             }
 
             set
             {
-                maliceObjective = value;
+                moodObjective = value;
             }
         }
 
@@ -830,8 +830,8 @@ namespace Rain_On_Your_Parade
         }
         #endregion
 
-        public float maliceTint() {
-            //return 1 - malice / maliceObjective;
+        public float moodTint() {
+            //return 1 - mood / moodObjective;
             return 1;
     }
 
@@ -977,24 +977,24 @@ namespace Rain_On_Your_Parade
             return (Math.Abs(Vector2.Distance(p_pos, q.PixelPosition)) < INTERACT_RADIUS && !p.Equals(q));
         }
 
-        public void updateMalice()
+        public void updateMood()
         {
-            maliceActors = new List<Actor>();
-            maliceObjects = new List<WorldObject>();
-            malice = 0;
+            angerActors = new List<Actor>();
+            angerObjects = new List<WorldObject>();
+            mood = 0;
 
             foreach(Actor a in actors) {
-                malice += a.Mood;
+                Mood += a.Mood;
                 if (a.Mood >= 5)
                 {
-                    maliceActors.Add(a);
+                    angerActors.Add(a);
                 }
             }
             foreach(WorldObject o in objects)
             {
                 if (o.Type.CanActivate && !o.Activated)
                 {
-                    maliceObjects.Add(o);
+                    angerObjects.Add(o);
                 }
             }
         }
@@ -1007,7 +1007,7 @@ namespace Rain_On_Your_Parade
                 grid += g.ToString() + "\n";
             }
             return "World Width: " + squaresWide + "\nWorld Height: " + squaresTall +
-                "\nMalice: " + malice + "\nMalice Objective: " + maliceObjective + "\n" + "Player: \n" + player.ToString() + "\nGrid: \n" + grid;
+                "\nMood: " + mood + "\nMood Objective: " + moodObjective + "\n" + "Player: \n" + player.ToString() + "\nGrid: \n" + grid;
         }
     }   
 }

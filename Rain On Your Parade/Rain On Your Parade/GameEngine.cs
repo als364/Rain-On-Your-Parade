@@ -17,7 +17,7 @@ namespace Rain_On_Your_Parade
     /// </summary>
     public class GameEngine : Game
     {
-        public enum WinCondition { Objects, Actors, Malice };
+        public enum WinCondition { Objects, Actors, Mood };
 
         public enum GameState { MainMenu, PauseMenu, Game };
 
@@ -123,7 +123,7 @@ namespace Rain_On_Your_Parade
                     // Debug.WriteLine("Y: " + level.Grid[6, 6].Actors[0].Position.Y);
                     //int quota = 100;
                     ////worldState = new WorldState(quota,level.Grid);
-                    //level.MaliceObjective = quota;
+                    //level.MoodObjective = quota;
 
                     //Debug.WriteLine("Y: " + worldState.getActors().ToArray()[1].Position.Y);
                     foreach (WorldObject o in level.Objects)
@@ -282,20 +282,20 @@ namespace Rain_On_Your_Parade
                     //    framesTillLog--;
                     //}
 
-                    level.updateMalice();
+                    level.updateMood();
 
                     #region WinConditions
                     switch (level.win)
                     {
-                        case WinCondition.Malice:
-                            level.percentWon = ((float)level.Malice) / ((float)level.MaliceObjective);
+                        case WinCondition.Mood:
+                            level.percentWon = ((float)level.Mood) / ((float)level.MoodObjective);
                             if (level.percentWon >= .99)
                             {
                                 levelHasEnded = true;
                             }
                             break;
                         case WinCondition.Actors:
-                            level.percentWon = ((float)level.maliceActors.Count) / ((float)level.Actors.Count);
+                            level.percentWon = ((float)level.angerActors.Count) / ((float)level.Actors.Count);
                             if (level.percentWon >= .99)
                             {
                                 levelHasEnded = true;
@@ -310,7 +310,7 @@ namespace Rain_On_Your_Parade
                                     activableObjCount++;
                                 }
                             }
-                            level.percentWon = ((float)level.maliceObjects.Count) / (float)activableObjCount;
+                            level.percentWon = ((float)level.angerObjects.Count) / (float)activableObjCount;
                             if (level.percentWon >= .99)
                             {
                                 levelHasEnded = true;
@@ -353,14 +353,14 @@ namespace Rain_On_Your_Parade
                                 model.deactivatedSprite.Update();
                             }
 
-                            /*int maliceSum = 0;
+                            /*int MoodSum = 0;
 
                             if (model is Actor)
                             {
                                 Actor actor = (Actor)model;
-                                maliceSum += actor.Mood;
+                                MoodSum += actor.Mood;
                             }
-                            level.Malice = maliceSum;*/
+                            level.Mood = moodSum;*/
                         }
                     }
                     //make sure player is not raining at very start
@@ -426,7 +426,7 @@ namespace Rain_On_Your_Parade
 
                     //Game Background
                     spriteBatch.Begin();
-                    spriteBatch.Draw(background, new Rectangle(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT), new Color(level.maliceTint(),level.maliceTint(),level.maliceTint()));
+                    spriteBatch.Draw(background, new Rectangle(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT), new Color(level.moodTint(),level.moodTint(),level.moodTint()));
                     spriteBatch.End();
 
                     //Draw all models
@@ -449,7 +449,7 @@ namespace Rain_On_Your_Parade
                     }
                     spriteBatch.DrawString(font, "Water", new Vector2(20, 5), Color.White, 0, new Vector2(0, 0), 0.5f, SpriteEffects.None, 0);
               
-                    //Draw the Malice Meter
+                    //Draw the mood Meter
                     spriteBatch.Draw(batterybar, new Rectangle(0, 40, SCREEN_WIDTH, 40), Color.Black);
                     int percentInt = (int)(level.percentWon * SCREEN_WIDTH/2);
                     spriteBatch.Draw(batterybar, new Rectangle(0, 45, percentInt, 30), Color.Firebrick);
