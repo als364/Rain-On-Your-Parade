@@ -18,6 +18,7 @@ namespace Rain_On_Your_Parade
     public class LevelComplete
     {
         int optionIndex;
+        int completeDelay = 10;
         Color normal = Color.White;
         Color hilite = Color.Yellow;
         KeyboardState keyboardState;
@@ -28,10 +29,14 @@ namespace Rain_On_Your_Parade
 
         int OPTION_NUM = 3;
 
-        int button_margin_left = 80;
-        int button_margin_top = 500;
-        int button_width = 150;
-        int button_height = 70;
+        int iconHeight = 70;
+        int iconWidth = 150;
+
+        int marLeft = 90;
+        int marTop = 120;
+        int padLeft = 18;
+        int padTop = 10;
+
 
         List<String> levelTitles = new List<String>();
         List<String> levelSubTitles = new List<String>();
@@ -75,24 +80,28 @@ namespace Rain_On_Your_Parade
         /// checking for collisions, gathering input, and playing audio.
         public int Update()
         {
+            if (completeDelay == 0)
+            {
             oldKeyboardState = keyboardState;
             keyboardState = Keyboard.GetState();
             if (CheckKey(Keys.Right))
             {
                 optionIndex++;
-                if (optionIndex > OPTION_NUM) optionIndex = 1;
+                if (optionIndex == OPTION_NUM) optionIndex = 0;
             }
 
             if (CheckKey(Keys.Left))
             {
                 optionIndex--;
-                if (optionIndex == 0) optionIndex = OPTION_NUM;
+                if (optionIndex == 0) optionIndex = OPTION_NUM-1;
             }
 
             if (Keyboard.GetState().IsKeyDown(Keys.Enter) || Keyboard.GetState().IsKeyDown(Keys.Space))
             {
                 return optionIndex;
             }
+            }
+            if (completeDelay > 0) completeDelay--;
             return -1;
         }
 
@@ -110,23 +119,24 @@ namespace Rain_On_Your_Parade
             string score = "Your Score Data Here!";
             spriteBatch.DrawString(font, "You Win!", new Vector2(GameEngine.SCREEN_WIDTH / 2 - 250, GameEngine.SCREEN_HEIGHT / 2 - 80), Color.White, 0, new Vector2(0, 0), 1f, SpriteEffects.None, 0);
             spriteBatch.DrawString(font, score, new Vector2(GameEngine.SCREEN_WIDTH / 2 - 250, GameEngine.SCREEN_HEIGHT / 2 - 40), Color.White, 0, new Vector2(0, 0), 0.8f, SpriteEffects.None, 0);
-
-            //Buttons
-            Color col = (optionIndex == 1) ? Color.Blue :
-                (optionIndex == 2) ? Color.Yellow : Color.Red;
-            string button_text = (optionIndex == 1) ? "Continue" :
-                (optionIndex == 2) ? "Main Menu" : "Replay";
-
-            for (int i = 0; i < 3; i++)
+            
+            for (int i = 0; i < OPTION_NUM; i++)
             {
-                if(i == optionIndex) {
-                    spriteBatch.Draw(bg_box, new Rectangle(optionIndex * button_margin_left + 50, button_margin_top, button_width, button_height), Color.Black);
-                    spriteBatch.DrawString(font, button_text, new Vector2(optionIndex * button_margin_left + 60, button_margin_top+10), Color.White, 0, new Vector2(0, 0), 0.8f, SpriteEffects.None, 0);
 
-                } else {
-                    spriteBatch.Draw(bg_box, new Rectangle(optionIndex * button_margin_left + 50, button_margin_top, button_width, button_height), col);
-                    spriteBatch.DrawString(font, button_text, new Vector2(optionIndex * button_margin_left + 60, button_margin_top + 10), Color.White, 0, new Vector2(0, 0), 0.8f, SpriteEffects.None, 0);
+                string button_text = (i == 0) ? "Continue" :
+                    (i == 1) ? "Replay" : "Main Menu";
 
+                if (i == optionIndex)
+                {
+                    //Highlight icon
+                    spriteBatch.Draw(bg_box, new Rectangle(iconWidth * i + GameEngine.SCREEN_WIDTH / 4 + i * 30 + marLeft, 3 * GameEngine.SCREEN_HEIGHT / 8 + marTop + 70, iconWidth, iconHeight), Color.White);
+                    spriteBatch.Draw(bg_box, new Rectangle(iconWidth * i + GameEngine.SCREEN_WIDTH / 4 + i * 30 + marLeft + 5, 3 * GameEngine.SCREEN_HEIGHT / 8 + marTop + 70 + 5, iconWidth - 10, iconHeight - 10), Color.Black);
+                    spriteBatch.DrawString(font, button_text, new Vector2(iconWidth * i + GameEngine.SCREEN_WIDTH / 4 + i * 30 + marLeft + padLeft, 3 * GameEngine.SCREEN_HEIGHT / 8 + marTop + 70 + padTop), Color.White);
+                }
+                else
+                {
+                    spriteBatch.Draw(bg_box, new Rectangle(iconWidth * i + GameEngine.SCREEN_WIDTH / 4 + i * 30 + marLeft, 3 * GameEngine.SCREEN_HEIGHT / 8 + marTop + 70, iconWidth, iconHeight), Color.Black);
+                    spriteBatch.DrawString(font, button_text, new Vector2(iconWidth * i + GameEngine.SCREEN_WIDTH / 4 + i * 30 + marLeft + padLeft, 3 * GameEngine.SCREEN_HEIGHT / 8 + marTop + 70 + padTop), Color.White);
                 }
             }
 

@@ -22,6 +22,7 @@ namespace Rain_On_Your_Parade
         Texture2D levelSelected;
 
         int selectedIndex;
+        int menuDelay = 10;
         Color normal = Color.White;
         Color hilite = Color.Yellow;
         KeyboardState keyboardState;
@@ -101,9 +102,13 @@ namespace Rain_On_Your_Parade
             // TODO: Unload any non ContentManager content here
         }
 
-        private bool CheckKey(Keys theKey)
+        private bool NewlyPressed(Keys theKey)
         {
-        return keyboardState.IsKeyUp(theKey) && oldKeyboardState.IsKeyDown(theKey);
+            return keyboardState.IsKeyDown(theKey) && oldKeyboardState.IsKeyUp(theKey);
+        }
+        private bool NewlyReleased(Keys theKey)
+        {
+            return keyboardState.IsKeyUp(theKey) && oldKeyboardState.IsKeyDown(theKey);
         }
 
         /// <summary>
@@ -111,37 +116,41 @@ namespace Rain_On_Your_Parade
         /// checking for collisions, gathering input, and playing audio.
         public int Update()
         {
-            oldKeyboardState = keyboardState;
-            keyboardState = Keyboard.GetState();
-            if (CheckKey(Keys.Right))
+            if (menuDelay == 0)
             {
-                selectedIndex++;
-                if (selectedIndex == GameEngine.STAGE_NUM)
-                    selectedIndex = 0;
-            }
-            if (CheckKey(Keys.Down))
-            {
-                selectedIndex += num_col;
-                if (selectedIndex >= GameEngine.STAGE_NUM)
-                    selectedIndex -= GameEngine.STAGE_NUM;
-            }
-            if (CheckKey(Keys.Up))
-            {
-                selectedIndex -= num_col;
-                if (selectedIndex < 0)
-                    selectedIndex += GameEngine.STAGE_NUM;
-            }
-            if (CheckKey(Keys.Left))
-            {
-                selectedIndex--;
-                if (selectedIndex < 0)
-                    selectedIndex = GameEngine.STAGE_NUM - 1;
-            }
+                oldKeyboardState = keyboardState;
+                keyboardState = Keyboard.GetState();
+                if (NewlyPressed(Keys.Right))
+                {
+                    selectedIndex++;
+                    if (selectedIndex == GameEngine.STAGE_NUM)
+                        selectedIndex = 0;
+                }
+                if (NewlyPressed(Keys.Down))
+                {
+                    selectedIndex += num_col;
+                    if (selectedIndex >= GameEngine.STAGE_NUM)
+                        selectedIndex -= GameEngine.STAGE_NUM;
+                }
+                if (NewlyPressed(Keys.Up))
+                {
+                    selectedIndex -= num_col;
+                    if (selectedIndex < 0)
+                        selectedIndex += GameEngine.STAGE_NUM;
+                }
+                if (NewlyPressed(Keys.Left))
+                {
+                    selectedIndex--;
+                    if (selectedIndex < 0)
+                        selectedIndex = GameEngine.STAGE_NUM - 1;
+                }
 
-            if (Keyboard.GetState().IsKeyDown(Keys.Enter) || Keyboard.GetState().IsKeyDown(Keys.Space))
-            {
-                return selectedIndex+1;
+                if (NewlyPressed(Keys.Enter) || NewlyPressed(Keys.Space))
+                {
+                    return selectedIndex + 1;
+                }
             }
+            if (menuDelay > 0) menuDelay--;
             return -1;
         }
 

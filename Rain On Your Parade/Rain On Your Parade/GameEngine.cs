@@ -54,8 +54,14 @@ namespace Rain_On_Your_Parade
         MainMenu mainMenu;
         LevelComplete levelEnd;
         LevelStart levelStart;
+        PauseScreen pauseScreen;
+
+        KeyboardState keyboardState;
+        KeyboardState oldKeyboardState;
+
         bool levelNotStarted;
         int levelStartDelay;
+        bool levelPaused;
         bool levelHasEnded;
         //Boolean menuOn = true;
 
@@ -99,10 +105,12 @@ namespace Rain_On_Your_Parade
             mainMenu = new MainMenu();
             levelEnd = new LevelComplete();
             levelStart = new LevelStart();
+            pauseScreen = new PauseScreen();
 
             levelNotStarted = true;
             levelStartDelay = 10;
             levelHasEnded = false;
+            levelPaused = false;
 
             //if (menuOn) mainMenu.Initialize();
             switch (state)
@@ -179,6 +187,7 @@ namespace Rain_On_Your_Parade
             mainMenu.LoadContent(this.Content);
             levelEnd.LoadContent(this.Content);
             levelStart.LoadContent(this.Content);
+            pauseScreen.LoadContent(this.Content);
 
         }
 
@@ -209,7 +218,7 @@ namespace Rain_On_Your_Parade
                         //Record Results
                         int optionSelected = levelEnd.Update();
 
-                        if (optionSelected == 1) //Continue
+                        if (optionSelected == 0) //Continue
                         {
                             if (stage++ > STAGE_NUM - 1)
                             {
@@ -227,7 +236,7 @@ namespace Rain_On_Your_Parade
                             Initialize();
                             return;
                         }
-                        if (optionSelected == 3) //Replay
+                        if (optionSelected == 1) //Replay
                         {
                             levelHasEnded = false;
                             levelNotStarted = true;
@@ -248,20 +257,34 @@ namespace Rain_On_Your_Parade
                         }
                         if (readyToStart == 2) //Main Menu
                         {
-                            levelStartDelay = 10;
                             levelNotStarted = false;
                             state = GameState.MainMenu;
                             Initialize();
                             return;
                         }
-                        else
+                        else //Start Game
                         {
-                            levelStartDelay = 10;
                             levelNotStarted = false;
                         }
                     }
                     #endregion GameStart
 
+                    #region GamePaused
+                    if (levelPaused) {
+                        int pauseOption = pauseScreen.Update();
+                        if (pauseOption == 0) //Continue
+                        {
+                            levelPaused = false;
+                        }
+                        if (pauseOption == 1) //Main Menu
+                        {
+                            state = GameState.MainMenu;
+                            Initialize();
+                        }
+                        //Still Paused
+                        return;
+                    }
+                    #endregion GamePaused
 
                     if (framesTillLog == 0)
                     {
@@ -354,7 +377,7 @@ namespace Rain_On_Your_Parade
                             level.Malice = maliceSum;*/
                         }
                     }
-                    //make sure player is not raining at very start
+
                     if (levelStartDelay > 0)
                     {
                         levelStartDelay--;
@@ -363,11 +386,13 @@ namespace Rain_On_Your_Parade
                     {
                         foreach (Controller controller in controllers)
                         {
-                                controller.Update(gameTime, level);
+                            controller.Update(gameTime, level);
                         }
+                        level.upateGridSquares();
+                        
                     }
-                    level.upateGridSquares();
                     break;
+
                 case GameState.MainMenu:
                     int selected = mainMenu.Update();
                     if (selected > 0)
@@ -379,22 +404,26 @@ namespace Rain_On_Your_Parade
                         return;
                     }
                     break;
-                case GameState.PauseMenu:
-                    break;
             }
 
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Back))
+            oldKeyboardState = keyboardState;
+            keyboardState = Keyboard.GetState();
+
+            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || keyboardState.IsKeyDown(Keys.Back))
                 Exit();
-            if (Keyboard.GetState().IsKeyDown(Keys.Escape))
+            if (keyboardState.IsKeyDown(Keys.Delete))
             {
                 state = GameState.MainMenu;
             }
-            if (Keyboard.GetState().IsKeyDown(Keys.P))
+            if (keyboardState.IsKeyDown(Keys.R))
             {
                 Initialize();
                 return;
             }
-
+            if (keyboardState.IsKeyDown(Keys.Escape) && oldKeyboardState.IsKeyUp(Keys.Escape))
+            {
+                levelPaused = true;
+            }
 
             base.Update(gameTime);
         }
@@ -447,6 +476,11 @@ namespace Rain_On_Your_Parade
 
                     spriteBatch.End();
 
+                    //Pause Screen
+                    if (levelPaused) {
+                        pauseScreen.Draw(spriteBatch, level.title, level.objectiveMessage, level.initialRain);
+                    }
+
                     //Game Over Screen
                     if (levelHasEnded)
                     {
@@ -466,9 +500,6 @@ namespace Rain_On_Your_Parade
                     spriteBatch.Draw(menu_background, new Rectangle(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT), Color.White);
                     spriteBatch.End();
                     mainMenu.Draw(spriteBatch);
-                    break;
-                case GameState.PauseMenu:
-                    //TODO: implement pause menu
                     break;
             }
             base.Draw(gameTime);

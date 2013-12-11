@@ -14,18 +14,18 @@ namespace Rain_On_Your_Parade
 {
     /// <summary>
     /// </summary>
-    public class LevelStart
+    public class PauseScreen
     {
+        int selectedPauseOption;
+        int PAUSE_OPTION_NUM = 1;
         Texture2D bg_box;
         Texture2D bg_box_trans;
-        int startDelay = 10;
+        int pauseDelay = 10;
         Color normal = Color.White;
         Color hilite = Color.Yellow;
         KeyboardState keyboardState;
         KeyboardState oldKeyboardState;
         SpriteFont font;
-
-        int OPTION_NUM = 3;
 
         int num_col = 2;
         int iconHeight = 50;
@@ -33,13 +33,13 @@ namespace Rain_On_Your_Parade
 
         int marLeft = 90;
         int marTop = 120;
-        int padLeft = 45;
+        int padLeft = 18;
         int padTop = 10;
 
         List<String> levelTitles = new List<String>();
         List<String> levelSubTitles = new List<String>();
 
-        public LevelStart()
+        public PauseScreen()
         {
         }
 
@@ -69,7 +69,11 @@ namespace Rain_On_Your_Parade
             // TODO: Unload any non ContentManager content here
         }
 
-        private bool CheckKey(Keys theKey)
+        private bool NewlyPressed(Keys theKey)
+        {
+            return keyboardState.IsKeyDown(theKey) && oldKeyboardState.IsKeyUp(theKey);
+        }
+        private bool NewlyReleased(Keys theKey)
         {
             return keyboardState.IsKeyUp(theKey) && oldKeyboardState.IsKeyDown(theKey);
         }
@@ -77,23 +81,32 @@ namespace Rain_On_Your_Parade
         /// <summary>
         /// Allows the game to run logic such as updating the world,
         /// checking for collisions, gathering input, and playing audio.
-        public int Update()
+        public int Update() //0 = Continue, 1 = Main, other = Paused
         {
-            if (startDelay == 0)
+            if (pauseDelay == 0)
             {
                 oldKeyboardState = keyboardState;
                 keyboardState = Keyboard.GetState();
-                if (Keyboard.GetState().IsKeyDown(Keys.Enter) || Keyboard.GetState().IsKeyDown(Keys.Space))
+                if (NewlyPressed(Keys.Enter) || NewlyPressed(Keys.Space))
                 {
-                    return 1;
+                    pauseDelay = 10;
+                    return selectedPauseOption;
                 }
-                if (Keyboard.GetState().IsKeyDown(Keys.Escape)) 
+                if (NewlyPressed(Keys.Right) || NewlyPressed(Keys.Down))
                 {
-                    return 2;
+                    if (selectedPauseOption++ == PAUSE_OPTION_NUM) selectedPauseOption = 0;
+                }
+                if (NewlyPressed(Keys.Up) || NewlyPressed(Keys.Left))
+                {
+                    if (selectedPauseOption-- == 0) selectedPauseOption = PAUSE_OPTION_NUM;
+                }
+                if (NewlyPressed(Keys.Escape))
+                {
+                    return 0;
                 }
             }
-            if (startDelay > 0) startDelay--;
-            return 0;
+            if (pauseDelay > 0) pauseDelay--;
+            return -1;
         }
 
         /// <summary>
@@ -104,16 +117,33 @@ namespace Rain_On_Your_Parade
             spriteBatch.Begin();
 
             spriteBatch.Draw(bg_box_trans, new Rectangle(GameEngine.SCREEN_WIDTH / 8, GameEngine.SCREEN_HEIGHT / 4, 3 * GameEngine.SCREEN_WIDTH / 4, GameEngine.SCREEN_HEIGHT / 2), Color.Black);
-            spriteBatch.DrawString(font, "Press [SPACEBAR] or [ENTER] to Start", new Vector2(GameEngine.SCREEN_WIDTH / 2 - 150, GameEngine.SCREEN_HEIGHT / 8 + 100), Color.White, 0, new Vector2(0, 0), 0.8f, SpriteEffects.None, 0);
 
             spriteBatch.DrawString(font, levelTitle, new Vector2(GameEngine.SCREEN_WIDTH / 2 - 250, GameEngine.SCREEN_HEIGHT / 2 - 80), Color.White, 0, new Vector2(0, 0), 1f, SpriteEffects.None, 0);
             spriteBatch.DrawString(font, "Your initial rain level is " + initialRain.ToString() + " units", new Vector2(GameEngine.SCREEN_WIDTH / 2 - 250, GameEngine.SCREEN_HEIGHT / 2 - 40), Color.White, 0, new Vector2(0, 0), 1f, SpriteEffects.None, 0);
             spriteBatch.DrawString(font, levelHelp, new Vector2(GameEngine.SCREEN_WIDTH / 2 - 250, GameEngine.SCREEN_HEIGHT / 2), Color.White, 0, new Vector2(0, 0), 0.8f, SpriteEffects.None, 0);
 
-            spriteBatch.Draw(bg_box, new Rectangle(GameEngine.SCREEN_WIDTH / 4  + marLeft + 80, 3 * GameEngine.SCREEN_HEIGHT / 8 + marTop + 70, iconWidth, iconHeight), Color.White);
-            spriteBatch.Draw(bg_box, new Rectangle(GameEngine.SCREEN_WIDTH / 4  + marLeft + 5 + 80, 3 * GameEngine.SCREEN_HEIGHT / 8 + marTop + 70 + 5, iconWidth - 10, iconHeight - 10), Color.Black);
-            spriteBatch.DrawString(font, "Start!", new Vector2(GameEngine.SCREEN_WIDTH / 4 + marLeft + padLeft + 80, 3 * GameEngine.SCREEN_HEIGHT / 8 + marTop + 70 + padTop), Color.White);
-            
+            spriteBatch.DrawString(font, "GAME PAUSED", new Vector2(GameEngine.SCREEN_WIDTH / 2 - 70, GameEngine.SCREEN_HEIGHT / 8 + 100), Color.White, 0, new Vector2(0, 0), 1.2f, SpriteEffects.None, 0);
+
+
+            for (int i = 0; i <= PAUSE_OPTION_NUM; i++)
+            {
+
+                string optionName = (i == 0) ? "Continue" : "Main Menu" ;
+
+                if (i == selectedPauseOption)
+                {
+                    //Highlight icon
+                    spriteBatch.Draw(bg_box, new Rectangle(iconWidth * i + GameEngine.SCREEN_WIDTH / 4 + i*30 + marLeft, 3 * GameEngine.SCREEN_HEIGHT / 8 + marTop + 70, iconWidth, iconHeight), Color.White);
+                    spriteBatch.Draw(bg_box, new Rectangle(iconWidth * i + GameEngine.SCREEN_WIDTH / 4 + i * 30 + marLeft + 5, 3 * GameEngine.SCREEN_HEIGHT / 8 + marTop + 70 + 5, iconWidth - 10, iconHeight - 10), Color.Black);
+                    spriteBatch.DrawString(font, optionName, new Vector2(iconWidth * i + GameEngine.SCREEN_WIDTH / 4 + i * 30 + marLeft + padLeft, 3 * GameEngine.SCREEN_HEIGHT / 8 + marTop + 70 + padTop), Color.White);
+                }
+                else
+                {
+                    spriteBatch.Draw(bg_box, new Rectangle(iconWidth * i + GameEngine.SCREEN_WIDTH / 4 + i * 30 + marLeft, 3 * GameEngine.SCREEN_HEIGHT / 8 + marTop + 70, iconWidth, iconHeight), Color.Black);
+                    spriteBatch.DrawString(font, optionName, new Vector2(iconWidth * i + GameEngine.SCREEN_WIDTH / 4 + i * 30 + marLeft + padLeft, 3 * GameEngine.SCREEN_HEIGHT / 8 + marTop + 70 + padTop), Color.White);
+                }
+            }
+
             spriteBatch.End();
 
         }
