@@ -318,29 +318,21 @@ namespace Rain_On_Your_Parade
                     switch (level.win)
                     {
                         case WinCondition.Mood:
-                            level.percentWon = ((float)level.Mood) / ((float)level.MoodObjective);
+                            level.percentWon = ((float)level.angerActors.Count) / ((float)level.goalAngerActors.Count);
                             if (level.percentWon >= .99)
                             {
                                 levelHasEnded = true;
                             }
                             break;
                         case WinCondition.Actors:
-                            level.percentWon = ((float)level.angerActors.Count) / ((float)level.Actors.Count);
+                            level.percentWon = ((float)level.angerActors.Count) / ((float)level.goalAngerObjects.Count);
                             if (level.percentWon >= .99)
                             {
                                 levelHasEnded = true;
                             }
                             break;
                         case WinCondition.Objects:
-                            int activableObjCount = 0;
-                            foreach (WorldObject o in level.Objects)
-                            {
-                                if (o.Type.CanActivate)
-                                {
-                                    activableObjCount++;
-                                }
-                            }
-                            level.percentWon = ((float)level.angerObjects.Count) / (float)activableObjCount;
+                            level.percentWon = ((float)level.angerObjects.Count) / (float)level.goalAngerObjects.Count;
                             if (level.percentWon >= .99)
                             {
                                 levelHasEnded = true;

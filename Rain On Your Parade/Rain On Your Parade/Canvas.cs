@@ -24,8 +24,12 @@ namespace Rain_On_Your_Parade
         public int initialRain;
 
         public GameEngine.WinCondition win;
+        public ActorType.Type? aType;
+        public ObjectType.Type? oType;
         public List<Actor> angerActors = new List<Actor>();
         public List<WorldObject> angerObjects = new List<WorldObject>();
+        public List<Actor> goalAngerActors = new List<Actor>();
+        public List<WorldObject> goalAngerObjects = new List<WorldObject>();
 
         public int levelNum;
 
@@ -158,7 +162,13 @@ namespace Rain_On_Your_Parade
                     //cat 2,8
                     actors.Add(new Actor(ActorType.Type.Cat, new Point(3, 6)));
 
+                    //Set win condition for level
                     win = GameEngine.WinCondition.Actors;
+                    aType = ActorType.Type.Cat;
+
+                    //Add actors/objects that need to be fully angered
+                    updateAngerList();
+
                     #endregion levelone
                     break;
                 case 2:
@@ -249,6 +259,12 @@ namespace Rain_On_Your_Parade
 
                     //win = GameEngine.WinCondition.Actors;
 
+                    //Set win condition for level
+                    win = GameEngine.WinCondition.Actors;
+                    aType = ActorType.Type.Cat;
+
+                    //Add actors/objects that need to be fully angered
+                    updateAngerList();
 
                     #endregion level2
                     break;
@@ -270,6 +286,7 @@ namespace Rain_On_Your_Parade
                     objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(0, 7), 0));
                     objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(0, 8), 0));
                     //objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(0, 9), 0));                  
+
 
                     //fence 5,0 to 5,4
                     objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(5, 0), 0));
@@ -326,7 +343,13 @@ namespace Rain_On_Your_Parade
                     actors.Add(new Actor(ActorType.Type.Kid, new Point(3, 3)));
                     actors.Add(new Actor(ActorType.Type.Kid, new Point(6, 6)));
 
+                    //Set win condition for level
                     win = GameEngine.WinCondition.Actors;
+                    aType = ActorType.Type.Kid;
+
+                    //Add actors/objects that need to be fully angered
+                    updateAngerList();
+
                     #endregion level3
                     //break;
                 case 4:*/
@@ -392,8 +415,15 @@ namespace Rain_On_Your_Parade
                     objects.Add(new WorldObject(ObjectType.Type.Garden, new Point(11, 7), 1));
                     objects.Add(new WorldObject(ObjectType.Type.Garden, new Point(11, 8), 1));
 
+                    //Set win condition for level
                     win = GameEngine.WinCondition.Objects;
+                    oType = ObjectType.Type.Garden;
+
+                    //Add actors/objects that need to be fully angered
+                    updateAngerList();
+
                     #endregion level3
+                    //#endregion level4
                     break;
 
                 case 4:
@@ -473,12 +503,18 @@ namespace Rain_On_Your_Parade
                     //kid 3,3 and 6,6
                     actors.Add(new Actor(ActorType.Type.Kid, new Point(2, 4)));
                     actors.Add(new Actor(ActorType.Type.Kid, new Point(9, 5)));
-
-                    win = GameEngine.WinCondition.Actors;
-                    #endregion level4
-
+                    
                     //win = GameEngine.WinCondition.Mood;
                     //#endregion level5
+
+                    //Set win condition for level
+                    win = GameEngine.WinCondition.Mood;
+
+                    //Add actors/objects that need to be fully angered
+                    updateAngerList();
+
+                    #endregion level4
+
                     break;
                 case 5:
                     //Level 5 - Showdown (Goal: Actor Cat)
@@ -546,7 +582,13 @@ namespace Rain_On_Your_Parade
                     actors.Add(new Actor(ActorType.Type.Cat, new Point(0, 4)));
                     actors.Add(new Actor(ActorType.Type.Cat, new Point(11, 4)));
 
+                    //Set win condition for level
                     win = GameEngine.WinCondition.Actors;
+                    aType = ActorType.Type.Cat;
+
+                    //Add actors/objects that need to be fully angered
+                    updateAngerList();
+
                     #endregion level6
                     break;
 
@@ -1256,6 +1298,40 @@ namespace Rain_On_Your_Parade
                 {
                     angerObjects.Add(o);
                 }
+            }
+        }
+
+        public void updateAngerList()
+        {
+            angerActors = new List<Actor>();
+            angerObjects = new List<WorldObject>();
+
+            switch (win)
+            {
+                case GameEngine.WinCondition.Mood:
+                    foreach (Actor a in actors)
+                    {
+                        goalAngerActors.Add(a);
+                    }
+                    break;
+                case GameEngine.WinCondition.Actors:
+                    foreach (Actor a in actors)
+                    {
+                        if (a.Type.TypeName == aType || aType == null)
+                        {
+                            goalAngerActors.Add(a);
+                        }
+                    }
+                    break;
+                case GameEngine.WinCondition.Objects:
+                    foreach (WorldObject o in objects)
+                    {
+                        if ((o.Type.TypeName == oType && o.Type.CanActivate) || oType == null)
+                        {
+                            goalAngerObjects.Add(o);
+                        }
+                    }
+                break;
             }
         }
 
