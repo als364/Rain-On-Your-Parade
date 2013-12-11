@@ -466,22 +466,22 @@ namespace Rain_On_Your_Parade
                     //Draw the Water Meter
                     spriteBatch.Begin();
                     spriteBatch.Draw(batterybar, new Rectangle(0, 0, SCREEN_WIDTH, 40), Color.Black);
-                    spriteBatch.Draw(batterybar, new Rectangle(45, 5, Player.MAX_RAIN * 5 + 10, 30), Color.LightSteelBlue);
-                    spriteBatch.Draw(batterybar, new Rectangle(50, 10, Player.MAX_RAIN * 5, 20), Color.Azure);
+                    spriteBatch.Draw(batterybar, new Rectangle(45, 5, Player.MAX_RAIN * 40 + 10, 30), Color.LightSteelBlue);
+                    spriteBatch.Draw(batterybar, new Rectangle(50, 10, Player.MAX_RAIN * 40, 20), Color.Azure);
                     spriteBatch.Draw(waterDrop, new Rectangle(7,7, 30, 30), Color.White);
                     for (int i = 1; i <= level.Player.Rain; i++)
                     {
                         spriteBatch.Draw(batterybar,
-                            new Rectangle(i * 5 + 46, 10, 5, 20), Color.Blue);
+                            new Rectangle(i * 40 + 10, 10, 40, 20), Color.Blue);
                     }                    
 
                     //spriteBatch.DrawString(font, "Water", new Vector2(20, 5), Color.White, 0, new Vector2(0, 0), 0.5f, SpriteEffects.None, 0);
               
                     //Draw the mood Meter
                     spriteBatch.Draw(batterybar, new Rectangle(0, 40, SCREEN_WIDTH, 40), Color.Black);
-                    spriteBatch.Draw(batterybar, new Rectangle(45, 45, Player.MAX_RAIN * 5 + 10, 30), Color.LightSteelBlue);
-                    spriteBatch.Draw(batterybar, new Rectangle(50, 50, Player.MAX_RAIN * 5, 20), Color.Azure);
-                    int percentInt = (int)(level.percentWon * Player.MAX_RAIN * 5);
+                    spriteBatch.Draw(batterybar, new Rectangle(45, 45, Player.MAX_RAIN * 40 + 10, 30), Color.LightSteelBlue);
+                    spriteBatch.Draw(batterybar, new Rectangle(50, 50, Player.MAX_RAIN * 40, 20), Color.Azure);
+                    int percentInt = (int)(level.percentWon * Player.MAX_RAIN * 40);
                     spriteBatch.Draw(batterybar, new Rectangle(50, 50, percentInt, 20), Color.Firebrick);
                     spriteBatch.DrawString(font, "Goal", new Vector2(4, 50), Color.White, 0, new Vector2(0, 0), 0.5f, SpriteEffects.None, 0);
 
@@ -489,9 +489,9 @@ namespace Rain_On_Your_Parade
                     for (int i = 1; i <= Player.MAX_RAIN; i++)
                     {
                         spriteBatch.Draw(batterybar,
-                            new Rectangle(i * 5 + 45, 10, 1, 20), Color.DarkBlue);
+                            new Rectangle(i * 40 + 10, 10, 1, 20), Color.DarkBlue);
                         spriteBatch.Draw(batterybar,
-                            new Rectangle(i * 5 + 45, 50, 1, 20), Color.DarkRed);
+                            new Rectangle(i * 40 + 10, 50, 1, 20), Color.DarkRed);
                     }
 
                     //TODO: Display Icon of objects/actors that need to be ruined
