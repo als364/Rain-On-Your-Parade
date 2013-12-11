@@ -20,6 +20,8 @@ namespace Rain_On_Your_Parade
         private const float RUN_SPEED = 2f;
         private float velX = 0f;
         private float velY = 0f;
+        private const double RAINBOW_RADIUS = 400;
+
 
         public ActorController(Actor actor) : base(actor)
         {
@@ -38,7 +40,11 @@ namespace Rain_On_Your_Parade
                 Dictionary<GridSquare, Actor> rainbows = new Dictionary<GridSquare, Actor>();
                 foreach (WorldObject r in level.rainbows.Keys)
                 {
-                    rainbows.Add(level.Grid[r.GridspacePosition.X, r.GridspacePosition.Y], null);
+                    if (Utils.EuclideanDistance(r.PixelPosition, controlledActor.PixelPosition) <= RAINBOW_RADIUS)
+                    {
+                        rainbows.Add(level.Grid[r.GridspacePosition.X, r.GridspacePosition.Y], null);
+                    }
+                    
                 }
                 if (rainbows.Count != 0)
                 {
@@ -79,9 +85,25 @@ namespace Rain_On_Your_Parade
             //Determines whether the actor close to the cloud, and if so, changes its state to Run
             if (controlledActor.State.State != ActorState.AState.Run && level.nearEnoughForInteraction(level.Player, controlledActor)) //&& controlledActor.State.State != controlledActor.TargetState)
             {
-                controlledActor.InteractionTimer = 0;
-                controlledActor.State = new ActorState(ActorState.AState.Run);
+                controlledActor.State.State = ActorState.AState.Run;
                 controlledActor.Path = null;
+
+                if (controlledActor.InteractingActor != null)
+                {
+                    controlledActor.IncrementMood();
+                    Console.WriteLine("Ending interaction");
+                    controlledActor.InteractionTimer = -120;
+                    controlledActor.InteractingActor.State.State = ActorState.AState.Seek;
+                    controlledActor.InteractingActor.InteractionTimer = -120;
+                    controlledActor.InteractingActor.InteractingActor = null;
+                    controlledActor.InteractingActor = null;
+                }
+
+                if (controlledActor.InteractingObject != null)
+                {
+                    controlledActor.IncrementMood();
+                    controlledActor.InteractingObject = null;
+                }
 
                 float xChange = level.Player.PixelPosition.X - level.Player.PrevPos.X;
                 float yChange = level.Player.PixelPosition.Y - level.Player.PrevPos.Y;
@@ -113,7 +135,9 @@ namespace Rain_On_Your_Parade
                         ((a.Mood > 3 && controlledActor.Mood > 3) || (a.Mood == 5 || controlledActor.Mood == 5)))
                     {
                         controlledActor.State.State = ActorState.AState.Fight;
+                        controlledActor.InteractingActor = a;
                         a.State.State = ActorState.AState.Fight;
+                        a.InteractingActor = controlledActor;
                     }
                     else if (controlledActor.InteractionTimer == 0 &&
                             (DetermineTargetState() == ActorState.AState.Nurture && a.Mood > 3 && controlledActor.Mood < 3) ||
@@ -121,6 +145,8 @@ namespace Rain_On_Your_Parade
                     {
                         controlledActor.State.State = ActorState.AState.Comfort;
                         a.State.State = ActorState.AState.Comfort;
+                        controlledActor.InteractingActor = a;
+                        a.InteractingActor = controlledActor;
                     }
                     
                 }
@@ -136,6 +162,7 @@ namespace Rain_On_Your_Parade
                     }
                     else
                     {
+                        controlledActor.InteractingObject = null;
                         controlledActor.State.State = ActorState.AState.Seek;
                         break;
                     }
@@ -146,10 +173,11 @@ namespace Rain_On_Your_Parade
 
                     if (controlledActor.InteractionTimer >= 360)
                     {
-                        controlledActor.InteractionTimer = -360;
+                        controlledActor.InteractionTimer = -300;
                         if (controlledActor.Mood < 5)
                         controlledActor.Mood = controlledActor.Mood + 1;
                         controlledActor.State.State = ActorState.AState.Seek;
+                        controlledActor.InteractingActor = null;
                     }
 
                     break;
@@ -160,10 +188,11 @@ namespace Rain_On_Your_Parade
 
                     if (controlledActor.InteractionTimer >= 360)
                     {
-                        controlledActor.InteractionTimer = -360;
+                        controlledActor.InteractionTimer = -300;
                         if (controlledActor.Mood > 0) controlledActor.Mood = controlledActor.Mood - 1;
                         controlledActor.NurtureLevel--;
                         controlledActor.State.State = ActorState.AState.Seek;
+                        controlledActor.InteractingActor = null;
                     }
 
                     break;
@@ -173,6 +202,7 @@ namespace Rain_On_Your_Parade
                     if (enjoyTime == 0)
                     {
                         interactWithObject(level, ActorState.AState.Nurture);
+                        controlledActor.InteractingObject = null;
                         controlledActor.State.State = ActorState.AState.Wander;
                     }
                     else
@@ -188,6 +218,7 @@ namespace Rain_On_Your_Parade
                     if (enjoyTime == 0)
                     {
                         interactWithObject(level, ActorState.AState.Play);
+                        controlledActor.InteractingObject = null;
                         controlledActor.State.State = ActorState.AState.Wander;
                     }
                     else
@@ -199,6 +230,7 @@ namespace Rain_On_Your_Parade
                 #endregion
                 #region RampageState
                 case ActorState.AState.Rampage:
+                    controlledActor.InteractingObject = null;
                     controlledActor.State.State = ActorState.AState.Seek;
                     break;
                 #endregion
@@ -207,6 +239,7 @@ namespace Rain_On_Your_Parade
                     if (enjoyTime == 0)
                     {
                         interactWithObject(level, ActorState.AState.Sleep);
+                        controlledActor.InteractingObject = null;
                         controlledActor.State.State = ActorState.AState.Wander;
                     }
                     else
@@ -275,6 +308,15 @@ namespace Rain_On_Your_Parade
                                 }
                                 else
                                 {
+                                    if (nextSquare.Objects.Count > 0)
+                                    {
+                                        controlledActor.InteractingObject = nextSquare.Objects[0];
+                                        nextSquare.Objects[0].AddInteractingActor(controlledActor);
+                                    }
+                                    else
+                                    {
+                                        Debug.WriteLine("People are interacting with empty squares that don't even have people in them.");
+                                    }
                                     controlledActor.State.State = controlledActor.TargetState;
                                 }
                                 enjoyTime = MAX_ENJOY_TIME;
@@ -884,6 +926,16 @@ namespace Rain_On_Your_Parade
             return minimumDistance;
         }
 
+
+
+        private bool ObjectStillInteractable(Canvas level, ActorState.AState action)
+        {
+
+
+
+
+            return false;
+        }
         /// <summary>
         /// Activates any objects in that actor's grid square if they can be activated by an actor
         /// in their current state.
@@ -897,41 +949,39 @@ namespace Rain_On_Your_Parade
 
             foreach (WorldObject o in interactObjs)
             {
-               // if (o.Type.CanActivate)
-               // {
-                    switch (action)
-                    {
-                        case ActorState.AState.Nurture:
-                           // if (o.Type.NurtureLevel > 2)
-                          //  {
-                                o.activate();
-                                controlledActor.NurtureLevel--;
-                                controlledActor.DecrementMood();
-                                if (controlledActor.NurtureLevel < 0) controlledActor.NurtureLevel = 0;
-                                interacted = true;
-                           // }
-                            break;
-                        case ActorState.AState.Play:
-                          //  if (o.Type.PlayLevel > 2)
-                          //  {
-                                o.activate();
-                                controlledActor.PlayLevel--;
-                                controlledActor.DecrementMood();
-                                if (controlledActor.PlayLevel < 0) controlledActor.PlayLevel = 0;
-                                interacted = true;
-                          //  }
-                            break;
-                        case ActorState.AState.Sleep:
-                           // if (o.Type.SleepLevel > 2)
-                           // {
-                                controlledActor.SleepLevel--;
-                                controlledActor.DecrementMood();
-                                if (controlledActor.SleepLevel < 0) controlledActor.SleepLevel = 0;
-                                interacted = true;
-                           // }
-                            break;
-                    //}
+                switch (action)
+                {
+                    case ActorState.AState.Nurture:
+                        // if (o.Type.NurtureLevel > 2)
+                        //  {
+                        if(o.Type.CanActivate) o.activate();
+                        controlledActor.NurtureLevel--;
+                        controlledActor.DecrementMood();
+                        if (controlledActor.NurtureLevel < 0) controlledActor.NurtureLevel = 0;
+                        interacted = true;
+                        // }
+                        break;
+                    case ActorState.AState.Play:
+                        //  if (o.Type.PlayLevel > 2)
+                        //  {
+                        if(o.Type.CanActivate) o.activate();
+                        controlledActor.PlayLevel--;
+                        controlledActor.DecrementMood();
+                        if (controlledActor.PlayLevel < 0) controlledActor.PlayLevel = 0;
+                        interacted = true;
+                        //  }
+                        break;
+                    case ActorState.AState.Sleep:
+                        // if (o.Type.SleepLevel > 2)
+                        // {
+                        controlledActor.SleepLevel--;
+                        controlledActor.DecrementMood();
+                        if (controlledActor.SleepLevel < 0) controlledActor.SleepLevel = 0;
+                        interacted = true;
+                        // }
+                        break;
                 }
+                
             }
             return interacted;
         }

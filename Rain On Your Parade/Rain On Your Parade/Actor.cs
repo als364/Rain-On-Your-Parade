@@ -41,6 +41,11 @@ namespace Rain_On_Your_Parade
         public Texture2D playImg;
         public Texture2D sleepImg;
 
+        private Actor interactingActor;
+        private WorldObject interactingObject;
+
+        private List<WorldObject> interactedObjects = new List<WorldObject>();
+
         public Actor(ActorType.Type newActType, Point pos)
         {
             ActorType aType = new ActorType(newActType);
@@ -62,6 +67,7 @@ namespace Rain_On_Your_Parade
             colorAlpha = 0f;
             rot_mode = -1;
             facesLeft = false;
+
         }
 
         public override void LoadContent(ContentManager content)
@@ -122,6 +128,22 @@ namespace Rain_On_Your_Parade
         }
 
         #region Getters and Setters
+
+        public List<WorldObject> InteractedObjects
+        {
+            get { return interactedObjects; }
+            set { interactedObjects = value; }
+        }
+        public Actor InteractingActor
+        {
+            get { return interactingActor; }
+            set { interactingActor = value; }
+        }
+        public WorldObject InteractingObject
+        {
+            get { return interactingObject; }
+            set { interactingObject = value; }
+        }
         public ActorType Type
         {
             get { return type; }
@@ -231,7 +253,6 @@ namespace Rain_On_Your_Parade
             }
 
         }
-
 
         public void increaseFastNeeds(){
 

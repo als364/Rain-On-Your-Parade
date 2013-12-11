@@ -16,7 +16,7 @@ namespace Rain_On_Your_Parade
         private int coolDown;
         private Player player;
         public bool isRaining = false;
-        public int MAX_RAIN = GameEngine.SCREEN_WIDTH / 10 - 1;
+
 
         public PlayerController(Player player)
             : base(player)
@@ -179,7 +179,7 @@ namespace Rain_On_Your_Parade
             {
                 isRaining = true;
                 player.Rain--;
-                player.colorAlpha = (1f - ((float)player.Rain / (float)MAX_RAIN));
+                player.colorAlpha = (1f - ((float)player.Rain / (float)Player.MAX_RAIN));
 
                 foreach (Actor a in level.Actors)
                 {
@@ -199,6 +199,8 @@ namespace Rain_On_Your_Parade
                         {
                            a.IncrementMood();
                            a.IncrementMood();
+                           a.State.State = ActorState.AState.Seek;
+                           Console.WriteLine("RAINED ON TARGET ITEM");
                         }
                         else
                         {
@@ -209,37 +211,35 @@ namespace Rain_On_Your_Parade
                    
                 }
 
-                //WorldObject toReplace = null; //for sunnyspot to rainbow
-
                 Point shadowPoint = shadowPointXY();
 
                 List<WorldObject> objects = level.Grid[shadowPoint.X, shadowPoint.Y].Objects;
                 foreach (WorldObject o in objects)
                 {
+                    if (o.ActorsInteracted.Count > 0)
+                    {
+                        foreach (Actor a in o.ActorsInteracted)
+                        {
+                            a.IncrementMood();
+                        }
+                        o.ActorsInteracted.Clear();
+                    }
+
                     //Console.Write(o.ToString() + "object rained upon\n");
 
                     if (o.Type.TypeName == ObjectType.Type.SunnyRainbowSpot && !level.rainbows.ContainsKey(o))
                     {
                         level.rainbows.Add(o, GameEngine.MAX_RAINBOW_TIME);
                     }
-
                     if (o.Type.IsWetObject)
                     {
-                        o.activate();                    
+                        o.activate();                                        
                     }
                     else
                     {
                         o.deactivate();
                     }
                 }
-
-                //if (toReplace != null)
-                //{
-                //    WorldObject addedRainbow = new WorldObject(ObjectType.Type.Rainbow, new Point(toReplace.GridspacePosition.X, toReplace.GridspacePosition.Y), 1);
-                //    addedRainbow.activate();
-                //    objects.Add(addedRainbow);
-                //    objects.Remove(toReplace);
-                //}
 
                 return true;
             }
@@ -248,13 +248,10 @@ namespace Rain_On_Your_Parade
 
         private bool Absorb(Canvas level)
         {
-            if (player.Rain < MAX_RAIN)
+            if (player.Rain < Player.MAX_RAIN)
             {
-                //WorldObject toReplace = null; //for rainbow to sunnyspot
-
                 Point shadowPoint = shadowPointXY();
                 
-
                 List<WorldObject> objects = level.Grid[shadowPoint.X, shadowPoint.Y].Objects;
                 foreach (WorldObject o in objects)
                 {
@@ -263,17 +260,12 @@ namespace Rain_On_Your_Parade
                     if (o.WaterLevel > 0)
                     {
                         player.Rain++;
-                        player.colorAlpha = (1f - ((float)player.Rain / (float)MAX_RAIN));
+                        player.colorAlpha = (1f - ((float)player.Rain / (float)Player.MAX_RAIN));
 
                         if (--o.WaterLevel == 0)
                         {
                             if (o.Type.IsWetObject)
                             {
-                                //if (o.Type.TypeName == ObjectType.Type.Rainbow)
-                                //{
-                                //    //change to SunnySpot
-                                //    toReplace = o;
-                                //}
                                 o.deactivate();
                             }
                             else
@@ -291,6 +283,9 @@ namespace Rain_On_Your_Parade
                                 {
                                     a.IncrementMood();
                                     a.IncrementMood();
+                                    a.State.State = ActorState.AState.Seek;
+                                    Console.WriteLine("RAINED ON TARGET ITEM");
+                        
                                 }
                                 else
                                 {
@@ -300,37 +295,7 @@ namespace Rain_On_Your_Parade
                         }
                     }
                     else { return false; }
-
-                    //if (o.Type.IsWetObject && o.WaterLevel == 0)
-                    //{
-                    //    if (o.Type.TypeName == ObjectType.Type.Rainbow)
-                    //    {
-                    //        //change to SunnySpot
-                    //        toReplace = o;
-                    //        o.deactivate();
-                    //    }
-                    //    else
-                    //    {
-                    //        o.deactivate();
-                    //        Console.Write("DEACTIVATE/n");
-                    //    }
-                    //}
-                    //else
-                    //{
-                    //    o.activate();
-                    //    Console.Write("ACTIVATE/n");
-                    //}
                 }
-
-                //if (toReplace != null)
-                //{
-                //    WorldObject addedSunny = new WorldObject(ObjectType.Type.SunnySpot, new Point(toReplace.GridspacePosition.X, toReplace.GridspacePosition.Y), 0);
-                //    addedSunny.activate();
-                //    objects.Add(addedSunny);
-                //    objects.Remove(toReplace);
-                //    Console.Write("removed rainbow and added Sunny SUNNY!!/n");
-                //}
-
                 return true;
             }
             else { return false; }

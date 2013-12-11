@@ -75,6 +75,7 @@
     <Compile Include="PauseScreen.cs" />
     <Compile Include="LevelStart.cs" />
     <Compile Include="LevelComplete.cs" />
+    <Compile Include="LevelParser.cs" />
     <Compile Include="MainMenu.cs" />
     <Compile Include="Controller.cs" />
     <Compile Include="AnimatedSprite.cs" />
@@ -112,6 +113,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\Levels\sample.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Levels\Level1.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Icon.ico" />
   </ItemGroup>
   <ItemGroup>

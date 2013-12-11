@@ -65,6 +65,11 @@ namespace Rain_On_Your_Parade
         bool levelHasEnded;
         //Boolean menuOn = true;
 
+        //Add levels to Levels folder and then add name to this array
+        string[] levels = { "sample.xml",
+                              "Level1.xml",
+                          "sample.xml"};
+
         public GameEngine()
             : base()
         {
@@ -119,10 +124,14 @@ namespace Rain_On_Your_Parade
                     //This is where the level building goes. I don't care about an XML parsing framework yet
                     level = new Canvas(stage);
 
+                    //////////////////////////////////////////////
+                    //level = LevelParser.parse(levels[stage]);
+                    ///////////////////////////////////////////
+
                     // Debug.WriteLine("Y: " + level.Grid[6, 6].Actors[0].Position.Y);
-                    int quota = 100;
-                    //worldState = new WorldState(quota,level.Grid);
-                    level.MaliceObjective = quota;
+                    //int quota = 100;
+                    ////worldState = new WorldState(quota,level.Grid);
+                    //level.MaliceObjective = quota;
 
                     //Debug.WriteLine("Y: " + worldState.getActors().ToArray()[1].Position.Y);
                     foreach (WorldObject o in level.Objects)
@@ -286,15 +295,15 @@ namespace Rain_On_Your_Parade
                     }
                     #endregion GamePaused
 
-                    if (framesTillLog == 0)
-                    {
-                        log.Log(level, gameTime);
-                        framesTillLog = LOG_FRAMES;
-                    }
-                    else
-                    {
-                        framesTillLog--;
-                    }
+                    //if (framesTillLog == 0)
+                    //{
+                    //    log.Log(level, gameTime);
+                    //    framesTillLog = LOG_FRAMES;
+                    //}
+                    //else
+                    //{
+                    //    framesTillLog--;
+                    //}
 
                     level.updateMalice();
 
@@ -461,7 +470,11 @@ namespace Rain_On_Your_Parade
                     for (int i = 0; i < level.Player.Rain; i++)
                     {
                         spriteBatch.Draw(batterybar,
-                            new Rectangle(i * 10 + 5, 5, 10, 30), Color.Blue);
+                            new Rectangle(i * 40 + 5, 5, 40, 30), Color.Blue);
+                        spriteBatch.Draw(batterybar,
+                            new Rectangle(i * 40 + 5, 5, 1, 30), Color.White);
+                        
+                        
                     }
                     spriteBatch.DrawString(font, "Water", new Vector2(20, 5), Color.White, 0, new Vector2(0, 0), 0.5f, SpriteEffects.None, 0);
               

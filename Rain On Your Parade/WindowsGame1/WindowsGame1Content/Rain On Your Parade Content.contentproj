@@ -348,6 +348,7 @@
       <Name>DefaultFont</Name>
       <Importer>FontDescriptionImporter</Importer>
       <Processor>FontDescriptionProcessor</Processor>
+      <SubType>Designer</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -433,14 +434,6 @@
       <Name>invisible</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Content\DosisTitle.spritefont">
-      <Name>DosisTitle</Name>
-      <Importer>FontDescriptionImporter</Importer>
-      <Processor>FontDescriptionProcessor</Processor>
-      <SubType>Designer</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
