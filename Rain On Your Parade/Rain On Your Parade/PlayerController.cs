@@ -192,15 +192,15 @@ namespace Rain_On_Your_Parade
 
                     //Console.Write(dist.ToString() + "\n");
 
-                    if (Math.Abs(dist) < 100)
+                    if (Math.Abs(dist) < 100 && a.rainCooldown == 0)
                     {
-                       
+                        a.rainCooldown = Actor.RAIN_COOLDOWN;
+
                        if (a.State.State == a.TargetState)
                         {
                            a.IncrementMood();
                            a.IncrementMood();
                            a.State.State = ActorState.AState.Seek;
-                           Console.WriteLine("RAINED ON TARGET ITEM");
                         }
                         else
                         {

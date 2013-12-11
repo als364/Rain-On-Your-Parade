@@ -105,6 +105,15 @@ namespace Rain_On_Your_Parade
                  if (actor.State.State == ActorState.AState.Comfort)
                      spriteBatch.Draw(actor.nurtureImg, new Rectangle((int)viewedModel.PixelPosition.X + 18, (int)viewedModel.PixelPosition.Y - 25, 60, 60), Color.White);
 
+                 if (actor.rainCooldown > 0)
+                 {
+                     if (actor.Type.TypeName == ActorType.Type.Cat)
+                         spriteBatch.Draw(actor.nurtureImg, new Rectangle((int)viewedModel.PixelPosition.X, (int)viewedModel.PixelPosition.Y, 80, 80), Color.White);
+                     else 
+                         spriteBatch.Draw(actor.nurtureImg, new Rectangle((int)viewedModel.PixelPosition.X, (int)viewedModel.PixelPosition.Y, 80, 80), Color.White);
+                 }
+
+
                  spriteBatch.End();
 
                 }

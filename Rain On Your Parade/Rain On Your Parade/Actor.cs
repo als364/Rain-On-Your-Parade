@@ -27,6 +27,8 @@ namespace Rain_On_Your_Parade
         private int gridRampageEffect;
         private List<GridSquare> path;
         private int interactionTimer;
+        public const int RAIN_COOLDOWN = 120;
+        public int rainCooldown;
         private int rot_mode;
         private bool facesLeft;
 

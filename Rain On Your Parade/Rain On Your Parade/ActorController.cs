@@ -63,6 +63,7 @@ namespace Rain_On_Your_Parade
             }
 
             NeedIncreaseTimer++;
+            if (controlledActor.rainCooldown > 0) controlledActor.rainCooldown--;
             if (controlledActor.InteractionTimer < 0) controlledActor.InteractionTimer++;
 
             if (NeedIncreaseTimer % 720 == 0)
