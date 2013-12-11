@@ -98,8 +98,8 @@ namespace Rain_On_Your_Parade
         public void activate()
         {
             ObjectType.Type typeSwitch = type.TypeName;
-            if (!activated)
-            {
+            //if (!activated)
+            //{
                 activated = true;
                 switch (typeSwitch)
                 {
@@ -129,7 +129,7 @@ namespace Rain_On_Your_Parade
                         type.PlayLevel = 0;
                         break;
                 }
-            }
+            //}
         }
 
 

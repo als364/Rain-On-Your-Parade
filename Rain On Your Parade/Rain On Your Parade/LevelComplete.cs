@@ -29,10 +29,10 @@ namespace Rain_On_Your_Parade
 
         int OPTION_NUM = 3;
 
-        int iconHeight = 70;
+        int iconHeight = 50;
         int iconWidth = 150;
 
-        int marLeft = 90;
+        int marLeft = 5;
         int marTop = 120;
         int padLeft = 18;
         int padTop = 10;
@@ -93,7 +93,7 @@ namespace Rain_On_Your_Parade
             if (CheckKey(Keys.Left))
             {
                 optionIndex--;
-                if (optionIndex == 0) optionIndex = OPTION_NUM-1;
+                if (optionIndex < 0) optionIndex = OPTION_NUM-1;
             }
 
             if (Keyboard.GetState().IsKeyDown(Keys.Enter) || Keyboard.GetState().IsKeyDown(Keys.Space))
@@ -129,14 +129,14 @@ namespace Rain_On_Your_Parade
                 if (i == optionIndex)
                 {
                     //Highlight icon
-                    spriteBatch.Draw(bg_box, new Rectangle(iconWidth * i + GameEngine.SCREEN_WIDTH / 4 + i * 30 + marLeft, 3 * GameEngine.SCREEN_HEIGHT / 8 + marTop + 70, iconWidth, iconHeight), Color.White);
-                    spriteBatch.Draw(bg_box, new Rectangle(iconWidth * i + GameEngine.SCREEN_WIDTH / 4 + i * 30 + marLeft + 5, 3 * GameEngine.SCREEN_HEIGHT / 8 + marTop + 70 + 5, iconWidth - 10, iconHeight - 10), Color.Black);
-                    spriteBatch.DrawString(font, button_text, new Vector2(iconWidth * i + GameEngine.SCREEN_WIDTH / 4 + i * 30 + marLeft + padLeft, 3 * GameEngine.SCREEN_HEIGHT / 8 + marTop + 70 + padTop), Color.White);
+                    spriteBatch.Draw(bg_box, new Rectangle(iconWidth * i + GameEngine.SCREEN_WIDTH / 4 + i * 10 + marLeft, 3 * GameEngine.SCREEN_HEIGHT / 8 + marTop + 70, iconWidth, iconHeight), Color.White);
+                    spriteBatch.Draw(bg_box, new Rectangle(iconWidth * i + GameEngine.SCREEN_WIDTH / 4 + i * 10 + marLeft + 5, 3 * GameEngine.SCREEN_HEIGHT / 8 + marTop + 70 + 5, iconWidth - 10, iconHeight - 10), Color.Black);
+                    spriteBatch.DrawString(font, button_text, new Vector2(iconWidth * i + GameEngine.SCREEN_WIDTH / 4 + i * 10 + marLeft + iconWidth / 2, 3 * GameEngine.SCREEN_HEIGHT / 8 + marTop + 70 + padTop), Color.White, 0, new Vector2(font.MeasureString(button_text).X / 2, 0), 0.8f, SpriteEffects.None, 0);
                 }
                 else
                 {
-                    spriteBatch.Draw(bg_box, new Rectangle(iconWidth * i + GameEngine.SCREEN_WIDTH / 4 + i * 30 + marLeft, 3 * GameEngine.SCREEN_HEIGHT / 8 + marTop + 70, iconWidth, iconHeight), Color.Black);
-                    spriteBatch.DrawString(font, button_text, new Vector2(iconWidth * i + GameEngine.SCREEN_WIDTH / 4 + i * 30 + marLeft + padLeft, 3 * GameEngine.SCREEN_HEIGHT / 8 + marTop + 70 + padTop), Color.White);
+                    spriteBatch.Draw(bg_box, new Rectangle(iconWidth * i + GameEngine.SCREEN_WIDTH / 4 + i * 10 + marLeft, 3 * GameEngine.SCREEN_HEIGHT / 8 + marTop + 70, iconWidth, iconHeight), Color.Black);
+                    spriteBatch.DrawString(font, button_text, new Vector2(iconWidth * i + GameEngine.SCREEN_WIDTH / 4 + i * 10 + marLeft + iconWidth / 2, 3 * GameEngine.SCREEN_HEIGHT / 8 + marTop + 70 + padTop), Color.White, 0, new Vector2(font.MeasureString(button_text).X / 2, 0), 0.8f, SpriteEffects.None, 0);
                 }
             }
 

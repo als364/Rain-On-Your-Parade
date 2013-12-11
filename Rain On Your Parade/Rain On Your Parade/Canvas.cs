@@ -116,7 +116,7 @@ namespace Rain_On_Your_Parade
                 case 1:
                     //Level 1 - Soak the Cat (endless water, Goal: Actor Cat)
                     #region levelone
-                    initialRain = 40; //don't start with 10, this is a tutorial level -- it's supposed to be easy
+                    initialRain = Player.MAX_RAIN; //don't start with 10, this is a tutorial level -- it's supposed to be easy
 
                     title = "Level 1 - Soak the Cat";
                     objectiveMessage = "Goal: Rain on the cat.\nUse [SPACEBAR] to Rain.\nUse [WASD] or [Arrow] to move.";

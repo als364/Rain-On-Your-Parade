@@ -233,7 +233,8 @@ namespace Rain_On_Your_Parade
                     }
                     if (o.Type.IsWetObject)
                     {
-                        o.activate();                                        
+                        o.activate();
+                        //Console.Write(o.WaterLevel.ToString() + "after Rain\n");                
                     }
                     else
                     {
@@ -262,7 +263,9 @@ namespace Rain_On_Your_Parade
                         player.Rain++;
                         player.colorAlpha = (1f - ((float)player.Rain / (float)Player.MAX_RAIN));
 
-                        if (--o.WaterLevel == 0)
+                        o.WaterLevel--;
+
+                        if (o.WaterLevel == 0)
                         {
                             if (o.Type.IsWetObject)
                             {
@@ -273,6 +276,8 @@ namespace Rain_On_Your_Parade
                                 o.activate();
                             }
                         }
+
+                        //Console.Write(o.WaterLevel.ToString() + "after Absorb\n");    
 
                         foreach (Actor a in level.Actors)
                         {

@@ -43,7 +43,7 @@ namespace Rain_On_Your_Parade
         Canvas level;
 
         Texture2D batterybar;
-        Texture2D battery;
+        Texture2D waterDrop;
         Texture2D background;
         Texture2D menu_background;
         SpriteFont font;
@@ -189,7 +189,7 @@ namespace Rain_On_Your_Parade
             }
 
             batterybar = Content.Load<Texture2D>("SliderBackground");
-            battery = Content.Load<Texture2D>("grass");
+            waterDrop = Content.Load<Texture2D>("water_drop");
             background = Content.Load<Texture2D>("background");
             menu_background = Content.Load<Texture2D>("menu_bg");
             font = Content.Load<SpriteFont>("DefaultFont");
@@ -467,25 +467,40 @@ namespace Rain_On_Your_Parade
                     //Draw the Water Meter
                     spriteBatch.Begin();
                     spriteBatch.Draw(batterybar, new Rectangle(0, 0, SCREEN_WIDTH, 40), Color.Black);
-                    for (int i = 0; i < level.Player.Rain; i++)
+                    spriteBatch.Draw(batterybar, new Rectangle(45, 5, Player.MAX_RAIN * 5 + 10, 30), Color.LightSteelBlue);
+                    spriteBatch.Draw(batterybar, new Rectangle(50, 10, Player.MAX_RAIN * 5, 20), Color.Azure);
+                    spriteBatch.Draw(waterDrop, new Rectangle(7,7, 30, 30), Color.White);
+                    for (int i = 1; i <= level.Player.Rain; i++)
                     {
                         spriteBatch.Draw(batterybar,
-                            new Rectangle(i * 40 + 5, 5, 40, 30), Color.Blue);
-                        spriteBatch.Draw(batterybar,
-                            new Rectangle(i * 40 + 5, 5, 1, 30), Color.White);
-                        
-                        
-                    }
-                    spriteBatch.DrawString(font, "Water", new Vector2(20, 5), Color.White, 0, new Vector2(0, 0), 0.5f, SpriteEffects.None, 0);
+                            new Rectangle(i * 5 + 46, 10, 5, 20), Color.Blue);
+                    }                    
+
+                    //spriteBatch.DrawString(font, "Water", new Vector2(20, 5), Color.White, 0, new Vector2(0, 0), 0.5f, SpriteEffects.None, 0);
               
                     //Draw the Malice Meter
                     spriteBatch.Draw(batterybar, new Rectangle(0, 40, SCREEN_WIDTH, 40), Color.Black);
-                    int percentInt = (int)(level.percentWon * SCREEN_WIDTH/2);
-                    spriteBatch.Draw(batterybar, new Rectangle(0, 45, percentInt, 30), Color.Firebrick);
-                    spriteBatch.DrawString(font, "Goal", new Vector2(20, 45), Color.White, 0, new Vector2(0, 0), 0.5f, SpriteEffects.None, 0);
+                    spriteBatch.Draw(batterybar, new Rectangle(45, 45, Player.MAX_RAIN * 5 + 10, 30), Color.LightSteelBlue);
+                    spriteBatch.Draw(batterybar, new Rectangle(50, 50, Player.MAX_RAIN * 5, 20), Color.Azure);
+                    int percentInt = (int)(level.percentWon * Player.MAX_RAIN * 5);
+                    spriteBatch.Draw(batterybar, new Rectangle(50, 50, percentInt, 20), Color.Firebrick);
+                    spriteBatch.DrawString(font, "Goal", new Vector2(4, 50), Color.White, 0, new Vector2(0, 0), 0.5f, SpriteEffects.None, 0);
 
+                    //Draw the incrementation
+                    for (int i = 1; i <= Player.MAX_RAIN; i++)
+                    {
+                        spriteBatch.Draw(batterybar,
+                            new Rectangle(i * 5 + 45, 10, 1, 20), Color.DarkBlue);
+                        spriteBatch.Draw(batterybar,
+                            new Rectangle(i * 5 + 45, 50, 1, 20), Color.DarkRed);
+                    }
+
+                    //TODO: Display Icon of objects/actors that need to be ruined
                     //Remind Player of their objective
-                    spriteBatch.DrawString(font, level.objectiveMessage, new Vector2(440, 5), Color.White, 0, new Vector2(0, 0), 0.5f, SpriteEffects.None, 0);
+                    //spriteBatch.DrawString(font, level.objectiveMessage, new Vector2(SCREEN_WIDTH/2, 5), Color.White, 0, new Vector2(0, 0), 0.5f, SpriteEffects.None, 0);
+
+                    string info = "[ESC] for Pause/Controls   |   [R] to Restart";
+                    spriteBatch.DrawString(font, info, new Vector2(SCREEN_WIDTH/2, 5), Color.White, 0, new Vector2(0, 0), 0.5f, SpriteEffects.None, 0);
 
                     spriteBatch.End();
 
