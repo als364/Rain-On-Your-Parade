@@ -17,18 +17,15 @@ namespace Rain_On_Your_Parade
     /// </summary>
     public class GameEngine : Game
     {
-        public enum WinCondition { Objects, Actors, Malice };
+        public enum WinCondition { Objects, Actors, Mood };
 
         public enum GameState { MainMenu, PauseMenu, Game };
 
-        public const int SCREEN_WIDTH = 800;
-        public const int SCREEN_HEIGHT = 800;
+        public const int SCREEN_WIDTH = 960;
+        public const int SCREEN_HEIGHT = 720;
 
         public const int MAX_RAINBOW_TIME = 400;
-
-        private int stage = 1;
-
-        public static int STAGE_NUM= 10;
+        
         public const int LOG_FRAMES = 120;
         private int framesTillLog = 0;
 
@@ -43,7 +40,7 @@ namespace Rain_On_Your_Parade
         Canvas level;
 
         Texture2D batterybar;
-        Texture2D battery;
+        Texture2D waterDrop;
         Texture2D background;
         Texture2D menu_background;
         SpriteFont font;
@@ -54,10 +51,31 @@ namespace Rain_On_Your_Parade
         MainMenu mainMenu;
         LevelComplete levelEnd;
         LevelStart levelStart;
+        PauseScreen pauseScreen;
+
+        KeyboardState keyboardState;
+        KeyboardState oldKeyboardState;
+
         bool levelNotStarted;
         int levelStartDelay;
+        bool levelPaused;
         bool levelHasEnded;
         //Boolean menuOn = true;
+
+        //Add levels to Levels folder and then add name to this array
+        /*public static string[] levels = { "sample.xml",
+                                          "Level1.xml",
+                                          "Soak the Cat.xml",
+                                          "Kill the Flowers.xml",
+                                          "Kill the Flowers v2.xml",
+                                          "Make Kids Cry.xml",
+                                          "Showdown.xml",
+                                          "Errand Boys.xml"};
+        */
+        private int stage = 1;
+
+        //public static int STAGE_NUM = levels.GetLength(0) ;
+        public static int STAGE_NUM = 10;
 
         public GameEngine()
             : base()
@@ -99,10 +117,12 @@ namespace Rain_On_Your_Parade
             mainMenu = new MainMenu();
             levelEnd = new LevelComplete();
             levelStart = new LevelStart();
+            pauseScreen = new PauseScreen();
 
             levelNotStarted = true;
             levelStartDelay = 10;
             levelHasEnded = false;
+            levelPaused = false;
 
             //if (menuOn) mainMenu.Initialize();
             switch (state)
@@ -110,12 +130,15 @@ namespace Rain_On_Your_Parade
                 case GameState.Game:
                     //This is where the level building goes. I don't care about an XML parsing framework yet
                     level = new Canvas(stage);
-                    //level = LevelParser.parse("Sample.xml");
+
+                    //////////////////////////////////////////////
+                    //level = LevelParser.parse(levels[stage]);
+                    ///////////////////////////////////////////
 
                     // Debug.WriteLine("Y: " + level.Grid[6, 6].Actors[0].Position.Y);
-                    int quota = 100;
-                    //worldState = new WorldState(quota,level.Grid);
-                    level.MaliceObjective = quota;
+                    //int quota = 100;
+                    ////worldState = new WorldState(quota,level.Grid);
+                    //level.MoodObjective = quota;
 
                     //Debug.WriteLine("Y: " + worldState.getActors().ToArray()[1].Position.Y);
                     foreach (WorldObject o in level.Objects)
@@ -173,13 +196,14 @@ namespace Rain_On_Your_Parade
             }
 
             batterybar = Content.Load<Texture2D>("SliderBackground");
-            battery = Content.Load<Texture2D>("grass");
+            waterDrop = Content.Load<Texture2D>("water_drop");
             background = Content.Load<Texture2D>("background");
             menu_background = Content.Load<Texture2D>("menu_bg");
             font = Content.Load<SpriteFont>("DefaultFont");
             mainMenu.LoadContent(this.Content);
             levelEnd.LoadContent(this.Content);
             levelStart.LoadContent(this.Content);
+            pauseScreen.LoadContent(this.Content);
 
         }
 
@@ -210,11 +234,11 @@ namespace Rain_On_Your_Parade
                         //Record Results
                         int optionSelected = levelEnd.Update();
 
-                        if (optionSelected == 1) //Continue
+                        if (optionSelected == 0) //Continue
                         {
-                            if (stage++ > STAGE_NUM - 1)
+                            if (stage++ > STAGE_NUM)
                             {
-                                stage = 1;
+                                stage = 0;
                             }
                             levelHasEnded = false;
                             levelNotStarted = true;
@@ -228,7 +252,7 @@ namespace Rain_On_Your_Parade
                             Initialize();
                             return;
                         }
-                        if (optionSelected == 3) //Replay
+                        if (optionSelected == 1) //Replay
                         {
                             levelHasEnded = false;
                             levelNotStarted = true;
@@ -249,60 +273,66 @@ namespace Rain_On_Your_Parade
                         }
                         if (readyToStart == 2) //Main Menu
                         {
-                            levelStartDelay = 10;
                             levelNotStarted = false;
                             state = GameState.MainMenu;
                             Initialize();
                             return;
                         }
-                        else
+                        else //Start Game
                         {
-                            levelStartDelay = 10;
                             levelNotStarted = false;
                         }
                     }
                     #endregion GameStart
 
-
-                    if (framesTillLog == 0)
-                    {
-                        log.Log(level, gameTime);
-                        framesTillLog = LOG_FRAMES;
+                    #region GamePaused
+                    if (levelPaused) {
+                        int pauseOption = pauseScreen.Update();
+                        if (pauseOption == 0) //Continue
+                        {
+                            levelPaused = false;
+                        }
+                        if (pauseOption == 1) //Main Menu
+                        {
+                            state = GameState.MainMenu;
+                            Initialize();
+                        }
+                        //Still Paused
+                        return;
                     }
-                    else
-                    {
-                        framesTillLog--;
-                    }
+                    #endregion GamePaused
 
-                    level.updateMalice();
+                    //if (framesTillLog == 0)
+                    //{
+                    //    log.Log(level, gameTime);
+                    //    framesTillLog = LOG_FRAMES;
+                    //}
+                    //else
+                    //{
+                    //    framesTillLog--;
+                    //}
+
+                    level.updateMood();
 
                     #region WinConditions
                     switch (level.win)
                     {
-                        case WinCondition.Malice:
-                            level.percentWon = ((float)level.Malice) / ((float)level.MaliceObjective);
+                        case WinCondition.Mood:
+                            level.percentWon = ((float)level.angerActors.Count) / ((float)level.goalAngerActors.Count);
                             if (level.percentWon >= .99)
                             {
                                 levelHasEnded = true;
                             }
                             break;
                         case WinCondition.Actors:
-                            level.percentWon = ((float)level.maliceActors.Count) / ((float)level.Actors.Count);
+                            level.percentWon = ((float)level.angerActors.Count) / ((float)level.goalAngerObjects.Count);
                             if (level.percentWon >= .99)
                             {
                                 levelHasEnded = true;
                             }
                             break;
                         case WinCondition.Objects:
-                            int activableObjCount = 0;
-                            foreach (WorldObject o in level.Objects)
-                            {
-                                if (o.Type.CanActivate)
-                                {
-                                    activableObjCount++;
-                                }
-                            }
-                            level.percentWon = ((float)level.maliceObjects.Count) / (float)activableObjCount;
+                            level.percentWon = ((float)level.angerObjects.Count) / (float)level.goalAngerObjects.Count;
                             if (level.percentWon >= .99)
                             {
                                 levelHasEnded = true;
@@ -345,17 +375,17 @@ namespace Rain_On_Your_Parade
                                 model.deactivatedSprite.Update();
                             }
 
-                            /*int maliceSum = 0;
+                            /*int MoodSum = 0;
 
                             if (model is Actor)
                             {
                                 Actor actor = (Actor)model;
-                                maliceSum += actor.Mood;
+                                MoodSum += actor.Mood;
                             }
-                            level.Malice = maliceSum;*/
+                            level.Mood = moodSum;*/
                         }
                     }
-                    //make sure player is not raining at very start
+
                     if (levelStartDelay > 0)
                     {
                         levelStartDelay--;
@@ -364,11 +394,13 @@ namespace Rain_On_Your_Parade
                     {
                         foreach (Controller controller in controllers)
                         {
-                                controller.Update(gameTime, level);
+                            controller.Update(gameTime, level);
                         }
+                        level.upateGridSquares();
+                        
                     }
-                    level.upateGridSquares();
                     break;
+
                 case GameState.MainMenu:
                     int selected = mainMenu.Update();
                     if (selected > 0)
@@ -380,22 +412,26 @@ namespace Rain_On_Your_Parade
                         return;
                     }
                     break;
-                case GameState.PauseMenu:
-                    break;
             }
 
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Back))
+            oldKeyboardState = keyboardState;
+            keyboardState = Keyboard.GetState();
+
+            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || keyboardState.IsKeyDown(Keys.Back))
                 Exit();
-            if (Keyboard.GetState().IsKeyDown(Keys.Escape))
+            if (keyboardState.IsKeyDown(Keys.Delete))
             {
                 state = GameState.MainMenu;
             }
-            if (Keyboard.GetState().IsKeyDown(Keys.P))
+            if (keyboardState.IsKeyDown(Keys.R))
             {
                 Initialize();
                 return;
             }
-
+            if (keyboardState.IsKeyDown(Keys.Escape) && oldKeyboardState.IsKeyUp(Keys.Escape))
+            {
+                levelPaused = true;
+            }
 
             base.Update(gameTime);
         }
@@ -418,7 +454,7 @@ namespace Rain_On_Your_Parade
 
                     //Game Background
                     spriteBatch.Begin();
-                    spriteBatch.Draw(background, new Rectangle(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT), new Color(level.maliceTint(),level.maliceTint(),level.maliceTint()));
+                    spriteBatch.Draw(background, new Rectangle(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT), new Color(level.moodTint(),level.moodTint(),level.moodTint()));
                     spriteBatch.End();
 
                     //Draw all models
@@ -430,27 +466,47 @@ namespace Rain_On_Your_Parade
                     //Draw the Water Meter
                     spriteBatch.Begin();
                     spriteBatch.Draw(batterybar, new Rectangle(0, 0, SCREEN_WIDTH, 40), Color.Black);
-                    for (int i = 0; i < level.Player.Rain; i++)
+                    spriteBatch.Draw(batterybar, new Rectangle(45, 5, Player.MAX_RAIN * 5 + 10, 30), Color.LightSteelBlue);
+                    spriteBatch.Draw(batterybar, new Rectangle(50, 10, Player.MAX_RAIN * 5, 20), Color.Azure);
+                    spriteBatch.Draw(waterDrop, new Rectangle(7,7, 30, 30), Color.White);
+                    for (int i = 1; i <= level.Player.Rain; i++)
                     {
                         spriteBatch.Draw(batterybar,
-                            new Rectangle(i * 40 + 5, 5, 40, 30), Color.Blue);
-                        spriteBatch.Draw(batterybar,
-                            new Rectangle(i * 40 + 5, 5, 1, 30), Color.White);
-                        
-                        
-                    }
-                    spriteBatch.DrawString(font, "Water", new Vector2(20, 5), Color.White, 0, new Vector2(0, 0), 0.5f, SpriteEffects.None, 0);
-              
-                    //Draw the Malice Meter
-                    spriteBatch.Draw(batterybar, new Rectangle(0, 40, SCREEN_WIDTH, 40), Color.Black);
-                    int percentInt = (int)(level.percentWon * SCREEN_WIDTH/2);
-                    spriteBatch.Draw(batterybar, new Rectangle(0, 45, percentInt, 30), Color.Firebrick);
-                    spriteBatch.DrawString(font, "Goal", new Vector2(20, 45), Color.White, 0, new Vector2(0, 0), 0.5f, SpriteEffects.None, 0);
+                            new Rectangle(i * 5 + 46, 10, 5, 20), Color.Blue);
+                    }                    
 
+                    //spriteBatch.DrawString(font, "Water", new Vector2(20, 5), Color.White, 0, new Vector2(0, 0), 0.5f, SpriteEffects.None, 0);
+              
+                    //Draw the mood Meter
+                    spriteBatch.Draw(batterybar, new Rectangle(0, 40, SCREEN_WIDTH, 40), Color.Black);
+                    spriteBatch.Draw(batterybar, new Rectangle(45, 45, Player.MAX_RAIN * 5 + 10, 30), Color.LightSteelBlue);
+                    spriteBatch.Draw(batterybar, new Rectangle(50, 50, Player.MAX_RAIN * 5, 20), Color.Azure);
+                    int percentInt = (int)(level.percentWon * Player.MAX_RAIN * 5);
+                    spriteBatch.Draw(batterybar, new Rectangle(50, 50, percentInt, 20), Color.Firebrick);
+                    spriteBatch.DrawString(font, "Goal", new Vector2(4, 50), Color.White, 0, new Vector2(0, 0), 0.5f, SpriteEffects.None, 0);
+
+                    //Draw the incrementation
+                    for (int i = 1; i <= Player.MAX_RAIN; i++)
+                    {
+                        spriteBatch.Draw(batterybar,
+                            new Rectangle(i * 5 + 45, 10, 1, 20), Color.DarkBlue);
+                        spriteBatch.Draw(batterybar,
+                            new Rectangle(i * 5 + 45, 50, 1, 20), Color.DarkRed);
+                    }
+
+                    //TODO: Display Icon of objects/actors that need to be ruined
                     //Remind Player of their objective
-                    spriteBatch.DrawString(font, level.objectiveMessage, new Vector2(440, 5), Color.White, 0, new Vector2(0, 0), 0.5f, SpriteEffects.None, 0);
+                    //spriteBatch.DrawString(font, level.objectiveMessage, new Vector2(SCREEN_WIDTH/2, 5), Color.White, 0, new Vector2(0, 0), 0.5f, SpriteEffects.None, 0);
+
+                    string info = "[ESC] for Pause/Controls   |   [R] to Restart";
+                    spriteBatch.DrawString(font, info, new Vector2(SCREEN_WIDTH/2, 5), Color.White, 0, new Vector2(0, 0), 0.5f, SpriteEffects.None, 0);
 
                     spriteBatch.End();
+
+                    //Pause Screen
+                    if (levelPaused) {
+                        pauseScreen.Draw(spriteBatch, level.title, level.objectiveMessage, level.initialRain);
+                    }
 
                     //Game Over Screen
                     if (levelHasEnded)
@@ -471,9 +527,6 @@ namespace Rain_On_Your_Parade
                     spriteBatch.Draw(menu_background, new Rectangle(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT), Color.White);
                     spriteBatch.End();
                     mainMenu.Draw(spriteBatch);
-                    break;
-                case GameState.PauseMenu:
-                    //TODO: implement pause menu
                     break;
             }
             base.Draw(gameTime);

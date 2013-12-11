@@ -17,10 +17,12 @@ namespace Rain_On_Your_Parade
         private int enjoyTime;
         private const int MAX_RUN_COOLDOWN = 80;
         private int runCoolDown = MAX_RUN_COOLDOWN;
-        private const float RUN_SPEED = 2f;
+        private const float RUN_SPEED = 2.5f;
+        private const float WALK_SPEED = .75f;
+        private const int SWITCH_TO_WANDER = 25;
         private float velX = 0f;
         private float velY = 0f;
-        private const double RAINBOW_RADIUS = 100;
+        private const double RAINBOW_RADIUS = 400;
 
 
         public ActorController(Actor actor) : base(actor)
@@ -69,7 +71,6 @@ namespace Rain_On_Your_Parade
             if (NeedIncreaseTimer % 720 == 0)
             {
                 controlledActor.increaseFastNeeds();
-                //Console.WriteLine(controlledActor.ToString());
             }
             else
             {
@@ -83,20 +84,29 @@ namespace Rain_On_Your_Parade
             int next = random.Next(1000); //Let the actor choose a new state in a random way
             actorSquare = controlledActor.GridspacePosition;
 
+            bool switchWander = random.Next(100) < SWITCH_TO_WANDER;
+
             //Determines whether the actor close to the cloud, and if so, changes its state to Run
             if (controlledActor.State.State != ActorState.AState.Run && level.nearEnoughForInteraction(level.Player, controlledActor)) //&& controlledActor.State.State != controlledActor.TargetState)
             {
-                controlledActor.State = new ActorState(ActorState.AState.Run);
+                controlledActor.State.State = ActorState.AState.Run;
                 controlledActor.Path = null;
 
-                if (controlledActor.InteractingActor != null){
+                if (controlledActor.InteractingActor != null)
+                {
+                    controlledActor.IncrementMood();
                     Console.WriteLine("Ending interaction");
                     controlledActor.InteractionTimer = -120;
                     controlledActor.InteractingActor.State.State = ActorState.AState.Seek;
                     controlledActor.InteractingActor.InteractionTimer = -120;
                     controlledActor.InteractingActor.InteractingActor = null;
                     controlledActor.InteractingActor = null;
+                }
 
+                if (controlledActor.InteractingObject != null)
+                {
+                    controlledActor.IncrementMood();
+                    controlledActor.InteractingObject = null;
                 }
 
                 float xChange = level.Player.PixelPosition.X - level.Player.PrevPos.X;
@@ -156,7 +166,8 @@ namespace Rain_On_Your_Parade
                     }
                     else
                     {
-                        controlledActor.State.State = ActorState.AState.Seek;
+                        controlledActor.InteractingObject = null;
+                        controlledActor.State.State = switchWander ? ActorState.AState.Wander : ActorState.AState.Seek;
                         break;
                     }
                 #endregion
@@ -169,7 +180,7 @@ namespace Rain_On_Your_Parade
                         controlledActor.InteractionTimer = -300;
                         if (controlledActor.Mood < 5)
                         controlledActor.Mood = controlledActor.Mood + 1;
-                        controlledActor.State.State = ActorState.AState.Seek;
+                        controlledActor.State.State = switchWander ? ActorState.AState.Wander : ActorState.AState.Seek;
                         controlledActor.InteractingActor = null;
                     }
 
@@ -184,7 +195,7 @@ namespace Rain_On_Your_Parade
                         controlledActor.InteractionTimer = -300;
                         if (controlledActor.Mood > 0) controlledActor.Mood = controlledActor.Mood - 1;
                         controlledActor.NurtureLevel--;
-                        controlledActor.State.State = ActorState.AState.Seek;
+                        controlledActor.State.State = switchWander ? ActorState.AState.Wander : ActorState.AState.Seek;
                         controlledActor.InteractingActor = null;
                     }
 
@@ -195,14 +206,13 @@ namespace Rain_On_Your_Parade
                     if (enjoyTime == 0)
                     {
                         interactWithObject(level, ActorState.AState.Nurture);
+                        controlledActor.InteractingObject = null;
                         controlledActor.State.State = ActorState.AState.Wander;
                     }
                     else
                     {
                         enjoyTime--;
                     }
-
-                    //if (next <= 1) controlledActor.State = new ActorState(ActorState.AState.Seek);
                     break;
                 #endregion
                 #region PlayState
@@ -210,17 +220,18 @@ namespace Rain_On_Your_Parade
                     if (enjoyTime == 0)
                     {
                         interactWithObject(level, ActorState.AState.Play);
+                        controlledActor.InteractingObject = null;
                         controlledActor.State.State = ActorState.AState.Wander;
                     }
                     else
                     {
                         enjoyTime--;
                     }
-                    //if (next <= 1) controlledActor.State = new ActorState(ActorState.AState.Seek);
                     break;
                 #endregion
                 #region RampageState
                 case ActorState.AState.Rampage:
+                    controlledActor.InteractingObject = null;
                     controlledActor.State.State = ActorState.AState.Seek;
                     break;
                 #endregion
@@ -229,14 +240,13 @@ namespace Rain_On_Your_Parade
                     if (enjoyTime == 0)
                     {
                         interactWithObject(level, ActorState.AState.Sleep);
+                        controlledActor.InteractingObject = null;
                         controlledActor.State.State = ActorState.AState.Wander;
                     }
                     else
                     {
                         enjoyTime--;
                     }
-                    //if (next <= 1) controlledActor.State = new ActorState(ActorState.AState.Seek);
-                    // controlledActor.State.State = ActorState.AState.Seek;
                     break;
                 #endregion
                 #region SeekState
@@ -269,7 +279,7 @@ namespace Rain_On_Your_Parade
                 case ActorState.AState.Walk:
                     if (controlledActor.Path.Count < 1)
                     {
-                        controlledActor.State.State = ActorState.AState.Seek;
+                        controlledActor.State.State = switchWander ? ActorState.AState.Wander : ActorState.AState.Seek;
                     }
                     //The actual moving along the path.
                     else
@@ -289,14 +299,23 @@ namespace Rain_On_Your_Parade
                                 if (controlledActor.TargetIsActor && nextSquare.Actors.Count == 0)
                                 {
                                     controlledActor.TargetIsActor = false;
-                                    controlledActor.State.State = ActorState.AState.Seek;
+                                    controlledActor.State.State = switchWander ? ActorState.AState.Wander : ActorState.AState.Seek;
                                 }
                                 else if (!controlledActor.TargetIsActor && nextSquare.Objects.Count == 0)
                                 {
-                                    controlledActor.State.State = ActorState.AState.Seek;
+                                    controlledActor.State.State = switchWander ? ActorState.AState.Wander : ActorState.AState.Seek;
                                 }
                                 else
                                 {
+                                    if (nextSquare.Objects.Count > 0)
+                                    {
+                                        controlledActor.InteractingObject = nextSquare.Objects[0];
+                                        nextSquare.Objects[0].AddInteractingActor(controlledActor);
+                                    }
+                                    else
+                                    {
+                                        Debug.WriteLine("People are interacting with empty squares that don't even have people in them.");
+                                    }
                                     controlledActor.State.State = controlledActor.TargetState;
                                 }
                                 enjoyTime = MAX_ENJOY_TIME;
@@ -311,19 +330,19 @@ namespace Rain_On_Your_Parade
                         //If I'm not within the next square on the path, make sure my velocity is set correctly (necessary for first square) Move uniformly to the next square
                         if (nextSquare.Location.X * Canvas.SQUARE_SIZE - controlledActor.PixelPosition.X <= 0)
                         {
-                            Velx = controlledActor.Mood > 4 ? -RUN_SPEED : -1f;
+                            Velx = controlledActor.Mood > 4 ? -RUN_SPEED : -WALK_SPEED;
                         }
                         else
                         {
-                            Velx = controlledActor.Mood > 4 ? RUN_SPEED : 1f;
+                            Velx = controlledActor.Mood > 4 ? RUN_SPEED : WALK_SPEED;
                         }
                         if (nextSquare.Location.Y * Canvas.SQUARE_SIZE - controlledActor.PixelPosition.Y <= 0)
                         {
-                            Vely = controlledActor.Mood > 4 ? -RUN_SPEED : -1f;
+                            Vely = controlledActor.Mood > 4 ? -RUN_SPEED : -WALK_SPEED;
                         }
                         else
                         {
-                            Vely = controlledActor.Mood > 4 ? RUN_SPEED : 1f;
+                            Vely = controlledActor.Mood > 4 ? RUN_SPEED : WALK_SPEED;
                         }
                         controlledActor.Velocity = new Vector2(Velx, Vely);
                         //controlledActor.Velocity = new Vector2(nextSquare.Location.X * Canvas.SQUARE_SIZE - controlledActor.Position.X, 
@@ -395,19 +414,19 @@ namespace Rain_On_Your_Parade
                         //If I'm not within the next square on the path, make sure my velocity is set correctly (necessary for first square) Move uniformly to the next square
                         if (nextSquare.Location.X * Canvas.SQUARE_SIZE - controlledActor.PixelPosition.X <= 0)
                         {
-                            Velx = controlledActor.Mood > 4 ? -RUN_SPEED : -1f;
+                            Velx = controlledActor.Mood > 4 ? -RUN_SPEED : -WALK_SPEED;
                         }
                         else
                         {
-                            Velx = controlledActor.Mood > 4 ? RUN_SPEED : 1f;
+                            Velx = controlledActor.Mood > 4 ? RUN_SPEED : WALK_SPEED;
                         }
                         if (nextSquare.Location.Y * Canvas.SQUARE_SIZE - controlledActor.PixelPosition.Y <= 0)
                         {
-                            Vely = controlledActor.Mood > 4 ? -RUN_SPEED : -1f;
+                            Vely = controlledActor.Mood > 4 ? -RUN_SPEED : -WALK_SPEED;
                         }
                         else
                         {
-                            Vely = controlledActor.Mood > 4 ? RUN_SPEED : 1f;
+                            Vely = controlledActor.Mood > 4 ? RUN_SPEED : WALK_SPEED;
                         }
                         controlledActor.Velocity = new Vector2(Velx, Vely);
                         //controlledActor.Velocity = new Vector2(nextSquare.Location.X * Canvas.SQUARE_SIZE - controlledActor.Position.X, 
@@ -430,7 +449,7 @@ namespace Rain_On_Your_Parade
                     {
                         if (!controlledActor.Path.ElementAt(controlledActor.Path.Count - 1).Objects[0].Activated)
                         {
-                            controlledActor.State = new ActorState(ActorState.AState.Seek);
+                            controlledActor.State.State = switchWander ? ActorState.AState.Wander : ActorState.AState.Seek;
                             break;
                         }
                         //Console.WriteLine(controlledActor.Type.TypeName + " Position: " + controlledActor.GridspacePosition);
@@ -470,19 +489,19 @@ namespace Rain_On_Your_Parade
                         //If I'm not within the next square on the path, make sure my velocity is set correctly (necessary for first square) Move uniformly to the next square
                         if (nextSquare.Location.X * Canvas.SQUARE_SIZE - controlledActor.PixelPosition.X <= 0)
                         {
-                            Velx = controlledActor.Mood > 4 ? -RUN_SPEED : -1f;
+                            Velx = controlledActor.Mood > 4 ? -RUN_SPEED : -WALK_SPEED;
                         }
                         else
                         {
-                            Velx = controlledActor.Mood > 4 ? RUN_SPEED : 1f;
+                            Velx = controlledActor.Mood > 4 ? RUN_SPEED : WALK_SPEED;
                         }
                         if (nextSquare.Location.Y * Canvas.SQUARE_SIZE - controlledActor.PixelPosition.Y <= 0)
                         {
-                            Vely = controlledActor.Mood > 4 ? -RUN_SPEED : -1f;
+                            Vely = controlledActor.Mood > 4 ? -RUN_SPEED : -WALK_SPEED;
                         }
                         else
                         {
-                            Vely = controlledActor.Mood > 4 ? RUN_SPEED : 1f;
+                            Vely = controlledActor.Mood > 4 ? RUN_SPEED : WALK_SPEED;
                         }
                         controlledActor.Velocity = new Vector2(Velx, Vely);
                         //controlledActor.Velocity = new Vector2(nextSquare.Location.X * Canvas.SQUARE_SIZE - controlledActor.Position.X, 
@@ -929,41 +948,39 @@ namespace Rain_On_Your_Parade
 
             foreach (WorldObject o in interactObjs)
             {
-               // if (o.Type.CanActivate)
-               // {
-                    switch (action)
-                    {
-                        case ActorState.AState.Nurture:
-                           // if (o.Type.NurtureLevel > 2)
-                          //  {
-                                o.activate();
-                                controlledActor.NurtureLevel--;
-                                controlledActor.DecrementMood();
-                                if (controlledActor.NurtureLevel < 0) controlledActor.NurtureLevel = 0;
-                                interacted = true;
-                           // }
-                            break;
-                        case ActorState.AState.Play:
-                          //  if (o.Type.PlayLevel > 2)
-                          //  {
-                                o.activate();
-                                controlledActor.PlayLevel--;
-                                controlledActor.DecrementMood();
-                                if (controlledActor.PlayLevel < 0) controlledActor.PlayLevel = 0;
-                                interacted = true;
-                          //  }
-                            break;
-                        case ActorState.AState.Sleep:
-                           // if (o.Type.SleepLevel > 2)
-                           // {
-                                controlledActor.SleepLevel--;
-                                controlledActor.DecrementMood();
-                                if (controlledActor.SleepLevel < 0) controlledActor.SleepLevel = 0;
-                                interacted = true;
-                           // }
-                            break;
-                    //}
+                switch (action)
+                {
+                    case ActorState.AState.Nurture:
+                        // if (o.Type.NurtureLevel > 2)
+                        //  {
+                        if(o.Type.CanActivate) o.activate();
+                        controlledActor.NurtureLevel--;
+                        controlledActor.DecrementMood();
+                        if (controlledActor.NurtureLevel < 0) controlledActor.NurtureLevel = 0;
+                        interacted = true;
+                        // }
+                        break;
+                    case ActorState.AState.Play:
+                        //  if (o.Type.PlayLevel > 2)
+                        //  {
+                        if(o.Type.CanActivate) o.activate();
+                        controlledActor.PlayLevel--;
+                        controlledActor.DecrementMood();
+                        if (controlledActor.PlayLevel < 0) controlledActor.PlayLevel = 0;
+                        interacted = true;
+                        //  }
+                        break;
+                    case ActorState.AState.Sleep:
+                        // if (o.Type.SleepLevel > 2)
+                        // {
+                        controlledActor.SleepLevel--;
+                        controlledActor.DecrementMood();
+                        if (controlledActor.SleepLevel < 0) controlledActor.SleepLevel = 0;
+                        interacted = true;
+                        // }
+                        break;
                 }
+                
             }
             return interacted;
         }

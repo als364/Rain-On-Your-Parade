@@ -13,6 +13,7 @@ namespace Rain_On_Your_Parade
         private bool activated;
         private int waterLevel;
         private int initialWaterLevel;
+        private List<Actor> actorsInteracted;
 
         public WorldObject(ObjectType.Type oType, Point pos, int waterAmt)
         {
@@ -23,6 +24,7 @@ namespace Rain_On_Your_Parade
             waterLevel = waterAmt;
             initialWaterLevel = waterAmt;
             colorAlpha = 0f;
+            actorsInteracted = new List<Actor>();
         }
 
         public override void LoadContent(ContentManager content)
@@ -46,6 +48,11 @@ namespace Rain_On_Your_Parade
         }
 
         #region Getters and Setters
+        public List<Actor> ActorsInteracted
+        {
+            get { return actorsInteracted; }
+            set { actorsInteracted = value; }
+        }
         public ObjectType Type
         {
             get
@@ -83,23 +90,28 @@ namespace Rain_On_Your_Parade
         }
         #endregion
 
+        public void AddInteractingActor(Actor actor)
+        {
+            actorsInteracted.Add(actor);
+        }
+
         public void activate()
         {
             ObjectType.Type typeSwitch = type.TypeName;
-            if (!activated)
-            {
+            //if (!activated)
+            //{
                 activated = true;
                 switch (typeSwitch)
                 {
                     case ObjectType.Type.Pool:
                         type.PlayLevel = 3;
-                        waterLevel = initialWaterLevel;
+                        waterLevel++; //CHECK THIS
                         break;
                     case ObjectType.Type.Garden:
                         type.PlayLevel = 0;
                         type.SleepLevel = 3;
                         type.NurtureLevel = 3;
-                        waterLevel = initialWaterLevel;
+                        waterLevel++; //CHECK THIS
                         break;
                     case ObjectType.Type.Chalking:
                         type.PlayLevel = 0;
@@ -109,15 +121,15 @@ namespace Rain_On_Your_Parade
                         break;
                     case ObjectType.Type.Laundry:
                         type.RampageLevel = 0;
-                        type.NurtureLevel = 3;
+                        type.NurtureLevel = 0;
                         break;
                     case ObjectType.Type.SunnyRainbowSpot:
-                        type.SleepLevel = 10;
-                        type.NurtureLevel = 10;
-                        type.PlayLevel = 10;
+                        type.SleepLevel = 0;
+                        type.NurtureLevel = 0;
+                        type.PlayLevel = 0;
                         break;
                 }
-            }
+            //}
         }
 
 
@@ -136,11 +148,11 @@ namespace Rain_On_Your_Parade
                     case ObjectType.Type.Garden:
                         type.PlayLevel = 0;
                         type.SleepLevel = 0;
-                        type.NurtureLevel = -2;
+                        type.NurtureLevel = 2;
                         activated = false;
                         break;
                     case ObjectType.Type.Chalking:
-                        type.PlayLevel = 0;
+                        type.PlayLevel = 2;
                         type.RampageLevel = 0;
                         activated = false;
                         break;
@@ -148,8 +160,9 @@ namespace Rain_On_Your_Parade
                         break;
                     case ObjectType.Type.Laundry:
                         type.RampageLevel = 0;
-                        type.NurtureLevel = -2;
+                        type.NurtureLevel = 3;
                         activated = false;
+                        waterLevel++;
                         break;
                     case ObjectType.Type.SunnyRainbowSpot:
                         type.SleepLevel =3;

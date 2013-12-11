@@ -22,17 +22,18 @@ namespace Rain_On_Your_Parade
         Texture2D levelSelected;
 
         int selectedIndex;
+        int menuDelay = 10;
         Color normal = Color.White;
         Color hilite = Color.Yellow;
         KeyboardState keyboardState;
         KeyboardState oldKeyboardState;
         SpriteFont font;
 
-        int num_col = 2;
+        int num_col = 3;
         int iconHeight = 90;
         int iconWidth = 90;
 
-        int marLeft = 90;
+        int marLeft = 60;
         int marTop = 150;
         int padLeft = 28;
         int padTop = 28;
@@ -46,27 +47,6 @@ namespace Rain_On_Your_Parade
         public MainMenu()
         {
             STAGE_ROWS = GameEngine.SCREEN_WIDTH / iconWidth;
-                        
-            levelTitles.Add("Soak the Cat");
-            levelSubTitles.Add("Goal: Cat\n\nPress [Spacebar] to Rain");
-            levelTitles.Add("Kill the Flowers");
-            levelSubTitles.Add("Goal: Garden\n\nPress [Shift] to Absorb");
-            levelTitles.Add("Make Kids Cry");
-            levelSubTitles.Add("Goal: Kid\n\nTake advantage of kids and their \nfavorite things");
-            levelTitles.Add("Kill the Flowers V2.0");
-            levelSubTitles.Add("Goal: Garden\n\nIt's a race against mom!");
-            levelTitles.Add("Lambs to the Slaughter");
-            levelSubTitles.Add("Goal: Malice\n\nRaining on Sunny Spots generates a \ntemporary Rainbow");
-            levelTitles.Add("Showdown");
-            levelSubTitles.Add("Goal: Cat\n\nPit angry cats against each other!");
-            levelTitles.Add("Showdown V2.0");
-            levelSubTitles.Add("Goal: Malice\n\nThis time it's mom and son");
-            levelTitles.Add("Cats and Sunflowers");
-            levelSubTitles.Add("or is it catnip?");
-            levelTitles.Add("The American Dream");
-            levelSubTitles.Add("...according to Helen");
-            levelTitles.Add("Guide the Kid");
-            levelSubTitles.Add("Make him refill the water\nand then CRUSH HIM");
         }
 
 
@@ -97,9 +77,13 @@ namespace Rain_On_Your_Parade
             // TODO: Unload any non ContentManager content here
         }
 
-        private bool CheckKey(Keys theKey)
+        private bool NewlyPressed(Keys theKey)
         {
-        return keyboardState.IsKeyUp(theKey) && oldKeyboardState.IsKeyDown(theKey);
+            return keyboardState.IsKeyDown(theKey) && oldKeyboardState.IsKeyUp(theKey);
+        }
+        private bool NewlyReleased(Keys theKey)
+        {
+            return keyboardState.IsKeyUp(theKey) && oldKeyboardState.IsKeyDown(theKey);
         }
 
         /// <summary>
@@ -107,44 +91,48 @@ namespace Rain_On_Your_Parade
         /// checking for collisions, gathering input, and playing audio.
         public int Update()
         {
-            oldKeyboardState = keyboardState;
-            keyboardState = Keyboard.GetState();
-            if (CheckKey(Keys.Right))
+            if (menuDelay == 0)
             {
-                selectedIndex++;
-                if (selectedIndex == GameEngine.STAGE_NUM)
-                    selectedIndex = 0;
-            }
-            if (CheckKey(Keys.Down))
-            {
-                selectedIndex += num_col;
-                if (selectedIndex >= GameEngine.STAGE_NUM)
-                    selectedIndex -= GameEngine.STAGE_NUM;
-            }
-            if (CheckKey(Keys.Up))
-            {
-                selectedIndex -= num_col;
-                if (selectedIndex < 0)
-                    selectedIndex += GameEngine.STAGE_NUM;
-            }
-            if (CheckKey(Keys.Left))
-            {
-                selectedIndex--;
-                if (selectedIndex < 0)
-                    selectedIndex = GameEngine.STAGE_NUM - 1;
-            }
+                oldKeyboardState = keyboardState;
+                keyboardState = Keyboard.GetState();
+                if (NewlyReleased(Keys.Right))
+                {
+                    selectedIndex++;
+                    if (selectedIndex == GameEngine.STAGE_NUM)
+                        selectedIndex = 0;
+                }
+                if (NewlyReleased(Keys.Down))
+                {
+                    selectedIndex += num_col;
+                    if (selectedIndex >= GameEngine.STAGE_NUM)
+                        selectedIndex -= GameEngine.STAGE_NUM;
+                }
+                if (NewlyReleased(Keys.Up))
+                {
+                    selectedIndex -= num_col;
+                    if (selectedIndex < 0)
+                        selectedIndex += GameEngine.STAGE_NUM;
+                }
+                if (NewlyReleased(Keys.Left))
+                {
+                    selectedIndex--;
+                    if (selectedIndex < 0)
+                        selectedIndex = GameEngine.STAGE_NUM - 1;
+                }
 
-            if (Keyboard.GetState().IsKeyDown(Keys.Enter) || Keyboard.GetState().IsKeyDown(Keys.Space))
-            {
-                return selectedIndex+1;
+                if (NewlyPressed(Keys.Enter) || NewlyPressed(Keys.Space))
+                {
+                    return selectedIndex + 1;
+                }
             }
+            if (menuDelay > 0) menuDelay--;
             return -1;
         }
 
         /// <summary>
         /// This is called when the game should draw itself.
         /// </summary>
-        public  void Draw(SpriteBatch spriteBatch)
+        public void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Begin();
 
@@ -157,30 +145,31 @@ namespace Rain_On_Your_Parade
             spriteBatch.Draw(topbar, new Rectangle(GameEngine.SCREEN_WIDTH / 2, marTop - 20, 3 * GameEngine.SCREEN_WIDTH / 4, 3 * GameEngine.SCREEN_HEIGHT / 4), Color.Black);
 
             //Controls list
-            string controls = "[WASD] or [ARROWS] to Move\n[SPACEBAR] to Rain\n[SHIFT] to Absorb\n[ESC] to Pause\n[P] to Restart";
+            string controls = "[WASD] or [ARROWS] to Move\n[SPACEBAR] to Rain\n[ALT] to Absorb\n[ESC] to Pause\n[P] to Restart";
             spriteBatch.DrawString(font, "Controls", new Vector2(GameEngine.SCREEN_WIDTH / 2 + 10, 3* marTop), Color.White, 0, new Vector2(0, 0), 0.8f, SpriteEffects.None, 0);
             spriteBatch.DrawString(font, controls, new Vector2(GameEngine.SCREEN_WIDTH / 2 + 10, 3 * marTop + 30), Color.White, 0, new Vector2(0, 0), 0.6f, SpriteEffects.None, 0);
 
-         for (int i=0; i< GameEngine.STAGE_NUM; i++){
+         for (int i=1; i<= GameEngine.STAGE_NUM; i++){
 
-             string num = (i < 9) ? "0" + (i+1) : "" + (i+1);
-             int row = (i % num_col);
-             int col = (i / num_col);
+             string num = (i-1 < 9) ? "0" + (i) : "" + (i);
+             int row = ((i-1) % num_col);
+             int col = ((i-1) / num_col);
 
-             if (i == selectedIndex)
+             if (i-1 == selectedIndex)
              {
+                 Canvas level = new Canvas(i);
                  //Side panel info
-                 spriteBatch.DrawString(font, "Level " + num + "\n" + levelTitles[i], new Vector2(GameEngine.SCREEN_WIDTH / 2 + 10, marTop - 20), Color.White, 0, new Vector2(0, 0), 0.8f, SpriteEffects.None, 0);
-                 spriteBatch.DrawString(font, levelSubTitles[i], new Vector2(GameEngine.SCREEN_WIDTH / 2 +10, 3*marTop/2), Color.White, 0, new Vector2(0, 0), 0.6f, SpriteEffects.None, 0);
+                 spriteBatch.DrawString(font, "Level " + num + "\n" + level.title , new Vector2(GameEngine.SCREEN_WIDTH / 2 + 10, marTop - 20), Color.White, 0, new Vector2(0, 0), 0.8f, SpriteEffects.None, 0);
+                 spriteBatch.DrawString(font, level.objectiveMessage, new Vector2(GameEngine.SCREEN_WIDTH / 2 +10, 3*marTop/2), Color.White, 0, new Vector2(0, 0), 0.6f, SpriteEffects.None, 0);
 
                  //Highlight icon
-                 spriteBatch.Draw(levelicon, new Rectangle(iconWidth*row + row*iconWidth/2 + marLeft, iconHeight*col + col*iconHeight/8 + marTop, iconWidth, iconHeight), Color.Black);
-                 spriteBatch.DrawString(font, num, new Vector2(iconWidth*row + row*iconWidth/2 + marLeft + padLeft, iconHeight*col + col*iconHeight/8 + marTop + padTop), Color.White);
+                 spriteBatch.Draw(levelicon, new Rectangle(iconWidth*row + row*iconWidth/2 + marLeft, iconHeight*col + col*iconHeight/8 + marTop + 25, iconWidth, iconHeight), Color.Black);
+                 spriteBatch.DrawString(font, num, new Vector2(iconWidth*row + row*iconWidth/2 + marLeft + padLeft, iconHeight*col + col*iconHeight/8 + marTop + 25 + padTop), Color.White);
              }
              else
              {
-                 spriteBatch.Draw(levelicon, new Rectangle(iconWidth * row + row * iconWidth / 2 + marLeft, iconHeight * col + col * iconHeight / 8 + marTop, iconWidth, iconHeight), Color.White);
-                 spriteBatch.DrawString(font, num, new Vector2(iconWidth * row + row * iconWidth / 2 + marLeft + padLeft, iconHeight * col + col * iconHeight / 8 + marTop + padTop), Color.Black);
+                 spriteBatch.Draw(levelicon, new Rectangle(iconWidth * row + row * iconWidth / 2 + marLeft, iconHeight * col + col * iconHeight / 8 + marTop + 25, iconWidth, iconHeight), Color.White);
+                 spriteBatch.DrawString(font, num, new Vector2(iconWidth * row + row * iconWidth / 2 + marLeft + padLeft, iconHeight * col + col * iconHeight / 8 + marTop + 25 + padTop), Color.Black);
              }
 
              
