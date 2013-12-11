@@ -17,7 +17,7 @@ namespace Rain_On_Your_Parade
     /// </summary>
     public class GameEngine : Game
     {
-        public enum WinCondition { Objects, Actors, Malice };
+        public enum WinCondition { Objects, Actors, Mood };
 
         public enum GameState { MainMenu, PauseMenu, Game };
 
@@ -63,7 +63,7 @@ namespace Rain_On_Your_Parade
         //Boolean menuOn = true;
 
         //Add levels to Levels folder and then add name to this array
-        public static string[] levels = { "sample.xml",
+        /*public static string[] levels = { "sample.xml",
                                           "Level1.xml",
                                           "Soak the Cat.xml",
                                           "Kill the Flowers.xml",
@@ -71,10 +71,11 @@ namespace Rain_On_Your_Parade
                                           "Make Kids Cry.xml",
                                           "Showdown.xml",
                                           "Errand Boys.xml"};
-
+        */
         private int stage = 1;
 
-        public static int STAGE_NUM = levels.GetLength(0) ;
+        //public static int STAGE_NUM = levels.GetLength(0) ;
+        public static int STAGE_NUM = 10;
 
         public GameEngine()
             : base()
@@ -128,16 +129,16 @@ namespace Rain_On_Your_Parade
             {
                 case GameState.Game:
                     //This is where the level building goes. I don't care about an XML parsing framework yet
-                    //level = new Canvas(stage);
+                    level = new Canvas(stage);
 
                     //////////////////////////////////////////////
-                    level = LevelParser.parse(levels[stage]);
+                    //level = LevelParser.parse(levels[stage]);
                     ///////////////////////////////////////////
 
                     // Debug.WriteLine("Y: " + level.Grid[6, 6].Actors[0].Position.Y);
                     //int quota = 100;
                     ////worldState = new WorldState(quota,level.Grid);
-                    //level.MaliceObjective = quota;
+                    //level.MoodObjective = quota;
 
                     //Debug.WriteLine("Y: " + worldState.getActors().ToArray()[1].Position.Y);
                     foreach (WorldObject o in level.Objects)
@@ -311,20 +312,20 @@ namespace Rain_On_Your_Parade
                     //    framesTillLog--;
                     //}
 
-                    level.updateMalice();
+                    level.updateMood();
 
                     #region WinConditions
                     switch (level.win)
                     {
-                        case WinCondition.Malice:
-                            level.percentWon = ((float)level.Malice) / ((float)level.MaliceObjective);
+                        case WinCondition.Mood:
+                            level.percentWon = ((float)level.Mood) / ((float)level.MoodObjective);
                             if (level.percentWon >= .99)
                             {
                                 levelHasEnded = true;
                             }
                             break;
                         case WinCondition.Actors:
-                            level.percentWon = ((float)level.maliceActors.Count) / ((float)level.Actors.Count);
+                            level.percentWon = ((float)level.angerActors.Count) / ((float)level.Actors.Count);
                             if (level.percentWon >= .99)
                             {
                                 levelHasEnded = true;
@@ -339,7 +340,7 @@ namespace Rain_On_Your_Parade
                                     activableObjCount++;
                                 }
                             }
-                            level.percentWon = ((float)level.maliceObjects.Count) / (float)activableObjCount;
+                            level.percentWon = ((float)level.angerObjects.Count) / (float)activableObjCount;
                             if (level.percentWon >= .99)
                             {
                                 levelHasEnded = true;
@@ -382,14 +383,14 @@ namespace Rain_On_Your_Parade
                                 model.deactivatedSprite.Update();
                             }
 
-                            /*int maliceSum = 0;
+                            /*int MoodSum = 0;
 
                             if (model is Actor)
                             {
                                 Actor actor = (Actor)model;
-                                maliceSum += actor.Mood;
+                                MoodSum += actor.Mood;
                             }
-                            level.Malice = maliceSum;*/
+                            level.Mood = moodSum;*/
                         }
                     }
 
@@ -461,7 +462,7 @@ namespace Rain_On_Your_Parade
 
                     //Game Background
                     spriteBatch.Begin();
-                    spriteBatch.Draw(background, new Rectangle(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT), new Color(level.maliceTint(),level.maliceTint(),level.maliceTint()));
+                    spriteBatch.Draw(background, new Rectangle(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT), new Color(level.moodTint(),level.moodTint(),level.moodTint()));
                     spriteBatch.End();
 
                     //Draw all models
@@ -484,7 +485,7 @@ namespace Rain_On_Your_Parade
 
                     //spriteBatch.DrawString(font, "Water", new Vector2(20, 5), Color.White, 0, new Vector2(0, 0), 0.5f, SpriteEffects.None, 0);
               
-                    //Draw the Malice Meter
+                    //Draw the mood Meter
                     spriteBatch.Draw(batterybar, new Rectangle(0, 40, SCREEN_WIDTH, 40), Color.Black);
                     spriteBatch.Draw(batterybar, new Rectangle(45, 45, Player.MAX_RAIN * 5 + 10, 30), Color.LightSteelBlue);
                     spriteBatch.Draw(batterybar, new Rectangle(50, 50, Player.MAX_RAIN * 5, 20), Color.Azure);

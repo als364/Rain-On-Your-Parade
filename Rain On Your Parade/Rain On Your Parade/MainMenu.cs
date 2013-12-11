@@ -95,25 +95,25 @@ namespace Rain_On_Your_Parade
             {
                 oldKeyboardState = keyboardState;
                 keyboardState = Keyboard.GetState();
-                if (NewlyPressed(Keys.Right))
+                if (NewlyReleased(Keys.Right))
                 {
                     selectedIndex++;
                     if (selectedIndex == GameEngine.STAGE_NUM)
                         selectedIndex = 0;
                 }
-                if (NewlyPressed(Keys.Down))
+                if (NewlyReleased(Keys.Down))
                 {
                     selectedIndex += num_col;
                     if (selectedIndex >= GameEngine.STAGE_NUM)
                         selectedIndex -= GameEngine.STAGE_NUM;
                 }
-                if (NewlyPressed(Keys.Up))
+                if (NewlyReleased(Keys.Up))
                 {
                     selectedIndex -= num_col;
                     if (selectedIndex < 0)
                         selectedIndex += GameEngine.STAGE_NUM;
                 }
-                if (NewlyPressed(Keys.Left))
+                if (NewlyReleased(Keys.Left))
                 {
                     selectedIndex--;
                     if (selectedIndex < 0)
@@ -145,19 +145,19 @@ namespace Rain_On_Your_Parade
             spriteBatch.Draw(topbar, new Rectangle(GameEngine.SCREEN_WIDTH / 2, marTop - 20, 3 * GameEngine.SCREEN_WIDTH / 4, 3 * GameEngine.SCREEN_HEIGHT / 4), Color.Black);
 
             //Controls list
-            string controls = "[WASD] or [ARROWS] to Move\n[SPACEBAR] to Rain\n[SHIFT] to Absorb\n[ESC] to Pause\n[P] to Restart";
+            string controls = "[WASD] or [ARROWS] to Move\n[SPACEBAR] to Rain\n[ALT] to Absorb\n[ESC] to Pause\n[P] to Restart";
             spriteBatch.DrawString(font, "Controls", new Vector2(GameEngine.SCREEN_WIDTH / 2 + 10, 3* marTop), Color.White, 0, new Vector2(0, 0), 0.8f, SpriteEffects.None, 0);
             spriteBatch.DrawString(font, controls, new Vector2(GameEngine.SCREEN_WIDTH / 2 + 10, 3 * marTop + 30), Color.White, 0, new Vector2(0, 0), 0.6f, SpriteEffects.None, 0);
 
-         for (int i=0; i< GameEngine.STAGE_NUM; i++){
+         for (int i=1; i<= GameEngine.STAGE_NUM; i++){
 
-             string num = (i < 9) ? "0" + (i+1) : "" + (i+1);
-             int row = (i % num_col);
-             int col = (i / num_col);
+             string num = (i-1 < 9) ? "0" + (i) : "" + (i);
+             int row = ((i-1) % num_col);
+             int col = ((i-1) / num_col);
 
-             if (i == selectedIndex)
+             if (i-1 == selectedIndex)
              {
-                 Canvas level = LevelParser.parse(GameEngine.levels[i]);
+                 Canvas level = new Canvas(i);
                  //Side panel info
                  spriteBatch.DrawString(font, "Level " + num + "\n" + level.title , new Vector2(GameEngine.SCREEN_WIDTH / 2 + 10, marTop - 20), Color.White, 0, new Vector2(0, 0), 0.8f, SpriteEffects.None, 0);
                  spriteBatch.DrawString(font, level.objectiveMessage, new Vector2(GameEngine.SCREEN_WIDTH / 2 +10, 3*marTop/2), Color.White, 0, new Vector2(0, 0), 0.6f, SpriteEffects.None, 0);

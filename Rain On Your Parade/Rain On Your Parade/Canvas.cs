@@ -14,8 +14,8 @@ namespace Rain_On_Your_Parade
 
         private GridSquare[,] canvasGrid;
         private Player player;
-        private int malice;                 //total malice generated
-        private int maliceObjective;        //amount of malice needed to win level
+        private int mood;                 //total mood
+        private int moodObjective;        //amount of mood needed to win level
         private List<WorldObject> objects;
         private List<Actor> actors;
         public float percentWon;
@@ -24,8 +24,8 @@ namespace Rain_On_Your_Parade
         public int initialRain;
 
         public GameEngine.WinCondition win;
-        public List<Actor> maliceActors = new List<Actor>();
-        public List<WorldObject> maliceObjects = new List<WorldObject>();
+        public List<Actor> angerActors = new List<Actor>();
+        public List<WorldObject> angerObjects = new List<WorldObject>();
 
         public int levelNum;
 
@@ -33,7 +33,7 @@ namespace Rain_On_Your_Parade
 
         public const int INTERACT_RADIUS = 50;
 
-        public Canvas(string title, int width, int height, GameEngine.WinCondition cond, List<WorldObject> o, List<Actor> a, Player p, string message, List<WorldObject> maliceObjs, List<Actor> maliceActors, int maliceGoal)
+        public Canvas(string title, int width, int height, GameEngine.WinCondition cond, List<WorldObject> o, List<Actor> a, Player p, string message, List<WorldObject> angerObjs, List<Actor> angerActors, int moodGoal)
         {
             this.title = title;
             squaresTall = height;
@@ -43,9 +43,9 @@ namespace Rain_On_Your_Parade
             actors = a;
             percentWon = 0f;
             objectiveMessage = message;
-            this.maliceActors = maliceActors;
-            maliceObjects = maliceObjs;
-            maliceObjective = maliceGoal;
+            this.angerActors = angerActors;
+            angerObjects = angerObjs;
+            moodObjective = moodGoal;
 
             for (int i = 0; i < squaresWide; i++)
             {
@@ -64,7 +64,7 @@ namespace Rain_On_Your_Parade
             foreach (Actor actor in actors)
             {
                 Grid[actor.GridspacePosition.X, actor.GridspacePosition.Y].add(actor);
-                //maliceActors.Add(actor);
+                //moodActors.Add(actor);
             }
             foreach (GridSquare square in Grid)
             {
@@ -395,59 +395,64 @@ namespace Rain_On_Your_Parade
                     win = GameEngine.WinCondition.Objects;
                     #endregion level3
                     break;
+
                 case 4:
                     //Level 4 - Make Kids Cry (Goal: Actor Kid)
                     #region level4
 
-                    initialRain = 20;
-                    title = "Level 3 - Make Kids Cry";
-                    objectiveMessage = "Goal: Destroy whatever attracts kids.";
+                //case 5:
+                    //Level 5 - Lambs to the Slaughter (Goal: Some Reasonable Mood Quota for 3 actors)
+                    //#region level5
+
+                    //initialRain = 20;
+                    //title = "Level 3 - Make Kids Cry";
+                    //objectiveMessage = "Goal: Destroy whatever attracts kids.";
 
                     //fence 0,5 to 0,9
-                    objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(0, 5), 0));
-                    objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(0, 6), 0));
-                    objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(0, 7), 0));
-                    objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(0, 8), 0));
+                    //objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(0, 5), 0));
+                    //objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(0, 6), 0));
+                    //objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(0, 7), 0));
+                    //objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(0, 8), 0));
 
                     //fence 4,5 to 4,9
-                    objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(5, 5), 0));
-                    objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(5, 6), 0));
-                    objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(5, 7), 0));
-                    objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(5, 8), 0));
+                    //objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(5, 5), 0));
+                    //objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(5, 6), 0));
+                    //objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(5, 7), 0));
+                    //objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(5, 8), 0));
 
                     //fence 5,0 to 5,4
-                    objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(6, 0), 0));
-                    objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(6, 1), 0));
-                    objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(6, 2), 0));
-                    objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(6, 3), 0));
-                    objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(6, 4), 0));
+                    //objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(6, 0), 0));
+                    //objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(6, 1), 0));
+                    //objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(6, 2), 0));
+                    //objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(6, 3), 0));
+                    //objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(6, 4), 0));
 
                     //pool 0,4 9,4
                     //objects.Add(new WorldObject(ObjectType.Type.Pool, new Point(0, 4), 1));
                     //objects.Add(new WorldObject(ObjectType.Type.Pool, new Point(9, 4), 1));
 
                     //fence 9,0 to 9,4
-                    objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(11, 0), 0));
-                    objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(11, 1), 0));
-                    objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(11, 2), 0));
-                    objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(11, 3), 0));
-                    objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(11, 4), 0));
+                    //objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(11, 0), 0));
+                    //objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(11, 1), 0));
+                    //objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(11, 2), 0));
+                    //objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(11, 3), 0));
+                    //objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(11, 4), 0));
 
                     //sidewalk 0,0 0,2 0,4 9,5 9,7 9,9
-                    objects.Add(new WorldObject(ObjectType.Type.Sidewalk, new Point(0, 2), 0));
-                    objects.Add(new WorldObject(ObjectType.Type.Sidewalk, new Point(0, 4), 0));
-                    objects.Add(new WorldObject(ObjectType.Type.Sidewalk, new Point(11, 5), 0));
-                    objects.Add(new WorldObject(ObjectType.Type.Sidewalk, new Point(11, 7), 0));
+                    //objects.Add(new WorldObject(ObjectType.Type.Sidewalk, new Point(0, 2), 0));
+                    //objects.Add(new WorldObject(ObjectType.Type.Sidewalk, new Point(0, 4), 0));
+                    //objects.Add(new WorldObject(ObjectType.Type.Sidewalk, new Point(11, 5), 0));
+                    //objects.Add(new WorldObject(ObjectType.Type.Sidewalk, new Point(11, 7), 0));
 
                     //chalking 0,1 0,3 9,6 9,8
-                    objects.Add(new WorldObject(ObjectType.Type.Chalking, new Point(11, 8), 0));
-                    objects.Add(new WorldObject(ObjectType.Type.Chalking, new Point(11, 6), 0));
-                    objects.Add(new WorldObject(ObjectType.Type.Chalking, new Point(0, 3), 0));
-                    objects.Add(new WorldObject(ObjectType.Type.Chalking, new Point(0, 1), 0));
+                    //objects.Add(new WorldObject(ObjectType.Type.Chalking, new Point(11, 8), 0));
+                    //objects.Add(new WorldObject(ObjectType.Type.Chalking, new Point(11, 6), 0));
+                    //objects.Add(new WorldObject(ObjectType.Type.Chalking, new Point(0, 3), 0));
+                    //objects.Add(new WorldObject(ObjectType.Type.Chalking, new Point(0, 1), 0));
 
                     //pool 2,7 7,2
-                    objects.Add(new WorldObject(ObjectType.Type.Pool, new Point(3, 7), 5));
-                    objects.Add(new WorldObject(ObjectType.Type.Pool, new Point(8, 2), 5));
+                    //objects.Add(new WorldObject(ObjectType.Type.Pool, new Point(3, 7), 5));
+                    //objects.Add(new WorldObject(ObjectType.Type.Pool, new Point(8, 2), 5));
 
                     //house 2,1 3,2 
                     objects.Add(new WorldObject(ObjectType.Type.Invisible, new Point(3, 1), 0));
@@ -471,6 +476,9 @@ namespace Rain_On_Your_Parade
 
                     win = GameEngine.WinCondition.Actors;
                     #endregion level4
+
+                    //win = GameEngine.WinCondition.Mood;
+                    //#endregion level5
                     break;
                 case 5:
                     //Level 5 - Showdown (Goal: Actor Cat)
@@ -541,12 +549,21 @@ namespace Rain_On_Your_Parade
                     win = GameEngine.WinCondition.Actors;
                     #endregion level6
                     break;
+
                 case 6:
                     //Level 6 - Errand Boys (Goal Actor Kids)
                     #region level6
                     initialRain = 0;
                     title = "";
                     objectiveMessage = "";
+
+                //case 7:
+                    //Level 7 - Showdown v2.0 (Goal: Some reasonable mood level given 2 kids, 2 moms)
+                    //#region level7
+
+                    //initialRain = 5;
+                    //title = "Level 7 - Showdown v2.0";
+                    //objectiveMessage = "Goal: Make kids and moms fight each other!";
 
                     //Chalkings
                     objects.Add(new WorldObject(ObjectType.Type.Chalking, new Point(0, 1), 0));
@@ -651,8 +668,7 @@ namespace Rain_On_Your_Parade
                     title = "";
                     objectiveMessage = "";
 
-                    win = GameEngine.WinCondition.Actors;
-
+                    win = GameEngine.WinCondition.Mood;
                     #endregion level7
                     break;
                 case 8:
@@ -903,7 +919,7 @@ namespace Rain_On_Your_Parade
                     objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(7, 8), 0));
                     objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(7, 8), 0));
 
-                    win = GameEngine.WinCondition.Malice;
+                    win = GameEngine.WinCondition.Mood;
                     #endregion levelEX2
                     break;
                     
@@ -954,7 +970,7 @@ namespace Rain_On_Your_Parade
                     //cat 3,7
                     actors.Add(new Actor(ActorType.Type.Cat, new Point(3, 7)));
 
-                    win = GameEngine.WinCondition.Malice;
+                    win = GameEngine.WinCondition.Mood;
                     #endregion levelEX4
                     break;
 
@@ -971,7 +987,7 @@ namespace Rain_On_Your_Parade
             foreach (Actor actor in actors)
             {
                 Grid[actor.GridspacePosition.X, actor.GridspacePosition.Y].add(actor);
-                //maliceActors.Add(actor);
+                //angerActors.Add(actor);
             }
             foreach (GridSquare square in Grid)
             {
@@ -994,29 +1010,29 @@ namespace Rain_On_Your_Parade
             }
         }
 
-        public int Malice
+        public int Mood
         {
             get
             {
-                return malice;
+                return mood;
             }
 
             set
             {
-                malice = value;
+                mood = value;
             }
         }
 
-        public int MaliceObjective
+        public int MoodObjective
         {
             get
             {
-                return maliceObjective;
+                return moodObjective;
             }
 
             set
             {
-                maliceObjective = value;
+                moodObjective = value;
             }
         }
 
@@ -1074,8 +1090,8 @@ namespace Rain_On_Your_Parade
         }
         #endregion
 
-        public float maliceTint() {
-            //return 1 - malice / maliceObjective;
+        public float moodTint() {
+            //return 1 - mood / moodObjective;
             return 1;
     }
 
@@ -1221,24 +1237,24 @@ namespace Rain_On_Your_Parade
             return (Math.Abs(Vector2.Distance(p_pos, q.PixelPosition)) < INTERACT_RADIUS && !p.Equals(q));
         }
 
-        public void updateMalice()
+        public void updateMood()
         {
-            maliceActors = new List<Actor>();
-            maliceObjects = new List<WorldObject>();
-            malice = 0;
+            angerActors = new List<Actor>();
+            angerObjects = new List<WorldObject>();
+            mood = 0;
 
             foreach(Actor a in actors) {
-                malice += a.Mood;
+                Mood += a.Mood;
                 if (a.Mood >= 5)
                 {
-                    maliceActors.Add(a);
+                    angerActors.Add(a);
                 }
             }
             foreach(WorldObject o in objects)
             {
                 if (o.Type.CanActivate && !o.Activated)
                 {
-                    maliceObjects.Add(o);
+                    angerObjects.Add(o);
                 }
             }
         }
@@ -1251,7 +1267,7 @@ namespace Rain_On_Your_Parade
                 grid += g.ToString() + "\n";
             }
             return "World Width: " + squaresWide + "\nWorld Height: " + squaresTall +
-                "\nMalice: " + malice + "\nMalice Objective: " + maliceObjective + "\n" + "Player: \n" + player.ToString() + "\nGrid: \n" + grid;
+                "\nMood: " + mood + "\nMood Objective: " + moodObjective + "\n" + "Player: \n" + player.ToString() + "\nGrid: \n" + grid;
         }
     }   
 }

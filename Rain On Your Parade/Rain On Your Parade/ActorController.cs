@@ -17,7 +17,9 @@ namespace Rain_On_Your_Parade
         private int enjoyTime;
         private const int MAX_RUN_COOLDOWN = 80;
         private int runCoolDown = MAX_RUN_COOLDOWN;
-        private const float RUN_SPEED = 2f;
+        private const float RUN_SPEED = 2.5f;
+        private const float WALK_SPEED = .75f;
+        private const int SWITCH_TO_WANDER = 25;
         private float velX = 0f;
         private float velY = 0f;
         private const double RAINBOW_RADIUS = 400;
@@ -68,7 +70,6 @@ namespace Rain_On_Your_Parade
             if (NeedIncreaseTimer % 720 == 0)
             {
                 controlledActor.increaseFastNeeds();
-                //Console.WriteLine(controlledActor.ToString());
             }
             else
             {
@@ -81,6 +82,8 @@ namespace Rain_On_Your_Parade
             Random random = new Random();
             int next = random.Next(1000); //Let the actor choose a new state in a random way
             actorSquare = controlledActor.GridspacePosition;
+
+            bool switchWander = random.Next(100) < SWITCH_TO_WANDER;
 
             //Determines whether the actor close to the cloud, and if so, changes its state to Run
             if (controlledActor.State.State != ActorState.AState.Run && level.nearEnoughForInteraction(level.Player, controlledActor)) //&& controlledActor.State.State != controlledActor.TargetState)
@@ -163,7 +166,7 @@ namespace Rain_On_Your_Parade
                     else
                     {
                         controlledActor.InteractingObject = null;
-                        controlledActor.State.State = ActorState.AState.Seek;
+                        controlledActor.State.State = switchWander ? ActorState.AState.Wander : ActorState.AState.Seek;
                         break;
                     }
                 #endregion
@@ -176,7 +179,7 @@ namespace Rain_On_Your_Parade
                         controlledActor.InteractionTimer = -300;
                         if (controlledActor.Mood < 5)
                         controlledActor.Mood = controlledActor.Mood + 1;
-                        controlledActor.State.State = ActorState.AState.Seek;
+                        controlledActor.State.State = switchWander ? ActorState.AState.Wander : ActorState.AState.Seek;
                         controlledActor.InteractingActor = null;
                     }
 
@@ -191,7 +194,7 @@ namespace Rain_On_Your_Parade
                         controlledActor.InteractionTimer = -300;
                         if (controlledActor.Mood > 0) controlledActor.Mood = controlledActor.Mood - 1;
                         controlledActor.NurtureLevel--;
-                        controlledActor.State.State = ActorState.AState.Seek;
+                        controlledActor.State.State = switchWander ? ActorState.AState.Wander : ActorState.AState.Seek;
                         controlledActor.InteractingActor = null;
                     }
 
@@ -209,8 +212,6 @@ namespace Rain_On_Your_Parade
                     {
                         enjoyTime--;
                     }
-
-                    //if (next <= 1) controlledActor.State = new ActorState(ActorState.AState.Seek);
                     break;
                 #endregion
                 #region PlayState
@@ -225,7 +226,6 @@ namespace Rain_On_Your_Parade
                     {
                         enjoyTime--;
                     }
-                    //if (next <= 1) controlledActor.State = new ActorState(ActorState.AState.Seek);
                     break;
                 #endregion
                 #region RampageState
@@ -246,8 +246,6 @@ namespace Rain_On_Your_Parade
                     {
                         enjoyTime--;
                     }
-                    //if (next <= 1) controlledActor.State = new ActorState(ActorState.AState.Seek);
-                    // controlledActor.State.State = ActorState.AState.Seek;
                     break;
                 #endregion
                 #region SeekState
@@ -280,7 +278,7 @@ namespace Rain_On_Your_Parade
                 case ActorState.AState.Walk:
                     if (controlledActor.Path.Count < 1)
                     {
-                        controlledActor.State.State = ActorState.AState.Seek;
+                        controlledActor.State.State = switchWander ? ActorState.AState.Wander : ActorState.AState.Seek;
                     }
                     //The actual moving along the path.
                     else
@@ -300,11 +298,11 @@ namespace Rain_On_Your_Parade
                                 if (controlledActor.TargetIsActor && nextSquare.Actors.Count == 0)
                                 {
                                     controlledActor.TargetIsActor = false;
-                                    controlledActor.State.State = ActorState.AState.Seek;
+                                    controlledActor.State.State = switchWander ? ActorState.AState.Wander : ActorState.AState.Seek;
                                 }
                                 else if (!controlledActor.TargetIsActor && nextSquare.Objects.Count == 0)
                                 {
-                                    controlledActor.State.State = ActorState.AState.Seek;
+                                    controlledActor.State.State = switchWander ? ActorState.AState.Wander : ActorState.AState.Seek;
                                 }
                                 else
                                 {
@@ -331,19 +329,19 @@ namespace Rain_On_Your_Parade
                         //If I'm not within the next square on the path, make sure my velocity is set correctly (necessary for first square) Move uniformly to the next square
                         if (nextSquare.Location.X * Canvas.SQUARE_SIZE - controlledActor.PixelPosition.X <= 0)
                         {
-                            Velx = controlledActor.Mood > 4 ? -RUN_SPEED : -1f;
+                            Velx = controlledActor.Mood > 4 ? -RUN_SPEED : -WALK_SPEED;
                         }
                         else
                         {
-                            Velx = controlledActor.Mood > 4 ? RUN_SPEED : 1f;
+                            Velx = controlledActor.Mood > 4 ? RUN_SPEED : WALK_SPEED;
                         }
                         if (nextSquare.Location.Y * Canvas.SQUARE_SIZE - controlledActor.PixelPosition.Y <= 0)
                         {
-                            Vely = controlledActor.Mood > 4 ? -RUN_SPEED : -1f;
+                            Vely = controlledActor.Mood > 4 ? -RUN_SPEED : -WALK_SPEED;
                         }
                         else
                         {
-                            Vely = controlledActor.Mood > 4 ? RUN_SPEED : 1f;
+                            Vely = controlledActor.Mood > 4 ? RUN_SPEED : WALK_SPEED;
                         }
                         controlledActor.Velocity = new Vector2(Velx, Vely);
                         //controlledActor.Velocity = new Vector2(nextSquare.Location.X * Canvas.SQUARE_SIZE - controlledActor.Position.X, 
@@ -415,19 +413,19 @@ namespace Rain_On_Your_Parade
                         //If I'm not within the next square on the path, make sure my velocity is set correctly (necessary for first square) Move uniformly to the next square
                         if (nextSquare.Location.X * Canvas.SQUARE_SIZE - controlledActor.PixelPosition.X <= 0)
                         {
-                            Velx = controlledActor.Mood > 4 ? -RUN_SPEED : -1f;
+                            Velx = controlledActor.Mood > 4 ? -RUN_SPEED : -WALK_SPEED;
                         }
                         else
                         {
-                            Velx = controlledActor.Mood > 4 ? RUN_SPEED : 1f;
+                            Velx = controlledActor.Mood > 4 ? RUN_SPEED : WALK_SPEED;
                         }
                         if (nextSquare.Location.Y * Canvas.SQUARE_SIZE - controlledActor.PixelPosition.Y <= 0)
                         {
-                            Vely = controlledActor.Mood > 4 ? -RUN_SPEED : -1f;
+                            Vely = controlledActor.Mood > 4 ? -RUN_SPEED : -WALK_SPEED;
                         }
                         else
                         {
-                            Vely = controlledActor.Mood > 4 ? RUN_SPEED : 1f;
+                            Vely = controlledActor.Mood > 4 ? RUN_SPEED : WALK_SPEED;
                         }
                         controlledActor.Velocity = new Vector2(Velx, Vely);
                         //controlledActor.Velocity = new Vector2(nextSquare.Location.X * Canvas.SQUARE_SIZE - controlledActor.Position.X, 
@@ -450,7 +448,7 @@ namespace Rain_On_Your_Parade
                     {
                         if (!controlledActor.Path.ElementAt(controlledActor.Path.Count - 1).Objects[0].Activated)
                         {
-                            controlledActor.State = new ActorState(ActorState.AState.Seek);
+                            controlledActor.State.State = switchWander ? ActorState.AState.Wander : ActorState.AState.Seek;
                             break;
                         }
                         //Console.WriteLine(controlledActor.Type.TypeName + " Position: " + controlledActor.GridspacePosition);
@@ -490,19 +488,19 @@ namespace Rain_On_Your_Parade
                         //If I'm not within the next square on the path, make sure my velocity is set correctly (necessary for first square) Move uniformly to the next square
                         if (nextSquare.Location.X * Canvas.SQUARE_SIZE - controlledActor.PixelPosition.X <= 0)
                         {
-                            Velx = controlledActor.Mood > 4 ? -RUN_SPEED : -1f;
+                            Velx = controlledActor.Mood > 4 ? -RUN_SPEED : -WALK_SPEED;
                         }
                         else
                         {
-                            Velx = controlledActor.Mood > 4 ? RUN_SPEED : 1f;
+                            Velx = controlledActor.Mood > 4 ? RUN_SPEED : WALK_SPEED;
                         }
                         if (nextSquare.Location.Y * Canvas.SQUARE_SIZE - controlledActor.PixelPosition.Y <= 0)
                         {
-                            Vely = controlledActor.Mood > 4 ? -RUN_SPEED : -1f;
+                            Vely = controlledActor.Mood > 4 ? -RUN_SPEED : -WALK_SPEED;
                         }
                         else
                         {
-                            Vely = controlledActor.Mood > 4 ? RUN_SPEED : 1f;
+                            Vely = controlledActor.Mood > 4 ? RUN_SPEED : WALK_SPEED;
                         }
                         controlledActor.Velocity = new Vector2(Velx, Vely);
                         //controlledActor.Velocity = new Vector2(nextSquare.Location.X * Canvas.SQUARE_SIZE - controlledActor.Position.X, 
