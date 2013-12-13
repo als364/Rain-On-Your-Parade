@@ -142,7 +142,7 @@ namespace Rain_On_Your_Parade
                     break;
 
                 case ObjectType.Type.Laundry:
-                    isWetObject = false;
+                    isWetObject = true;
                     canActivate = true;
                     startsWet = false;
                     holdsWater = true;
@@ -207,8 +207,8 @@ namespace Rain_On_Your_Parade
             //activatedImages.Add(Type.Chalking, chalkImgName);
             activatedImages.Add(Type.Chalking, "sidewalk");
             deactivatedImages.Add(Type.Chalking, "sidewalk");
-            activatedImages.Add(Type.Laundry, "wetlaundry");
-            deactivatedImages.Add(Type.Laundry, "laundry");
+            activatedImages.Add(Type.Laundry, "laundry");
+            deactivatedImages.Add(Type.Laundry, "wetlaundry");
             activatedImages.Add(Type.House, "house");
             deactivatedImages.Add(Type.House, "house");
             activatedImages.Add(Type.Sidewalk, "sidewalk");
