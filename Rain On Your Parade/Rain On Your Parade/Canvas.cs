@@ -234,7 +234,7 @@ namespace Rain_On_Your_Parade
                     #endregion level2
                     break;
 
-                case 3:
+                case 4:
                     #region level3
 
                     //case 5:
@@ -242,7 +242,7 @@ namespace Rain_On_Your_Parade
                     //#region level5
 
                     initialRain = 0;
-                    title = "Level 3\nAbsorb the Pool";
+                    title = "Level 4\nAbsorb the Pool";
                     hint = "Hint: You can rain to refill swimming pools!";
                     objectiveMessage = "Goal: " +
                     "Use your shadow to herd \nangry children towards each other. \nKids fight when both are frowning \nor if one is VERY upset! The \nmood of fighting kids worsens by 2.";
@@ -333,12 +333,12 @@ namespace Rain_On_Your_Parade
 
                     #endregion level3
                     break;
-                case 4:
+                case 5:
                     #region level4
 
                     initialRain = 0;
 
-                    title = "Level 4\nMake Kids Cry";
+                    title = "Level 5\nMake Kids Cry";
                     hint = "Hint: Rain on sunny spots to lure kid near angry cat!";
                     objectiveMessage = "Goal: Make everyone upset.\nRaining on a sunnyspot will create a \nrainbow, attracting children for a \nshort time!"
                     + " Remember: Characters \nthat are very angry will fight.";
@@ -411,13 +411,13 @@ namespace Rain_On_Your_Parade
 
                     #endregion level4
                     break;
-                case 5:
+                case 6:
                     //Level 4 - Make Kids Cry (Goal: Actor Kid)
                     #region level5
 
                     initialRain = 0;
 
-                    title = "Level 5\nMake Kids Cry";
+                    title = "Level 6\nMake Kids Cry II";
                     hint = "Hint: Lure kids to full pools then ABSORB to upset them.";
                     objectiveMessage = "Goal: Make all the kids upset. \nLure the children to the pools \nthen drain out the water!";
 
@@ -496,11 +496,11 @@ namespace Rain_On_Your_Parade
 
                     #endregion level5
                     break;
-                case 6:
+                case 7:
                     #region level6
 
                      initialRain = 10;
-                     title = "Level 6\nFight!";
+                     title = "Level 7\nFight!";
                      hint=  "Hint: Ruining mom's laundry will make her unhappy"; 
                      objectiveMessage = "Goal: Make Everyone Angry!\nBe careful though,"+
                      " Mom will not \nfight with others. Instead she'll\ncheer them up if she is happy!";
@@ -645,11 +645,11 @@ namespace Rain_On_Your_Parade
                      #endregion level6
                      break;
                     
-                case 7:
+                case 8:
                     #region level7
                     
                     initialRain = 0;
-                    title = "Level 7\nKill the Flowers, Wet the Laundry";
+                    title = "Level 8\nKill the Flowers, Wet the Laundry";
                     objectiveMessage = "Goal: Absorb the flowers and \nwet the laundry before the motherly \nnurturing heals them!";
 
                     //mom 1,1 4,4 8,7
@@ -716,14 +716,14 @@ namespace Rain_On_Your_Parade
 
                     #endregion level7
                     break;
-                case 8:
+                case 9:
                     //Level 7 
                     #region level7
 
                     initialRain = 4;
-                    title = "Level 8\nKill the Flowers v2.0";
+                    title = "Level 9\nKill the Flowers II";
                     hint = "hint";
-                    objectiveMessage = "Goal: Drain the flowers of water\nBeware the motherly nurturing!";
+                    objectiveMessage = "Goal: Drain the flowers of water.\nSoak laundry before moms dry it.\nBeware the motherly nurturing!";
 
                     //mom 1,1 4,4 8,7
                     actors.Add(new Actor(ActorType.Type.Mom, new Point(9, 1)));
@@ -790,12 +790,12 @@ namespace Rain_On_Your_Parade
                     #endregion level3
                     //#endregion level4
                     break;
-                case 9:
+                case 3:
                     //Level 8 - Experimental Level - C is for Cat / Cats and Flowers [Not Final]
                     #region level8
 
-                    title = "Level 9\nC is for Cat";
-                    objectiveMessage = "Goal: Make cats unhappy.";
+                    title = "Level 3\nC is for Cat";
+                    objectiveMessage = "Goal: Make cats unhappy.\nRain on sunspots to form Rainbows\nand attract nearby cats together.";
 
                     actors.Add(new Actor(ActorType.Type.Cat, new Point(9, 1)));
                     actors.Add(new Actor(ActorType.Type.Cat, new Point(0, 4)));
