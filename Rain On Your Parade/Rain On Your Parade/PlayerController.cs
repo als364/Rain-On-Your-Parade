@@ -16,7 +16,7 @@ namespace Rain_On_Your_Parade
         private int coolDown;
         private Player player;
         public bool isRaining = false;
-
+        public bool isAbsorbing = false;
 
         public PlayerController(Player player)
             : base(player)
@@ -33,6 +33,7 @@ namespace Rain_On_Your_Parade
         public override void Update(GameTime gameTime, Canvas level)
         {
             player.isRaining = isRaining;
+            player.isAbsorbing = isAbsorbing;
             level.Player.PrevPos = new Vector2(player.PixelPosition.X, player.PixelPosition.Y);
             KeyboardState ks = Keyboard.GetState();
 
@@ -143,6 +144,7 @@ namespace Rain_On_Your_Parade
                 if (coolDown < 1)
                 {
                     isRaining = false;
+                    isAbsorbing = false;
                 }
             }
 
@@ -251,6 +253,8 @@ namespace Rain_On_Your_Parade
             if (player.Rain < Player.MAX_RAIN)
             {
                 Point shadowPoint = shadowPointXY();
+
+                
                 
                 List<WorldObject> objects = level.Grid[shadowPoint.X, shadowPoint.Y].Objects;
                 foreach (WorldObject o in objects)
@@ -259,6 +263,7 @@ namespace Rain_On_Your_Parade
 
                     if (o.WaterLevel > 0)
                     {
+                        isAbsorbing = true;
                         player.Rain++;
                         player.colorAlpha = (1f - ((float)player.Rain / (float)Player.MAX_RAIN));
 

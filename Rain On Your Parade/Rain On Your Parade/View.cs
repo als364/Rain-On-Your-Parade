@@ -34,6 +34,11 @@ namespace Rain_On_Your_Parade
          
                 }
 
+                if (current.isAbsorbing)
+                {
+                    current.abSprite.Draw(spriteBatch, viewedModel.PixelPosition, Color.White, true, 0f);
+                }
+
                 activatedImage.Draw(spriteBatch, viewedModel.PixelPosition,
                     new Color(viewedModel.colorAlpha, viewedModel.colorAlpha, viewedModel.colorAlpha),false,0f);
            
@@ -74,6 +79,10 @@ namespace Rain_On_Your_Parade
                         {
                             deactivatedImage.Draw(spriteBatch, viewedModel.PixelPosition, Color.GhostWhite, actor.isFacingLeft(), actor.rot_level());
                         }
+                        else if (actor.State.State == ActorState.AState.Sleep && actor.Type.TypeName == ActorType.Type.Cat)
+                        {
+                            actor.sleepSprite.Draw(spriteBatch, viewedModel.PixelPosition, Color.GhostWhite, false, 0f);
+                        }
                         else activatedImage.Draw(spriteBatch, viewedModel.PixelPosition, Color.Azure, actor.isFacingLeft(), actor.rot_level());
                     }
                     else deactivatedImage.Draw(spriteBatch, viewedModel.PixelPosition, Color.Brown, actor.isFacingLeft(), actor.rot_level());
@@ -92,7 +101,7 @@ namespace Rain_On_Your_Parade
                  if (actor.State.State == ActorState.AState.Sleep)
                      spriteBatch.Draw(actor.sleepImg, new Rectangle((int)viewedModel.PixelPosition.X + 18, (int)viewedModel.PixelPosition.Y-25, 40, 40), Color.White);
                  if (actor.State.State == ActorState.AState.Fight)
-                     spriteBatch.Draw(actor.mood6, new Rectangle((int)viewedModel.PixelPosition.X + 18, (int)viewedModel.PixelPosition.Y - 25, 60, 60), Color.White);
+                     spriteBatch.Draw(actor.moodFight, new Rectangle((int)viewedModel.PixelPosition.X + 18, (int)viewedModel.PixelPosition.Y - 25, 60, 60), Color.White);
                  if (actor.State.State == ActorState.AState.Comfort)
                      spriteBatch.Draw(actor.nurtureImg, new Rectangle((int)viewedModel.PixelPosition.X + 18, (int)viewedModel.PixelPosition.Y - 25, 60, 60), Color.White);
 

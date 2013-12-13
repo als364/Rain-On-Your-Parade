@@ -53,8 +53,8 @@ namespace Rain_On_Your_Parade
                     gridNurtureEffect = 1;
                     gridRampageEffect = 3;
                     initState = new ActorState(ActorState.AState.Sleep);
-                    activatedImages.Add(Type.Cat, "cat_80");
-                    deactivatedImages.Add(Type.Cat, "cat_80");
+                    activatedImages.Add(Type.Cat, "CatWalkingForward");
+                    deactivatedImages.Add(Type.Cat, "CatFlailing");
                     fastNeedIncrease = new int[3] {1, 0, 0};
                     slowNeedIncrease = new int[3] {0, 0, 1 };
                     break;
@@ -114,10 +114,10 @@ namespace Rain_On_Your_Parade
             gridNurtureEffect = aGridNurtureEffect;
             gridRampageEffect = aGridRampageEffect;
 
-            activatedImages.Add(Type.Cat, "cat_80");
+            activatedImages.Add(Type.Cat, "CatWalkingForward");
             activatedImages.Add(Type.Kid, "KidWalkingForward");
             activatedImages.Add(Type.Mom, "MomWalkingForward");
-            deactivatedImages.Add(Type.Cat, "cat_80");
+            deactivatedImages.Add(Type.Cat, "CatFlailing");
             deactivatedImages.Add(Type.Kid, "KidFlailing");
             deactivatedImages.Add(Type.Mom, "MomFlailing");
         }

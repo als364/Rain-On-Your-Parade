@@ -32,12 +32,15 @@ namespace Rain_On_Your_Parade
         private int rot_mode;
         private bool facesLeft;
 
+
         public Texture2D mood1;
         public Texture2D mood2;
         public Texture2D mood3;
         public Texture2D mood4;
         public Texture2D mood5;
         public Texture2D mood6;
+        public Texture2D moodFight;
+        public AnimatedSprite sleepSprite;
 
         public Texture2D nurtureImg;
         public Texture2D playImg;
@@ -108,12 +111,24 @@ namespace Rain_On_Your_Parade
                     break;
 
                 case ActorType.Type.Cat:
-                    AnimatedTexture catActive = new AnimatedTexture(activatedTexture, 1, 1, false, false);
-                    List<AnimationSequence> catAct = new List<AnimationSequence>(1);
-                    catAct.Add(new AnimationSequence(0, 0, true, 1, 0.1f, catActive, null));
-
+                    AnimatedTexture catActive = new AnimatedTexture(activatedTexture, 5, 2, false, false);
+                    List<AnimationSequence> catAct = new List<AnimationSequence>(2);
+                    catAct.Add(new AnimationSequence(4, 0, true, 1, 0.1f, catActive, null));
+                    catAct.Add(new AnimationSequence(9, 5, true, 1, 0.1f, catActive, null));
                     activatedSprite = new AnimatedSprite(catAct);
-                    deactivatedSprite = new AnimatedSprite(catAct);
+
+                    Texture2D csleep = content.Load<Texture2D>("CatSleeping");
+                    AnimatedTexture catSleep = new AnimatedTexture(csleep, 5, 1, false, false);
+                    List<AnimationSequence> catS = new List<AnimationSequence>(1);
+                    catS.Add(new AnimationSequence(0, 4, true, 0, 0.1f, catSleep, null));
+                    sleepSprite = new AnimatedSprite(catS);
+                    
+                    AnimatedTexture catDeactive = new AnimatedTexture(deactivatedTexture, 3, 3, false, false);
+                    List<AnimationSequence> catDeact = new List<AnimationSequence>(1);
+                    //catDeact.Add(new AnimationSequence(2, 0, true, 1, 0.1f, catDeactive, null));
+                    //catDeact.Add(new AnimationSequence(5, 3, true, 1, 0.1f, catDeactive, null));
+                    catDeact.Add(new AnimationSequence(0, 4, true, 0, 0.1f, catDeactive, null));  
+                    deactivatedSprite = new AnimatedSprite(catDeact);
                     break;
             }
 
@@ -123,6 +138,7 @@ namespace Rain_On_Your_Parade
             mood4 = content.Load<Texture2D>("Emote4");
             mood5 = content.Load<Texture2D>("Emote5");
             mood6 = content.Load<Texture2D>("Emote6");
+            moodFight = content.Load<Texture2D>("EmoteFighting");
 
             catWet = content.Load<Texture2D>("wetCat");
             personWet = content.Load<Texture2D>("wetPerson");

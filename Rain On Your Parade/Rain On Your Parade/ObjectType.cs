@@ -36,8 +36,8 @@ namespace Rain_On_Your_Parade
                     nurtureLevel = 0;
                     rampageLevel = 0;
                     passable = true;
-                    activatedImages.Add(Type.SunnyRainbowSpot, "rainbow_80");
-                    deactivatedImages.Add(Type.SunnyRainbowSpot, "sunspot");
+                    activatedImages.Add(Type.SunnyRainbowSpot, "rainbow");
+                    deactivatedImages.Add(Type.SunnyRainbowSpot, "sunspot2");
                     break;
 
                 //case ObjectType.Type.:
@@ -179,8 +179,8 @@ namespace Rain_On_Your_Parade
             nurtureLevel = oNurture;
             rampageLevel = oRampage;
 
-            activatedImages.Add(Type.SunnyRainbowSpot, "rainbow_80");
-            deactivatedImages.Add(Type.SunnyRainbowSpot, "sunspot");
+            activatedImages.Add(Type.SunnyRainbowSpot, "rainbow");
+            deactivatedImages.Add(Type.SunnyRainbowSpot, "sunspot2");
             activatedImages.Add(Type.Garden, "garden");
             deactivatedImages.Add(Type.Garden, "drygarden");
             activatedImages.Add(Type.Pool, "pool");

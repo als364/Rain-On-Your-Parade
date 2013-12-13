@@ -18,8 +18,10 @@ namespace Rain_On_Your_Parade
         
         public int rainInit;
         public bool isRaining = false;
+        public bool isAbsorbing = false;
         public Texture2D waterImg;
         public AnimatedSprite rainSprite;
+        public AnimatedSprite abSprite;
 
         #region Getters and Setters
 
@@ -93,14 +95,16 @@ namespace Rain_On_Your_Parade
             AnimatedTexture aniTexShadow = new AnimatedTexture(textureShadow, 6, 1, false, false);
 
             Texture2D waterImg = content.Load<Texture2D>("CloudRain");
+            AnimatedTexture rainTex = new AnimatedTexture(waterImg, 3, 1, false, false);
 
-            AnimatedTexture RainSequence = new AnimatedTexture(waterImg, 3, 1, false, false);
-            List<AnimationSequence> rain = new List<AnimationSequence>(1);
-            rain.Add(new AnimationSequence(0, 2, false, 1, 0.1f, RainSequence, null));
-
-            rainSprite = new AnimatedSprite(rain);
-
-          
+            List<AnimationSequence> rainSequences = new List<AnimationSequence>(1);
+            AnimationSequence rainSeq = new AnimationSequence(0, 2, true, 1, 0.1f, rainTex, null);
+            rainSequences.Add(rainSeq);
+            rainSprite = new AnimatedSprite(rainSequences);
+            
+            List<AnimationSequence> abs = new List<AnimationSequence>(1);
+            abs.Add(new AnimationSequence(2, 0, true, 1, 0.1f, rainTex, null));
+            abSprite = new AnimatedSprite(abs);          
 
             List<AnimationSequence> aniSequences = new List<AnimationSequence>(2);
             List<AnimationSequence> overlay1 = new List<AnimationSequence>();
