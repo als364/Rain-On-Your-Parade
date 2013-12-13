@@ -60,6 +60,9 @@ namespace Rain_On_Your_Parade
         int levelStartDelay;
         bool levelPaused;
         bool levelHasEnded;
+
+        public float timer;
+
         //Boolean menuOn = true;
 
         //Add levels to Levels folder and then add name to this array
@@ -123,6 +126,8 @@ namespace Rain_On_Your_Parade
             levelStartDelay = 10;
             levelHasEnded = false;
             levelPaused = false;
+
+            timer = 500f;
 
             //if (menuOn) mainMenu.Initialize();
             switch (state)
@@ -301,6 +306,8 @@ namespace Rain_On_Your_Parade
                         return;
                     }
                     #endregion GamePaused
+
+                    if (!levelPaused) timer -= 1f / 60f;
 
                     //if (framesTillLog == 0)
                     //{
@@ -515,6 +522,7 @@ namespace Rain_On_Your_Parade
 
                     string info = "[ESC] for Pause/Controls   |   [R] to Restart";
                     spriteBatch.DrawString(font, info, new Vector2(SCREEN_WIDTH/2, 5), Color.White, 0, new Vector2(0, 0), 0.5f, SpriteEffects.None, 0);
+                    spriteBatch.DrawString(font, ((int)timer).ToString(), new Vector2(SCREEN_WIDTH - 50, SCREEN_HEIGHT - 150), Color.White, 0, new Vector2(0, 0), 1f, SpriteEffects.None, 0);
 
                     spriteBatch.End();
 

@@ -625,7 +625,7 @@ namespace Rain_On_Your_Parade
                     //objects.Add(new WorldObject(ObjectType.Type.Garden, new Point(9, 4), 1));
 
                     //Fences
-                    objects.Add(new WorldObject(ObjectType.Type.FenceV, new Point(1, 3), 0));
+                    objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(1, 3), 0));
                     objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(1, 5), 0));
                     objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(1, 6), 0));
                     objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(1, 7), 0));
