@@ -43,6 +43,7 @@ namespace Rain_On_Your_Parade
         Texture2D waterDrop;
         Texture2D background;
         Texture2D menu_background;
+
         SpriteFont font;
 
         Logger log;
@@ -499,10 +500,12 @@ namespace Rain_On_Your_Parade
               
                     //Draw the mood Meter
                     spriteBatch.Draw(batterybar, new Rectangle(0, 40, SCREEN_WIDTH, 40), Color.Black);
-                    spriteBatch.Draw(batterybar, new Rectangle(45, 45, Player.MAX_RAIN * 40 + 10, 30), Color.LightSteelBlue);
-                    spriteBatch.Draw(batterybar, new Rectangle(50, 50, Player.MAX_RAIN * 40, 20), Color.Azure);
-                    int percentInt = (int)(level.percentWon * Player.MAX_RAIN * 40);
-                    spriteBatch.Draw(batterybar, new Rectangle(50, 50, percentInt, 20), Color.Firebrick);
+                    //spriteBatch.Draw(batterybar, new Rectangle(45, 45, Player.MAX_RAIN * 40 + 10, 30), Color.LightSteelBlue);
+                    //spriteBatch.Draw(batterybar, new Rectangle(50, 50, Player.MAX_RAIN * 40, 20), Color.Azure);
+                    spriteBatch.Draw(batterybar, new Rectangle(45, 45, level.goalAngerObjects.Count*22 + level.goalAngerActors.Count*52 + 10, 30), Color.LightSteelBlue);
+                    spriteBatch.Draw(batterybar, new Rectangle(50, 50, level.goalAngerObjects.Count*22 + level.goalAngerActors.Count*52, 20), Color.Azure);
+                    //int percentInt = (int)(level.percentWon * Player.MAX_RAIN * 40);
+                    //spriteBatch.Draw(batterybar, new Rectangle(50, 50, percentInt, 20), Color.Firebrick);
                     spriteBatch.DrawString(font, "Goal", new Vector2(4, 50), Color.White, 0, new Vector2(0, 0), 0.5f, SpriteEffects.None, 0);
 
                     //Draw the incrementation
@@ -510,17 +513,39 @@ namespace Rain_On_Your_Parade
                     {
                         spriteBatch.Draw(batterybar,
                             new Rectangle(i * 40 + 10, 10, 1, 20), Color.DarkBlue);
-                        spriteBatch.Draw(batterybar,
-                            new Rectangle(i * 40 + 10, 50, 1, 20), Color.DarkRed);
+                        //spriteBatch.Draw(batterybar,
+                         //   new Rectangle(i * 40 + 10, 50, 1, 20), Color.DarkRed);
                     }
 
                     //TODO: Display Icon of objects/actors that need to be ruined
+                    for (int i = 0; i < level.goalAngerActors.Count; i++)
+                    {
+                        Color iconBG = (level.goalAngerActors[i].Type.TypeName == ActorType.Type.Cat) ? Color.Orange :
+                            (level.goalAngerActors[i].Type.TypeName == ActorType.Type.Kid) ? Color.Blue : Color.Green;
+                        Color iconColor = (level.goalAngerActors[i].Mood > 4) ? Color.DarkRed : iconBG;
+                        string iconTexture = (level.goalAngerActors[i].Type.TypeName == ActorType.Type.Cat) ? "cat" :
+                            (level.goalAngerActors[i].Type.TypeName == ActorType.Type.Kid) ? "kid" : "mom";
+                        spriteBatch.Draw(batterybar, new Rectangle(50 + i * 52, 50, 50, 20), iconColor);
+                        spriteBatch.DrawString(font, iconTexture, new Vector2(50 + i * 52 + 25, 50), Color.White, 0, new Vector2(font.MeasureString(iconTexture).X / 2, 0), 0.8f, SpriteEffects.None, 0);
+                    }
+
+                    for (int i = 0; i < level.goalAngerObjects.Count; i++)
+                    {
+                        int y_dist = 50;
+                        int x_dist = i;
+                        Color iconColor = (!level.goalAngerObjects[i].Activated) ? Color.DarkRed : Color.Goldenrod;
+                        string iconTexture = "Fl";
+                        spriteBatch.Draw(batterybar, new Rectangle(50 + x_dist * 22, y_dist, 20, 20), iconColor);
+                        spriteBatch.DrawString(font, iconTexture, new Vector2(50 + x_dist * 22 + 10, y_dist), Color.White, 0, new Vector2(font.MeasureString(iconTexture).X / 2, 0), 0.8f, SpriteEffects.None, 0);
+                    }
+
+
                     //Remind Player of their objective
                     //spriteBatch.DrawString(font, level.objectiveMessage, new Vector2(SCREEN_WIDTH/2, 5), Color.White, 0, new Vector2(0, 0), 0.5f, SpriteEffects.None, 0);
 
-                    string info = "[ESC] for Pause/Controls   |   [R] to Restart";
-                    spriteBatch.DrawString(font, info, new Vector2(SCREEN_WIDTH/2, 5), Color.White, 0, new Vector2(0, 0), 0.5f, SpriteEffects.None, 0);
-                    spriteBatch.DrawString(font, "Time Remaining: " + ((int)timer).ToString(), new Vector2(SCREEN_WIDTH - 300, 60), Color.White, 0, new Vector2(0, 0), 1f, SpriteEffects.None, 0);
+                    string info = "[ESC] for Pause/Controls\n[R] to Restart";
+                    spriteBatch.DrawString(font, info, new Vector2(SCREEN_WIDTH/2, 2), Color.White, 0, new Vector2(0, 0), 0.8f, SpriteEffects.None, 0);
+                    spriteBatch.DrawString(font, "Time Remaining: " + ((int)timer).ToString(), new Vector2(SCREEN_WIDTH - 200, 2), Color.White, 0, new Vector2(0, 0), 0.9f, SpriteEffects.None, 0);
 
                     spriteBatch.End();
 
