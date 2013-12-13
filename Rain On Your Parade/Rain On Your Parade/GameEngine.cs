@@ -522,7 +522,7 @@ namespace Rain_On_Your_Parade
 
                     spriteBatch.DrawString(font, info, new Vector2(SCREEN_WIDTH/2, 5), Color.White, 0, new Vector2(0, 0), 0.8f, SpriteEffects.None, 0);
 
-                   spriteBatch.DrawString(font, level.hint, new Vector2(SCREEN_WIDTH / 2, 25), Color.White, 0, new Vector2(0, 0), 1f, SpriteEffects.None, 0);
+                    spriteBatch.DrawString(font, level.hint, new Vector2(SCREEN_WIDTH / 2, 25), Color.White, 0, new Vector2(0, 0), 1f, SpriteEffects.None, 0);
 
                     spriteBatch.DrawString(font, "Time Remaining: " + ((int)timer).ToString(), new Vector2(SCREEN_WIDTH - 300, 60), Color.White, 0, new Vector2(0, 0), 1f, SpriteEffects.None, 0);
 
