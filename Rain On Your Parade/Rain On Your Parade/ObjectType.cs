@@ -137,8 +137,8 @@ namespace Rain_On_Your_Parade
                     nurtureLevel = 0;
                     rampageLevel = 0;
                     passable = false;
-                    activatedImages.Add(Type.Fence, "fence2");
-                    deactivatedImages.Add(Type.Fence, "fence2");
+                    activatedImages.Add(Type.FenceV, "fence2");
+                    deactivatedImages.Add(Type.FenceV, "fence2");
                     break;
 
                 case ObjectType.Type.Laundry:
@@ -215,8 +215,8 @@ namespace Rain_On_Your_Parade
             deactivatedImages.Add(Type.Sidewalk, "sidewalk");
             activatedImages.Add(Type.Fence, "fence");
             deactivatedImages.Add(Type.Fence, "fence");
-            activatedImages.Add(Type.Fence, "fence2");
-            deactivatedImages.Add(Type.Fence, "fence2");
+            activatedImages.Add(Type.FenceV, "fence2");
+            deactivatedImages.Add(Type.FenceV, "fence2");
             activatedImages.Add(Type.Invisible, "invisible");
             deactivatedImages.Add(Type.Invisible, "invisible");
         }
