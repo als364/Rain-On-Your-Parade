@@ -97,7 +97,7 @@ namespace Rain_On_Your_Parade
             AnimatedTexture rainTex = new AnimatedTexture(waterImg, 3, 1, false, false);
 
             List<AnimationSequence> rainSequences = new List<AnimationSequence>(1);
-            AnimationSequence rainSeq = new AnimationSequence(0, 2, true, 1, 0.1f, rainTex, null);
+            AnimationSequence rainSeq = new AnimationSequence(0, 2, true, 0, 0.1f, rainTex, null);
             rainSequences.Add(rainSeq);
             rainSprite = new AnimatedSprite(rainSequences);
             
