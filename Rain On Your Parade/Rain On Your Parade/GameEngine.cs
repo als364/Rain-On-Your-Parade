@@ -232,8 +232,12 @@ namespace Rain_On_Your_Parade
             {
                 case GameState.Game:
 
+
+                    //Do timey-wimey stuff
+                    if (!levelPaused) timer -= 1f / 60f;                    
+
                     #region GameOver
-                    if (levelHasEnded)
+                    if (levelHasEnded || timer == 0)
                     {
                         //Record Results
                         int optionSelected = levelEnd.Update();
@@ -306,7 +310,7 @@ namespace Rain_On_Your_Parade
                     }
                     #endregion GamePaused
 
-                    if (!levelPaused) timer -= 1f / 60f;
+                    
 
                     //if (framesTillLog == 0)
                     //{
@@ -420,6 +424,7 @@ namespace Rain_On_Your_Parade
                         level.upateGridSquares();
                         
                     }
+
                     break;
 
                 case GameState.MainMenu:
@@ -572,6 +577,12 @@ namespace Rain_On_Your_Parade
                     }
 
                     //Game Over Screen
+                    if (timer == 0)
+                    {
+                        levelEnd.Draw(spriteBatch);
+                    }
+
+                    //Game Start Screen
                     if (levelNotStarted)
                     {
                         levelStart.Draw(spriteBatch, level.title, level.objectiveMessage,level.initialRain);
