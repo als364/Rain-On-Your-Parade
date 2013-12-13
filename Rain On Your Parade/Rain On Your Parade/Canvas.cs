@@ -722,7 +722,7 @@ namespace Rain_On_Your_Parade
 
                     initialRain = 4;
                     title = "Level 9\nKill the Flowers II";
-                    hint = "hint";
+                    hint = "Hint: Space your moves out strategically!";
                     objectiveMessage = "Goal: Drain the flowers of water.\nSoak laundry before moms dry it.\nBeware the motherly nurturing!";
 
                     //mom 1,1 4,4 8,7
@@ -795,6 +795,7 @@ namespace Rain_On_Your_Parade
                     #region level8
 
                     title = "Level 3\nC is for Cat";
+                    hint = "Rain + Sunny Spot = Rainbow";
                     objectiveMessage = "Goal: Make cats unhappy.\nRain on sunspots to form Rainbows\nand attract nearby cats together.";
 
                     actors.Add(new Actor(ActorType.Type.Cat, new Point(9, 1)));
