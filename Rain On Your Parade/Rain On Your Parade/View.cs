@@ -11,6 +11,8 @@ namespace Rain_On_Your_Parade
     class View
     {
         protected Model viewedModel;
+        
+
         public Model ViewedModel { get { return viewedModel; } }
 
         public View(Model model)
@@ -59,6 +61,14 @@ namespace Rain_On_Your_Parade
                         //    activatedImage.Draw(spriteBatch, viewedModel.PixelPosition, new Color(alpha, alpha, alpha, alpha));
                         //}
                         activatedImage.Draw(spriteBatch, viewedModel.PixelPosition, Color.White,false,0f);
+
+                        if (current.Type.TypeName == ObjectType.Type.Chalking)
+                        {
+                            spriteBatch.Begin();
+                            spriteBatch.Draw(current.chalkImg, viewedModel.PixelPosition, Color.White);
+                            spriteBatch.End();
+                        }
+
                         break;
                     case false:
                         deactivatedImage.Draw(spriteBatch, viewedModel.PixelPosition, Color.White,false,0f);
