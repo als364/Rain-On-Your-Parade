@@ -36,7 +36,7 @@ namespace Rain_On_Your_Parade
 
                 if (current.isAbsorbing)
                 {
-                    current.abSprite.Draw(spriteBatch, viewedModel.PixelPosition, Color.Crimson , true, 0f);
+                    current.abSprite.Draw(spriteBatch, new Vector2 (viewedModel.PixelPosition.X, viewedModel.PixelPosition.Y - 80f), Color.Crimson , true, 0f);
                 }
 
                 activatedImage.Draw(spriteBatch, viewedModel.PixelPosition,

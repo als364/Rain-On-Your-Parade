@@ -6,7 +6,7 @@ namespace Rain_On_Your_Parade
     public class ObjectType
     {
 
-        public enum Type {SunnyRainbowSpot, Garden, Pool, Chalking, Sidewalk, Fence, Laundry, House, Invisible};
+        public enum Type {SunnyRainbowSpot, Garden, Pool, Chalking, Sidewalk, Fence, FenceV, Laundry, House, Invisible};
         Hashtable activatedImages = new Hashtable();
         Hashtable deactivatedImages = new Hashtable();
         private Type typeName;
@@ -124,6 +124,20 @@ namespace Rain_On_Your_Parade
                     deactivatedImages.Add(Type.Fence, "fence");
                     break;
 
+                case ObjectType.Type.FenceV:
+                    isWetObject = false;
+                    canActivate = false;
+                    startsWet = false;
+                    holdsWater = false;
+                    sleepLevel = 0;
+                    playLevel = 0;
+                    nurtureLevel = 0;
+                    rampageLevel = 0;
+                    passable = false;
+                    activatedImages.Add(Type.Fence, "fence2");
+                    deactivatedImages.Add(Type.Fence, "fence2");
+                    break;
+
                 case ObjectType.Type.Laundry:
                     isWetObject = false;
                     canActivate = true;
@@ -195,6 +209,8 @@ namespace Rain_On_Your_Parade
             deactivatedImages.Add(Type.Sidewalk, "sidewalk");
             activatedImages.Add(Type.Fence, "fence");
             deactivatedImages.Add(Type.Fence, "fence");
+            activatedImages.Add(Type.Fence, "fence2");
+            deactivatedImages.Add(Type.Fence, "fence2");
             activatedImages.Add(Type.Invisible, "invisible");
             deactivatedImages.Add(Type.Invisible, "invisible");
         }
