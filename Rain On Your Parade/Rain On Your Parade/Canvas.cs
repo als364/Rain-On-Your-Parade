@@ -394,7 +394,7 @@ namespace Rain_On_Your_Parade
                     //initialRain = 20;
                     title = "Level 3 - Make Kids Fight";
                     objectiveMessage = "Goal: Anger both of the children!\n"+
-                    "Use your shadow and rain on the sunny spots to heard angry children twords each other to fight./n Kids fighting will make them angry by 1.";
+                    "Use your shadow to herd angry children twords each other to fight.\n Raining on a sunnyspot will create a rainbow to lure children for a short time!\n Kids fighting will make them angry by 1.";
 
                     //fence 0,5 to 0,9
                     objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(0, 2), 0));
