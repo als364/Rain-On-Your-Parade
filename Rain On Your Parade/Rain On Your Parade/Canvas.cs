@@ -68,7 +68,6 @@ namespace Rain_On_Your_Parade
             foreach (Actor actor in actors)
             {
                 Grid[actor.GridspacePosition.X, actor.GridspacePosition.Y].add(actor);
-                //moodActors.Add(actor);
             }
             foreach (GridSquare square in Grid)
             {
@@ -114,7 +113,7 @@ namespace Rain_On_Your_Parade
             objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(9, 0), 0));
             objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(10, 0), 0));
             objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(11, 0), 0));
-
+           
             switch (level)
             {
                 case 1:
@@ -225,7 +224,6 @@ namespace Rain_On_Your_Parade
 
                     win = GameEngine.WinCondition.Actors;
                     #endregion level2
-                    break;
                     break;
                 case 3:
                     //Level 3 - Kill the Flowers v2.0 (Goal: WorldObject Garden)
@@ -548,6 +546,8 @@ namespace Rain_On_Your_Parade
                     //Set win condition for level
                     win = GameEngine.WinCondition.Actors;
                     aType = ActorType.Type.Cat;
+
+                    Console.WriteLine(actors.Count);
 
                     //Add actors/objects that need to be fully angered
                     updateAngerList();
@@ -1266,8 +1266,8 @@ namespace Rain_On_Your_Parade
 
         public void updateAngerList()
         {
-            angerActors = new List<Actor>();
-            angerObjects = new List<WorldObject>();
+            goalAngerActors = new List<Actor>();
+            goalAngerObjects = new List<WorldObject>();
 
             switch (win)
             {
@@ -1285,6 +1285,8 @@ namespace Rain_On_Your_Parade
                             goalAngerActors.Add(a);
                         }
                     }
+                    Console.WriteLine("Total actors: " + actors.Count);
+                    Console.WriteLine("Goal anger actors: " + goalAngerActors.Count);
                     break;
                 case GameEngine.WinCondition.Objects:
                     foreach (WorldObject o in objects)

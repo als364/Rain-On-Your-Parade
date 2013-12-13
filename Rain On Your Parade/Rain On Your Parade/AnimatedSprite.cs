@@ -70,7 +70,6 @@ namespace Rain_On_Your_Parade
 
             if (timeElapsed >= currentSequence.TimePerFrame) 
             {
-                //Console.Write(currentFrame.ToString() + "\n");
 
                 // process a reversing sequence
                 if (currentSequence.ReverseFrames)
@@ -91,14 +90,12 @@ namespace Rain_On_Your_Parade
                         // check if we need to switch to the next sequence
                         if (counter == currentSequence.SeqCounter)
                         {
-                            //Console.Write("switching sequences and resetting counter\n");
                             // switch to the next sequence
                             NextInSequence();
                             counter = 0;
                         }
                         else
                         {
-                            //Console.Write("incrementing counter and reversing\n");
                             // increment counter and set current
                             counter++;
                             currentSequence.GoForward = !currentSequence.GoForward;
@@ -144,7 +141,6 @@ namespace Rain_On_Your_Parade
             int row = (int)((float)currentFrame / (float)currentSequence.Texture.Columns);
             int column = currentFrame % currentSequence.Texture.Columns;
 
-            //Console.Write("("+row.ToString()+", "+column.ToString()+")\n");
 
             Rectangle sourceRectangle = new Rectangle(width * column, height * row, width, height);
             Rectangle destinationRectangle = new Rectangle((int)location.X, (int)location.Y, width, height);

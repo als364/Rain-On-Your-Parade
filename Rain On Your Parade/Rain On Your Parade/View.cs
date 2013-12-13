@@ -79,7 +79,6 @@ namespace Rain_On_Your_Parade
                     else deactivatedImage.Draw(spriteBatch, viewedModel.PixelPosition, Color.Brown, actor.isFacingLeft(), actor.rot_level());
 
                     Texture2D[] moods = new Texture2D[6] {actor.mood1,actor.mood2,actor.mood3,actor.mood4,actor.mood5,actor.mood6};
-                    //Console.WriteLine(actor.Mood);
 
                     spriteBatch.Begin();
 

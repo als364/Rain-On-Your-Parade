@@ -95,7 +95,6 @@ namespace Rain_On_Your_Parade
                 if (controlledActor.InteractingActor != null)
                 {
                     controlledActor.IncrementMood();
-                    Console.WriteLine("Ending interaction");
                     controlledActor.InteractionTimer = -120;
                     controlledActor.InteractingActor.State.State = ActorState.AState.Seek;
                     controlledActor.InteractingActor.InteractionTimer = -120;

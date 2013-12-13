@@ -27,7 +27,6 @@ namespace Rain_On_Your_Parade
         KeyboardState oldKeyboardState;
         SpriteFont font;
 
-        int num_col = 2;
         int iconHeight = 50;
         int iconWidth = 150;
 

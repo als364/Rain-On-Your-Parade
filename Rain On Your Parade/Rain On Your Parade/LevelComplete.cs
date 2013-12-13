@@ -116,7 +116,7 @@ namespace Rain_On_Your_Parade
             spriteBatch.Draw(bg_box_trans, new Rectangle(GameEngine.SCREEN_WIDTH / 8, GameEngine.SCREEN_HEIGHT / 4, 3 * GameEngine.SCREEN_WIDTH / 4, GameEngine.SCREEN_HEIGHT / 2), Color.Black);
             
             //Score
-            string score = "Your Score Data Here!";
+            string score = "You successfully wreaked havoc on innocent bystanders.";
             spriteBatch.DrawString(font, "You Win!", new Vector2(GameEngine.SCREEN_WIDTH / 2 - 250, GameEngine.SCREEN_HEIGHT / 2 - 80), Color.White, 0, new Vector2(0, 0), 1f, SpriteEffects.None, 0);
             spriteBatch.DrawString(font, score, new Vector2(GameEngine.SCREEN_WIDTH / 2 - 250, GameEngine.SCREEN_HEIGHT / 2 - 40), Color.White, 0, new Vector2(0, 0), 0.8f, SpriteEffects.None, 0);
             

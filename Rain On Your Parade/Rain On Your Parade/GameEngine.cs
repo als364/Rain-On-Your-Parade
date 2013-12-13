@@ -319,21 +319,21 @@ namespace Rain_On_Your_Parade
                     {
                         case WinCondition.Mood:
                             level.percentWon = ((float)level.angerActors.Count) / ((float)level.goalAngerActors.Count);
-                            if (level.percentWon >= .99)
+                            if (level.percentWon >= 0.99)
                             {
                                 levelHasEnded = true;
                             }
                             break;
                         case WinCondition.Actors:
-                            level.percentWon = ((float)level.angerActors.Count) / ((float)level.goalAngerObjects.Count);
-                            if (level.percentWon >= .99)
+                            level.percentWon = ((float)level.angerActors.Count) / ((float)level.goalAngerActors.Count);
+                            if (level.percentWon >= 0.99)
                             {
                                 levelHasEnded = true;
                             }
                             break;
                         case WinCondition.Objects:
                             level.percentWon = ((float)level.angerObjects.Count) / (float)level.goalAngerObjects.Count;
-                            if (level.percentWon >= .99)
+                            if (level.percentWon >= 0.99)
                             {
                                 levelHasEnded = true;
                             }
