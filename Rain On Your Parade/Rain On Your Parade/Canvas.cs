@@ -122,9 +122,9 @@ namespace Rain_On_Your_Parade
                     #region levelone
                     initialRain = Player.MAX_RAIN; //don't start with 10, this is a tutorial level -- it's supposed to be easy
 
-                    title = "Level 1 - Soak the Cat";
+                    title = "Level 1\nSoak the Cat";
                     hint = "Hint: Wait for the Cat to dry off before raining again";
-                    objectiveMessage = "Goal: Rain on the cat to upset him, angering him by 1 each time.\nUse [SPACEBAR] to Rain.\nUse [WASD] or [Arrow] to move.";
+                    objectiveMessage = "Goal: Rain on the cat to upset him,\nangering him by 1 each time.\nUse [SPACEBAR] to Rain.\nUse [WASD] or [Arrow] to move.";
 
                     //fence 1,9 to 8,9 
                     objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(2, 7), 0));
@@ -177,9 +177,9 @@ namespace Rain_On_Your_Parade
                     #region level2
 
                     initialRain = 0;
-                    title = "Level 2 - Kill Flowers: Upset Cat";
+                    title = "Level 2\nKill Flowers: Upset Cat";
                     hint = "Hint: Cats don't like it when you drain their flowers";
-                    objectiveMessage = "Goal: Drain the flowers to gain water.\n Use [Alt] to Absorb its water.\nIf you absorb water while the Cat is sleeping, this will upset him!\n His mood will get upset by 2";
+                    objectiveMessage = "Goal: Drain flowers to gain water.\nUse [Alt] to Absorb water.\nIf you absorb water while the Cat is\nsleeping, his mood will worsen by 2!";
 
                     //TOP
                     //fence 2,2 to 7,2
@@ -237,10 +237,10 @@ namespace Rain_On_Your_Parade
                     //#region level5
 
                     initialRain = 0;
-                    title = "Level 3 - Absorb the Pool";
+                    title = "Level 3\nAbsorb the Pool";
                     hint = "Hint: You can rain to refill swimming pools!";
                     objectiveMessage = "Goal: Anger both of the children.\n" +
-                    "Use can also use your shadow to herd angry children twords each other to fight.\n Kids fight when they are both frowning or one is VERY upset! \n Kids fighting will make them angry by 1.";
+                    "Use can use your shadow to herd \nangry children towards each other. \nKids fight when both are frowning \nor if one is VERY upset! The \nmood of fighting kids worsens by 2.";
 
                     //fence 0,5 to 0,9
                     objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(0, 2), 0));
@@ -332,10 +332,10 @@ namespace Rain_On_Your_Parade
 
                     initialRain = 0;
 
-                    title = "Level 3 - Make Kids Cry";
+                    title = "Level 4\nMake Kids Cry";
                     hint = "Hint: Rain on sunny spots to lure kid near angry cat!";
-                    objectiveMessage = "Goal: Make everyone upset.  Raining on a sunnyspot will create a rainbow to lure children for a short time!\n"
-                    + "Remember: Characters that are very angry with fight with others.";
+                    objectiveMessage = "Goal: Make everyone upset.\nRaining on a sunnyspot will create a \nrainbow, attracting children for a \nshort time!"
+                    + " Remember: Characters \nthat are very angry will fight.";
 
 
                     //title = "Level 3 - Make Kids Cry";
@@ -411,9 +411,9 @@ namespace Rain_On_Your_Parade
 
                     initialRain = 0;
 
-                    title = "Level 3 - Make Kids Cry";
+                    title = "Level 5\nMake Kids Cry";
                     hint = "Hint: Lure kids to full pools then ABSORB to upset them.";
-                    objectiveMessage = "Goal: Make all the kids upset. Lure the children to the pools the rip out the water!";
+                    objectiveMessage = "Goal: Make all the kids upset. \nLure the children to the pools \nthen drain out the water!";
 
                     //title = "Level 3 - Make Kids Cry";
                     //objectiveMessage = "Goal: Make all the kids upset.\nTry raining on the sun spots to create a rainbow and lure kids!";
@@ -494,10 +494,10 @@ namespace Rain_On_Your_Parade
                     #region level6
 
                      initialRain = 5;
-                     title = "Level 6 - Fight!";
-                     hint=  "Hint: Ruining moms laundry will make her unhappy"; 
-                     objectiveMessage = "Goal: Make Everyone Angry! Be careful though,\n"+
-                     "Mom will not fight with others but cheer them up if she is happy!";
+                     title = "Level 6\nFight!";
+                     hint=  "Hint: Ruining mom's laundry will make her unhappy"; 
+                     objectiveMessage = "Goal: Make Everyone Angry!\nBe careful though,"+
+                     " Mom will not \nfight with others. Instead she'll\ncheer them up if she is happy!";
 
                   /*  //fence 0,5 to 0,9
                     objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(0, 5), 0));
