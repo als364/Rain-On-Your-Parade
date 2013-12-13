@@ -413,6 +413,32 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\CloudRain.xnb">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\wetCat.xnb">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\wetPerson.xnb">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Content\CatFlailing.xnb" />
+    <None Include="Content\CatSleeping.xnb" />
+    <None Include="Content\CatWalkingForward.xnb" />
+    <None Include="Content\chalking1.xnb" />
+    <None Include="Content\chalking2.xnb" />
+    <None Include="Content\chalking3.xnb" />
+    <None Include="Content\chalking4.xnb" />
+    <None Include="Content\chalking5.xnb" />
+    <None Include="Content\chalking6.xnb" />
+    <None Include="Content\chalking7.xnb" />
+    <None Include="Content\chalking8.xnb" />
+    <None Include="Content\EmoteFighting.xnb" />
+    <None Include="Content\sunspot2.xnb" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

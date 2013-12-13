@@ -129,7 +129,7 @@ namespace Rain_On_Your_Parade
             for (int i = 0; i <= PAUSE_OPTION_NUM; i++)
             {
 
-                string optionName = (i == 0) ? "Continue" : "Main Menu" ;
+                string optionName = (i == 0) ? "Resume" : "Main Menu" ;
 
                 if (i == selectedPauseOption)
                 {

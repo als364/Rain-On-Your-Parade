@@ -93,7 +93,7 @@ namespace Rain_On_Your_Parade
                     rampageLevel = 0;
                     passable = true;
                     activatedImages.Add(Type.Chalking, "chalking");
-                    deactivatedImages.Add(Type.Chalking, "sidewalk_80");
+                    deactivatedImages.Add(Type.Chalking, "sidewalk");
                     break;
 
                 case ObjectType.Type.Sidewalk:
@@ -106,8 +106,8 @@ namespace Rain_On_Your_Parade
                     nurtureLevel = 0;
                     rampageLevel = 0;
                     passable = true;
-                    activatedImages.Add(Type.Sidewalk, "sidewalk_80");
-                    deactivatedImages.Add(Type.Sidewalk, "sidewalk_80");
+                    activatedImages.Add(Type.Sidewalk, "sidewalk");
+                    deactivatedImages.Add(Type.Sidewalk, "sidewalk");
                     break;
 
                 case ObjectType.Type.Fence:
@@ -186,13 +186,13 @@ namespace Rain_On_Your_Parade
             activatedImages.Add(Type.Pool, "pool");
             deactivatedImages.Add(Type.Pool, "drypool");
             activatedImages.Add(Type.Chalking, "chalking");
-            deactivatedImages.Add(Type.Chalking, "sidewalk_80");
+            deactivatedImages.Add(Type.Chalking, "sidewalk");
             activatedImages.Add(Type.Laundry, "wetlaundry");
             deactivatedImages.Add(Type.Laundry, "laundry");
             activatedImages.Add(Type.House, "house");
             deactivatedImages.Add(Type.House, "house");
-            activatedImages.Add(Type.Sidewalk, "sidewalk_80");
-            deactivatedImages.Add(Type.Sidewalk, "sidewalk_80");
+            activatedImages.Add(Type.Sidewalk, "sidewalk");
+            deactivatedImages.Add(Type.Sidewalk, "sidewalk");
             activatedImages.Add(Type.Fence, "fence");
             deactivatedImages.Add(Type.Fence, "fence");
             activatedImages.Add(Type.Invisible, "invisible");
