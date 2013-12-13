@@ -200,7 +200,7 @@ namespace Rain_On_Your_Parade
 
                        if (a.State.State == a.TargetState)
                         {
-                           a.IncrementMood();
+                           //a.IncrementMood();
                            a.IncrementMood();
                            a.State.State = ActorState.AState.Seek;
                         }
@@ -218,14 +218,14 @@ namespace Rain_On_Your_Parade
                 List<WorldObject> objects = level.Grid[shadowPoint.X, shadowPoint.Y].Objects;
                 foreach (WorldObject o in objects)
                 {
-                    if (o.ActorsInteracted.Count > 0)
+                   /* if (o.ActorsInteracted.Count > 0)
                     {
                         foreach (Actor a in o.ActorsInteracted)
                         {
                             a.IncrementMood();
                         }
                         o.ActorsInteracted.Clear();
-                    }
+                    }*/
 
                     //Console.Write(o.ToString() + "object rained upon\n");
 
@@ -290,7 +290,7 @@ namespace Rain_On_Your_Parade
 
                                // if (a.State.State == a.TargetState)
                                // {
-                                    a.IncrementMood();
+                                   // a.IncrementMood();
                                     a.IncrementMood();
                                     a.State.State = ActorState.AState.Seek;
                                     //Console.WriteLine("RAINED ON TARGET ITEM");
