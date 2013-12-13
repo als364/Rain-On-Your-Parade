@@ -106,9 +106,9 @@ namespace Rain_On_Your_Parade
             spriteBatch.Draw(bg_box_trans, new Rectangle(GameEngine.SCREEN_WIDTH / 8, GameEngine.SCREEN_HEIGHT / 4, 3 * GameEngine.SCREEN_WIDTH / 4, GameEngine.SCREEN_HEIGHT / 2), Color.Black);
             spriteBatch.DrawString(font, "Press [SPACEBAR] or [ENTER] to Start", new Vector2(GameEngine.SCREEN_WIDTH / 2 - 150, GameEngine.SCREEN_HEIGHT / 8 + 100), Color.White, 0, new Vector2(0, 0), 0.8f, SpriteEffects.None, 0);
 
-            spriteBatch.DrawString(font, levelTitle, new Vector2(GameEngine.SCREEN_WIDTH / 2 - 250, GameEngine.SCREEN_HEIGHT / 2 - 80), Color.White, 0, new Vector2(0, 0), 1f, SpriteEffects.None, 0);
-            spriteBatch.DrawString(font, "Your initial rain level is " + initialRain.ToString() + " units", new Vector2(GameEngine.SCREEN_WIDTH / 2 - 250, GameEngine.SCREEN_HEIGHT / 2 - 40), Color.White, 0, new Vector2(0, 0), 1f, SpriteEffects.None, 0);
-            spriteBatch.DrawString(font, levelHelp, new Vector2(GameEngine.SCREEN_WIDTH / 2 - 250, GameEngine.SCREEN_HEIGHT / 2), Color.White, 0, new Vector2(0, 0), 0.8f, SpriteEffects.None, 0);
+            spriteBatch.DrawString(font, levelTitle, new Vector2(GameEngine.SCREEN_WIDTH / 2 - 250, GameEngine.SCREEN_HEIGHT / 2 - 120), Color.White, 0, new Vector2(0, 0), 1f, SpriteEffects.None, 0);
+            spriteBatch.DrawString(font, "Your initial rain level is " + initialRain.ToString() + " units", new Vector2(GameEngine.SCREEN_WIDTH / 2 - 250, GameEngine.SCREEN_HEIGHT / 2 - 60), Color.White, 0, new Vector2(0, 0), 0.7f, SpriteEffects.None, 0);
+            spriteBatch.DrawString(font, levelHelp, new Vector2(GameEngine.SCREEN_WIDTH / 2 - 250, GameEngine.SCREEN_HEIGHT / 2 -20), Color.White, 0, new Vector2(0, 0), 0.7f, SpriteEffects.None, 0);
 
             spriteBatch.Draw(bg_box, new Rectangle(GameEngine.SCREEN_WIDTH / 4  + marLeft + 80, 3 * GameEngine.SCREEN_HEIGHT / 8 + marTop + 70, iconWidth, iconHeight), Color.White);
             spriteBatch.Draw(bg_box, new Rectangle(GameEngine.SCREEN_WIDTH / 4  + marLeft + 5 + 80, 3 * GameEngine.SCREEN_HEIGHT / 8 + marTop + 70 + 5, iconWidth - 10, iconHeight - 10), Color.Black);

@@ -117,8 +117,8 @@ namespace Rain_On_Your_Parade
 
             spriteBatch.Draw(bg_box_trans, new Rectangle(GameEngine.SCREEN_WIDTH / 8, GameEngine.SCREEN_HEIGHT / 4, 3 * GameEngine.SCREEN_WIDTH / 4, GameEngine.SCREEN_HEIGHT / 2), Color.Black);
 
-            spriteBatch.DrawString(font, levelTitle, new Vector2(GameEngine.SCREEN_WIDTH / 4, GameEngine.SCREEN_HEIGHT / 2 - 70), Color.White, 0, new Vector2(0, 0), 1f, SpriteEffects.None, 0);
-            spriteBatch.DrawString(font, levelHelp, new Vector2(GameEngine.SCREEN_WIDTH / 4, GameEngine.SCREEN_HEIGHT / 2 - 30), Color.White, 0, new Vector2(0, 0), 0.8f, SpriteEffects.None, 0);
+            spriteBatch.DrawString(font, levelTitle, new Vector2(GameEngine.SCREEN_WIDTH / 4, GameEngine.SCREEN_HEIGHT / 2 - 90), Color.White, 0, new Vector2(0, 0), 0.9f, SpriteEffects.None, 0);
+            spriteBatch.DrawString(font, levelHelp, new Vector2(GameEngine.SCREEN_WIDTH / 4, GameEngine.SCREEN_HEIGHT / 2 - 30), Color.White, 0, new Vector2(0, 0), 0.7f, SpriteEffects.None, 0);
 
             spriteBatch.DrawString(font, "Controls (Game Paused)", new Vector2(GameEngine.SCREEN_WIDTH / 2, GameEngine.SCREEN_HEIGHT / 8 + 100), Color.White, 0, new Vector2(font.MeasureString("Controls (Game Paused)").X / 2, 0), 1.2f, SpriteEffects.None, 0);
 

@@ -505,7 +505,7 @@ namespace Rain_On_Your_Parade
                     spriteBatch.Draw(batterybar, new Rectangle(50, 50, level.goalAngerObjects.Count*22 + level.goalAngerActors.Count*52, 20), Color.Azure);
                     //int percentInt = (int)(level.percentWon * Player.MAX_RAIN * 40);
                     //spriteBatch.Draw(batterybar, new Rectangle(50, 50, percentInt, 20), Color.Firebrick);
-                    spriteBatch.DrawString(font, "Goal", new Vector2(4, 50), Color.White, 0, new Vector2(0, 0), 0.9f, SpriteEffects.None, 0);
+                    spriteBatch.DrawString(font, "Goal", new Vector2(4, 50), Color.White, 0, new Vector2(0, 0), 0.7f, SpriteEffects.None, 0);
 
                     //Draw the incrementation
                     for (int i = 1; i <= Player.MAX_RAIN; i++)
@@ -525,7 +525,7 @@ namespace Rain_On_Your_Parade
                         string iconTexture = (level.goalAngerActors[i].Type.TypeName == ActorType.Type.Cat) ? "cat" :
                             (level.goalAngerActors[i].Type.TypeName == ActorType.Type.Kid) ? "kid" : "mom";
                         spriteBatch.Draw(batterybar, new Rectangle(50 + i * 52, 50, 50, 20), iconColor);
-                        spriteBatch.DrawString(font, iconTexture, new Vector2(50 + i * 52 + 25, 50), Color.White, 0, new Vector2(font.MeasureString(iconTexture).X / 2, 0), 0.8f, SpriteEffects.None, 0);
+                        spriteBatch.DrawString(font, iconTexture, new Vector2(50 + i * 52 + 25, 50), Color.White, 0, new Vector2(font.MeasureString(iconTexture).X / 2, 0), 0.6f, SpriteEffects.None, 0);
                     }
 
                     for (int i = 0; i < level.goalAngerObjects.Count; i++)
@@ -535,7 +535,7 @@ namespace Rain_On_Your_Parade
                         Color iconColor = (!level.goalAngerObjects[i].Activated) ? Color.DarkRed : Color.Goldenrod;
                         string iconTexture = "Fl";
                         spriteBatch.Draw(batterybar, new Rectangle(50 + x_dist * 22, y_dist, 20, 20), iconColor);
-                        spriteBatch.DrawString(font, iconTexture, new Vector2(50 + x_dist * 22 + 10, y_dist), Color.White, 0, new Vector2(font.MeasureString(iconTexture).X / 2, 0), 0.8f, SpriteEffects.None, 0);
+                        spriteBatch.DrawString(font, iconTexture, new Vector2(50 + x_dist * 22 + 10, y_dist), Color.White, 0, new Vector2(font.MeasureString(iconTexture).X / 2, 0), 0.6f, SpriteEffects.None, 0);
                     }
 
 
@@ -550,13 +550,13 @@ namespace Rain_On_Your_Parade
                 
 
                     string info = "[ESC] for Pause/Controls | [R] to Restart";
-                    spriteBatch.DrawString(font, info, new Vector2(SCREEN_WIDTH - 5, 22), Color.White, 0, new Vector2(font.MeasureString(info).X, 0), 0.8f, SpriteEffects.None, 0);
+                    spriteBatch.DrawString(font, info, new Vector2(SCREEN_WIDTH - 5, 22), Color.White, 0, new Vector2(font.MeasureString(info).X, 0), 0.6f, SpriteEffects.None, 0);
                     //spriteBatch.DrawString(font, "[R] to Restart", new Vector2(SCREEN_WIDTH - 5, 22), Color.White, 0, new Vector2(font.MeasureString("[R] to Restart").X, 0), 0.8f, SpriteEffects.None, 0);
 
 
                     //spriteBatch.DrawString(font, info, new Vector2(SCREEN_WIDTH/2, 5), Color.White, 0, new Vector2(0, 0), 0.8f, SpriteEffects.None, 0);
                     string hintTxt = (level.hint != null) ? level.hint : "";
-                    spriteBatch.DrawString(font, hintTxt, new Vector2(SCREEN_WIDTH / 2, 2), Color.White, 0, new Vector2(0, 0), 0.8f, SpriteEffects.None, 0);
+                    spriteBatch.DrawString(font, hintTxt, new Vector2(SCREEN_WIDTH / 2, 2), Color.White, 0, new Vector2(0, 0), 0.6f, SpriteEffects.None, 0);
 
                     spriteBatch.End();
 

@@ -239,8 +239,8 @@ namespace Rain_On_Your_Parade
                     initialRain = 0;
                     title = "Level 3\nAbsorb the Pool";
                     hint = "Hint: You can rain to refill swimming pools!";
-                    objectiveMessage = "Goal: Anger both of the children.\n" +
-                    "Use can use your shadow to herd \nangry children towards each other. \nKids fight when both are frowning \nor if one is VERY upset! The \nmood of fighting kids worsens by 2.";
+                    objectiveMessage = "Goal: " +
+                    "Use your shadow to herd \nangry children towards each other. \nKids fight when both are frowning \nor if one is VERY upset! The \nmood of fighting kids worsens by 2.";
 
                     //fence 0,5 to 0,9
                     objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(0, 2), 0));
@@ -643,8 +643,8 @@ namespace Rain_On_Your_Parade
                     #region level7
                     
                     initialRain = 0;
-                    title = "Level 3 - Kill the Flowers and wet the Laundry!";
-                    objectiveMessage = "Goal: Absorb the flowers and wet the laundry \n before the motherly nurturing heals them!";
+                    title = "Level 7\nKill the Flowers, Wet the Laundry";
+                    objectiveMessage = "Goal: Absorb the flowers and \nwet the laundry before the motherly \nnurturing heals them!";
 
                     //mom 1,1 4,4 8,7
                     actors.Add(new Actor(ActorType.Type.Mom, new Point(1, 2)));
@@ -715,7 +715,7 @@ namespace Rain_On_Your_Parade
                     #region level7
 
                     initialRain = 4;
-                    title = "Level 3 - Kill the Flowers v2.0";
+                    title = "Level 8 - Kill the Flowers v2.0";
                     hint = "hint";
                     objectiveMessage = "Goal: Drain the flowers of water\nBeware the motherly nurturing!";
 
@@ -788,7 +788,7 @@ namespace Rain_On_Your_Parade
                     //Level 8 - Experimental Level - C is for Cat / Cats and Flowers [Not Final]
                     #region level8
 
-                    title = "Level 8 - C is for Cat";
+                    title = "Level 8\nC is for Cat";
                     objectiveMessage = "Goal: Make cats unhappy.";
 
                     actors.Add(new Actor(ActorType.Type.Cat, new Point(9, 1)));
@@ -827,7 +827,7 @@ namespace Rain_On_Your_Parade
                     //Level 9 - Experimental Level - Backyard Business / Super Progressive [Not Final]
                     #region level9
 
-                    title = "Level 9 - Backyard Business";
+                    title = "Level 9\nBackyard Business";
                     objectiveMessage = "Goal: Make kids and moms upset.";
 
                     actors.Add(new Actor(ActorType.Type.Kid, new Point(3, 2)));
