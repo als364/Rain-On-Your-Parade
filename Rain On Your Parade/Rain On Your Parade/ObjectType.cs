@@ -209,8 +209,8 @@ namespace Rain_On_Your_Parade
             deactivatedImages.Add(Type.Sidewalk, "sidewalk");
             activatedImages.Add(Type.Fence, "fence");
             deactivatedImages.Add(Type.Fence, "fence");
-            activatedImages.Add(Type.Fence, "fence2");
-            deactivatedImages.Add(Type.Fence, "fence2");
+            activatedImages.Add(Type.FenceV, "fence2");
+            deactivatedImages.Add(Type.FenceV, "fence2");
             activatedImages.Add(Type.Invisible, "invisible");
             deactivatedImages.Add(Type.Invisible, "invisible");
         }
@@ -273,6 +273,7 @@ namespace Rain_On_Your_Parade
 
         public string activatedStringName()
         {
+            Console.WriteLine(typeName);
             return (string)activatedImages[typeName];
         }
 

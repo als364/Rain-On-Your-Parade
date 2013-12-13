@@ -514,7 +514,9 @@ namespace Rain_On_Your_Parade
                     //spriteBatch.DrawString(font, level.objectiveMessage, new Vector2(SCREEN_WIDTH/2, 5), Color.White, 0, new Vector2(0, 0), 0.5f, SpriteEffects.None, 0);
 
                     string info = "[ESC] for Pause/Controls   |   [R] to Restart";
-                    spriteBatch.DrawString(font, info, new Vector2(SCREEN_WIDTH/2, 5), Color.White, 0, new Vector2(0, 0), 0.5f, SpriteEffects.None, 0);
+                    spriteBatch.DrawString(font, info, new Vector2(SCREEN_WIDTH/2, 5), Color.White, 0, new Vector2(0, 0), 0.8f, SpriteEffects.None, 0);
+
+                   spriteBatch.DrawString(font, level.hint, new Vector2(SCREEN_WIDTH / 2, 25), Color.White, 0, new Vector2(0, 0), 1f, SpriteEffects.None, 0);
 
                     spriteBatch.End();
 

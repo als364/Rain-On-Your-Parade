@@ -130,7 +130,7 @@ namespace Rain_On_Your_Parade
                 if (level.nearEnoughForInteraction(a, controlledActor))
                 {
                     if (controlledActor.InteractionTimer == 0 && a.InteractionTimer == 0 && 
-                        ((a.Mood > 3 && controlledActor.Mood > 3) || (a.Mood == 5 || controlledActor.Mood == 5)))
+                        ((a.Mood > 3 && controlledActor.Mood > 3) || (a.Mood == 3 || controlledActor.Mood == 3)))
                     {
                         controlledActor.State.State = ActorState.AState.Fight;
                         controlledActor.InteractingActor = a;
