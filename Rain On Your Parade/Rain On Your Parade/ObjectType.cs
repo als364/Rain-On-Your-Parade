@@ -144,7 +144,7 @@ namespace Rain_On_Your_Parade
                 case ObjectType.Type.Laundry:
                     isWetObject = true;
                     canActivate = true;
-                    startsWet = false;
+                    startsWet = true;
                     holdsWater = true;
                     sleepLevel = 0;
                     playLevel = 0;

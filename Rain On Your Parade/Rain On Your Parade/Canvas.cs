@@ -178,8 +178,8 @@ namespace Rain_On_Your_Parade
 
                     initialRain = 0;
                     title = "Level 2\nKill Flowers: Upset Cat";
-                    hint = "Hint: Cats don't like it when you drain their flowers";
-                    objectiveMessage = "Goal: Drain flowers to gain water.\nUse [Alt] to Absorb water.\nIf you absorb water while the Cat is\nsleeping, his mood will worsen by 2!";
+                    hint = "Hint: Cats don't like it when you drain their flowers.";
+                    objectiveMessage = "Goal: Drain flowers to gain water.\nUse [Alt] to Absorb water.\nIf you absorb water while the Cat is\nsleeping, his mood will worsen!";
 
                     //TOP
                     //fence 2,2 to 7,2
@@ -404,7 +404,6 @@ namespace Rain_On_Your_Parade
 
                     //Set win condition for level
                     win = GameEngine.WinCondition.Actors;
-                    aType = ActorType.Type.Kid;
 
                     //Add actors/objects that need to be fully angered
                     updateAngerList();
@@ -489,7 +488,7 @@ namespace Rain_On_Your_Parade
 
                     //Set win condition for level
                     win = GameEngine.WinCondition.Actors;
-                    aType = ActorType.Type.Kid;
+                 
 
                     //Add actors/objects that need to be fully angered
                     updateAngerList();
@@ -632,7 +631,7 @@ namespace Rain_On_Your_Parade
                      objects.Add(new WorldObject(ObjectType.Type.SunnyRainbowSpot, new Point(2, 7), 0));
                      objects.Add(new WorldObject(ObjectType.Type.SunnyRainbowSpot, new Point(11, 6), 0));
 
-                     objects.Add(new WorldObject(ObjectType.Type.Laundry, new Point(1, 2), 1));
+                     objects.Add(new WorldObject(ObjectType.Type.Laundry, new Point(1, 2), 0));
 
                      //Set win condition for level
                      win = GameEngine.WinCondition.Actors;
@@ -668,12 +667,12 @@ namespace Rain_On_Your_Parade
                     objects.Add(new WorldObject(ObjectType.Type.Garden, new Point(0, 4), 1));
 
                     //flower 1,0 2,1 2,2
-                    objects.Add(new WorldObject(ObjectType.Type.Laundry, new Point(1, 1), 1));
+                    objects.Add(new WorldObject(ObjectType.Type.Laundry, new Point(1, 1), 0));
                     objects.Add(new WorldObject(ObjectType.Type.Garden, new Point(2, 2), 1));
            
 
                     //flower 3,0 3,3 to 3,6
-                    objects.Add(new WorldObject(ObjectType.Type.Laundry, new Point(3, 1), 1));
+                    objects.Add(new WorldObject(ObjectType.Type.Laundry, new Point(3, 1), 0));
                     objects.Add(new WorldObject(ObjectType.Type.Garden, new Point(4, 2), 1));
                     objects.Add(new WorldObject(ObjectType.Type.Garden, new Point(4, 3), 1));
                     objects.Add(new WorldObject(ObjectType.Type.Garden, new Point(4, 4), 1));
@@ -683,7 +682,7 @@ namespace Rain_On_Your_Parade
                    // objects.Add(new WorldObject(ObjectType.Type.Laundry, new Point(5, 3), 1));
                     objects.Add(new WorldObject(ObjectType.Type.Garden, new Point(5, 6), 1));
 
-                    objects.Add(new WorldObject(ObjectType.Type.Laundry, new Point(6, 3), 1));
+                    objects.Add(new WorldObject(ObjectType.Type.Laundry, new Point(6, 3), 0));
                     objects.Add(new WorldObject(ObjectType.Type.Garden, new Point(6, 4), 1));
                     objects.Add(new WorldObject(ObjectType.Type.Garden, new Point(6, 5), 1));
                     objects.Add(new WorldObject(ObjectType.Type.Garden, new Point(6, 6), 1));
@@ -692,10 +691,10 @@ namespace Rain_On_Your_Parade
                     objects.Add(new WorldObject(ObjectType.Type.Garden, new Point(7, 6), 1));
 
                     //flower 6,6 7,7 7,8 8,6
-                    objects.Add(new WorldObject(ObjectType.Type.Laundry, new Point(7, 7), 1));
+                    objects.Add(new WorldObject(ObjectType.Type.Laundry, new Point(7, 7), 0));
                     objects.Add(new WorldObject(ObjectType.Type.Garden, new Point(7, 8), 1));
 
-                    objects.Add(new WorldObject(ObjectType.Type.Laundry, new Point(8, 5), 1));
+                    objects.Add(new WorldObject(ObjectType.Type.Laundry, new Point(8, 5), 0));
                     objects.Add(new WorldObject(ObjectType.Type.Garden, new Point(8, 6), 1));
 
                     //flower 9,6 to 9,9
@@ -794,6 +793,8 @@ namespace Rain_On_Your_Parade
                     //Level 8 - Experimental Level - C is for Cat / Cats and Flowers [Not Final]
                     #region level8
 
+
+                    initialRain = 0;
                     title = "Level 3\nC is for Cat";
                     hint = "Rain + Sunny Spot = Rainbow";
                     objectiveMessage = "Goal: Make cats unhappy.\nRain on sunspots to form Rainbows\nand attract nearby cats together.";
@@ -828,8 +829,6 @@ namespace Rain_On_Your_Parade
                     objects.Add(new WorldObject(ObjectType.Type.Garden, new Point(6, 7), 1));
 
                     win = GameEngine.WinCondition.Actors;
-
-                    aType = ActorType.Type.Cat;
 
                     //Add actors/objects that need to be fully angered
                     updateAngerList();
