@@ -493,7 +493,7 @@ namespace Rain_On_Your_Parade
                 case 6:
                     #region level6
 
-                     initialRain = 3;
+                     initialRain = 5;
                      title = "Level 6 - Fight!";
                      hint=  "Hint: Ruining moms laundry will make her unhappy"; 
                      objectiveMessage = "Goal: Make Everyone Angry! Be careful though,\n"+
@@ -638,131 +638,23 @@ namespace Rain_On_Your_Parade
 
                      #endregion level6
                      break;
-                     
-                    break;
+                    
                 case 7:
-                    //Level 6 - Errand Boys (Goal Actor Kids)
-                    #region level6
-                    initialRain = 0;
-                    title = "";
-                    objectiveMessage = "";
-
-                    //case 7:
-                    //Level 7 - Showdown v2.0 (Goal: Some reasonable mood level given 2 kids, 2 moms)
-                    //#region level7
-
-                    //initialRain = 5;
-                    //title = "Level 7 - Showdown v2.0";
-                    //objectiveMessage = "Goal: Make kids and moms fight each other!";
-
-                    //Chalkings
-                    objects.Add(new WorldObject(ObjectType.Type.Chalking, new Point(0, 1), 0));
-                    objects.Add(new WorldObject(ObjectType.Type.Chalking, new Point(1, 1), 0));
-                    objects.Add(new WorldObject(ObjectType.Type.Chalking, new Point(2, 1), 0));
-                    objects.Add(new WorldObject(ObjectType.Type.Chalking, new Point(3, 1), 0));
-
-                    //initialRain = 5;
-                    //title = "Level 7 - Showdown v2.0";
-                    //objectiveMessage = "Goal: Make kids and moms fight each other!";
-
-                    objects.Add(new WorldObject(ObjectType.Type.Chalking, new Point(7, 4), 0));
-                    objects.Add(new WorldObject(ObjectType.Type.Chalking, new Point(8, 4), 0));
-                    objects.Add(new WorldObject(ObjectType.Type.Chalking, new Point(9, 4), 0));
-
-                    //objects.Add(new WorldObject(ObjectType.Type.Chalking, new Point(0, 6), 0));
-                    //objects.Add(new WorldObject(ObjectType.Type.Chalking, new Point(0, 7), 0));
-                    //objects.Add(new WorldObject(ObjectType.Type.Chalking, new Point(0, 8), 0));
-
-                    objects.Add(new WorldObject(ObjectType.Type.Chalking, new Point(3, 8), 0));
-                    objects.Add(new WorldObject(ObjectType.Type.Chalking, new Point(4, 8), 0));
-                    objects.Add(new WorldObject(ObjectType.Type.Chalking, new Point(5, 8), 0));
-                    objects.Add(new WorldObject(ObjectType.Type.Chalking, new Point(6, 8), 0));
-                    objects.Add(new WorldObject(ObjectType.Type.Chalking, new Point(7, 8), 0));
-
-                    objects.Add(new WorldObject(ObjectType.Type.Chalking, new Point(10, 6), 0));
-                    objects.Add(new WorldObject(ObjectType.Type.Chalking, new Point(10, 7), 0));
-                    objects.Add(new WorldObject(ObjectType.Type.Chalking, new Point(10, 8), 0));
-
-                    //Sunnyspots
-                    objects.Add(new WorldObject(ObjectType.Type.SunnyRainbowSpot, new Point(5, 1), 0));
-                    objects.Add(new WorldObject(ObjectType.Type.SunnyRainbowSpot, new Point(11, 1), 0));
-                    objects.Add(new WorldObject(ObjectType.Type.SunnyRainbowSpot, new Point(8, 3), 0));
-                    objects.Add(new WorldObject(ObjectType.Type.SunnyRainbowSpot, new Point(2, 4), 0));
-                    objects.Add(new WorldObject(ObjectType.Type.SunnyRainbowSpot, new Point(2, 8), 0));
-                    objects.Add(new WorldObject(ObjectType.Type.SunnyRainbowSpot, new Point(8, 8), 0));
-
-                    //flower 0,5 1,5 8,4 9,4
-                    //objects.Add(new WorldObject(ObjectType.Type.Garden, new Point(0, 6), 1));
-                    //objects.Add(new WorldObject(ObjectType.Type.Garden, new Point(1, 6), 1));
-                    //objects.Add(new WorldObject(ObjectType.Type.Garden, new Point(8, 4), 1));
-                    //objects.Add(new WorldObject(ObjectType.Type.Garden, new Point(9, 4), 1));
-
-                    //Fences
-                    objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(1, 3), 0));
-                    objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(1, 5), 0));
-                    objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(1, 6), 0));
-                    objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(1, 7), 0));
-                    objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(1, 8), 0));
-
-                    objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(2, 3), 0));
-
-                    objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(3, 3), 0));
-                    objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(3, 4), 0));
-                    objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(3, 5), 0));
-                    objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(3, 6), 0));
-                    objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(3, 7), 0));
-
-                    objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(4, 1), 0));
-                    objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(4, 2), 0));
-                    objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(4, 3), 0));
-                    objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(4, 4), 0));
-                    objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(4, 7), 0));
-
-                    objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(5, 7), 0));
-                    objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(6, 3), 0));
-                    objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(6, 4), 0));
-                    objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(6, 7), 0));
-
-                    objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(7, 5), 0));
-                    objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(7, 6), 0));
-                    objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(7, 7), 0));
-
-                    objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(8, 2), 0));
-
-                    objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(9, 2), 0));
-                    objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(9, 5), 0));
-                    objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(9, 6), 0));
-                    objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(9, 7), 0));
-                    objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(9, 8), 0));
-
-                    objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(10, 2), 0));
-                    objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(10, 3), 0));
-                    objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(10, 4), 0));
-                    objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(10, 5), 0));
-
-                    //Pool
-                    objects.Add(new WorldObject(ObjectType.Type.Pool, new Point(5, 6), 3));
-
-                    //Kids
-                    actors.Add(new Actor(ActorType.Type.Kid, new Point(3, 2)));
-                    actors.Add(new Actor(ActorType.Type.Kid, new Point(11, 8)));
-
-                    win = GameEngine.WinCondition.Actors;
-
-                    #endregion level6
-                    break;
-                case 8:
-                    //Level 7 
                     #region level7
-
+                    
                     initialRain = 0;
-                    title = "Level 3 - Kill the Flowers v2.0";
-                    objectiveMessage = "Goal: Drain the flowers of water\nBeware the motherly nurturing!";
+                    title = "Level 3 - Kill the Flowers and wet the Laundry!";
+                    objectiveMessage = "Goal: Absorb the flowers and wet the laundry \n before the motherly nurturing heals them!";
 
                     //mom 1,1 4,4 8,7
                     actors.Add(new Actor(ActorType.Type.Mom, new Point(1, 2)));
                     actors.Add(new Actor(ActorType.Type.Mom, new Point(5, 4)));
                     actors.Add(new Actor(ActorType.Type.Mom, new Point(10, 7)));
+
+                    //mom 1,1 4,4 8,7
+                    actors.Add(new Actor(ActorType.Type.Mom, new Point(4, 2)));
+                    actors.Add(new Actor(ActorType.Type.Mom, new Point(5, 4)));
+                    actors.Add(new Actor(ActorType.Type.Mom, new Point(2, 3)));
 
                     //flower 0,0 to 0,3 
                     objects.Add(new WorldObject(ObjectType.Type.Garden, new Point(0, 2), 1));
@@ -770,24 +662,22 @@ namespace Rain_On_Your_Parade
                     objects.Add(new WorldObject(ObjectType.Type.Garden, new Point(0, 4), 1));
 
                     //flower 1,0 2,1 2,2
-                    objects.Add(new WorldObject(ObjectType.Type.Garden, new Point(1, 1), 1));
+                    objects.Add(new WorldObject(ObjectType.Type.Laundry, new Point(1, 1), 1));
                     objects.Add(new WorldObject(ObjectType.Type.Garden, new Point(2, 2), 1));
-                    objects.Add(new WorldObject(ObjectType.Type.Garden, new Point(2, 3), 1));
-                    objects.Add(new WorldObject(ObjectType.Type.Garden, new Point(2, 4), 1));
+           
 
                     //flower 3,0 3,3 to 3,6
-                    objects.Add(new WorldObject(ObjectType.Type.Garden, new Point(3, 1), 1));
+                    objects.Add(new WorldObject(ObjectType.Type.Laundry, new Point(3, 1), 1));
                     objects.Add(new WorldObject(ObjectType.Type.Garden, new Point(4, 2), 1));
                     objects.Add(new WorldObject(ObjectType.Type.Garden, new Point(4, 3), 1));
                     objects.Add(new WorldObject(ObjectType.Type.Garden, new Point(4, 4), 1));
-                    objects.Add(new WorldObject(ObjectType.Type.Garden, new Point(4, 5), 1));
-                    objects.Add(new WorldObject(ObjectType.Type.Garden, new Point(4, 6), 1));
+                
 
                     //flower 5,3 to 5,9
-                    objects.Add(new WorldObject(ObjectType.Type.Garden, new Point(5, 3), 1));
+                   // objects.Add(new WorldObject(ObjectType.Type.Laundry, new Point(5, 3), 1));
                     objects.Add(new WorldObject(ObjectType.Type.Garden, new Point(5, 6), 1));
 
-                    objects.Add(new WorldObject(ObjectType.Type.Garden, new Point(6, 3), 1));
+                    objects.Add(new WorldObject(ObjectType.Type.Laundry, new Point(6, 3), 1));
                     objects.Add(new WorldObject(ObjectType.Type.Garden, new Point(6, 4), 1));
                     objects.Add(new WorldObject(ObjectType.Type.Garden, new Point(6, 5), 1));
                     objects.Add(new WorldObject(ObjectType.Type.Garden, new Point(6, 6), 1));
@@ -796,10 +686,10 @@ namespace Rain_On_Your_Parade
                     objects.Add(new WorldObject(ObjectType.Type.Garden, new Point(7, 6), 1));
 
                     //flower 6,6 7,7 7,8 8,6
-                    objects.Add(new WorldObject(ObjectType.Type.Garden, new Point(7, 7), 1));
+                    objects.Add(new WorldObject(ObjectType.Type.Laundry, new Point(7, 7), 1));
                     objects.Add(new WorldObject(ObjectType.Type.Garden, new Point(7, 8), 1));
 
-                    objects.Add(new WorldObject(ObjectType.Type.Garden, new Point(8, 5), 1));
+                    objects.Add(new WorldObject(ObjectType.Type.Laundry, new Point(8, 5), 1));
                     objects.Add(new WorldObject(ObjectType.Type.Garden, new Point(8, 6), 1));
 
                     //flower 9,6 to 9,9
@@ -810,13 +700,83 @@ namespace Rain_On_Your_Parade
                     objects.Add(new WorldObject(ObjectType.Type.Garden, new Point(10, 5), 1));
                     objects.Add(new WorldObject(ObjectType.Type.Garden, new Point(10, 6), 1));
 
-                    objects.Add(new WorldObject(ObjectType.Type.Garden, new Point(11, 6), 1));
-                    objects.Add(new WorldObject(ObjectType.Type.Garden, new Point(11, 7), 1));
-                    objects.Add(new WorldObject(ObjectType.Type.Garden, new Point(11, 8), 1));
+                   
 
                     //Set win condition for level
                     win = GameEngine.WinCondition.Objects;
-                    oType = ObjectType.Type.Garden;
+
+                    //Add actors/objects that need to be fully angered
+                    updateAngerList();
+
+                    #endregion level7
+                    break;
+                case 8:
+                    //Level 7 
+                    #region level7
+
+                    initialRain = 4;
+                    title = "Level 3 - Kill the Flowers v2.0";
+                    hint = "hint";
+                    objectiveMessage = "Goal: Drain the flowers of water\nBeware the motherly nurturing!";
+
+                    //mom 1,1 4,4 8,7
+                    actors.Add(new Actor(ActorType.Type.Mom, new Point(9, 1)));
+                    actors.Add(new Actor(ActorType.Type.Mom, new Point(5, 3)));
+                    actors.Add(new Actor(ActorType.Type.Mom, new Point(2, 4)));
+
+                     actors.Add(new Actor(ActorType.Type.Mom, new Point(2, 7)));
+                    actors.Add(new Actor(ActorType.Type.Mom, new Point(0, 7)));
+                    
+
+                    objects.Add(new WorldObject(ObjectType.Type.Laundry, new Point(0, 1), 0));
+                    objects.Add(new WorldObject(ObjectType.Type.Laundry, new Point(2, 1), 0));
+                    objects.Add(new WorldObject(ObjectType.Type.Laundry, new Point(2, 8), 0));
+
+                    objects.Add(new WorldObject(ObjectType.Type.Laundry, new Point(10, 1), 0));
+                    objects.Add(new WorldObject(ObjectType.Type.Laundry, new Point(8, 1), 0));
+                    objects.Add(new WorldObject(ObjectType.Type.Laundry, new Point(0, 6), 0));
+                    objects.Add(new WorldObject(ObjectType.Type.Laundry, new Point(2, 6), 0));
+
+                    // objects.Add(new WorldObject(ObjectType.Type.Laundry, new Point(0, 8), 0));
+                    objects.Add(new WorldObject(ObjectType.Type.Laundry, new Point(2, 8), 0));
+
+                     objects.Add(new WorldObject(ObjectType.Type.Laundry, new Point(7, 8), 0));
+                    //objects.Add(new WorldObject(ObjectType.Type.Laundry, new Point(9, 8), 0));
+
+                    objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(0, 5), 0));
+                    objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(1, 5), 0));
+                    objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(2, 5), 0));
+                    objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(3, 5), 0));
+                    objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(4, 6), 0));
+                    objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(4, 7), 0));
+                    objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(4, 8), 0));
+                    objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(6, 5), 0));
+                    objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(7, 5), 0));
+
+                    objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(8, 3), 0));
+                    objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(9, 3), 0));
+                    objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(10, 3), 0));
+                    objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(11, 3), 0));
+
+                    objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(7, 1), 0));
+                    objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(7, 2), 0));
+
+                    objects.Add(new WorldObject(ObjectType.Type.Garden, new Point(2, 2), 1));
+                    objects.Add(new WorldObject(ObjectType.Type.Garden, new Point(4, 2), 1));
+                    objects.Add(new WorldObject(ObjectType.Type.Garden, new Point(1, 3), 1));
+                    objects.Add(new WorldObject(ObjectType.Type.Garden, new Point(3, 3), 1));
+                    objects.Add(new WorldObject(ObjectType.Type.Garden, new Point(6, 7), 1));
+                    objects.Add(new WorldObject(ObjectType.Type.Garden, new Point(8, 7), 1));
+                    objects.Add(new WorldObject(ObjectType.Type.Garden, new Point(10, 7), 1));
+                    objects.Add(new WorldObject(ObjectType.Type.Garden, new Point(10, 5), 1));
+
+
+
+ 
+
+                    //Set win condition for level
+                    win = GameEngine.WinCondition.Objects;
+                
 
                     //Add actors/objects that need to be fully angered
                     updateAngerList();
