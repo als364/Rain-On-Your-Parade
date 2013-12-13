@@ -138,13 +138,13 @@ namespace Rain_On_Your_Parade
 
                     //fence 1,5 to 1,8 and 8,5 to 8,8
                     objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(2, 3), 0));
-                    objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(2, 4), 0));
-                    objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(2, 5), 0));
-                    objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(2, 6), 0));
+                    objects.Add(new WorldObject(ObjectType.Type.FenceV, new Point(2, 4), 0));
+                    objects.Add(new WorldObject(ObjectType.Type.FenceV, new Point(2, 5), 0));
+                    objects.Add(new WorldObject(ObjectType.Type.FenceV, new Point(2, 6), 0));
                     objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(9, 3), 0));
-                    objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(9, 4), 0));
-                    objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(9, 5), 0));
-                    objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(9, 6), 0));
+                    objects.Add(new WorldObject(ObjectType.Type.FenceV, new Point(9, 4), 0));
+                    objects.Add(new WorldObject(ObjectType.Type.FenceV, new Point(9, 5), 0));
+                    objects.Add(new WorldObject(ObjectType.Type.FenceV, new Point(9, 6), 0));
 
                     //fence 2,5 3,5 6,5 7,5
                     objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(3, 3), 0));
@@ -205,15 +205,15 @@ namespace Rain_On_Your_Parade
                     //LEFT/RIGHT
                     //fence 1,5 to 1,8 and 8,5 to 8,8
                     objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(1, 2), 0));
-                    objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(1, 3), 0));
-                    objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(1, 4), 0));
-                    objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(1, 5), 0));
-                    objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(1, 6), 0));
+                    objects.Add(new WorldObject(ObjectType.Type.FenceV, new Point(1, 3), 0));
+                    objects.Add(new WorldObject(ObjectType.Type.FenceV, new Point(1, 4), 0));
+                    objects.Add(new WorldObject(ObjectType.Type.FenceV, new Point(1, 5), 0));
+                    objects.Add(new WorldObject(ObjectType.Type.FenceV, new Point(1, 6), 0));
                     objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(8, 2), 0));
-                    objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(8, 3), 0));
-                    objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(8, 4), 0));
-                    objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(8, 5), 0));
-                    objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(8, 6), 0));
+                    objects.Add(new WorldObject(ObjectType.Type.FenceV, new Point(8, 3), 0));
+                    objects.Add(new WorldObject(ObjectType.Type.FenceV, new Point(8, 4), 0));
+                    objects.Add(new WorldObject(ObjectType.Type.FenceV, new Point(8, 5), 0));
+                    objects.Add(new WorldObject(ObjectType.Type.FenceV, new Point(8, 6), 0));
 
 
                     //garden 3,3 to 6,6
@@ -249,23 +249,23 @@ namespace Rain_On_Your_Parade
 
                     //fence 0,5 to 0,9
                     objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(0, 2), 0));
-                    objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(0, 3), 0));
-                    objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(0, 4), 0));
-                    objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(0, 5), 0));
-                    objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(0, 6), 0));
-                    objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(0, 7), 0));
-                    objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(0, 8), 0));
+                    objects.Add(new WorldObject(ObjectType.Type.FenceV, new Point(0, 3), 0));
+                    objects.Add(new WorldObject(ObjectType.Type.FenceV, new Point(0, 4), 0));
+                    objects.Add(new WorldObject(ObjectType.Type.FenceV, new Point(0, 5), 0));
+                    objects.Add(new WorldObject(ObjectType.Type.FenceV, new Point(0, 6), 0));
+                    objects.Add(new WorldObject(ObjectType.Type.FenceV, new Point(0, 7), 0));
+                    objects.Add(new WorldObject(ObjectType.Type.FenceV, new Point(0, 8), 0));
 
 
                     //fence 9,0 to 9,4
 
                     objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(11, 2), 0));
-                    objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(11, 3), 0));
-                    objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(11, 4), 0));
-                    objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(11, 5), 0));
-                    objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(11, 6), 0));
-                    objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(11, 7), 0));
-                    objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(11, 8), 0));
+                    objects.Add(new WorldObject(ObjectType.Type.FenceV, new Point(11, 3), 0));
+                    objects.Add(new WorldObject(ObjectType.Type.FenceV, new Point(11, 4), 0));
+                    objects.Add(new WorldObject(ObjectType.Type.FenceV, new Point(11, 5), 0));
+                    objects.Add(new WorldObject(ObjectType.Type.FenceV, new Point(11, 6), 0));
+                    objects.Add(new WorldObject(ObjectType.Type.FenceV, new Point(11, 7), 0));
+                    objects.Add(new WorldObject(ObjectType.Type.FenceV, new Point(11, 8), 0));
 
 
                     objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(1, 2), 0));
@@ -426,9 +426,9 @@ namespace Rain_On_Your_Parade
 
                     //fence 0,5 to 0,9
                     objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(0, 5), 0));
-                    objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(0, 6), 0));
-                    objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(0, 7), 0));
-                    objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(0, 8), 0));
+                    objects.Add(new WorldObject(ObjectType.Type.FenceV, new Point(0, 6), 0));
+                    objects.Add(new WorldObject(ObjectType.Type.FenceV, new Point(0, 7), 0));
+                    objects.Add(new WorldObject(ObjectType.Type.FenceV, new Point(0, 8), 0));
                     //objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(0, 9), 0));                  
 
 
@@ -436,14 +436,14 @@ namespace Rain_On_Your_Parade
                     objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(5, 0), 0));
 
                     objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(5, 2), 0));
-                    objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(5, 3), 0));
+                    objects.Add(new WorldObject(ObjectType.Type.FenceV, new Point(5, 3), 0));
                     objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(5, 4), 0));
 
                     //fence 9,0 to 9,4
                     objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(10, 0), 0));
-                    objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(10, 1), 0));
-                    objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(10, 2), 0));
-                    objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(10, 3), 0));
+                    objects.Add(new WorldObject(ObjectType.Type.FenceV, new Point(10, 1), 0));
+                    objects.Add(new WorldObject(ObjectType.Type.FenceV, new Point(10, 2), 0));
+                    objects.Add(new WorldObject(ObjectType.Type.FenceV, new Point(10, 3), 0));
                     objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(10, 4), 0));
 
                     //sidewalk 0,0 0,2 0,4 9,5 9,7 9,9
@@ -753,9 +753,9 @@ namespace Rain_On_Your_Parade
                     objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(1, 5), 0));
                     objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(2, 5), 0));
                     objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(3, 5), 0));
-                    objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(4, 6), 0));
-                    objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(4, 7), 0));
-                    objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(4, 8), 0));
+                    objects.Add(new WorldObject(ObjectType.Type.FenceV, new Point(4, 6), 0));
+                    objects.Add(new WorldObject(ObjectType.Type.FenceV, new Point(4, 7), 0));
+                    objects.Add(new WorldObject(ObjectType.Type.FenceV, new Point(4, 8), 0));
                     objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(6, 5), 0));
                     objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(7, 5), 0));
 
@@ -764,8 +764,8 @@ namespace Rain_On_Your_Parade
                     objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(10, 3), 0));
                     objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(11, 3), 0));
 
-                    objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(7, 1), 0));
-                    objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(7, 2), 0));
+                    objects.Add(new WorldObject(ObjectType.Type.FenceV, new Point(7, 1), 0));
+                    objects.Add(new WorldObject(ObjectType.Type.FenceV, new Point(7, 2), 0));
 
                     objects.Add(new WorldObject(ObjectType.Type.Garden, new Point(2, 2), 1));
                     objects.Add(new WorldObject(ObjectType.Type.Garden, new Point(4, 2), 1));
