@@ -18,6 +18,10 @@ namespace Rain_On_Your_Parade
         public AnimatedSprite activatedSprite;
         public AnimatedSprite deactivatedSprite;
         public float colorAlpha;
+        public AnimatedSprite sleepSprite;
+        public AnimatedSprite rainSprite;
+        public AnimatedSprite abSprite;
+
 
         public Model(){}
 

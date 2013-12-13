@@ -1185,8 +1185,8 @@ namespace Rain_On_Your_Parade
         #endregion
 
         public float moodTint() {
-            //return 1 - mood / moodObjective;
-            return 1;
+            return Math.Max(1 - percentWon, 1 - percentWon + 0.7f);
+            
     }
 
         /// <summary>Initialize adjacency lists in level map for ease of search</summary>

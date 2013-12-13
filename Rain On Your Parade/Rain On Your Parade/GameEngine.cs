@@ -375,6 +375,21 @@ namespace Rain_On_Your_Parade
                                 model.deactivatedSprite.Update();
                             }
 
+                            if (model.sleepSprite != null)
+                            {
+                                model.sleepSprite.Update();
+                            }
+
+                            if (model.rainSprite != null)
+                            {
+                                model.rainSprite.Update();
+                            }
+
+                            if (model.abSprite != null)
+                            {
+                                model.abSprite.Update();
+                            }
+
                             /*int MoodSum = 0;
 
                             if (model is Actor)

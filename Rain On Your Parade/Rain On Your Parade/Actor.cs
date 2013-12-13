@@ -40,7 +40,7 @@ namespace Rain_On_Your_Parade
         public Texture2D mood5;
         public Texture2D mood6;
         public Texture2D moodFight;
-        public AnimatedSprite sleepSprite;
+        
 
         public Texture2D nurtureImg;
         public Texture2D playImg;

@@ -20,8 +20,7 @@ namespace Rain_On_Your_Parade
         public bool isRaining = false;
         public bool isAbsorbing = false;
         public Texture2D waterImg;
-        public AnimatedSprite rainSprite;
-        public AnimatedSprite abSprite;
+        
 
         #region Getters and Setters
 
