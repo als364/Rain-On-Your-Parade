@@ -139,15 +139,15 @@ namespace Rain_On_Your_Parade
             //Header
             spriteBatch.Draw(topbar, new Rectangle(0, 0, GameEngine.SCREEN_WIDTH, 100), Color.Black);
             spriteBatch.DrawString(font, "Select a Level", new Vector2(10, 10), Color.White);
-            spriteBatch.DrawString(font, "(arrows to select, enter to confirm)", new Vector2(10, 50), Color.White, 0, new Vector2(0, 0), 0.6f, SpriteEffects.None, 0);
+            spriteBatch.DrawString(font, "(arrows to select, enter to confirm)", new Vector2(10, 50), Color.White, 0, new Vector2(0, 0), 0.8f, SpriteEffects.None, 0);
 
             //Side panel
             spriteBatch.Draw(topbar, new Rectangle(GameEngine.SCREEN_WIDTH / 2, marTop - 20, 3 * GameEngine.SCREEN_WIDTH / 4, 3 * GameEngine.SCREEN_HEIGHT / 4), Color.Black);
 
             //Controls list
-            string controls = "[WASD] or [ARROWS] to Move\n[SPACEBAR] to Rain\n[ALT] to Absorb\n[ESC] to Pause\n[P] to Restart";
-            spriteBatch.DrawString(font, "Controls", new Vector2(GameEngine.SCREEN_WIDTH / 2 + 10, 3 * marTop), Color.White, 0, new Vector2(0, 0), 0.9f, SpriteEffects.None, 0);
-            spriteBatch.DrawString(font, controls, new Vector2(GameEngine.SCREEN_WIDTH / 2 + 10, 3 * marTop + 30), Color.White, 0, new Vector2(0, 0), 0.8f, SpriteEffects.None, 0);
+            string controls = "[WASD] or [ARROWS] to Move\n[SPACEBAR] to Rain\n[ALT] to Absorb\n[ESC] to Pause\n[R] to Restart";
+            spriteBatch.DrawString(font, "Controls", new Vector2(GameEngine.SCREEN_WIDTH / 2 + 10, 3 * marTop), Color.White, 0, new Vector2(0, 0), 0.8f, SpriteEffects.None, 0);
+            spriteBatch.DrawString(font, controls, new Vector2(GameEngine.SCREEN_WIDTH / 2 + 10, 3 * marTop + 30), Color.White, 0, new Vector2(0, 0), 0.7f, SpriteEffects.None, 0);
 
             for (int i = 1; i <= GameEngine.STAGE_NUM; i++)
             {
