@@ -21,6 +21,7 @@ namespace Rain_On_Your_Parade
         public float percentWon;
         public string objectiveMessage;
         public string title;
+        public float timer;
         public int initialRain;
 
         public GameEngine.WinCondition win;
@@ -90,6 +91,7 @@ namespace Rain_On_Your_Parade
             percentWon = 0f;
             objectiveMessage = "";
             title = "";
+            timer = 500f;
 
             for (int i = 0; i < squaresWide; i++)
             {

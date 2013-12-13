@@ -127,15 +127,13 @@ namespace Rain_On_Your_Parade
             levelHasEnded = false;
             levelPaused = false;
 
-            timer = 500f;
-
             //if (menuOn) mainMenu.Initialize();
             switch (state)
             {
                 case GameState.Game:
                     //This is where the level building goes. I don't care about an XML parsing framework yet
                     level = new Canvas(stage);
-
+                    timer = level.timer;
                     //////////////////////////////////////////////
                     //level = LevelParser.parse(levels[stage]);
                     ///////////////////////////////////////////
@@ -522,7 +520,7 @@ namespace Rain_On_Your_Parade
 
                     string info = "[ESC] for Pause/Controls   |   [R] to Restart";
                     spriteBatch.DrawString(font, info, new Vector2(SCREEN_WIDTH/2, 5), Color.White, 0, new Vector2(0, 0), 0.5f, SpriteEffects.None, 0);
-                    spriteBatch.DrawString(font, ((int)timer).ToString(), new Vector2(SCREEN_WIDTH - 50, SCREEN_HEIGHT - 150), Color.White, 0, new Vector2(0, 0), 1f, SpriteEffects.None, 0);
+                    spriteBatch.DrawString(font, "Time Remaining: " + ((int)timer).ToString(), new Vector2(SCREEN_WIDTH - 300, 60), Color.White, 0, new Vector2(0, 0), 1f, SpriteEffects.None, 0);
 
                     spriteBatch.End();
 
