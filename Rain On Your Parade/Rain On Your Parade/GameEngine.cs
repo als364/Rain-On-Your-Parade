@@ -552,9 +552,13 @@ namespace Rain_On_Your_Parade
                     //spriteBatch.DrawString(font, info, new Vector2(SCREEN_WIDTH/2, 2), Color.White, 0, new Vector2(0, 0), 0.8f, SpriteEffects.None, 0);
                     //spriteBatch.DrawString(font, "Time Remaining: " + ((int)timer).ToString(), new Vector2(SCREEN_WIDTH - 200, 2), Color.White, 0, new Vector2(0, 0), 0.9f, SpriteEffects.None, 0);
 
+
+                
+
                     string info = "[ESC] for Pause/Controls | [R] to Restart";
                     spriteBatch.DrawString(font, info, new Vector2(SCREEN_WIDTH - 5, 22), Color.White, 0, new Vector2(font.MeasureString(info).X, 0), 0.8f, SpriteEffects.None, 0);
                     //spriteBatch.DrawString(font, "[R] to Restart", new Vector2(SCREEN_WIDTH - 5, 22), Color.White, 0, new Vector2(font.MeasureString("[R] to Restart").X, 0), 0.8f, SpriteEffects.None, 0);
+
 
                     //spriteBatch.DrawString(font, info, new Vector2(SCREEN_WIDTH/2, 5), Color.White, 0, new Vector2(0, 0), 0.8f, SpriteEffects.None, 0);
                     string hintTxt = (level.hint != null) ? level.hint : "";
