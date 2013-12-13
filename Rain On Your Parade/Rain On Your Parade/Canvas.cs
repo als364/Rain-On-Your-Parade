@@ -20,8 +20,9 @@ namespace Rain_On_Your_Parade
         private List<Actor> actors;
         public float percentWon;
         public string objectiveMessage;
-        public string title;
         public string hint;
+        public string title;
+        public float timer;
         public int initialRain;
 
         public GameEngine.WinCondition win;
@@ -91,6 +92,7 @@ namespace Rain_On_Your_Parade
             percentWon = 0f;
             objectiveMessage = "";
             title = "";
+            timer = 500f;
 
             for (int i = 0; i < squaresWide; i++)
             {
@@ -233,7 +235,7 @@ namespace Rain_On_Your_Parade
                     #region level3
 
                     //case 5:
-                    //Level 5 - Lambs to the Slaughter (Goal: Some Reasonable Mood Quota for 3 actors)
+       
                     //#region level5
 
                     initialRain = 0;
@@ -310,7 +312,11 @@ namespace Rain_On_Your_Parade
                     actors.Add(new Actor(ActorType.Type.Kid, new Point(2, 4)));
                     actors.Add(new Actor(ActorType.Type.Kid, new Point(9, 5)));
 
-                    objects.Add(new WorldObject(ObjectType.Type.Pool, new Point(5, 5), 0));
+                    objects.Add(new WorldObject(ObjectType.Type.Pool, new Point(5, 5), 1));
+
+                    objects.Add(new WorldObject(ObjectType.Type.Pool, new Point(4, 4), 1));
+
+                    objects.Add(new WorldObject(ObjectType.Type.Pool, new Point(6, 6), 1));
 
                     //win = GameEngine.WinCondition.Mood;
                     //#endregion level5
@@ -361,6 +367,12 @@ namespace Rain_On_Your_Parade
                     objects.Add(new WorldObject(ObjectType.Type.SunnyRainbowSpot, new Point(2, 3), 1));
                     objects.Add(new WorldObject(ObjectType.Type.SunnyRainbowSpot, new Point(8, 5), 1));
 
+                     objects.Add(new WorldObject(ObjectType.Type.Garden, new Point(1, 3), 1));
+                    objects.Add(new WorldObject(ObjectType.Type.Garden, new Point(7, 5), 1));
+
+                     objects.Add(new WorldObject(ObjectType.Type.Garden, new Point(2, 2), 1));
+                    objects.Add(new WorldObject(ObjectType.Type.Garden, new Point(8, 4), 1));
+
                     //house 2,1 3,2 
                     objects.Add(new WorldObject(ObjectType.Type.Invisible, new Point(2, 2), 0));
                     objects.Add(new WorldObject(ObjectType.Type.Invisible, new Point(2, 3), 0));
@@ -375,7 +387,7 @@ namespace Rain_On_Your_Parade
                     objects.Add(new WorldObject(ObjectType.Type.Invisible, new Point(7, 6), 0));
                     objects.Add(new WorldObject(ObjectType.Type.Invisible, new Point(7, 7), 0));
 
-                    objects.Add(new WorldObject(ObjectType.Type.House, new Point(6, 6), 0));
+                    objects.Add(new WorldObject(ObjectType.Type.House, new Point(9, 6), 0));
 
                     //kid 3,3 and 6,6
                     actors.Add(new Actor(ActorType.Type.Kid, new Point(3, 3)));
@@ -389,8 +401,6 @@ namespace Rain_On_Your_Parade
                     updateAngerList();
 
                     #endregion level4
-
-
                     break;
                 case 5:
                     //Level 4 - Make Kids Cry (Goal: Actor Kid)
@@ -476,7 +486,6 @@ namespace Rain_On_Your_Parade
                     updateAngerList();
 
                     #endregion level5
-
                     break;
                 case 6:
                     #region level52

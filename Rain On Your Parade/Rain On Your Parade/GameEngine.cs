@@ -60,6 +60,9 @@ namespace Rain_On_Your_Parade
         int levelStartDelay;
         bool levelPaused;
         bool levelHasEnded;
+
+        public float timer;
+
         //Boolean menuOn = true;
 
         //Add levels to Levels folder and then add name to this array
@@ -130,7 +133,7 @@ namespace Rain_On_Your_Parade
                 case GameState.Game:
                     //This is where the level building goes. I don't care about an XML parsing framework yet
                     level = new Canvas(stage);
-
+                    timer = level.timer;
                     //////////////////////////////////////////////
                     //level = LevelParser.parse(levels[stage]);
                     ///////////////////////////////////////////
@@ -301,6 +304,8 @@ namespace Rain_On_Your_Parade
                         return;
                     }
                     #endregion GamePaused
+
+                    if (!levelPaused) timer -= 1f / 60f;
 
                     //if (framesTillLog == 0)
                     //{
@@ -514,9 +519,13 @@ namespace Rain_On_Your_Parade
                     //spriteBatch.DrawString(font, level.objectiveMessage, new Vector2(SCREEN_WIDTH/2, 5), Color.White, 0, new Vector2(0, 0), 0.5f, SpriteEffects.None, 0);
 
                     string info = "[ESC] for Pause/Controls   |   [R] to Restart";
+
                     spriteBatch.DrawString(font, info, new Vector2(SCREEN_WIDTH/2, 5), Color.White, 0, new Vector2(0, 0), 0.8f, SpriteEffects.None, 0);
 
                    spriteBatch.DrawString(font, level.hint, new Vector2(SCREEN_WIDTH / 2, 25), Color.White, 0, new Vector2(0, 0), 1f, SpriteEffects.None, 0);
+
+                    spriteBatch.DrawString(font, "Time Remaining: " + ((int)timer).ToString(), new Vector2(SCREEN_WIDTH - 300, 60), Color.White, 0, new Vector2(0, 0), 1f, SpriteEffects.None, 0);
+
 
                     spriteBatch.End();
 

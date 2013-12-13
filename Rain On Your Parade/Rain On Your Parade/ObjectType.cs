@@ -7,8 +7,8 @@ namespace Rain_On_Your_Parade
     {
 
         public enum Type {SunnyRainbowSpot, Garden, Pool, Chalking, Sidewalk, Fence, FenceV, Laundry, House, Invisible};
-        Hashtable activatedImages = new Hashtable();
-        Hashtable deactivatedImages = new Hashtable();
+        public Hashtable activatedImages = new Hashtable();
+        public Hashtable deactivatedImages = new Hashtable();
         private Type typeName;
         private bool canActivate;   //actor can activate this object
         private bool isWetObject;   //object deactivates if absorbed upon
@@ -92,7 +92,10 @@ namespace Rain_On_Your_Parade
                     nurtureLevel = 0;
                     rampageLevel = 0;
                     passable = true;
-                    activatedImages.Add(Type.Chalking, "chalking");
+                    //Random rand = new Random();
+                    //string chalkImgName = "chalking" + (rand.Next(1, 8)).ToString();
+                    //activatedImages.Add(Type.Chalking, chalkImgName);
+                    activatedImages.Add(Type.Chalking, "sidewalk");
                     deactivatedImages.Add(Type.Chalking, "sidewalk");
                     break;
 
@@ -134,8 +137,8 @@ namespace Rain_On_Your_Parade
                     nurtureLevel = 0;
                     rampageLevel = 0;
                     passable = false;
-                    activatedImages.Add(Type.Fence, "fence2");
-                    deactivatedImages.Add(Type.Fence, "fence2");
+                    activatedImages.Add(Type.FenceV, "fence2");
+                    deactivatedImages.Add(Type.FenceV, "fence2");
                     break;
 
                 case ObjectType.Type.Laundry:
@@ -199,7 +202,10 @@ namespace Rain_On_Your_Parade
             deactivatedImages.Add(Type.Garden, "drygarden");
             activatedImages.Add(Type.Pool, "pool");
             deactivatedImages.Add(Type.Pool, "drypool");
-            activatedImages.Add(Type.Chalking, "chalking");
+            //Random rand = new Random();
+            //string chalkImgName = "chalking" + (rand.Next(1, 8)).ToString();
+            //activatedImages.Add(Type.Chalking, chalkImgName);
+            activatedImages.Add(Type.Chalking, "sidewalk");
             deactivatedImages.Add(Type.Chalking, "sidewalk");
             activatedImages.Add(Type.Laundry, "wetlaundry");
             deactivatedImages.Add(Type.Laundry, "laundry");

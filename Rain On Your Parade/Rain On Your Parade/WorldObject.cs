@@ -14,6 +14,8 @@ namespace Rain_On_Your_Parade
         private int waterLevel;
         private int initialWaterLevel;
         private List<Actor> actorsInteracted;
+        public Texture2D chalkImg;
+        public string chalkName;
 
         public WorldObject(ObjectType.Type oType, Point pos, int waterAmt)
         {
@@ -25,6 +27,11 @@ namespace Rain_On_Your_Parade
             initialWaterLevel = waterAmt;
             colorAlpha = 0f;
             actorsInteracted = new List<Actor>();
+            if (type.TypeName == ObjectType.Type.Chalking)
+            {
+                Random rand = new Random();
+                chalkName = "chalking" + (rand.Next(1, 8)).ToString();
+            }
         }
 
         public override void LoadContent(ContentManager content)
@@ -32,6 +39,9 @@ namespace Rain_On_Your_Parade
             Texture2D activatedTexture = content.Load<Texture2D>(type.activatedStringName());
             Texture2D deactivatedTexture = content.Load<Texture2D>(type.deactivatedStringName());
 
+            chalkImg = content.Load<Texture2D>("chalking1");
+            if (chalkName != null) chalkImg = content.Load<Texture2D>(chalkName);
+            
             AnimatedTexture aniTexBaseActive = new AnimatedTexture(activatedTexture, 1, 1, false, false);
             AnimatedTexture aniTexBaseDeactive = new AnimatedTexture(deactivatedTexture, 1, 1, false, false);
 
@@ -100,6 +110,7 @@ namespace Rain_On_Your_Parade
             ObjectType.Type typeSwitch = type.TypeName;
             //if (!activated)
             //{
+
                 activated = true;
                 switch (typeSwitch)
                 {
@@ -129,6 +140,7 @@ namespace Rain_On_Your_Parade
                         type.PlayLevel = 0;
                         break;
                 }
+
             //}
         }
 
