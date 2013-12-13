@@ -22,7 +22,6 @@ namespace Rain_On_Your_Parade
         public string objectiveMessage;
         public string hint;
         public string title;
-        public float timer;
         public int initialRain;
 
         public GameEngine.WinCondition win;
@@ -92,7 +91,6 @@ namespace Rain_On_Your_Parade
             percentWon = 0f;
             objectiveMessage = "";
             title = "";
-            timer = 500f;
 
             for (int i = 0; i < squaresWide; i++)
             {
@@ -103,6 +101,9 @@ namespace Rain_On_Your_Parade
             }
 
             initialRain = 6;
+
+            objects.Add(new WorldObject(ObjectType.Type.Laundry, new Point(2, 2), 1));
+
 
             objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(0, 0), 0));
             objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(1, 0), 0));
@@ -125,7 +126,7 @@ namespace Rain_On_Your_Parade
                     initialRain = Player.MAX_RAIN; //don't start with 10, this is a tutorial level -- it's supposed to be easy
 
                     title = "Level 1 - Soak the Cat";
-                    hint = "Hint: Wait for the Cat to dry off before\nraining again";
+                    hint = "Hint: Wait for the Cat to dry off before raining again";
                     objectiveMessage = "Goal: Rain on the cat to upset him, angering him by 1 each time.\nUse [SPACEBAR] to Rain.\nUse [WASD] or [Arrow] to move.";
 
                     //fence 1,9 to 8,9 
@@ -180,7 +181,7 @@ namespace Rain_On_Your_Parade
 
                     initialRain = 0;
                     title = "Level 2 - Kill Flowers: Upset Cat";
-                    hint = "Hint: If you absorb water while the Cat is\n on the garden, this will upset him";
+                    hint = "Hint: Cats don't like it when you drain their flowers";
                     objectiveMessage = "Goal: Drain the flowers to gain water.\n Use [Alt] to Absorb its water.\nIf you absorb water while the Cat is sleeping, this will upset him!\n His mood will get upset by 2";
 
                     //TOP
@@ -240,7 +241,7 @@ namespace Rain_On_Your_Parade
 
                     initialRain = 0;
                     title = "Level 3 - Absorb the Pool";
-                    hint = "Hint: You can rain to pour water back into\nthe pool and reuse it!";
+                    hint = "Hint: You can rain to refill swimming pools!";
                     objectiveMessage = "Goal: Anger both of the children.\n" +
                     "Use can also use your shadow to herd angry children twords each other to fight.\n Kids fight when they are both frowning or one is VERY upset! \n Kids fighting will make them angry by 1.";
 
@@ -335,7 +336,7 @@ namespace Rain_On_Your_Parade
                     initialRain = 0;
 
                     title = "Level 3 - Make Kids Cry";
-                    hint = "Hint: Make the cat angry and rain on sunny\n spots to lure the kid to fight the cat!";
+                    hint = "Hint: Rain on sunny spots to lure kid near angry cat!";
                     objectiveMessage = "Goal: Make everyone upset.  Raining on a sunnyspot will create a rainbow to lure children for a short time!\n"
                     + "Remember: Characters that are very angry with fight with others.";
 
@@ -414,7 +415,7 @@ namespace Rain_On_Your_Parade
                     initialRain = 0;
 
                     title = "Level 3 - Make Kids Cry";
-                    hint = "Hint: Use the full pools to lure the children and absorb to anger them";
+                    hint = "Hint: Lure kids to full pools then ABSORB to upset them.";
                     objectiveMessage = "Goal: Make all the kids upset. Lure the children to the pools the rip out the water!";
 
                     //title = "Level 3 - Make Kids Cry";

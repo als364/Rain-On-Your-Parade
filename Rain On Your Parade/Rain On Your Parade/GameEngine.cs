@@ -62,7 +62,6 @@ namespace Rain_On_Your_Parade
         bool levelPaused;
         bool levelHasEnded;
 
-        public float timer;
 
         //Boolean menuOn = true;
 
@@ -79,7 +78,7 @@ namespace Rain_On_Your_Parade
         private int stage = 1;
 
         //public static int STAGE_NUM = levels.GetLength(0) ;
-        public static int STAGE_NUM = 10;
+        public static int STAGE_NUM = 9;
 
         public GameEngine()
             : base()
@@ -134,7 +133,6 @@ namespace Rain_On_Your_Parade
                 case GameState.Game:
                     //This is where the level building goes. I don't care about an XML parsing framework yet
                     level = new Canvas(stage);
-                    timer = level.timer;
                     //////////////////////////////////////////////
                     //level = LevelParser.parse(levels[stage]);
                     ///////////////////////////////////////////
@@ -232,12 +230,8 @@ namespace Rain_On_Your_Parade
             {
                 case GameState.Game:
 
-
-                    //Do timey-wimey stuff
-                    if (!levelPaused) timer -= 1f / 60f;                    
-
                     #region GameOver
-                    if (levelHasEnded || timer == 0)
+                    if (levelHasEnded)
                     {
                         //Record Results
                         int optionSelected = levelEnd.Update();
@@ -564,9 +558,6 @@ namespace Rain_On_Your_Parade
                     string hintTxt = (level.hint != null) ? level.hint : "";
                     spriteBatch.DrawString(font, hintTxt, new Vector2(SCREEN_WIDTH / 2, 2), Color.White, 0, new Vector2(0, 0), 0.8f, SpriteEffects.None, 0);
 
-                    string timeTxt = "Time Remaining: " + ((int)timer).ToString();
-                    spriteBatch.DrawString(font, timeTxt, new Vector2(SCREEN_WIDTH -5, 45), Color.White, 0, new Vector2(font.MeasureString(timeTxt).X, 0), 0.9f, SpriteEffects.None, 0);
-
                     spriteBatch.End();
 
                     //Pause Screen
@@ -579,13 +570,7 @@ namespace Rain_On_Your_Parade
                     {
                         levelEnd.Draw(spriteBatch);
                     }
-
-                    //Game Over Screen
-                    if (timer == 0)
-                    {
-                        levelEnd.Draw(spriteBatch);
-                    }
-
+                    
                     //Game Start Screen
                     if (levelNotStarted)
                     {

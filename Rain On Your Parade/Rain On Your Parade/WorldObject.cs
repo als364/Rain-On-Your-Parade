@@ -174,7 +174,7 @@ namespace Rain_On_Your_Parade
                         type.RampageLevel = 0;
                         type.NurtureLevel = 3;
                         activated = false;
-                        waterLevel++;
+                        waterLevel = (waterLevel < initialWaterLevel)? waterLevel+1: initialWaterLevel;  //CHECK THIS
                         break;
                     case ObjectType.Type.SunnyRainbowSpot:
                         type.SleepLevel =3;

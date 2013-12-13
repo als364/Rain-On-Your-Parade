@@ -26,7 +26,7 @@ namespace Rain_On_Your_Parade
 
         public Point shadowPointXY()
         {
-            return new Point((int)((player.PixelPosition.X + 40) / Canvas.SQUARE_SIZE), 
+            return new Point((int)((player.PixelPosition.X + 40) / Canvas.SQUARE_SIZE),
                 (int)((player.PixelPosition.Y + 120) / Canvas.SQUARE_SIZE));
         }
 
@@ -198,11 +198,11 @@ namespace Rain_On_Your_Parade
                     {
                         a.rainCooldown = Actor.RAIN_COOLDOWN;
 
-                       if (a.State.State == a.TargetState)
+                        if (a.State.State == a.TargetState)
                         {
-                           //a.IncrementMood();
-                           a.IncrementMood();
-                           a.State.State = ActorState.AState.Seek;
+                            //a.IncrementMood();
+                            a.IncrementMood();
+                            a.State.State = ActorState.AState.Seek;
                         }
                         else
                         {
@@ -210,22 +210,44 @@ namespace Rain_On_Your_Parade
                         }
                     }
 
-                   
+
                 }
 
                 Point shadowPoint = shadowPointXY();
 
                 List<WorldObject> objects = level.Grid[shadowPoint.X, shadowPoint.Y].Objects;
+                if (shadowPoint.X > 0)
+                {
+
+                    List<WorldObject> object_laundry = level.Grid[shadowPoint.X + 1, shadowPoint.Y].Objects;
+
+                    foreach (WorldObject o in object_laundry)
+                    {
+                        if (o.Type.TypeName == ObjectType.Type.Laundry)
+                        {
+                            o.deactivate();
+                            foreach (Actor a in level.Actors)
+                            {
+                                if (new Point(shadowPoint.X + 1, shadowPoint.Y) == a.GridspacePosition)
+                                {
+                                    a.IncrementMood();
+                                    a.State.State = ActorState.AState.Seek;
+                                }
+                            }
+
+                        }
+                    }
+                }
                 foreach (WorldObject o in objects)
                 {
-                   /* if (o.ActorsInteracted.Count > 0)
-                    {
-                        foreach (Actor a in o.ActorsInteracted)
-                        {
-                            a.IncrementMood();
-                        }
-                        o.ActorsInteracted.Clear();
-                    }*/
+                    /* if (o.ActorsInteracted.Count > 0)
+                     {
+                         foreach (Actor a in o.ActorsInteracted)
+                         {
+                             a.IncrementMood();
+                         }
+                         o.ActorsInteracted.Clear();
+                     }*/
 
                     //Console.Write(o.ToString() + "object rained upon\n");
 
@@ -233,9 +255,9 @@ namespace Rain_On_Your_Parade
                     {
                         level.rainbows.Add(o, GameEngine.MAX_RAINBOW_TIME);
                     }
-                    if (o.Type.IsWetObject)
+                    if (o.Type.IsWetObject && o.Type.TypeName != ObjectType.Type.Laundry)
                     {
-                        o.activate();          
+                        o.activate();
                     }
                     else
                     {
@@ -254,60 +276,88 @@ namespace Rain_On_Your_Parade
             {
                 Point shadowPoint = shadowPointXY();
 
-                
-                
-                List<WorldObject> objects = level.Grid[shadowPoint.X, shadowPoint.Y].Objects;
-                foreach (WorldObject o in objects)
+                if (shadowPoint.X > 0)
                 {
-                    //Console.Write(o.ToString() + "object ABSORBED upon\n");
 
-                    if (o.WaterLevel > 0)
+                    List<WorldObject> object_laundry = level.Grid[shadowPoint.X + 1, shadowPoint.Y].Objects;
+
+                    foreach (WorldObject o in object_laundry)
                     {
-                        isAbsorbing = true;
-                        player.Rain++;
-                        player.colorAlpha = (1f - ((float)player.Rain / (float)Player.MAX_RAIN));
-
-                        o.WaterLevel--;
-
-                        if (o.WaterLevel == 0)
+                        if (o.Type.TypeName == ObjectType.Type.Laundry)
                         {
-                            if (o.Type.IsWetObject)
+                            if (o.WaterLevel > 0)
                             {
-                                o.deactivate();
-                            }
-                            else
-                            {
+                                isAbsorbing = true;
+                                player.Rain++;
+                                player.colorAlpha = (1f - ((float)player.Rain / (float)Player.MAX_RAIN));
                                 o.activate();
-                            }
-                        }
+                                o.WaterLevel--;
 
-                        //Console.Write(o.WaterLevel.ToString() + "after Absorb\n");    
-
-                        foreach (Actor a in level.Actors)
-                        {
-                            if (shadowPoint == a.GridspacePosition)
-                            {
-
-                               // if (a.State.State == a.TargetState)
-                               // {
-                                   // a.IncrementMood();
-                                    a.IncrementMood();
-                                    a.State.State = ActorState.AState.Seek;
-                                    //Console.WriteLine("RAINED ON TARGET ITEM");
-                        
-                                //}
-                                //else
-                               // {
-                                  //  a.IncrementMood();
-                                //}
+                                foreach (Actor a in level.Actors)
+                                {
+                                    if (new Point(shadowPoint.X + 1, shadowPoint.Y) == a.GridspacePosition)
+                                    {
+                                        a.DecrementMood();
+                                        a.State.State = ActorState.AState.Seek;
+                                    }
+                                }
                             }
                         }
                     }
-                    else { return false; }
                 }
-                return true;
+
+                    List<WorldObject> objects = level.Grid[shadowPoint.X, shadowPoint.Y].Objects;
+                    foreach (WorldObject o in objects)
+                    {
+                        //Console.Write(o.ToString() + "object ABSORBED upon\n");
+
+                        if (o.WaterLevel > 0)
+                        {
+                            isAbsorbing = true;
+                            player.Rain++;
+                            player.colorAlpha = (1f - ((float)player.Rain / (float)Player.MAX_RAIN));
+
+                            o.WaterLevel--;
+
+                            if (o.WaterLevel == 0)
+                            {
+                                if (o.Type.IsWetObject && o.Type.TypeName != ObjectType.Type.Laundry)
+                                {
+                                    o.deactivate();
+                                }
+                                else
+                                {
+                                    o.activate();
+                                }
+                            }
+
+                            //Console.Write(o.WaterLevel.ToString() + "after Absorb\n");    
+
+                            foreach (Actor a in level.Actors)
+                            {
+                                if (shadowPoint == a.GridspacePosition)
+                                {
+
+                                    // if (a.State.State == a.TargetState)
+                                    // {
+                                    // a.IncrementMood();
+                                    a.IncrementMood();
+                                    a.State.State = ActorState.AState.Seek;
+                                    //Console.WriteLine("RAINED ON TARGET ITEM");
+
+                                    //}
+                                    //else
+                                    // {
+                                    //  a.IncrementMood();
+                                    //}
+                                }
+                            }
+                        }
+                        else { return false; }
+                    }
+                    return true;
+                }
+                else { return false; }
             }
-            else { return false; }
         }
-    }
 }
