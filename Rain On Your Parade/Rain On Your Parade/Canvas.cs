@@ -20,6 +20,7 @@ namespace Rain_On_Your_Parade
         private List<Actor> actors;
         public float percentWon;
         public string objectiveMessage;
+        public string hint;
         public string title;
         public float timer;
         public int initialRain;
@@ -123,7 +124,8 @@ namespace Rain_On_Your_Parade
                     #region levelone
                     initialRain = Player.MAX_RAIN; //don't start with 10, this is a tutorial level -- it's supposed to be easy
 
-                    title = "Level 1\nSoak the Cat";
+                    title = "Level 1 - Soak the Cat";
+                    hint = "Hint: Wait for the Cat to dry off before\nraining again";
                     objectiveMessage = "Goal: Rain on the cat to upset him, angering him by 1 each time.\nUse [SPACEBAR] to Rain.\nUse [WASD] or [Arrow] to move.";
 
                     //fence 1,9 to 8,9 
@@ -177,7 +179,8 @@ namespace Rain_On_Your_Parade
                     #region level2
 
                     initialRain = 0;
-                    title = "Level 2\nKill the flowers to upset the Cat";
+                    title = "Level 2 - Kill Flowers: Upset Cat";
+                    hint = "Hint: If you absorb water while the Cat is\n on the garden, this will upset him";
                     objectiveMessage = "Goal: Drain the flowers to gain water.\n Use [Alt] to Absorb its water.\nIf you absorb water while the Cat is sleeping, this will upset him!\n His mood will get upset by 2";
 
                     //TOP
@@ -227,17 +230,19 @@ namespace Rain_On_Your_Parade
                     win = GameEngine.WinCondition.Actors;
                     #endregion level2
                     break;
+
                 case 3:
                     #region level3
 
                     //case 5:
-                    //Level 5 - Lambs to the Slaughter (Goal: Some Reasonable Mood Quota for 3 actors)
+       
                     //#region level5
 
-                    initialRain = 5;
-                    title = "Level 3 - Make Kids Fight";
-                    objectiveMessage = "Goal: Anger both of the children!\n" +
-                    "Use your shadow to herd angry children twords each other to fight.\n Raining on a sunnyspot will create a rainbow to lure children for a short time!\n Kids fighting will make them angry by 1.";
+                    initialRain = 0;
+                    title = "Level 3 - Absorb the Pool";
+                    hint = "Hint: You can rain to pour water back into\nthe pool and reuse it!";
+                    objectiveMessage = "Goal: Anger both of the children.\n" +
+                    "Use can also use your shadow to herd angry children twords each other to fight.\n Kids fight when they are both frowning or one is VERY upset! \n Kids fighting will make them angry by 1.";
 
                     //fence 0,5 to 0,9
                     objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(0, 2), 0));
@@ -307,7 +312,11 @@ namespace Rain_On_Your_Parade
                     actors.Add(new Actor(ActorType.Type.Kid, new Point(2, 4)));
                     actors.Add(new Actor(ActorType.Type.Kid, new Point(9, 5)));
 
-                    objects.Add(new WorldObject(ObjectType.Type.SunnyRainbowSpot, new Point(5, 5), 0));
+                    objects.Add(new WorldObject(ObjectType.Type.Pool, new Point(5, 5), 1));
+
+                    objects.Add(new WorldObject(ObjectType.Type.Pool, new Point(4, 4), 1));
+
+                    objects.Add(new WorldObject(ObjectType.Type.Pool, new Point(6, 6), 1));
 
                     //win = GameEngine.WinCondition.Mood;
                     //#endregion level5
@@ -319,18 +328,89 @@ namespace Rain_On_Your_Parade
                     updateAngerList();
 
                     #endregion level3
-
-                    
                     break;
-
                 case 4:
-                    //Level 4 - Make Kids Cry (Goal: Actor Kid)
                     #region level4
 
                     initialRain = 0;
 
                     title = "Level 3 - Make Kids Cry";
-                    objectiveMessage = "Goal: Make all the kids upset.";
+                    hint = "Hint: Make the cat angry and rain on sunnyspots to lure the\n child to fight the cat!";
+                    objectiveMessage = "Goal: Make everyone upset.  Raining on a sunnyspot will create a rainbow to lure children for a short time!\n"
+                    + "Remember: Characters that are very angry with fight with others.";
+
+
+                    //title = "Level 3 - Make Kids Cry";
+                    //objectiveMessage = "Goal: Make all the kids upset.\nTry raining on the sun spots to create a rainbow and lure kids!";
+
+
+
+                    //fence 9,0 to 9,4
+                    objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(0, 8), 0));
+                    objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(1, 8), 0));
+                    objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(2, 8), 0));
+                    objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(3, 8), 0));
+                    objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(4, 8), 0));
+                    objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(5, 8), 0));
+                    objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(6, 8), 0));
+                    objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(7, 8), 0));
+                    objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(8, 8), 0));
+                    objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(9, 8), 0));
+                    objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(10, 8), 0));
+                    objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(11, 8), 0));
+
+
+
+
+
+                    //pool 2,7 7,2
+                    objects.Add(new WorldObject(ObjectType.Type.SunnyRainbowSpot, new Point(2, 3), 1));
+                    objects.Add(new WorldObject(ObjectType.Type.SunnyRainbowSpot, new Point(8, 5), 1));
+
+                     objects.Add(new WorldObject(ObjectType.Type.Garden, new Point(1, 3), 1));
+                    objects.Add(new WorldObject(ObjectType.Type.Garden, new Point(7, 5), 1));
+
+                     objects.Add(new WorldObject(ObjectType.Type.Garden, new Point(2, 2), 1));
+                    objects.Add(new WorldObject(ObjectType.Type.Garden, new Point(8, 4), 1));
+
+                    //house 2,1 3,2 
+                    objects.Add(new WorldObject(ObjectType.Type.Invisible, new Point(2, 2), 0));
+                    objects.Add(new WorldObject(ObjectType.Type.Invisible, new Point(2, 3), 0));
+                    objects.Add(new WorldObject(ObjectType.Type.Invisible, new Point(3, 2), 0));
+                    objects.Add(new WorldObject(ObjectType.Type.Invisible, new Point(3, 3), 0));
+
+                    objects.Add(new WorldObject(ObjectType.Type.House, new Point(2, 2), 0));
+
+                    //house 6,7 7,8
+                    objects.Add(new WorldObject(ObjectType.Type.Invisible, new Point(6, 6), 0));
+                    objects.Add(new WorldObject(ObjectType.Type.Invisible, new Point(6, 7), 0));
+                    objects.Add(new WorldObject(ObjectType.Type.Invisible, new Point(7, 6), 0));
+                    objects.Add(new WorldObject(ObjectType.Type.Invisible, new Point(7, 7), 0));
+
+                    objects.Add(new WorldObject(ObjectType.Type.House, new Point(9, 6), 0));
+
+                    //kid 3,3 and 6,6
+                    actors.Add(new Actor(ActorType.Type.Kid, new Point(3, 3)));
+                    actors.Add(new Actor(ActorType.Type.Cat, new Point(6, 6)));
+
+                    //Set win condition for level
+                    win = GameEngine.WinCondition.Actors;
+                    aType = ActorType.Type.Kid;
+
+                    //Add actors/objects that need to be fully angered
+                    updateAngerList();
+
+                    #endregion level4
+                    break;
+                case 5:
+                    //Level 4 - Make Kids Cry (Goal: Actor Kid)
+                    #region level5
+
+                    initialRain = 0;
+
+                    title = "Level 3 - Make Kids Cry";
+                    hint = "Hint: Use the full pools to lure the children and absorb to anger them";
+                    objectiveMessage = "Goal: Make all the kids upset. Lure the children to the pools the rip out the water!";
 
                     //title = "Level 3 - Make Kids Cry";
                     //objectiveMessage = "Goal: Make all the kids upset.\nTry raining on the sun spots to create a rainbow and lure kids!";
@@ -345,7 +425,7 @@ namespace Rain_On_Your_Parade
 
                     //fence 5,0 to 5,4
                     objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(5, 0), 0));
-                  
+
                     objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(5, 2), 0));
                     objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(5, 3), 0));
                     objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(5, 4), 0));
@@ -405,11 +485,10 @@ namespace Rain_On_Your_Parade
                     //Add actors/objects that need to be fully angered
                     updateAngerList();
 
-                    #endregion level4
-
+                    #endregion level5
                     break;
-                case 5:
-                    #region level5
+                case 6:
+                    #region level52
 
                     initialRain = 2;
                     title = "Level 3 - Empty those pools";
@@ -484,7 +563,7 @@ namespace Rain_On_Your_Parade
 
 
                     //win = GameEngine.WinCondition.Mood;
-                    #endregion level5
+                    #endregion level52
 
                     //Set win condition for level
                     win = GameEngine.WinCondition.Mood;
@@ -569,7 +648,7 @@ namespace Rain_On_Your_Parade
                      break;
                      */
                     break;
-                case 6:
+                case 7:
                     //Level 6 - Errand Boys (Goal Actor Kids)
                     #region level6
                     initialRain = 0;
@@ -680,10 +759,10 @@ namespace Rain_On_Your_Parade
 
                     #endregion level6
                     break;
-                case 7:
+                case 8:
                     //Level 7 
                     #region level7
-                    
+
                     initialRain = 0;
                     title = "Level 3 - Kill the Flowers v2.0";
                     objectiveMessage = "Goal: Drain the flowers of water\nBeware the motherly nurturing!";
@@ -753,7 +832,7 @@ namespace Rain_On_Your_Parade
                     #endregion level3
                     //#endregion level4
                     break;
-                case 8:
+                case 9:
                     //Level 8 - Experimental Level - C is for Cat / Cats and Flowers [Not Final]
                     #region level8
 
@@ -792,7 +871,7 @@ namespace Rain_On_Your_Parade
                     win = GameEngine.WinCondition.Actors;
                     #endregion level8
                     break;
-                case 9:
+                case 10:
                     //Level 9 - Experimental Level - Backyard Business / Super Progressive [Not Final]
                     #region level9
 
@@ -860,7 +939,7 @@ namespace Rain_On_Your_Parade
                     win = GameEngine.WinCondition.Actors;
                     #endregion level9
                     break;
-                case 10:
+                case 11:
                     //Level 10 - Experimental Level - Spiral Fences [Not Final]
                     #region level10
                     initialRain = 0;
@@ -929,7 +1008,7 @@ namespace Rain_On_Your_Parade
                     #endregion level10
                     break;
 
-                case 11:
+                case 12:
                     //Level 11 - Experimental Level  - Showdown v2.0 (Goal: Some reasonable malice level given 2 kids, 2 moms)  [Not Final]
                     #region levelEX2
 
@@ -1005,7 +1084,7 @@ namespace Rain_On_Your_Parade
                     #endregion levelEX2
                     break;
 
-                case 12:
+                case 13:
                     //Level 12 - Experimental Level - Lambs to the Slaughter (Goal: Some Reasonable Malice Quota for 3 actors)  [Not Final]
                     #region levelEX4
 

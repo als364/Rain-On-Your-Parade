@@ -506,7 +506,7 @@ namespace Rain_On_Your_Parade
                     spriteBatch.Draw(batterybar, new Rectangle(50, 50, level.goalAngerObjects.Count*22 + level.goalAngerActors.Count*52, 20), Color.Azure);
                     //int percentInt = (int)(level.percentWon * Player.MAX_RAIN * 40);
                     //spriteBatch.Draw(batterybar, new Rectangle(50, 50, percentInt, 20), Color.Firebrick);
-                    spriteBatch.DrawString(font, "Goal", new Vector2(4, 50), Color.White, 0, new Vector2(0, 0), 0.5f, SpriteEffects.None, 0);
+                    spriteBatch.DrawString(font, "Goal", new Vector2(4, 50), Color.White, 0, new Vector2(0, 0), 0.9f, SpriteEffects.None, 0);
 
                     //Draw the incrementation
                     for (int i = 1; i <= Player.MAX_RAIN; i++)
@@ -543,9 +543,20 @@ namespace Rain_On_Your_Parade
                     //Remind Player of their objective
                     //spriteBatch.DrawString(font, level.objectiveMessage, new Vector2(SCREEN_WIDTH/2, 5), Color.White, 0, new Vector2(0, 0), 0.5f, SpriteEffects.None, 0);
 
-                    string info = "[ESC] for Pause/Controls\n[R] to Restart";
-                    spriteBatch.DrawString(font, info, new Vector2(SCREEN_WIDTH/2, 2), Color.White, 0, new Vector2(0, 0), 0.8f, SpriteEffects.None, 0);
-                    spriteBatch.DrawString(font, "Time Remaining: " + ((int)timer).ToString(), new Vector2(SCREEN_WIDTH - 200, 2), Color.White, 0, new Vector2(0, 0), 0.9f, SpriteEffects.None, 0);
+                    //string info = "[ESC] for Pause/Controls\n[R] to Restart";
+                    //spriteBatch.DrawString(font, info, new Vector2(SCREEN_WIDTH/2, 2), Color.White, 0, new Vector2(0, 0), 0.8f, SpriteEffects.None, 0);
+                    //spriteBatch.DrawString(font, "Time Remaining: " + ((int)timer).ToString(), new Vector2(SCREEN_WIDTH - 200, 2), Color.White, 0, new Vector2(0, 0), 0.9f, SpriteEffects.None, 0);
+
+                    string info = "[ESC] for Pause/Controls | [R] to Restart";
+                    spriteBatch.DrawString(font, info, new Vector2(SCREEN_WIDTH - 5, 22), Color.White, 0, new Vector2(font.MeasureString(info).X, 0), 0.8f, SpriteEffects.None, 0);
+                    //spriteBatch.DrawString(font, "[R] to Restart", new Vector2(SCREEN_WIDTH - 5, 22), Color.White, 0, new Vector2(font.MeasureString("[R] to Restart").X, 0), 0.8f, SpriteEffects.None, 0);
+
+                    //spriteBatch.DrawString(font, info, new Vector2(SCREEN_WIDTH/2, 5), Color.White, 0, new Vector2(0, 0), 0.8f, SpriteEffects.None, 0);
+                    string hintTxt = (level.hint != null) ? level.hint : "";
+                    spriteBatch.DrawString(font, hintTxt, new Vector2(SCREEN_WIDTH / 2, 2), Color.White, 0, new Vector2(0, 0), 0.8f, SpriteEffects.None, 0);
+
+                    string timeTxt = "Time Remaining: " + ((int)timer).ToString();
+                    spriteBatch.DrawString(font, timeTxt, new Vector2(SCREEN_WIDTH -5, 45), Color.White, 0, new Vector2(font.MeasureString(timeTxt).X, 0), 0.9f, SpriteEffects.None, 0);
 
                     spriteBatch.End();
 
