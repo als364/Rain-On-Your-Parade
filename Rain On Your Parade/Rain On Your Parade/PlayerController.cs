@@ -284,18 +284,18 @@ namespace Rain_On_Your_Parade
                             if (shadowPoint == a.GridspacePosition)
                             {
 
-                                if (a.State.State == a.TargetState)
-                                {
+                               // if (a.State.State == a.TargetState)
+                               // {
                                     a.IncrementMood();
                                     a.IncrementMood();
                                     a.State.State = ActorState.AState.Seek;
                                     Console.WriteLine("RAINED ON TARGET ITEM");
                         
-                                }
-                                else
-                                {
-                                    a.IncrementMood();
-                                }
+                                //}
+                                //else
+                               // {
+                                  //  a.IncrementMood();
+                                //}
                             }
                         }
                     }

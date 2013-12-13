@@ -17,7 +17,7 @@ namespace Rain_On_Your_Parade
         private int enjoyTime;
         private const int MAX_RUN_COOLDOWN = 80;
         private int runCoolDown = MAX_RUN_COOLDOWN;
-        private const float RUN_SPEED = 2.5f;
+        private const float RUN_SPEED = 2f;
         private const float WALK_SPEED = .75f;
         private const int SWITCH_TO_WANDER = 25;
         private float velX = 0f;
@@ -103,11 +103,6 @@ namespace Rain_On_Your_Parade
                     controlledActor.InteractingActor = null;
                 }
 
-                if (controlledActor.InteractingObject != null)
-                {
-                    controlledActor.IncrementMood();
-                    controlledActor.InteractingObject = null;
-                }
 
                 float xChange = level.Player.PixelPosition.X - level.Player.PrevPos.X;
                 float yChange = level.Player.PixelPosition.Y - level.Player.PrevPos.Y;
