@@ -72,7 +72,6 @@
     <Compile Include="Canvas.cs" />
     <Compile Include="AnimatedTexture.cs" />
     <Compile Include="AnimationSequence.cs" />
-    <Compile Include="LoseScreen.cs" />
     <Compile Include="PauseScreen.cs" />
     <Compile Include="LevelStart.cs" />
     <Compile Include="LevelComplete.cs" />

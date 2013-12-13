@@ -102,9 +102,6 @@ namespace Rain_On_Your_Parade
 
             initialRain = 6;
 
-            objects.Add(new WorldObject(ObjectType.Type.Laundry, new Point(2, 2), 1));
-
-
             objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(0, 0), 0));
             objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(1, 0), 0));
             objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(2, 0), 0));
