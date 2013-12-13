@@ -238,9 +238,9 @@ namespace Rain_On_Your_Parade
 
                         if (optionSelected == 0) //Continue
                         {
-                            if (stage++ > STAGE_NUM)
+                            if (stage++ >= STAGE_NUM)
                             {
-                                stage = 0;
+                                stage = 1;
                             }
                             levelHasEnded = false;
                             levelNotStarted = true;
@@ -532,8 +532,10 @@ namespace Rain_On_Your_Parade
                     {
                         int y_dist = 50;
                         int x_dist = i;
-                        Color iconColor = (!level.goalAngerObjects[i].Activated) ? Color.DarkRed : Color.Goldenrod;
-                        string iconTexture = "Fl";
+
+                        Color iconColor = (!level.goalAngerObjects[i].Activated) ? Color.DarkRed :
+                            (level.goalAngerObjects[i].Type.TypeName == ObjectType.Type.Laundry) ? Color.Fuchsia : Color.Goldenrod;
+                        string iconTexture = (level.goalAngerObjects[i].Type.TypeName == ObjectType.Type.Laundry) ? "Ln" : "Fl";
                         spriteBatch.Draw(batterybar, new Rectangle(50 + x_dist * 22, y_dist, 20, 20), iconColor);
                         spriteBatch.DrawString(font, iconTexture, new Vector2(50 + x_dist * 22 + 10, y_dist), Color.White, 0, new Vector2(font.MeasureString(iconTexture).X / 2, 0), 0.6f, SpriteEffects.None, 0);
                     }

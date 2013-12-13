@@ -226,6 +226,11 @@ namespace Rain_On_Your_Parade
                     actors.Add(new Actor(ActorType.Type.Cat, new Point(4, 6)));
 
                     win = GameEngine.WinCondition.Actors;
+                    aType = ActorType.Type.Cat;
+
+                    //Add actors/objects that need to be fully angered
+                    updateAngerList();
+
                     #endregion level2
                     break;
 
@@ -320,7 +325,8 @@ namespace Rain_On_Your_Parade
                     //#endregion level5
 
                     //Set win condition for level
-                    win = GameEngine.WinCondition.Mood;
+                    win = GameEngine.WinCondition.Actors;
+                    aType = ActorType.Type.Kid;
 
                     //Add actors/objects that need to be fully angered
                     updateAngerList();
@@ -493,7 +499,7 @@ namespace Rain_On_Your_Parade
                 case 6:
                     #region level6
 
-                     initialRain = 5;
+                     initialRain = 10;
                      title = "Level 6\nFight!";
                      hint=  "Hint: Ruining mom's laundry will make her unhappy"; 
                      objectiveMessage = "Goal: Make Everyone Angry!\nBe careful though,"+
@@ -626,12 +632,12 @@ namespace Rain_On_Your_Parade
                      objects.Add(new WorldObject(ObjectType.Type.SunnyRainbowSpot, new Point(2, 7), 0));
                      objects.Add(new WorldObject(ObjectType.Type.SunnyRainbowSpot, new Point(11, 6), 0));
 
-                     objects.Add(new WorldObject(ObjectType.Type.Laundry, new Point(1, 2), 0));
+                     objects.Add(new WorldObject(ObjectType.Type.Laundry, new Point(1, 2), 1));
 
                      //Set win condition for level
                      win = GameEngine.WinCondition.Actors;
 
-                     Console.WriteLine(actors.Count);
+                     //Console.WriteLine(actors.Count);
 
                      //Add actors/objects that need to be fully angered
                      updateAngerList();
@@ -704,7 +710,7 @@ namespace Rain_On_Your_Parade
 
                     //Set win condition for level
                     win = GameEngine.WinCondition.Objects;
-
+                    
                     //Add actors/objects that need to be fully angered
                     updateAngerList();
 
@@ -715,7 +721,7 @@ namespace Rain_On_Your_Parade
                     #region level7
 
                     initialRain = 4;
-                    title = "Level 8 - Kill the Flowers v2.0";
+                    title = "Level 8\nKill the Flowers v2.0";
                     hint = "hint";
                     objectiveMessage = "Goal: Drain the flowers of water\nBeware the motherly nurturing!";
 
@@ -728,19 +734,19 @@ namespace Rain_On_Your_Parade
                     actors.Add(new Actor(ActorType.Type.Mom, new Point(0, 7)));
                     
 
-                    objects.Add(new WorldObject(ObjectType.Type.Laundry, new Point(0, 1), 0));
-                    objects.Add(new WorldObject(ObjectType.Type.Laundry, new Point(2, 1), 0));
-                    objects.Add(new WorldObject(ObjectType.Type.Laundry, new Point(2, 8), 0));
+                    objects.Add(new WorldObject(ObjectType.Type.Laundry, new Point(0, 1), 1));
+                    objects.Add(new WorldObject(ObjectType.Type.Laundry, new Point(2, 1), 1));
+                    objects.Add(new WorldObject(ObjectType.Type.Laundry, new Point(2, 8), 1));
 
-                    objects.Add(new WorldObject(ObjectType.Type.Laundry, new Point(10, 1), 0));
-                    objects.Add(new WorldObject(ObjectType.Type.Laundry, new Point(8, 1), 0));
-                    objects.Add(new WorldObject(ObjectType.Type.Laundry, new Point(0, 6), 0));
-                    objects.Add(new WorldObject(ObjectType.Type.Laundry, new Point(2, 6), 0));
+                    objects.Add(new WorldObject(ObjectType.Type.Laundry, new Point(10, 1), 1));
+                    objects.Add(new WorldObject(ObjectType.Type.Laundry, new Point(8, 1), 1));
+                    objects.Add(new WorldObject(ObjectType.Type.Laundry, new Point(0, 6), 1));
+                    objects.Add(new WorldObject(ObjectType.Type.Laundry, new Point(2, 6), 1));
 
                     // objects.Add(new WorldObject(ObjectType.Type.Laundry, new Point(0, 8), 0));
-                    objects.Add(new WorldObject(ObjectType.Type.Laundry, new Point(2, 8), 0));
+                    objects.Add(new WorldObject(ObjectType.Type.Laundry, new Point(2, 8), 1));
 
-                     objects.Add(new WorldObject(ObjectType.Type.Laundry, new Point(7, 8), 0));
+                     objects.Add(new WorldObject(ObjectType.Type.Laundry, new Point(7, 8), 1));
                     //objects.Add(new WorldObject(ObjectType.Type.Laundry, new Point(9, 8), 0));
 
                     objects.Add(new WorldObject(ObjectType.Type.Fence, new Point(0, 5), 0));
@@ -776,7 +782,7 @@ namespace Rain_On_Your_Parade
 
                     //Set win condition for level
                     win = GameEngine.WinCondition.Objects;
-                
+                    
 
                     //Add actors/objects that need to be fully angered
                     updateAngerList();
@@ -788,7 +794,7 @@ namespace Rain_On_Your_Parade
                     //Level 8 - Experimental Level - C is for Cat / Cats and Flowers [Not Final]
                     #region level8
 
-                    title = "Level 8\nC is for Cat";
+                    title = "Level 9\nC is for Cat";
                     objectiveMessage = "Goal: Make cats unhappy.";
 
                     actors.Add(new Actor(ActorType.Type.Cat, new Point(9, 1)));
@@ -821,6 +827,11 @@ namespace Rain_On_Your_Parade
                     objects.Add(new WorldObject(ObjectType.Type.Garden, new Point(6, 7), 1));
 
                     win = GameEngine.WinCondition.Actors;
+
+                    aType = ActorType.Type.Cat;
+
+                    //Add actors/objects that need to be fully angered
+                    updateAngerList();
                     #endregion level8
                     break;
                 case 10:
@@ -1403,7 +1414,8 @@ namespace Rain_On_Your_Parade
                 case GameEngine.WinCondition.Objects:
                     foreach (WorldObject o in objects)
                     {
-                        if ((o.Type.TypeName == oType && o.Type.CanActivate) || oType == null)
+                        if ((o.Type.TypeName == oType && o.Type.CanActivate) || 
+                            (oType == null && (o.Type.TypeName == ObjectType.Type.Laundry || o.Type.TypeName == ObjectType.Type.Garden)))
                         {
                             goalAngerObjects.Add(o);
                         }

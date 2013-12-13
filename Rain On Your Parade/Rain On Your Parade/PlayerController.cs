@@ -216,7 +216,7 @@ namespace Rain_On_Your_Parade
                 Point shadowPoint = shadowPointXY();
 
                 List<WorldObject> objects = level.Grid[shadowPoint.X, shadowPoint.Y].Objects;
-                if (shadowPoint.X > 0)
+                if (shadowPoint.X < 11)
                 {
 
                     List<WorldObject> object_laundry = level.Grid[shadowPoint.X + 1, shadowPoint.Y].Objects;
@@ -276,7 +276,7 @@ namespace Rain_On_Your_Parade
             {
                 Point shadowPoint = shadowPointXY();
 
-                if (shadowPoint.X > 0)
+                if (shadowPoint.X  < 11)
                 {
 
                     List<WorldObject> object_laundry = level.Grid[shadowPoint.X + 1, shadowPoint.Y].Objects;
