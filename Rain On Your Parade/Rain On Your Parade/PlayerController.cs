@@ -233,8 +233,7 @@ namespace Rain_On_Your_Parade
                     }
                     if (o.Type.IsWetObject)
                     {
-                        o.activate();
-                        //Console.Write(o.WaterLevel.ToString() + "after Rain\n");                
+                        o.activate();          
                     }
                     else
                     {
@@ -289,7 +288,7 @@ namespace Rain_On_Your_Parade
                                     a.IncrementMood();
                                     a.IncrementMood();
                                     a.State.State = ActorState.AState.Seek;
-                                    Console.WriteLine("RAINED ON TARGET ITEM");
+                                    //Console.WriteLine("RAINED ON TARGET ITEM");
                         
                                 }
                                 else
