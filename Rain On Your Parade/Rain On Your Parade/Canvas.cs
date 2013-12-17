@@ -1373,16 +1373,23 @@ namespace Rain_On_Your_Parade
             foreach (Actor a in actors)
             {
                 Mood += a.Mood;
-                if (a.Mood >= 5)
+                if (a.Type.TypeName == aType || aType == null)
                 {
-                    angerActors.Add(a);
+                    if (a.Mood >= 5)
+                    {
+                        angerActors.Add(a);
+                    }
                 }
             }
             foreach (WorldObject o in objects)
             {
-                if (o.Type.CanActivate && !o.Activated)
+                if ((o.Type.TypeName == oType && o.Type.CanActivate) ||
+                            (oType == null && (o.Type.TypeName == ObjectType.Type.Laundry || o.Type.TypeName == ObjectType.Type.Garden)))
                 {
-                    angerObjects.Add(o);
+                    if (o.Type.CanActivate && !o.Activated)
+                    {
+                        angerObjects.Add(o);
+                    }
                 }
             }
         }
@@ -1408,8 +1415,6 @@ namespace Rain_On_Your_Parade
                             goalAngerActors.Add(a);
                         }
                     }
-                    Console.WriteLine("Total actors: " + actors.Count);
-                    Console.WriteLine("Goal anger actors: " + goalAngerActors.Count);
                     break;
                 case GameEngine.WinCondition.Objects:
                     foreach (WorldObject o in objects)
